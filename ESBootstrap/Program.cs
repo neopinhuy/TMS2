@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThuChi;
+using Extensions;
 
 namespace ESBootstrap
 {
@@ -14,6 +16,7 @@ namespace ESBootstrap
         public static void Main()
         {
             var html = new Html();
+            var thuChi = new DanhSachThuChi(html);
 
             html.Nav.Attr("data-role", "ribbonmenu")
                 .Ul.ClassName("tabs-holder")
@@ -38,6 +41,8 @@ namespace ESBootstrap
                             .Span.ClassName("caption").Text("Sửa").End
                         .End
                     .End
+                    .Div.ClassName("clearfix").End
+                    .ThuChi()
                 .End.End.End
             .Render(); // end of Nav
         }

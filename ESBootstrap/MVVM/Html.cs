@@ -169,6 +169,22 @@ namespace MVVM
             }
         }
 
+        public Html Form
+        {
+            get
+            {
+                return Add(ElementType.form);
+            }
+        }
+
+        public Html Label
+        {
+            get
+            {
+                return Add(ElementType.label);
+            }
+        }
+
         public Html End
         {
             get
@@ -203,10 +219,23 @@ namespace MVVM
             return this;
         }
 
+        public Html Value(string val)
+        {
+            var (input, textArea) = GetInputOrTextArea();
+            if (input != null)
+            {
+                input.Value = val;
+            }
+            else if (textArea != null)
+            {
+                textArea.Value = val;
+            }
+            return this;
+        }
+
         public Html Value(Observable val)
         {
-            var input = Context as HTMLInputElement;
-            var textArea = Context as HTMLTextAreaElement;
+            var (input, textArea) = GetInputOrTextArea();
             if (input != null)
             {
                 input.Value = val.Data.ToString();
@@ -232,6 +261,13 @@ namespace MVVM
                 });
             }
             return this;
+        }
+
+        private (HTMLInputElement, HTMLTextAreaElement) GetInputOrTextArea()
+        {
+            var input = Context as HTMLInputElement;
+            var textArea = Context as HTMLTextAreaElement;
+            return (input, textArea);
         }
 
         public Html Attr(string attr, string val)

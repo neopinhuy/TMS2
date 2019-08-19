@@ -58,8 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Renderer.cs" />
     <Compile Include="MVVM\ElementType.cs" />
     <Compile Include="MVVM\Html.cs" />
+    <Compile Include="MVVM\IControl.cs" />
     <Compile Include="MVVM\Observable.cs" />
     <Compile Include="MVVM\ObservableArray.cs" />
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="SQLite\SQLiteStorageModes.cs" />
     <Compile Include="SQLite\SQLiteTableMeta.cs" />
     <Compile Include="SQLite\SQLiteTokenReader.cs" />
+    <Compile Include="ThuChi\ThuChi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\bridge\mif\metro.ttf" />
