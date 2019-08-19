@@ -9,7 +9,7 @@
   },
 
   "html": {
-    "disabled": true,
+    "disabled": false,
     "title": "ESBootstrap Demo"
   },
 

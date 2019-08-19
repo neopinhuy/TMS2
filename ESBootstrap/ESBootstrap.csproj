@@ -35,8 +35,8 @@
     <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bridge, Version=16.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bridge.Core.16.4.0\lib\net40\Bridge.dll</HintPath>
+    <Reference Include="Bridge, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bridge.Core.17.9.0\lib\net40\Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Bridge.Html5, Version=16.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.Html5.16.4.0\lib\net40\Bridge.Html5.dll</HintPath>
@@ -44,94 +44,120 @@
     <Reference Include="Bridge.jQuery2, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.jQuery.2.9.4\lib\net40\Bridge.jQuery2.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bridge.Newtonsoft.Json.1.16.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Retyped.Core, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Retyped.Core.1.6.6733\lib\net40\Retyped.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Retyped.dom, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Retyped.dom.2.8.6733\lib\net40\Retyped.dom.dll</HintPath>
+    </Reference>
+    <Reference Include="Retyped.es5, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Retyped.es5.2.8.6733\lib\net40\Retyped.es5.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap\Aria.cs" />
-    <Compile Include="Bootstrap\Container.cs" />
-    <Compile Include="Bootstrap\Fragment.cs" />
-    <Compile Include="Bootstrap\ViewPort.cs" />
-    <Compile Include="Bootstrap\WidgetBox.cs" />
-    <Compile Include="Bootstrap\Form.cs" />
-    <Compile Include="Bootstrap\WidgetStyle.cs" />
-    <Compile Include="Bootstrap\Widget.cs" />
-    <Compile Include="Bootstrap\Enums.cs" />
-    <Compile Include="Color.cs" />
-    <Compile Include="Form\WidgetClickable.cs" />
-    <Compile Include="Form\Button.cs" />
-    <Compile Include="Form\ButtonGroup.cs" />
-    <Compile Include="Form\CheckBox.cs" />
-    <Compile Include="Form\CheckBoxBase.cs" />
-    <Compile Include="Form\FormGroup.cs" />
-    <Compile Include="Form\FormGroupList.cs" />
-    <Compile Include="Form\InputGroup.cs" />
-    <Compile Include="Form\InputGroupAddon.cs" />
-    <Compile Include="Form\Label.cs" />
-    <Compile Include="Form\TextArea.cs" />
-    <Compile Include="Form\TextBox.cs" />
-    <Compile Include="Grid\ClearFix.cs" />
-    <Compile Include="Grid\Col.cs" />
-    <Compile Include="Grid\Row.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Modal\Modal.cs" />
-    <Compile Include="Modal\ModalBody.cs" />
-    <Compile Include="Modal\ModalContent.cs" />
-    <Compile Include="Modal\ModalDialog.cs" />
-    <Compile Include="Modal\ModalFooter.cs" />
-    <Compile Include="Modal\ModalHeader.cs" />
-    <Compile Include="NavBar\IconBar.cs" />
-    <Compile Include="NavBar\Navbar.cs" />
-    <Compile Include="NavBar\NavbarBrand.cs" />
-    <Compile Include="NavBar\NavbarCollapseButton.cs" />
-    <Compile Include="NavBar\NavbarContent.cs" />
-    <Compile Include="NavBar\NavbarHeader.cs" />
-    <Compile Include="Panel\Panel.cs" />
-    <Compile Include="Panel\PanelBody.cs" />
-    <Compile Include="Panel\PanelFooter.cs" />
-    <Compile Include="Panel\PanelGroup.cs" />
-    <Compile Include="Panel\PanelHeading.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Aria.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Container.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Fragment.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\ViewPort.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\WidgetBox.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Form.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\WidgetStyle.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Widget.cs" />
+    <Compile Include="ESBootstrap\Bootstrap\Enums.cs" />
+    <Compile Include="ESBootstrap\Color.cs" />
+    <Compile Include="ESBootstrap\Form\WidgetClickable.cs" />
+    <Compile Include="ESBootstrap\Form\Button.cs" />
+    <Compile Include="ESBootstrap\Form\ButtonGroup.cs" />
+    <Compile Include="ESBootstrap\Form\CheckBox.cs" />
+    <Compile Include="ESBootstrap\Form\CheckBoxBase.cs" />
+    <Compile Include="ESBootstrap\Form\FormGroup.cs" />
+    <Compile Include="ESBootstrap\Form\FormGroupList.cs" />
+    <Compile Include="ESBootstrap\Form\InputGroup.cs" />
+    <Compile Include="ESBootstrap\Form\InputGroupAddon.cs" />
+    <Compile Include="ESBootstrap\Form\Label.cs" />
+    <Compile Include="ESBootstrap\Form\TextArea.cs" />
+    <Compile Include="ESBootstrap\Form\TextBox.cs" />
+    <Compile Include="ESBootstrap\Grid\ClearFix.cs" />
+    <Compile Include="ESBootstrap\Grid\Col.cs" />
+    <Compile Include="ESBootstrap\Grid\Row.cs" />
+    <Compile Include="ESBootstrap\Extensions.cs" />
+    <Compile Include="ESBootstrap\Modal\Modal.cs" />
+    <Compile Include="ESBootstrap\Modal\ModalBody.cs" />
+    <Compile Include="ESBootstrap\Modal\ModalContent.cs" />
+    <Compile Include="ESBootstrap\Modal\ModalDialog.cs" />
+    <Compile Include="ESBootstrap\Modal\ModalFooter.cs" />
+    <Compile Include="ESBootstrap\Modal\ModalHeader.cs" />
+    <Compile Include="ESBootstrap\NavBar\IconBar.cs" />
+    <Compile Include="ESBootstrap\NavBar\Navbar.cs" />
+    <Compile Include="ESBootstrap\NavBar\NavbarBrand.cs" />
+    <Compile Include="ESBootstrap\NavBar\NavbarCollapseButton.cs" />
+    <Compile Include="ESBootstrap\NavBar\NavbarContent.cs" />
+    <Compile Include="ESBootstrap\NavBar\NavbarHeader.cs" />
+    <Compile Include="ESBootstrap\Panel\Panel.cs" />
+    <Compile Include="ESBootstrap\Panel\PanelBody.cs" />
+    <Compile Include="ESBootstrap\Panel\PanelFooter.cs" />
+    <Compile Include="ESBootstrap\Panel\PanelGroup.cs" />
+    <Compile Include="ESBootstrap\Panel\PanelHeading.cs" />
+    <Compile Include="MVVM\ElementType.cs" />
+    <Compile Include="MVVM\Html.cs" />
+    <Compile Include="MVVM\Observable.cs" />
+    <Compile Include="MVVM\ObservableArray.cs" />
+    <Compile Include="MVVM\ObservableArrayEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Table\Table.cs" />
-    <Compile Include="Table\TableBody.cs" />
-    <Compile Include="Table\TableCell.cs" />
-    <Compile Include="Table\TableFooter.cs" />
-    <Compile Include="Table\TableHeader.cs" />
-    <Compile Include="Table\TableHeaderCell.cs" />
-    <Compile Include="Table\TableHeaderRow.cs" />
-    <Compile Include="Table\TableResponsive.cs" />
-    <Compile Include="Table\TableRow.cs" />
-    <Compile Include="Typography\Abbr.cs" />
-    <Compile Include="Typography\Address.cs" />
-    <Compile Include="Typography\Anchor.cs" />
-    <Compile Include="Typography\Blockquote.cs" />
-    <Compile Include="Typography\Caret.cs" />
-    <Compile Include="Typography\Cite.cs" />
-    <Compile Include="Typography\Code.cs" />
-    <Compile Include="Typography\Deleted.cs" />
-    <Compile Include="Typography\DescriptionDetail.cs" />
-    <Compile Include="Typography\DescriptionList.cs" />
-    <Compile Include="Typography\DescriptionTitle.cs" />
-    <Compile Include="Typography\Emphasizing.cs" />
-    <Compile Include="Typography\Footer.cs" />
-    <Compile Include="Typography\Heading.cs" />
-    <Compile Include="Typography\Inserted.cs" />
-    <Compile Include="Typography\Kbd.cs" />
-    <Compile Include="Typography\ListItem.cs" />
-    <Compile Include="Typography\Mark.cs" />
-    <Compile Include="Typography\OrderedList.cs" />
-    <Compile Include="Typography\Paragraph.cs" />
-    <Compile Include="Typography\ParagraphList.cs" />
-    <Compile Include="Typography\Pre.cs" />
-    <Compile Include="Typography\Samp.cs" />
-    <Compile Include="Typography\Small.cs" />
-    <Compile Include="Typography\SourceOnly.cs" />
-    <Compile Include="Typography\Strikethrough.cs" />
-    <Compile Include="Typography\Strong.cs" />
-    <Compile Include="Typography\Underlined.cs" />
-    <Compile Include="Typography\UnorderedList.cs" />
-    <Compile Include="Typography\Var.cs" />
-    <Compile Include="Vector2.cs" />
-    <Compile Include="Vector4.cs" />
+    <Compile Include="ESBootstrap\Table\Table.cs" />
+    <Compile Include="ESBootstrap\Table\TableBody.cs" />
+    <Compile Include="ESBootstrap\Table\TableCell.cs" />
+    <Compile Include="ESBootstrap\Table\TableFooter.cs" />
+    <Compile Include="ESBootstrap\Table\TableHeader.cs" />
+    <Compile Include="ESBootstrap\Table\TableHeaderCell.cs" />
+    <Compile Include="ESBootstrap\Table\TableHeaderRow.cs" />
+    <Compile Include="ESBootstrap\Table\TableResponsive.cs" />
+    <Compile Include="ESBootstrap\Table\TableRow.cs" />
+    <Compile Include="ESBootstrap\Typography\Abbr.cs" />
+    <Compile Include="ESBootstrap\Typography\Address.cs" />
+    <Compile Include="ESBootstrap\Typography\Anchor.cs" />
+    <Compile Include="ESBootstrap\Typography\Blockquote.cs" />
+    <Compile Include="ESBootstrap\Typography\Caret.cs" />
+    <Compile Include="ESBootstrap\Typography\Cite.cs" />
+    <Compile Include="ESBootstrap\Typography\Code.cs" />
+    <Compile Include="ESBootstrap\Typography\Deleted.cs" />
+    <Compile Include="ESBootstrap\Typography\DescriptionDetail.cs" />
+    <Compile Include="ESBootstrap\Typography\DescriptionList.cs" />
+    <Compile Include="ESBootstrap\Typography\DescriptionTitle.cs" />
+    <Compile Include="ESBootstrap\Typography\Emphasizing.cs" />
+    <Compile Include="ESBootstrap\Typography\Footer.cs" />
+    <Compile Include="ESBootstrap\Typography\Heading.cs" />
+    <Compile Include="ESBootstrap\Typography\Inserted.cs" />
+    <Compile Include="ESBootstrap\Typography\Kbd.cs" />
+    <Compile Include="ESBootstrap\Typography\ListItem.cs" />
+    <Compile Include="ESBootstrap\Typography\Mark.cs" />
+    <Compile Include="ESBootstrap\Typography\OrderedList.cs" />
+    <Compile Include="ESBootstrap\Typography\Paragraph.cs" />
+    <Compile Include="ESBootstrap\Typography\ParagraphList.cs" />
+    <Compile Include="ESBootstrap\Typography\Pre.cs" />
+    <Compile Include="ESBootstrap\Typography\Samp.cs" />
+    <Compile Include="ESBootstrap\Typography\Small.cs" />
+    <Compile Include="ESBootstrap\Typography\SourceOnly.cs" />
+    <Compile Include="ESBootstrap\Typography\Strikethrough.cs" />
+    <Compile Include="ESBootstrap\Typography\Strong.cs" />
+    <Compile Include="ESBootstrap\Typography\Underlined.cs" />
+    <Compile Include="ESBootstrap\Typography\UnorderedList.cs" />
+    <Compile Include="ESBootstrap\Typography\Var.cs" />
+    <Compile Include="ESBootstrap\Vector2.cs" />
+    <Compile Include="ESBootstrap\Vector4.cs" />
+    <Compile Include="SQLite\SQLiteCommand.cs" />
+    <Compile Include="SQLite\SQLiteConnection.cs" />
+    <Compile Include="SQLite\SQLiteParameter.cs" />
+    <Compile Include="SQLite\SQLiteParser.cs" />
+    <Compile Include="SQLite\SQLiteStorageModes.cs" />
+    <Compile Include="SQLite\SQLiteTableMeta.cs" />
+    <Compile Include="SQLite\SQLiteTokenReader.cs" />
+    <Compile Include="ViewModels\PeopleViewModel.cs" />
+    <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
@@ -141,12 +167,13 @@
     <Content Include="bin\Release\bridge\index.html" />
     <Content Include="bin\Release\bridge\bootstrap.min.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Bridge.Min.16.4.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.16.4.0\build\Bridge.Min.targets')" />
+  <Import Project="..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Bridge.Min.16.4.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.16.4.0\build\Bridge.Min.targets'))" />
+    <Error Condition="!Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets'))" />
   </Target>
 </Project>
