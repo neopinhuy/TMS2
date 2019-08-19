@@ -58,49 +58,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ESBootstrap\Bootstrap\Aria.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\Container.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\Fragment.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\ViewPort.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\WidgetBox.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\Form.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\WidgetStyle.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\Widget.cs" />
-    <Compile Include="ESBootstrap\Bootstrap\Enums.cs" />
-    <Compile Include="ESBootstrap\Color.cs" />
-    <Compile Include="ESBootstrap\Form\WidgetClickable.cs" />
-    <Compile Include="ESBootstrap\Form\Button.cs" />
-    <Compile Include="ESBootstrap\Form\ButtonGroup.cs" />
-    <Compile Include="ESBootstrap\Form\CheckBox.cs" />
-    <Compile Include="ESBootstrap\Form\CheckBoxBase.cs" />
-    <Compile Include="ESBootstrap\Form\FormGroup.cs" />
-    <Compile Include="ESBootstrap\Form\FormGroupList.cs" />
-    <Compile Include="ESBootstrap\Form\InputGroup.cs" />
-    <Compile Include="ESBootstrap\Form\InputGroupAddon.cs" />
-    <Compile Include="ESBootstrap\Form\Label.cs" />
-    <Compile Include="ESBootstrap\Form\TextArea.cs" />
-    <Compile Include="ESBootstrap\Form\TextBox.cs" />
-    <Compile Include="ESBootstrap\Grid\ClearFix.cs" />
-    <Compile Include="ESBootstrap\Grid\Col.cs" />
-    <Compile Include="ESBootstrap\Grid\Row.cs" />
-    <Compile Include="ESBootstrap\Extensions.cs" />
-    <Compile Include="ESBootstrap\Modal\Modal.cs" />
-    <Compile Include="ESBootstrap\Modal\ModalBody.cs" />
-    <Compile Include="ESBootstrap\Modal\ModalContent.cs" />
-    <Compile Include="ESBootstrap\Modal\ModalDialog.cs" />
-    <Compile Include="ESBootstrap\Modal\ModalFooter.cs" />
-    <Compile Include="ESBootstrap\Modal\ModalHeader.cs" />
-    <Compile Include="ESBootstrap\NavBar\IconBar.cs" />
-    <Compile Include="ESBootstrap\NavBar\Navbar.cs" />
-    <Compile Include="ESBootstrap\NavBar\NavbarBrand.cs" />
-    <Compile Include="ESBootstrap\NavBar\NavbarCollapseButton.cs" />
-    <Compile Include="ESBootstrap\NavBar\NavbarContent.cs" />
-    <Compile Include="ESBootstrap\NavBar\NavbarHeader.cs" />
-    <Compile Include="ESBootstrap\Panel\Panel.cs" />
-    <Compile Include="ESBootstrap\Panel\PanelBody.cs" />
-    <Compile Include="ESBootstrap\Panel\PanelFooter.cs" />
-    <Compile Include="ESBootstrap\Panel\PanelGroup.cs" />
-    <Compile Include="ESBootstrap\Panel\PanelHeading.cs" />
     <Compile Include="MVVM\ElementType.cs" />
     <Compile Include="MVVM\Html.cs" />
     <Compile Include="MVVM\Observable.cs" />
@@ -108,47 +65,6 @@
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ESBootstrap\Table\Table.cs" />
-    <Compile Include="ESBootstrap\Table\TableBody.cs" />
-    <Compile Include="ESBootstrap\Table\TableCell.cs" />
-    <Compile Include="ESBootstrap\Table\TableFooter.cs" />
-    <Compile Include="ESBootstrap\Table\TableHeader.cs" />
-    <Compile Include="ESBootstrap\Table\TableHeaderCell.cs" />
-    <Compile Include="ESBootstrap\Table\TableHeaderRow.cs" />
-    <Compile Include="ESBootstrap\Table\TableResponsive.cs" />
-    <Compile Include="ESBootstrap\Table\TableRow.cs" />
-    <Compile Include="ESBootstrap\Typography\Abbr.cs" />
-    <Compile Include="ESBootstrap\Typography\Address.cs" />
-    <Compile Include="ESBootstrap\Typography\Anchor.cs" />
-    <Compile Include="ESBootstrap\Typography\Blockquote.cs" />
-    <Compile Include="ESBootstrap\Typography\Caret.cs" />
-    <Compile Include="ESBootstrap\Typography\Cite.cs" />
-    <Compile Include="ESBootstrap\Typography\Code.cs" />
-    <Compile Include="ESBootstrap\Typography\Deleted.cs" />
-    <Compile Include="ESBootstrap\Typography\DescriptionDetail.cs" />
-    <Compile Include="ESBootstrap\Typography\DescriptionList.cs" />
-    <Compile Include="ESBootstrap\Typography\DescriptionTitle.cs" />
-    <Compile Include="ESBootstrap\Typography\Emphasizing.cs" />
-    <Compile Include="ESBootstrap\Typography\Footer.cs" />
-    <Compile Include="ESBootstrap\Typography\Heading.cs" />
-    <Compile Include="ESBootstrap\Typography\Inserted.cs" />
-    <Compile Include="ESBootstrap\Typography\Kbd.cs" />
-    <Compile Include="ESBootstrap\Typography\ListItem.cs" />
-    <Compile Include="ESBootstrap\Typography\Mark.cs" />
-    <Compile Include="ESBootstrap\Typography\OrderedList.cs" />
-    <Compile Include="ESBootstrap\Typography\Paragraph.cs" />
-    <Compile Include="ESBootstrap\Typography\ParagraphList.cs" />
-    <Compile Include="ESBootstrap\Typography\Pre.cs" />
-    <Compile Include="ESBootstrap\Typography\Samp.cs" />
-    <Compile Include="ESBootstrap\Typography\Small.cs" />
-    <Compile Include="ESBootstrap\Typography\SourceOnly.cs" />
-    <Compile Include="ESBootstrap\Typography\Strikethrough.cs" />
-    <Compile Include="ESBootstrap\Typography\Strong.cs" />
-    <Compile Include="ESBootstrap\Typography\Underlined.cs" />
-    <Compile Include="ESBootstrap\Typography\UnorderedList.cs" />
-    <Compile Include="ESBootstrap\Typography\Var.cs" />
-    <Compile Include="ESBootstrap\Vector2.cs" />
-    <Compile Include="ESBootstrap\Vector4.cs" />
     <Compile Include="SQLite\SQLiteCommand.cs" />
     <Compile Include="SQLite\SQLiteConnection.cs" />
     <Compile Include="SQLite\SQLiteParameter.cs" />
@@ -156,8 +72,6 @@
     <Compile Include="SQLite\SQLiteStorageModes.cs" />
     <Compile Include="SQLite\SQLiteTableMeta.cs" />
     <Compile Include="SQLite\SQLiteTokenReader.cs" />
-    <Compile Include="ViewModels\PeopleViewModel.cs" />
-    <Compile Include="ViewModels\Person.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\bridge\mif\metro.ttf" />
@@ -172,7 +86,9 @@
     <Content Include="bin\Debug\bridge\Content\metro.min.js" />
     <Content Include="bin\Debug\bridge\Content\share.svg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

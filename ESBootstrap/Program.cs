@@ -1,7 +1,6 @@
 ﻿using Bridge;
 using Bridge.Html5;
 using MVVM;
-using MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +26,15 @@ namespace ESBootstrap
                 .Div.ClassName("section").Id("section-thuChi")
                     .Div.ClassName("group")
                         .Button.ClassName("ribbon-button")
-                            .Span.ClassName("icon mif-floppy-disk fg-blue").End
+                            .Span.ClassName("icon")
+                                .Span.ClassName("mif-floppy-disk fg-cyan").End.End
                             .Span.ClassName("caption").Text("Lưu").End
                         .End
                     .End
                     .Div.ClassName("group")
                         .Button.ClassName("ribbon-button")
-                            .Span.ClassName("icon mif-pencil fg-cyan").End
+                            .Span.ClassName("icon")
+                                .Span.ClassName("mif-pencil fg-cyan").End.End
                             .Span.ClassName("caption").Text("Sửa").End
                         .End
                     .End
