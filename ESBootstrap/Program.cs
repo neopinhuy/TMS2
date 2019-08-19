@@ -14,46 +14,31 @@ namespace ESBootstrap
     {        
         public static void Main()
         {
-            var vm = new PeopleViewModel();
-            PeopleViewModel.Focus.Subscribe(arg =>
-            {
-                Document.GetElementById(arg.NewData)?.Focus();
-            });
+            var html = new Html();
 
-            var html = new Html(Document.Body);
-            html.Div.Text("Test")
-                    .Input.Value(vm.FirstName).Id(nameof(vm.FirstName)).End
-                    .Input.Value(vm.LastName).End
-                    .Button.Text("Add person").Event(EventType.Click, vm.Add).End
-                    .Button.Text("Load data").AsyncEvent(EventType.Click, vm.LoadPeople).End
-                .End.Render();
-
-            html.Table
-                .Theader.TRow
-                    .Th.Text("First name").End
-                    .Th.Text("Last name").End
-                    .Th.Text("Full name").End
-                    .Th.Text("Action").End
-                .End.End
-                .TBody.ForEach(vm.People, (Person person, int index) =>
-                {
-                    html.TRow.Render();
-                    html.TData
-                        .Input.Value(person.FirstName).Visible(person.EditMode).End
-                        .Span.Text(person.FirstName).Hidden(person.EditMode).End
+            html.Nav.Attr("data-role", "ribbonmenu")
+                .Ul.ClassName("tabs-holder")
+                    .Li.Anchor.Href("#section-thuChi").Text("Thu chi tiền").End.End
+                    .Li.Anchor.Href("#section-kiemKe").Text("Kiểm kê").End.End
+                    .Li.Anchor.Href("#section-soChiTienMat").Text("Sổ chi tiền mặt").End.End
+                    .Li.Anchor.Href("#section-duBaoDongTien").Text("Dự báo dòng tiền").End.End
+                .End
+                .Div.ClassName("content-holder")
+                .Div.ClassName("section").Id("section-thuChi")
+                    .Div.ClassName("group")
+                        .Button.ClassName("ribbon-button")
+                            .Span.ClassName("icon mif-floppy-disk fg-blue").End
+                            .Span.ClassName("caption").Text("Lưu").End
+                        .End
                     .End
-                    .TData
-                        .Input.Value(person.LastName).Visible(person.EditMode).End
-                        .Span.Text(person.LastName).Hidden(person.EditMode).End
+                    .Div.ClassName("group")
+                        .Button.ClassName("ribbon-button")
+                            .Span.ClassName("icon mif-pencil fg-cyan").End
+                            .Span.ClassName("caption").Text("Sửa").End
+                        .End
                     .End
-                    .TData.Text(person.FullNameCapitalized).End
-                    .TData
-                        .Button.Text("Edit").Event(EventType.Click, person.Edit).End
-                        .Button.Text("X").Event(EventType.Click, vm.Remove, person).End
-                    .End.End.Render();
-                }).End
-            .End.Render();
-            PeopleViewModel.Focus.Data = nameof(vm.FirstName);
+                .End.End.End
+            .Render(); // end of Nav
         }
     }
 }

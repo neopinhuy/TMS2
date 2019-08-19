@@ -23,12 +23,19 @@ namespace MVVM
             Context = ele;
         }
 
-
         public Html Div
         {
             get
             {
                 return Add(ElementType.div);
+            }
+        }
+
+        public Html Nav
+        {
+            get
+            {
+                return Add(ElementType.nav);
             }
         }
 
@@ -45,6 +52,14 @@ namespace MVVM
             get
             {
                 return Add(ElementType.span);
+            }
+        }
+
+        public Html Img
+        {
+            get
+            {
+                return Add(ElementType.img);
             }
         }
 
@@ -130,6 +145,30 @@ namespace MVVM
             }
         }
 
+        public Html Ul
+        {
+            get
+            {
+                return Add(ElementType.ul);
+            }
+        }
+
+        public Html Li
+        {
+            get
+            {
+                return Add(ElementType.li);
+            }
+        }
+
+        public Html Anchor
+        {
+            get
+            {
+                return Add(ElementType.a);
+            }
+        }
+
         public Html End
         {
             get
@@ -166,9 +205,7 @@ namespace MVVM
 
         public Html Value(Observable val)
         {
-#pragma warning disable IDE0019 // Use pattern matching
             var input = Context as HTMLInputElement;
-#pragma warning restore IDE0019 // Use pattern matching
             var textArea = Context as HTMLTextAreaElement;
             if (input != null)
             {
@@ -194,6 +231,24 @@ namespace MVVM
                     textArea.Value = arg.NewData.ToString();
                 });
             }
+            return this;
+        }
+
+        public Html Attr(string attr, string val)
+        {
+            Context.SetAttribute(attr, val);
+            return this;
+        }
+
+        public Html Href(string val)
+        {
+            Context.SetAttribute("href", val);
+            return this;
+        }
+
+        public Html Src(string val)
+        {
+            Context.SetAttribute("src", val);
             return this;
         }
 
