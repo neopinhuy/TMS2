@@ -8,7 +8,7 @@ namespace ThuChi
         {
             Html.Instance
                 .Div.ClassName("grid").Div.ClassName("row marginTop20 marginLeft20")
-                .Div.ClassName("cell-12")
+                .Div.ClassName("cell-md-12 cell-lg-12 cell-xl-12")
                 .Div.Attr("data-role", "panel").Attr("data-title-caption", "Tìm kiếm")
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
@@ -28,7 +28,8 @@ namespace ThuChi
                 .End.End.End.End
             .End.End.End // end of row
 
-            .Div.ClassName("row marginTop20 marginLeft20").Div.ClassName("cell-12")
+            .Div.ClassName("row marginTop20 marginLeft20")
+            .Div.ClassName("cell-md-12 cell-lg-12 cell-xl-12")
             .Div.Attr("data-role", "panel").Attr("data-title-caption", "Danh sách")
             .Table.ClassName("table striped table-border mt-4 subcompact")
                 .Attr("data-role", "table")

@@ -13,7 +13,7 @@
     <script src="newtonsoft.json.js"></script>
     <script src="jquery-2.2.4.js"></script>
     <script src="../Content/metro.min.js"></script>
-    <script src="../../../Content/jquery.dataTables.min.js"></script>
+    <script src="../Content/jquery.dataTables.min.js"></script>
     <script src="ESBootstrap.js"></script>
     <script src="ESBootstrap.meta.js"></script>
     <script>
@@ -24,5 +24,52 @@
     </script>
 </head>
 <body>
+    <aside class="sidebar pos-absolute z-2"
+           data-role="sidebar"
+           data-toggle="#sidebar-toggle-3"
+           id="sb3"
+           data-shift=".shifted-content">
+        <div class="sidebar-header" data-image="../Content/sb-bg-1.jpg">
+            <div class="avatar">
+                <img>
+            </div>
+            <span class="title fg-white">Metro 4 Components Library</span>
+            <span class="subtitle fg-white"> 2018 © Sergey Pimenov</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a><span class="mif-home icon"></span>Home</a></li>
+            <li><a><span class="mif-books icon"></span>Guide</a></li>
+            <li><a><span class="mif-files-empty icon"></span>Examples</a></li>
+            <li class="divider"></li>
+            <li><a><span class="mif-images icon"></span>Icons</a></li>
+        </ul>
+    </aside>
+    <div class="shifted-content h-100 p-ab">
+        <div class="app-bar pos-absolute bg-red z-1" data-role="appbar">
+            <button class="app-bar-item c-pointer" id="sidebar-toggle-3">
+                <span class="mif-menu fg-white"></span>
+            </button>
+        </div>
+
+        <div class="h-100 p-4" id="content">
+            <ul data-role="tabs" data-expand="true">
+                <li><a href="#_target_1">Thu chi tiền</a></li>
+                <li><a href="#_target_2">Kiểm kê</a></li>
+                <li><a href="#_target_3">Sổ chi tiền mặt</a></li>
+                <li class="disabled"><a href="#">Dự báo dòng tiền</a></li>
+            </ul>
+            <div class="border bd-default no-border-top p-2">
+                <div id="_target_1">
+
+                </div>
+                <div id="_target_2">
+                    The shield is a post-apocalyptic nanomachine.
+                </div>
+                <div id="_target_3">
+                    Cream soup is just not the same without basil
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

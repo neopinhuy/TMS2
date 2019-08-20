@@ -16,7 +16,7 @@ namespace MVVM
 
         public Html()
         {
-            Context = Document.Body;
+            
         }
 
         public Html(Element ele)
@@ -218,6 +218,11 @@ namespace MVVM
                 Context = Context.ParentElement;
                 return this;
             }
+        }
+
+        public void Render(string html)
+        {
+            Context.InnerHTML = html;
         }
 
         public void Render()
