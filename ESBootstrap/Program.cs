@@ -16,7 +16,6 @@ namespace ESBootstrap
         public static void Main()
         {
             var html = new Html();
-            var thuChi = new DanhSachThuChi(html);
 
             html.Nav.Attr("data-role", "ribbonmenu")
                 .Ul.ClassName("tabs-holder")
