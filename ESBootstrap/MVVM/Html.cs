@@ -496,8 +496,8 @@ namespace MVVM
             }
             var select = Context as HTMLSelectElement;
             list.ForEach((T model) => {
-                var text = model[displayField] as string;
-                var value = model[valueField] as string;
+                var text = displayField == null ? model.ToString() : model[displayField] as string;
+                var value = valueField == null ? model.ToString() : model[valueField] as string;
                 Option.Text(text).Value(value).End.Render();
             });
             select.SelectedIndex = GetSelectedIndex(list, selectedItem, valueField);
@@ -542,7 +542,7 @@ namespace MVVM
         {
             if (item == null)
                 return -1;
-            var arr = list as T[];
+            var arr = list.ToArray();
             var index = Array.IndexOf(arr, item);
             if (valueField != "")
             {
