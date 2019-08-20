@@ -64,7 +64,7 @@ namespace ThuChi
         {
             Html.Instance
                 .Div.ClassName("grid").Div.ClassName("row marginTop5")
-                .Div.ClassName("cell-md-8 cell-lg-8 cell-xl-8")
+                .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
                 .Div.Attr("data-role", "panel")
                 .Attr("data-cls-panel", "shadow-1")
                 .Form.Table.ClassName("subcompact")
@@ -98,9 +98,7 @@ namespace ThuChi
             .End.End.End // end of row
 
             .Div.ClassName("row marginTop5")
-            .Div.ClassName("cell-md-8 cell-lg-8 cell-xl-8")
-            .Div.Attr("data-role", "panel")
-            .Attr("data-cls-panel", "shadow-1")
+            .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
             .Table.ClassName("table striped table-border mt-4")
                 .Attr("data-role", "table")
                 .Attr("data-cls-table-top", "row flex-nowrap")
@@ -108,6 +106,7 @@ namespace ThuChi
                 .Attr("data-show-rows-steps", "false")
                 .Attr("data-show-pagination", "false")
                 .Attr("data-show-activity", "false")
+                .Attr("data-cls-component", "shadow-1")
                 .Theader.TRow
                     .Th.Text("Ngày hạch toán").Attr("data-sortable", "true").End
                     .Th.Text("Ngày chứng từ").Attr("data-sortable", "true").End
@@ -163,6 +162,75 @@ namespace ThuChi
                     .TData.Text("Công nợ").End
                 .End
             .End.End.End
+
+            .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
+            .Table.ClassName("table striped table-border mt-4")
+                .Attr("data-role", "table")
+                .Attr("data-cls-table-top", "row flex-nowrap")
+                .Attr("data-show-search", "false")
+                .Attr("data-show-rows-steps", "false")
+                .Attr("data-show-pagination", "false")
+                .Attr("data-show-activity", "false")
+                .Attr("data-cls-component", "shadow-1")
+                .Theader.TRow
+                    .Th.Text("Diễn giải").Attr("data-sortable", "true").End
+                    .Th.Text("TK nợ").Attr("data-sortable", "true").End
+                    .Th.Text("TK có").Attr("data-sortable", "true").End
+                    .Th.Text("Số tiền").Attr("data-sortable", "true").End
+                    .Th.Text("Nghiệp vụ").Attr("data-sortable", "true").End
+                    .Th.Text("Đối tượng").Attr("data-sortable", "true").End
+                    .Th.Text("Tên đối tượng").Attr("data-sortable", "true").End
+                    .Th.Text("TK ngân hàng").Attr("data-sortable", "true").End
+                    .Th.Text("Đơn vị").Attr("data-sortable", "true").End
+                    .Th.Text("Công trình").Attr("data-sortable", "true").End
+                    .Th.Text("Hợp đồng bán").Attr("data-sortable", "true").End
+                    .Th.Text("Mã thống kê").Attr("data-sortable", "true").End
+                .End.End
+                .TBody
+                    .TRow
+                        .TData.Text("Diễn giải").Attr("data-sortable", "true").End
+                        .TData.Text("TK nợ").Attr("data-sortable", "true").End
+                        .TData.Text("TK có").Attr("data-sortable", "true").End
+                        .TData.Text("Số tiền").Attr("data-sortable", "true").End
+                        .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
+                        .TData.Text("Đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
+                        .TData.Text("Đơn vị").Attr("data-sortable", "true").End
+                        .TData.Text("Công trình").Attr("data-sortable", "true").End
+                        .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
+                        .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                    .End
+                    .TRow
+                        .TData.Text("Diễn giải").Attr("data-sortable", "true").End
+                        .TData.Text("TK nợ").Attr("data-sortable", "true").End
+                        .TData.Text("TK có").Attr("data-sortable", "true").End
+                        .TData.Text("Số tiền").Attr("data-sortable", "true").End
+                        .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
+                        .TData.Text("Đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
+                        .TData.Text("Đơn vị").Attr("data-sortable", "true").End
+                        .TData.Text("Công trình").Attr("data-sortable", "true").End
+                        .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
+                        .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                    .End
+                    .TRow
+                        .TData.Text("Diễn giải").Attr("data-sortable", "true").End
+                        .TData.Text("TK nợ").Attr("data-sortable", "true").End
+                        .TData.Text("TK có").Attr("data-sortable", "true").End
+                        .TData.Text("Số tiền").Attr("data-sortable", "true").End
+                        .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
+                        .TData.Text("Đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
+                        .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
+                        .TData.Text("Đơn vị").Attr("data-sortable", "true").End
+                        .TData.Text("Công trình").Attr("data-sortable", "true").End
+                        .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
+                        .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                    .End
+                .End
+            .End.End
             .End.End.End.Render();
         }
     }

@@ -1,5 +1,5 @@
 ﻿body {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
 }
 .marginTop5 {
     margin-top: 5px;
@@ -12,4 +12,10 @@ nav {
 }
 [type="date"] + .button-group {
     display: none;
+}
+.table-info {
+    display: none;
+}
+table tbody td {
+    padding: 2px !important;
 }
