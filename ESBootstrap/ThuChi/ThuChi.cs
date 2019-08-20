@@ -6,12 +6,18 @@ namespace ThuChi
 {
     public class DanhSachThuChi : IControl
     {
-        public List<SelectListItem> KyHan { get; set; }
-        public SelectListItem KyHanDuocChon { get; set; }
+        public List<SelectListItem> Ranges { get; set; }
+        public SelectListItem SelectedRange { get; set; }
+
+        public List<SelectListItem> States { get; set; }
+        public SelectListItem SelectedState { get; set; }
+
+        public List<SelectListItem> Types { get; set; }
+        public SelectListItem SelectedType { get; set; }
 
         public DanhSachThuChi()
         {
-            KyHan = new List<SelectListItem>
+            Ranges = new List<SelectListItem>
             {
                 new SelectListItem { Value = 1, Display = "Đầu tháng đến hiện tại" },
                 new SelectListItem { Value = 2, Display = "Quý này" },
@@ -37,47 +43,70 @@ namespace ThuChi
                 new SelectListItem { Value = 21, Display = "Quý 3" },
                 new SelectListItem { Value = 22, Display = "Quý 4" },
             };
-            KyHanDuocChon = KyHan[0];
+            SelectedRange = Ranges[0];
+            States = new List<SelectListItem>
+            {
+                new SelectListItem { Value = 1, Display = "Đã ghi sổ" },
+                new SelectListItem { Value = 2, Display = "Chưa ghi sổ" },
+                new SelectListItem { Value = 3, Display = "Tất cả" },
+            };
+            SelectedState = States[2];
+
+            Types = new List<SelectListItem>
+            {
+                new SelectListItem { Value = 1, Display = "Phiếu thu" },
+                new SelectListItem { Value = 2, Display = "Phiếu chi" },
+                new SelectListItem { Value = 3, Display = "Tất cả" },
+            };
+            SelectedType = Types[2];
         }
         public void Render()
         {
             Html.Instance
-                .Div.ClassName("grid").Div.ClassName("row marginTop20 marginLeft20")
-                .Div.ClassName("cell-md-12 cell-lg-12 cell-xl-12")
-                .Div.Attr("data-role", "panel").Attr("data-title-caption", "Tìm kiếm")
+                .Div.ClassName("grid").Div.ClassName("row marginTop5")
+                .Div.ClassName("cell-md-8 cell-lg-8 cell-xl-8")
+                .Div.Attr("data-role", "panel")
+                .Attr("data-cls-panel", "shadow-1")
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Kỳ").End
                         .TData
-                            .Dropdown(KyHan, KyHanDuocChon, nameof(SelectListItem.Display), nameof(SelectListItem.Value))
+                            .Dropdown(Ranges, SelectedRange, nameof(SelectListItem.Display), nameof(SelectListItem.Value))
                             .Attr("data-role", "select")
                             .End
                         .End
                         .TData.Text("Từ").End
-                        .TData.Input.Value(DateTime.Now.ToString()).Attr("data-role", "datepicker").End.End
+                        .TData.Input.Value(DateTime.Now.ToString()).Attr("data-role", "input").Type("date").End.End
                         .TData.Text("Đến").End
-                        .TData.Input.Value("Hôm nay").Attr("data-role", "input").End.End
+                        .TData.Input.Value(DateTime.Now.ToString()).Attr("data-role", "input").Type("date").End.End
                     .End.TRow
                         .TData.Text("Trạng thái").End
-                        .TData.Input.Value("Tất cả").Attr("data-role", "input").End.End
+                        .TData
+                            .Dropdown(States, SelectedState, nameof(SelectListItem.Display), nameof(SelectListItem.Value))
+                            .Attr("data-role", "select")
+                            .End
+                        .End
                         .TData.Text("Loại").End
-                        .TData.Input.Value("Tất cả").Attr("data-role", "input").End.End
+                        .TData
+                            .Dropdown(Types, SelectedType, nameof(SelectListItem.Display), nameof(SelectListItem.Value))
+                            .Attr("data-role", "select")
+                            .End
+                        .End
                         .TData.End
                         .TData.Button.Text("Lấy dữ liệu").End.End
                 .End.End.End.End
             .End.End.End // end of row
 
-            .Div.ClassName("row marginTop20 marginLeft20")
-            .Div.ClassName("cell-md-12 cell-lg-12 cell-xl-12")
-            .Div.Attr("data-role", "panel").Attr("data-title-caption", "Danh sách")
-            .Table.ClassName("table striped table-border mt-4 subcompact")
+            .Div.ClassName("row marginTop5")
+            .Div.ClassName("cell-md-8 cell-lg-8 cell-xl-8")
+            .Div.Attr("data-role", "panel")
+            .Attr("data-cls-panel", "shadow-1")
+            .Table.ClassName("table striped table-border mt-4")
                 .Attr("data-role", "table")
                 .Attr("data-cls-table-top", "row flex-nowrap")
-                .Attr("data-cls-table-top", "row flex-nowrap")
-                .Attr("data-cls-search", "cell-md-8")
-                .Attr("data-cls-rows-count", "cell-md-4")
-                .Attr("data-rows", "5")
-                .Attr("data-rows-steps", "5, 10")
+                .Attr("data-show-search", "false")
+                .Attr("data-show-rows-steps", "false")
+                .Attr("data-show-pagination", "false")
                 .Attr("data-show-activity", "false")
                 .Theader.TRow
                     .Th.Text("Ngày hạch toán").Attr("data-sortable", "true").End

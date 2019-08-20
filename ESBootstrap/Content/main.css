@@ -1,9 +1,15 @@
-﻿.marginTop20 {
-  margin-top: 20px;
+﻿body {
+    font-size: 0.8rem;
+}
+.marginTop5 {
+    margin-top: 5px;
 }
 .marginLeft20 {
   margin-left: 20px;
 }
 nav {
   margin-left: 250px;
+}
+[type="date"] + .button-group {
+    display: none;
 }

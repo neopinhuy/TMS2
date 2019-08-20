@@ -309,6 +309,12 @@ namespace MVVM
             return this;
         }
 
+        public Html Type(string val)
+        {
+            Context.SetAttribute("type", val);
+            return this;
+        }
+
         public Html Href(string val)
         {
             Context.SetAttribute("href", val);
