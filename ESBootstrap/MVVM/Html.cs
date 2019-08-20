@@ -6,7 +6,8 @@ namespace MVVM
 {
     public class Html
     {
-        public Element Context { get; set; }
+        private static Html _instance;
+        public static Element Context { get; set; }
 
         public Html(string selector)
         {
@@ -21,6 +22,15 @@ namespace MVVM
         public Html(Element ele)
         {
             Context = ele;
+        }
+
+        public static Html Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new Html();
+                return _instance;
+            }
         }
 
         public Html Div

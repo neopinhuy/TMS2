@@ -15,9 +15,7 @@ namespace ESBootstrap
     {        
         public static void Main()
         {
-            var html = new Html();
-
-            html.Nav.Attr("data-role", "ribbonmenu")
+            Html.Instance.Nav.Attr("data-role", "ribbonmenu")
                 .Ul.ClassName("tabs-holder")
                     .Li.Anchor.Href("#section-thuChi").Text("Thu chi tiền").End.End
                     .Li.Anchor.Href("#section-kiemKe").Text("Kiểm kê").End.End
@@ -26,24 +24,9 @@ namespace ESBootstrap
                 .End
                 .Div.ClassName("content-holder")
                 .Div.ClassName("section").Id("section-thuChi")
-                    .Div.ClassName("group")
-                        .Button.ClassName("ribbon-button")
-                            .Span.ClassName("icon")
-                                .Span.ClassName("mif-floppy-disk fg-cyan").End.End
-                            .Span.ClassName("caption").Text("Lưu").End
-                        .End
-                    .End
-                    .Div.ClassName("group")
-                        .Button.ClassName("ribbon-button")
-                            .Span.ClassName("icon")
-                                .Span.ClassName("mif-pencil fg-cyan").End.End
-                            .Span.ClassName("caption").Text("Sửa").End
-                        .End
-                    .End
-                    .Div.ClassName("clearfix").End
                     .ThuChi()
-                .End.End.End
-            .Render(); // end of Nav
+                .End.End
+            .End.Render(); // end of Nav
         }
     }
 }

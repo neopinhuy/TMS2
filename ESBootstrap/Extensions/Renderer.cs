@@ -12,7 +12,7 @@ namespace Extensions
     {
         public static Html ThuChi(this Html html)
         {
-            var thuChi = new DanhSachThuChi(html);
+            var thuChi = new DanhSachThuChi();
             thuChi.Render();
             return html;
         }
