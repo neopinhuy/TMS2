@@ -57,6 +57,22 @@ namespace MVVM
             }
         }
 
+        public Html Select
+        {
+            get
+            {
+                return Add(ElementType.select);
+            }
+        }
+
+        public Html Option
+        {
+            get
+            {
+                return Add(ElementType.option);
+            }
+        }
+
         public Html Span
         {
             get
