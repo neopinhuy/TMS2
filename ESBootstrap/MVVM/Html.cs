@@ -1,5 +1,7 @@
 using Bridge.Html5;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVVM
@@ -357,6 +359,15 @@ namespace MVVM
             return this;
         }
 
+        public Html Event(EventType type, Action<Event> action)
+        {
+            Context.AddEventListener(type, (e) =>
+            {
+                action(e);
+            });
+            return this;
+        }
+
         public Html AsyncEvent(EventType type, Func<Task> action)
         {
             Context.AddEventListener(type, async delegate(Event e)
@@ -475,6 +486,72 @@ namespace MVVM
             {
                 parent.RemoveChild(parent.Children[startIndex]);
             }
+        }
+
+        public Html Dropdown<T>(List<T> list, T selectedItem, string displayField = null, string valueField = null)
+        {
+            if (Context.NodeName.ToLowerCase() != "select")
+            {
+                Select.Render();
+            }
+            var select = Context as HTMLSelectElement;
+            list.ForEach((T model) => {
+                var text = model[displayField] as string;
+                var value = model[valueField] as string;
+                Option.Text(text).Value(value).End.Render();
+            });
+            select.SelectedIndex = GetSelectedIndex(list, selectedItem, valueField);
+            return this;
+        }
+
+        public Html Dropdown<T>(ObservableArray<T> list, Observable<T> selectedItem, string displayField, string valueField)
+        {
+            if (Context.NodeName.ToLowerCase() != "select")
+            {
+                Select.Render();
+            }
+            var select = Context as HTMLSelectElement;
+
+            ForEach(list, (T model, int index) => {
+                var text = model[displayField] as string;
+                var value = model[valueField] as string;
+                Option.Text(text).Value(value).End.Render();
+            });
+
+            select.SelectedIndex = GetSelectedIndex(list.Data.ToList(), selectedItem.Data, valueField);
+            list.Subscribe(realList => {
+                select.SelectedIndex = GetSelectedIndex(realList.Array.ToList(), selectedItem.Data, valueField);
+            });
+
+            selectedItem.BindingNodes.Add(select);
+
+            Event(EventType.Change, () => {
+                var selectedObj = list.Data[select.SelectedIndex];
+                selectedItem.Data = selectedObj;
+            });
+
+            // Subscribe change from selectedItem, to update selected index
+            selectedItem.Subscribe(val => {
+                select.SelectedIndex = GetSelectedIndex(list.Data.ToList(), val.NewData, valueField);
+            });
+
+            return this;
+        }
+
+        private int GetSelectedIndex<T>(List<T> list, T item, string valueField)
+        {
+            if (item == null)
+                return -1;
+            var arr = list as T[];
+            var index = Array.IndexOf(arr, item);
+            if (valueField != "")
+            {
+                var selectedItem = Array.Find(arr, x => {
+                    return x[valueField] == item[valueField];
+                });
+                index = Array.IndexOf(arr, selectedItem);
+            }
+            return index;
         }
 
         public Html Visible(Observable<bool> visible)

@@ -6,6 +6,8 @@ namespace MVVM
 {
     public class Observable
     {
+        public readonly List<HTMLElement> BindingNodes = new List<HTMLElement>();
+
         protected static readonly List<Observable> _computedStack = new List<Observable>();
         protected static readonly List<Observable> _exeStack = new List<Observable>();
         protected readonly Func<object> _computedFn;

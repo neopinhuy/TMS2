@@ -1,9 +1,21 @@
 ﻿using MVVM;
+using System.Collections.Generic;
 
 namespace ThuChi
 {
     public class DanhSachThuChi : IControl
     {
+        public List<SelectListItem> KyHan { get; set; }
+        public SelectListItem KyHanDuocChon { get; set; }
+
+        public DanhSachThuChi()
+        {
+            KyHan = new List<SelectListItem>
+            {
+                new SelectListItem { Value = 1, Display = "Đầu tháng đến hiện tại" }
+            };
+            KyHanDuocChon = KyHan[0];
+        }
         public void Render()
         {
             Html.Instance
@@ -13,7 +25,7 @@ namespace ThuChi
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Kỳ").End
-                        .TData.Input.Value("Đầu tháng đến hiện tại").End.End
+                        .TData.Dropdown(KyHan, KyHanDuocChon).End.End
                         .TData.Text("Từ").End
                         .TData.Input.Value("Đầu tháng").End.End
                         .TData.Text("Đến").End
