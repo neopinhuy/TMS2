@@ -1,4 +1,5 @@
-﻿using MVVM;
+﻿using Extensions;
+using MVVM;
 using System;
 using System.Collections.Generic;
 
@@ -60,13 +61,13 @@ namespace ThuChi
             };
             SelectedType = Types[2];
         }
+
         public void Render()
         {
             Html.Instance
                 .Div.ClassName("grid").Div.ClassName("row marginTop5")
                 .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                .Div.Attr("data-role", "panel")
-                .Attr("data-cls-panel", "shadow-1")
+                .Panel()
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Kỳ").End
@@ -93,7 +94,7 @@ namespace ThuChi
                             .End
                         .End
                         .TData.End
-                        .TData.Button.Text("Lấy dữ liệu").End.End
+                        .TData.Button.ClassName("button info").Text("Lấy dữ liệu").End.End
                 .End.End.End.End
             .End.End.End // end of row
 
@@ -117,6 +118,7 @@ namespace ThuChi
                     .Th.Text("Lý do thu/chi").Attr("data-sortable", "true").End
                     .Th.Text("Ngày ghi sổ quỹ ").Attr("data-sortable", "true").End
                     .Th.Text("Loại chứng từ").Attr("data-sortable", "true").End
+                    .ActionColumn()
                 .End.End
                 .TBody
                 .TRow
@@ -125,6 +127,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
                 .TRow
                     .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
@@ -132,6 +135,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
                 .TRow
                     .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
@@ -139,6 +143,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
                 .TRow
                     .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
@@ -146,6 +151,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
                 .TRow
                     .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
@@ -153,6 +159,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
                 .TRow
                     .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
@@ -160,6 +167,7 @@ namespace ThuChi
                     .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
                     .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
                     .TData.Text("Công nợ").End
+                    .EditButton()
                 .End
             .End.End.End
 
@@ -185,6 +193,7 @@ namespace ThuChi
                     .Th.Text("Công trình").Attr("data-sortable", "true").End
                     .Th.Text("Hợp đồng bán").Attr("data-sortable", "true").End
                     .Th.Text("Mã thống kê").Attr("data-sortable", "true").End
+                    .ActionColumn()
                 .End.End
                 .TBody
                     .TRow
@@ -200,6 +209,7 @@ namespace ThuChi
                         .TData.Text("Công trình").Attr("data-sortable", "true").End
                         .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
                         .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                        .EditButton()
                     .End
                     .TRow
                         .TData.Text("Diễn giải").Attr("data-sortable", "true").End
@@ -214,6 +224,7 @@ namespace ThuChi
                         .TData.Text("Công trình").Attr("data-sortable", "true").End
                         .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
                         .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                        .EditButton()
                     .End
                     .TRow
                         .TData.Text("Diễn giải").Attr("data-sortable", "true").End
@@ -228,6 +239,7 @@ namespace ThuChi
                         .TData.Text("Công trình").Attr("data-sortable", "true").End
                         .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
                         .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
+                        .EditButton()
                     .End
                 .End
             .End.End

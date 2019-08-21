@@ -16,7 +16,7 @@ namespace ESBootstrap
         public static void Main()
         {
             Html.Context = Document.GetElementById("_target_1");
-            Html.Instance.ThuChi();
+            new DanhSachThuChi().Render();
         }
     }
 }

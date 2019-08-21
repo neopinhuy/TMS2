@@ -10,11 +10,19 @@ namespace Extensions
 {
     public static class Renderer
     {
-        public static Html ThuChi(this Html html)
+        public static Html EditButton(this Html html)
         {
-            var thuChi = new DanhSachThuChi();
-            thuChi.Render();
-            return html;
+            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").EndUp(ElementType.td.ToString());
+        }
+
+        public static Html ActionColumn(this Html html)
+        {
+            return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
+        }
+
+        public static Html Panel(this Html html)
+        {
+            return html.Div.Attr("data-role", "panel").Attr("data-cls-panel", "shadow-1");
         }
     }
 }

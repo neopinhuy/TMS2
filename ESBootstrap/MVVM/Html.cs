@@ -83,6 +83,14 @@ namespace MVVM
             }
         }
 
+        public Html I
+        {
+            get
+            {
+                return Add(ElementType.i);
+            }
+        }
+
         public Html Img
         {
             get
@@ -220,6 +228,21 @@ namespace MVVM
                 Context = Context.ParentElement;
                 return this;
             }
+        }
+
+        public Html EndUp(string selector)
+        {
+            while (Context != null)
+            {
+                var parent = Context.ParentElement;
+                if (Context.QuerySelector(selector) == null && parent != null)
+                {
+                    Context = parent;
+                }
+                else if (Context.QuerySelector(selector) != null)
+                    break;
+            }
+            return this;
         }
 
         public void Render(string html)
