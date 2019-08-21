@@ -108,14 +108,7 @@ namespace ThuChi
         {
             Html.Instance.Div.ClassName("row marginTop5")
                         .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                        .Table.ClassName("table striped table-border mt-4")
-                            .Attr("data-role", "table")
-                            .Attr("data-cls-table-top", "row flex-nowrap")
-                            .Attr("data-show-search", "false")
-                            .Attr("data-show-rows-steps", "false")
-                            .Attr("data-show-pagination", "false")
-                            .Attr("data-show-activity", "false")
-                            .Attr("data-cls-component", "shadow-1")
+                        .Table()
                             .Theader.TRow
                                 .Th.Text("Ngày hạch toán").Attr("data-sortable", "true").End
                                 .Th.Text("Ngày chứng từ").Attr("data-sortable", "true").End

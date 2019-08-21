@@ -27,12 +27,14 @@ namespace ThuChi
         {
             ThongTinChung();
             ChungTu();
+            HoachToan();
         }
 
         private void ThongTinChung()
         {
-            Html.Instance.Div.ClassName("grid").Div.ClassName("row marginTop5")
-                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9").Panel()
+            Html.Instance.Grid().GridRow().ClassName("marginTop5")
+                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
+                .Panel()
                 .GridRow().GridCell(8)
                 .Table.ClassName("subcompact")
                     .TBody.TRow
@@ -67,7 +69,7 @@ namespace ThuChi
                 .TRow
                     .TData.Text("Ngày hạch toán").End
                     .TData.SmallDatePicker().Value(DateTime.Now.ToString())
-                .EndOf(ElementType.tr.ToString())
+                .EndOf(ElementType.tr)
                 .TRow
                     .TData.Text("Ngày chứng từ").End
                     .TData.SmallDatePicker().Value(DateTime.Now.ToString())
@@ -77,6 +79,50 @@ namespace ThuChi
                     .TData.SmallInput()
                 .EndOf(ElementType.tr)
                 .EndOf(".grid").Render();
+        }
+
+        private void HoachToan()
+        {
+            Console.WriteLine(Html.Context);
+            Html.Instance.Grid().GridRow().GridCell(9)
+                .Table()
+                .Theader.TRow
+                    .Th.Text("Diễn giải").End
+                    .Th.Text("TK nợ").End
+                    .Th.Text("TK có").End
+                    .Th.Text("Số tiền").End
+                    .Th.Text("Mã thống kê").End
+                .EndOf(ElementType.thead)
+                .TBody
+                .TRow
+                    .TData.Text("21/08/2019").End
+                    .TData.Text("111 - Ngoại tệ").End
+                    .TData.Text("112 - VND").End
+                    .TData.Text("15.000.123").End
+                    .TData.Text("123 9999").End
+                .EndOf(ElementType.tr)
+                .TRow
+                    .TData.Text("21/08/2019").End
+                    .TData.Text("111 - Ngoại tệ").End
+                    .TData.Text("112 - VND").End
+                    .TData.Text("15.000.123").End
+                    .TData.Text("123 9999").End
+                .EndOf(ElementType.tr)
+                .TRow
+                    .TData.Text("21/08/2019").End
+                    .TData.Text("111 - Ngoại tệ").End
+                    .TData.Text("112 - VND").End
+                    .TData.Text("15.000.123").End
+                    .TData.Text("123 9999").End
+                .EndOf(ElementType.tr)
+                .TRow
+                    .TData.Text("21/08/2019").End
+                    .TData.Text("111 - Ngoại tệ").End
+                    .TData.Text("112 - VND").End
+                    .TData.Text("15.000.123").End
+                    .TData.Text("123 9999").End
+                .EndOf(ElementType.tr)
+                .EndOf(".panel").Render();
         }
     }
 

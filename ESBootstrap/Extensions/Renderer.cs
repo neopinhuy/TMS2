@@ -40,6 +40,11 @@ namespace Extensions
             return html.Dropdown(list, selectedItem, displayField, valueField).ClassName("input-small").Attr("data-role", "select");
         }
 
+        public static Html Grid(this Html html)
+        {
+            return html.Div.ClassName("grid");
+        }
+
         public static Html GridRow(this Html html)
         {
             return html.Div.ClassName("row");
@@ -48,6 +53,18 @@ namespace Extensions
         public static Html GridCell(this Html html, int size)
         {
             return html.Div.ClassName("cell cell-" + size);
+        }
+
+        public static Html Table(this Html html)
+        {
+            return html.Table.ClassName("table striped table-border mt-4")
+                .Attr("data-role", "table")
+                .Attr("data-cls-table-top", "row flex-nowrap")
+                .Attr("data-show-search", "false")
+                .Attr("data-show-rows-steps", "false")
+                .Attr("data-show-pagination", "false")
+                .Attr("data-show-activity", "false")
+                .Attr("data-cls-component", "shadow-1");
         }
     }
 }
