@@ -58,10 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\TableMetadata.cs" />
     <Compile Include="Extensions\Renderer.cs" />
+    <Compile Include="Components\Table.cs" />
     <Compile Include="MVVM\ElementType.cs" />
     <Compile Include="MVVM\Html.cs" />
-    <Compile Include="MVVM\IControl.cs" />
+    <Compile Include="Components\IControl.cs" />
     <Compile Include="MVVM\Observable.cs" />
     <Compile Include="MVVM\ObservableArray.cs" />
     <Compile Include="MVVM\ObservableArrayEvent.cs" />

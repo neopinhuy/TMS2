@@ -1,11 +1,11 @@
-﻿using Extensions;
+﻿using Components;
+using Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
 
 namespace ThuChi
 {
-
     public class PhieuThu : IControl
     {
         public List<SelectListItem> DepositReason { get; set; }

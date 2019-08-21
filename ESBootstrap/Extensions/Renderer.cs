@@ -12,7 +12,7 @@ namespace Extensions
     {
         public static Html EditButton(this Html html)
         {
-            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").EndOf(ElementType.td.ToString());
+            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").End;
         }
 
         public static Html ActionColumn(this Html html)

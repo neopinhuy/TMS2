@@ -429,6 +429,23 @@ namespace MVVM
             Context.InnerHTML = string.Empty;
         }
 
+        public Html ForEach<T>(T[] list, Action<T, int> renderer)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+            var element = Context;
+
+            var length = list.Length;
+            var index = -1;
+
+            while (++index < length)
+            {
+                Context = element;
+                renderer.Call(element, list[index], index);
+            }
+            return this;
+        }
+
         public Html ForEach<T>(ObservableArray<T> observableArray, Action<T, int> renderer)
         {
             if (observableArray == null)
