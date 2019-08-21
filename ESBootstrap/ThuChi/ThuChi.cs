@@ -66,7 +66,6 @@ namespace ThuChi
         {
             RenderSearch();
             RenderTables();
-            new PhieuThu().Render();
         }
 
         private void RenderSearch()

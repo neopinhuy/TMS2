@@ -15,8 +15,10 @@ namespace ESBootstrap
     {        
         public static void Main()
         {
-            Html.Context = Document.GetElementById("_target_1");
+            Html.Context = Document.GetElementById("thuChiTien");
             new DanhSachThuChi().Render();
+            Html.Context = Document.GetElementById("thuTien");
+            new PhieuThu().Render();
         }
     }
 }
