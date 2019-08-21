@@ -31,24 +31,27 @@ namespace ThuChi
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Đối tượng").End
-                        .TData.Input.Attr("data-role", "input").Value(DateTime.Now.ToString()).End.End
-                        .TData.Attr("colspan", "3").Input.Attr("data-role", "input").Value("Nhân JS").End.End
+                        .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
+                        .TData.Attr("colspan", "3").SmallInput().Value("Nhân JS").End.End
                     .End.TRow
                         .TData.Text("Người nộp").End
-                        .TData.Attr("colspan", "4").Input.Attr("data-role", "input").Value("Nhân JS").End.End
+                        .TData.Attr("colspan", "4").SmallInput().Value("Nhân JS").End.End
                     .End.TRow
                         .TData.Text("Địa chỉ").End
-                        .TData.Attr("colspan", "4").Input.Attr("data-role", "input").Value("387A Lê văn khương").End.End
+                        .TData.Attr("colspan", "4").SmallInput().Value("387A Lê văn khương").End.End
                     .End.TRow
                         .TData.Text("Lý do nộp").End
-                        .TData.Attr("colspan", "3").Dropdown(DepositReason, SelectedDepositReason, "Display", "Value").Attr("data-role", "select").End.End
+                        .TData.Attr("colspan", "3").SmallDropDown(DepositReason, SelectedDepositReason, "Display", "Value").End.End
                         .TData.Input.Attr("data-role", "input").Value("Rút tiền gởi về nộp quỹ").End.End
                     .End.TRow
                         .TData.Text("Nhân viên thu").End
                         .TData.Input.Attr("data-role", "input").End.End
                         .TData.Text("Kèm theo").End
-                        .TData.Input.Attr("data-role", "input").End.End
+                        .TData.SmallInput().End.End
                         .TData.Span.Text("Chứng từ gốc").End.End
+                    .End.TRow
+                        .TData.Text("Tham chiếu").End
+                        .TData.Attr("colspan", "4").Button.ClassName("button small").Span.ClassName("fa fa-search").End.End.End
                 .End.End.End.End
             .End.End.End.Render();
         }

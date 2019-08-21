@@ -24,5 +24,20 @@ namespace Extensions
         {
             return html.Div.Attr("data-role", "panel").Attr("data-cls-panel", "shadow-1");
         }
+
+        public static Html SmallDatePicker(this Html html)
+        {
+            return html.SmallInput().Attr("type", "date");
+        }
+
+        public static Html SmallInput(this Html html)
+        {
+            return html.Input.ClassName("input-small").Attr("data-role", "input");
+        }
+
+        public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
+        {
+            return html.Dropdown(list, selectedItem, displayField, valueField).ClassName("input-small").Attr("data-role", "select");
+        }
     }
 }
