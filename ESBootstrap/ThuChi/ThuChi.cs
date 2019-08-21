@@ -64,7 +64,7 @@ namespace ThuChi
         {
             Html.Instance
                 .Div.ClassName("grid").Div.ClassName("row marginTop5")
-                .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
+                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
                 .Div.Attr("data-role", "panel")
                 .Attr("data-cls-panel", "shadow-1")
                 .Form.Table.ClassName("subcompact")
@@ -98,7 +98,7 @@ namespace ThuChi
             .End.End.End // end of row
 
             .Div.ClassName("row marginTop5")
-            .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
+            .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
             .Table.ClassName("table striped table-border mt-4")
                 .Attr("data-role", "table")
                 .Attr("data-cls-table-top", "row flex-nowrap")
@@ -163,7 +163,7 @@ namespace ThuChi
                 .End
             .End.End.End
 
-            .Div.ClassName("cell-md-10 cell-lg-10 cell-xl-10")
+            .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
             .Table.ClassName("table striped table-border mt-4")
                 .Attr("data-role", "table")
                 .Attr("data-cls-table-top", "row flex-nowrap")

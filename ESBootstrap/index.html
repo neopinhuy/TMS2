@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Misa online</title>
+    <link href="../Content/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="../Content/metro-all.min.css" rel="stylesheet" />
     <link href="../Content/choosen.css" rel="stylesheet" />
     <link href="../Content/main.css" rel="stylesheet" />
@@ -20,13 +21,9 @@
     <script src="ESBootstrap.meta.js"></script>
 </head>
 <body>
-    <aside class="sidebar pos-absolute z-2"
-           data-role="sidebar"
-           data-toggle="#sidebar-toggle-3"
-           id="sb3"
+    <aside class="sidebar pos-absolute z-2" data-role="sidebar" data-toggle="#sidebar-toggle-2"
            data-shift=".shifted-content-2"
-           data-static-shift=".shifted-content-2"
-           data-static="md">
+           data-static-shift=".shifted-content-2">
         <div class="sidebar-header" data-image="../Content/sb-bg-1.jpg">
             <div class="avatar">
                 <img>
@@ -36,9 +33,13 @@
         </div>
         <ul class="sidebar-menu border bd-default">
             <li class="group-title">Main</li>
-            <li><a><span class="mif-home icon"></span>Home</a></li>
-            <li><a><span class="mif-books icon"></span>Guide</a></li>
-            <li><a><span class="mif-files-empty icon"></span>Examples</a></li>
+            <li><a><span class="mif-home icon"></span>Trang chủ</a></li>
+            <li><a><span class="mif-dollars icon"></span>Quỹ</a></li>
+            <li><a><span class="mif-library icon"></span>Ngân hàng</a></li>
+            <li><a><span class="mif-add-shopping-cart icon"></span>Mua hàng</a></li>
+            <li><a><span class="mif-truck icon"></span>Bán hàng</a></li>
+            <li><a><span class="fa fa-file-invoice icon"></span>Hóa đơn</a></li>
+            <li><a><span class="fa fa-warehouse icon"></span>Kho</a></li>
             <li class="group-title">Settings</li>
             <li><a><span class="mif-cogs icon"></span>Preferences</a></li>
             <li><a><span class="mif-user icon"></span>Profile</a></li>
@@ -48,7 +49,7 @@
     </aside>
     <div class="shifted-content-2 h-100 p-ab">
         <div class="app-bar pos-absolute bg-red z-1" data-role="appbar">
-            <button class="app-bar-item c-pointer" id="sidebar-toggle-3">
+            <button class="app-bar-item c-pointer" id="sidebar-toggle-2">
                 <span class="mif-menu fg-white"></span>
             </button>
         </div>
@@ -73,5 +74,8 @@
             </div>
         </div>
     </div>
+    <script>
+        $('button#sidebar-toggle-2').click();
+    </script>
 </body>
 </html>
