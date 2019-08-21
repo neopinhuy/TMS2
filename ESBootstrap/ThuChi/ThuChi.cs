@@ -244,6 +244,8 @@ namespace ThuChi
                 .End
             .End.End
             .End.End.End.Render();
+
+            new PhieuThu().Render();
         }
     }
 }
