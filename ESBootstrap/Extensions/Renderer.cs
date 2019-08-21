@@ -12,7 +12,7 @@ namespace Extensions
     {
         public static Html EditButton(this Html html)
         {
-            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").EndUp(ElementType.td.ToString());
+            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").EndOf(ElementType.td.ToString());
         }
 
         public static Html ActionColumn(this Html html)
@@ -22,7 +22,7 @@ namespace Extensions
 
         public static Html Panel(this Html html)
         {
-            return html.Div.Attr("data-role", "panel").Attr("data-cls-panel", "shadow-1");
+            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", "shadow-1");
         }
 
         public static Html SmallDatePicker(this Html html)
@@ -38,6 +38,16 @@ namespace Extensions
         public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
         {
             return html.Dropdown(list, selectedItem, displayField, valueField).ClassName("input-small").Attr("data-role", "select");
+        }
+
+        public static Html GridRow(this Html html)
+        {
+            return html.Div.ClassName("row");
+        }
+
+        public static Html GridCell(this Html html, int size)
+        {
+            return html.Div.ClassName("cell cell-" + size);
         }
     }
 }

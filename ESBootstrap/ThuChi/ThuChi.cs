@@ -101,7 +101,7 @@ namespace ThuChi
                         .End
                         .TData.End
                         .TData.Button.ClassName("button small info").Text("Lấy dữ liệu").End.End
-                .EndUp(".row").Render(); // end of row
+                .EndOf(".row").Render(); // end of row
         }
 
         private static void RenderTables()
@@ -248,7 +248,7 @@ namespace ThuChi
                                     .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
                                     .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
                                     .EditButton()
-                                .EndUp(".grid").Render();
+                                .EndOf(".grid").Render();
         }
     }
 }

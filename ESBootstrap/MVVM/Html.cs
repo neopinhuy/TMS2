@@ -230,18 +230,27 @@ namespace MVVM
             }
         }
 
-        public Html EndUp(string selector)
+        public Html EndOf(ElementType type)
         {
-            while (Context != null)
+            return EndOf(type.ToString());
+        }
+
+        public Html EndOf(string selector)
+        {
+            var result = Context;
+            while (result != null)
             {
-                var parent = Context.ParentElement;
-                if (Context.QuerySelector(selector) == null && parent != null)
+                if (result.QuerySelector(selector) != null)
                 {
-                    Context = parent;
-                }
-                else if (Context.QuerySelector(selector) != null)
                     break;
+                }
+                else
+                {
+                    result = result.ParentElement;
+                }
             }
+
+            Context = result ?? throw new InvalidOperationException("Cannot find the element");
             return this;
         }
 
