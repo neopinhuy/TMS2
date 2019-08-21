@@ -19,3 +19,6 @@ nav {
 table tbody td {
     padding: 2px !important;
 }
+ul.sidebar-menu ul {
+    display: none;
+}
