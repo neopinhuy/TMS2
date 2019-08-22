@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Components
 {
-    public class TableMetadata
+    public class Header<T>
     {
-        public string Header { get; set; }
+        public string HeaderText { get; set; }
         public string FieldName { get; set; }
         public bool ShowSort { get; set; }
         public Type DataType { get; set; }
         public string Format { get; set; }
+        public bool EditButton { get; set; }
+        public bool DeleteButton { get; set; }
+        public Action<T> EditEvent { get; set; }
     }
 }

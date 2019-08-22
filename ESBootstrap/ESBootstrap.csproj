@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\TableMetadata.cs" />
+    <Compile Include="Components\Header.cs" />
     <Compile Include="Components\Renderer.cs" />
     <Compile Include="Components\Table.cs" />
     <Compile Include="MVVM\ElementType.cs" />

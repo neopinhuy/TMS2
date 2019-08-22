@@ -9,10 +9,8 @@ namespace MisaOnline.ThuChi
     {
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }
-
         public List<SelectListItem> States { get; set; }
         public SelectListItem SelectedState { get; set; }
-
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
 
@@ -66,6 +64,7 @@ namespace MisaOnline.ThuChi
         {
             RenderSearch();
             RenderTables();
+            ChiTiet();
         }
 
         private void RenderSearch()
@@ -107,16 +106,22 @@ namespace MisaOnline.ThuChi
         {
             Html.Instance.Div.ClassName("row marginTop5")
                 .Div.ClassName("cell cell-md-9 cell-lg-9 cell-xl-9")
-                .Table(new ObservableArray<TableMetadata>(new TableMetadata[] {
-                    new TableMetadata { Header = "Ngày hạch toán", FieldName = "NgayHachToan" },
-                    new TableMetadata { Header = "Ngày chứng từ", FieldName = "NgayChungTu" },
-                    new TableMetadata { Header = "Số chứng từ", FieldName = "SoChungTu" },
-                    new TableMetadata { Header = "Diễn giải", FieldName = "DienGiai" },
-                    new TableMetadata { Header = "Số tiền", FieldName = "SoTien" },
-                    new TableMetadata { Header = "Đối tượng", FieldName = "DoiTuong" },
-                    new TableMetadata { Header = "Lý do thu/chi", FieldName = "LyDoThuChi" },
-                    new TableMetadata { Header = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
-                    new TableMetadata { Header = "Loại chứng từ", FieldName = "LoaiChungTu" },
+                .Table(new ObservableArray<Header<object>>(new Header<object>[] {
+                    new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
+                    new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
+                    new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
+                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                    new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
+                    new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
+                    new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
+                    new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
+                    new Header<object> {
+                        EditButton = true,
+                        EditEvent = (x) => {
+                            Console.WriteLine(x);
+                        }
+                    },
                 }), new ObservableArray<object>(new object[] {
                     new
                     {
@@ -143,78 +148,63 @@ namespace MisaOnline.ThuChi
                         NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
                         SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
                     },
-                })).EndOf(".cell")
+                })).EndOf(".cell").Render();
 
-                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                .Table.ClassName("table striped table-border mt-4")
-                    .Attr("data-role", "table")
-                    .Attr("data-cls-table-top", "row flex-nowrap")
-                    .Attr("data-show-search", "false")
-                    .Attr("data-show-rows-steps", "false")
-                    .Attr("data-show-pagination", "false")
-                    .Attr("data-show-activity", "false")
-                    .Attr("data-cls-component", "shadow-1")
-                    .Theader.TRow
-                        .Th.Text("Diễn giải").Attr("data-sortable", "true").End
-                        .Th.Text("TK nợ").Attr("data-sortable", "true").End
-                        .Th.Text("TK có").Attr("data-sortable", "true").End
-                        .Th.Text("Số tiền").Attr("data-sortable", "true").End
-                        .Th.Text("Nghiệp vụ").Attr("data-sortable", "true").End
-                        .Th.Text("Đối tượng").Attr("data-sortable", "true").End
-                        .Th.Text("Tên đối tượng").Attr("data-sortable", "true").End
-                        .Th.Text("TK ngân hàng").Attr("data-sortable", "true").End
-                        .Th.Text("Đơn vị").Attr("data-sortable", "true").End
-                        .Th.Text("Công trình").Attr("data-sortable", "true").End
-                        .Th.Text("Hợp đồng bán").Attr("data-sortable", "true").End
-                        .Th.Text("Mã thống kê").Attr("data-sortable", "true").End
-                        .ActionColumn()
-                    .End.End
-                    .TBody
-                        .TRow
-                            .TData.Text("Diễn giải").Attr("data-sortable", "true").End
-                            .TData.Text("TK nợ").Attr("data-sortable", "true").End
-                            .TData.Text("TK có").Attr("data-sortable", "true").End
-                            .TData.Text("Số tiền").Attr("data-sortable", "true").End
-                            .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
-                            .TData.Text("Đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
-                            .TData.Text("Đơn vị").Attr("data-sortable", "true").End
-                            .TData.Text("Công trình").Attr("data-sortable", "true").End
-                            .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
-                            .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
-                            .EditButton()
-                        .EndOf(ElementType.tr)
-                        .TRow
-                            .TData.Text("Diễn giải").Attr("data-sortable", "true").End
-                            .TData.Text("TK nợ").Attr("data-sortable", "true").End
-                            .TData.Text("TK có").Attr("data-sortable", "true").End
-                            .TData.Text("Số tiền").Attr("data-sortable", "true").End
-                            .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
-                            .TData.Text("Đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
-                            .TData.Text("Đơn vị").Attr("data-sortable", "true").End
-                            .TData.Text("Công trình").Attr("data-sortable", "true").End
-                            .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
-                            .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
-                            .EditButton()
-                        .EndOf(ElementType.tr)
-                        .TRow
-                            .TData.Text("Diễn giải").Attr("data-sortable", "true").End
-                            .TData.Text("TK nợ").Attr("data-sortable", "true").End
-                            .TData.Text("TK có").Attr("data-sortable", "true").End
-                            .TData.Text("Số tiền").Attr("data-sortable", "true").End
-                            .TData.Text("Nghiệp vụ").Attr("data-sortable", "true").End
-                            .TData.Text("Đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("Tên đối tượng").Attr("data-sortable", "true").End
-                            .TData.Text("TK ngân hàng").Attr("data-sortable", "true").End
-                            .TData.Text("Đơn vị").Attr("data-sortable", "true").End
-                            .TData.Text("Công trình").Attr("data-sortable", "true").End
-                            .TData.Text("Hợp đồng bán").Attr("data-sortable", "true").End
-                            .TData.Text("Mã thống kê").Attr("data-sortable", "true").End
-                            .EditButton()
-                        .EndOf(".grid").Render();
+        }
+
+        private static void ChiTiet()
+        {
+            Html.Instance.Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
+                .Table(new ObservableArray<Header<object>>(new Header<object>[] {
+                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+                    new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
+                    new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
+                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                    new Header<object> { HeaderText = "Nghiệp vụ", FieldName = "NghiepVu" },
+                    new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
+                    new Header<object> { HeaderText = "Tên đối tượng", FieldName = "TenDoiTuong" },
+                    new Header<object> { HeaderText = "TK ngân hàng", FieldName = "TKNganHang" },
+                    new Header<object> { HeaderText = "Đơn vị", FieldName = "DonVi" },
+                    new Header<object> { HeaderText = "Công trình", FieldName = "CongTrinh" },
+                    new Header<object> { HeaderText = "Hợp đồng bán", FieldName = "HopDongBan" },
+                    new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
+                }), new ObservableArray<object>(new object[] {
+                    new
+                    {
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
+                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
+                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                    },
+                    new
+                    {
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
+                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
+                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                    },
+                    new
+                    {
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
+                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
+                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                    },
+                    new
+                    {
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
+                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
+                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                    },
+                    new
+                    {
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
+                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
+                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                    },
+                })).EndOf(".grid").Render();
         }
     }
 }

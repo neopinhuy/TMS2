@@ -50,7 +50,7 @@ namespace Components
             return html.Div.ClassName("cell cell-" + size);
         }
 
-        public static Html Table<Data>(this Html html, ObservableArray<TableMetadata> metadata, ObservableArray<Data> rowData)
+        public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
         {
             var table = new Table<Data>(metadata, rowData);
             table.Render();

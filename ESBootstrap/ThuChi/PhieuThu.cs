@@ -84,12 +84,12 @@ namespace MisaOnline.ThuChi
         {
             Console.WriteLine(Html.Context);
             Html.Instance.Grid().GridRow().GridCell(9)
-                .Table(new ObservableArray<TableMetadata>(new TableMetadata[] {
-                    new TableMetadata { Header = "Diễn giải", FieldName = "DienGiai" },
-                    new TableMetadata { Header = "TK nợ", FieldName = "TKNo" },
-                    new TableMetadata { Header = "TK có", FieldName = "TKCo" },
-                    new TableMetadata { Header = "Số tiền", FieldName = "SoTien" },
-                    new TableMetadata { Header = "Mã thống kê", FieldName = "MaThongKe" },
+                .Table(new ObservableArray<Header<object>>(new Header<object>[] {
+                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+                    new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
+                    new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
+                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                    new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
                 }), new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },

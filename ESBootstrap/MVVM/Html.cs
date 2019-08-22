@@ -415,7 +415,7 @@ namespace MVVM
             return this;
         }
 
-        public Html Event<T>(EventType type, Action<T> action, T model = null) where T : class
+        public Html Event<T>(EventType type, Action<T> action, T model)
         {
             Context.AddEventListener(type, (e) =>
             {
