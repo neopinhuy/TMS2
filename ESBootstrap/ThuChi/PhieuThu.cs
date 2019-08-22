@@ -1,10 +1,9 @@
 ﻿using Components;
-using Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
 
-namespace ThuChi
+namespace MisaOnline.ThuChi
 {
     public class PhieuThu : IControl
     {
@@ -85,43 +84,19 @@ namespace ThuChi
         {
             Console.WriteLine(Html.Context);
             Html.Instance.Grid().GridRow().GridCell(9)
-                .Table()
-                .Theader.TRow
-                    .Th.Text("Diễn giải").End
-                    .Th.Text("TK nợ").End
-                    .Th.Text("TK có").End
-                    .Th.Text("Số tiền").End
-                    .Th.Text("Mã thống kê").End
-                .EndOf(ElementType.thead)
-                .TBody
-                .TRow
-                    .TData.Text("21/08/2019").End
-                    .TData.Text("111 - Ngoại tệ").End
-                    .TData.Text("112 - VND").End
-                    .TData.Text("15.000.123").End
-                    .TData.Text("123 9999").End
-                .EndOf(ElementType.tr)
-                .TRow
-                    .TData.Text("21/08/2019").End
-                    .TData.Text("111 - Ngoại tệ").End
-                    .TData.Text("112 - VND").End
-                    .TData.Text("15.000.123").End
-                    .TData.Text("123 9999").End
-                .EndOf(ElementType.tr)
-                .TRow
-                    .TData.Text("21/08/2019").End
-                    .TData.Text("111 - Ngoại tệ").End
-                    .TData.Text("112 - VND").End
-                    .TData.Text("15.000.123").End
-                    .TData.Text("123 9999").End
-                .EndOf(ElementType.tr)
-                .TRow
-                    .TData.Text("21/08/2019").End
-                    .TData.Text("111 - Ngoại tệ").End
-                    .TData.Text("112 - VND").End
-                    .TData.Text("15.000.123").End
-                    .TData.Text("123 9999").End
-                .EndOf(ElementType.tr)
+                .Table(new ObservableArray<TableMetadata>(new TableMetadata[] {
+                    new TableMetadata { Header = "Diễn giải", FieldName = "DienGiai" },
+                    new TableMetadata { Header = "TK nợ", FieldName = "TKNo" },
+                    new TableMetadata { Header = "TK có", FieldName = "TKCo" },
+                    new TableMetadata { Header = "Số tiền", FieldName = "SoTien" },
+                    new TableMetadata { Header = "Mã thống kê", FieldName = "MaThongKe" },
+                }), new ObservableArray<object>(new object[] {
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                }))
                 .EndOf(".panel").Render();
         }
     }

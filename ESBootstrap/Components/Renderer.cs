@@ -1,12 +1,7 @@
 ﻿using MVVM;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ThuChi;
 
-namespace Extensions
+namespace Components
 {
     public static class Renderer
     {
@@ -55,16 +50,11 @@ namespace Extensions
             return html.Div.ClassName("cell cell-" + size);
         }
 
-        public static Html Table(this Html html)
+        public static Html Table<Data>(this Html html, ObservableArray<TableMetadata> metadata, ObservableArray<Data> rowData)
         {
-            return html.Table.ClassName("table striped table-border mt-4")
-                .Attr("data-role", "table")
-                .Attr("data-cls-table-top", "row flex-nowrap")
-                .Attr("data-show-search", "false")
-                .Attr("data-show-rows-steps", "false")
-                .Attr("data-show-pagination", "false")
-                .Attr("data-show-activity", "false")
-                .Attr("data-cls-component", "shadow-1");
+            var table = new Table<Data>(metadata, rowData);
+            table.Render();
+            return html;
         }
     }
 }

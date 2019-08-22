@@ -250,7 +250,7 @@ namespace MVVM
                 }
             }
 
-            Context = result ?? throw new InvalidOperationException("Cannot find the element");
+            Context = result ?? throw new InvalidOperationException("Cannot find the element of selector " + selector);
             return this;
         }
 

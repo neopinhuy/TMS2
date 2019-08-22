@@ -1,10 +1,9 @@
 ﻿using Components;
-using Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
 
-namespace ThuChi
+namespace MisaOnline.ThuChi
 {
     public class DanhSachThuChi : IControl
     {
@@ -107,70 +106,44 @@ namespace ThuChi
         private static void RenderTables()
         {
             Html.Instance.Div.ClassName("row marginTop5")
-                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                .Table()
-                    .Theader.TRow
-                        .Th.Text("Ngày hạch toán").Attr("data-sortable", "true").End
-                        .Th.Text("Ngày chứng từ").Attr("data-sortable", "true").End
-                        .Th.Text("Số chứng từ").Attr("data-sortable", "true").End
-                        .Th.Text("Diễn giải").Attr("data-sortable", "true").End
-                        .Th.Text("Số tiền").Attr("data-sortable", "true").End
-                        .Th.Text("Đối tượng").Attr("data-sortable", "true").End
-                        .Th.Text("Lý do thu/chi").Attr("data-sortable", "true").End
-                        .Th.Text("Ngày ghi sổ quỹ ").Attr("data-sortable", "true").End
-                        .Th.Text("Loại chứng từ").Attr("data-sortable", "true").End
-                        .ActionColumn()
-                    .End.End
-                    .TBody
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("20/08/2019").End.TData.Text("20/08/2019").End
-                        .TData.Text("CT00001").End.TData.Text("Chung tu 00001").End
-                        .TData.Text("10.000.000").End.TData.Text("Nhân Js").End
-                        .TData.Text("Thu tiền công nợ").End.TData.Text("20/08/2019").End
-                        .TData.Text("Công nợ").End
-                        .EditButton()
-                    .EndOf(ElementType.tr)
-                .End.End.End
+                .Div.ClassName("cell cell-md-9 cell-lg-9 cell-xl-9")
+                .Table(new ObservableArray<TableMetadata>(new TableMetadata[] {
+                    new TableMetadata { Header = "Ngày hạch toán", FieldName = "NgayHachToan" },
+                    new TableMetadata { Header = "Ngày chứng từ", FieldName = "NgayChungTu" },
+                    new TableMetadata { Header = "Số chứng từ", FieldName = "SoChungTu" },
+                    new TableMetadata { Header = "Diễn giải", FieldName = "DienGiai" },
+                    new TableMetadata { Header = "Số tiền", FieldName = "SoTien" },
+                    new TableMetadata { Header = "Đối tượng", FieldName = "DoiTuong" },
+                    new TableMetadata { Header = "Lý do thu/chi", FieldName = "LyDoThuChi" },
+                    new TableMetadata { Header = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
+                    new TableMetadata { Header = "Loại chứng từ", FieldName = "LoaiChungTu" },
+                }), new ObservableArray<object>(new object[] {
+                    new
+                    {
+                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    },
+                    new
+                    {
+                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    },
+                    new
+                    {
+                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    },
+                    new
+                    {
+                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    },
+                    new
+                    {
+                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    },
+                })).EndOf(".cell")
 
                 .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
                 .Table.ClassName("table striped table-border mt-4")

@@ -1,18 +1,16 @@
-﻿using Components;
-using ESBootstrap.Components;
-using MVVM;
-using System.Collections.Generic;
+﻿using MVVM;
 
 namespace Components
 {
     public class Table<Data> : IControl
     {
-        public List<TableMetadata> Metadata { get; set; }
+        public ObservableArray<TableMetadata> Metadata { get; set; }
         public ObservableArray<Data> RowData { get; set; }
 
-        public Table(List<TableMetadata> metadata)
+        public Table(ObservableArray<TableMetadata> metadata, ObservableArray<Data> rowData)
         {
             Metadata = metadata;
+            RowData = rowData;
         }
 
         public void Render()
@@ -26,7 +24,7 @@ namespace Components
                 .Attr("data-show-pagination", "false")
                 .Attr("data-show-activity", "false")
                 .Attr("data-cls-component", "shadow-1")
-            .Theader.ForEach(Metadata.ToArray(), (metaData, index) =>
+            .Theader.ForEach(Metadata, (metaData, index) =>
             {
                 html.TRow.Th.Text(metaData.Header);
                 if (metaData.ShowSort) html.Attr("data-sortable", "true");
@@ -35,7 +33,7 @@ namespace Components
             .EndOf(ElementType.thead)
             .TBody.ForEach(RowData, (row, index) =>
             {
-                html.TRow.ForEach(Metadata.ToArray(), (metaData, headerIndex) =>
+                html.TRow.ForEach(Metadata, (metaData, headerIndex) =>
                 {
                     html.TData.Text(row[metaData.FieldName].ToString()).End.Render();
                 });
