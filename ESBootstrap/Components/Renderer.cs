@@ -53,7 +53,6 @@ namespace Components
         public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
         {
             var table = new Table<Data>(metadata, rowData);
-            table.Render();
             return html;
         }
     }

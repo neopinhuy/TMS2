@@ -7,9 +7,10 @@ using ElementType = MVVM.ElementType;
 
 namespace MisaOnline.ThuChi
 {
-    public class PhieuThu : IControl
+    public class PhieuThu : IComponent
     {
-        private static PhieuThu _phieuThu;
+        public string ControlName { get; set; } = "PhieuThu";
+        public string Title { get; set; } = "Phiếu thu";
         public List<SelectListItem> DepositReason { get; set; }
         public SelectListItem SelectedDepositReason { get; set; }
         public ObservableArray<Header<object>> Headers = new ObservableArray<Header<object>>(new Header<object>[] {
@@ -19,16 +20,6 @@ namespace MisaOnline.ThuChi
             new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
             new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
         });
-
-        public static PhieuThu Instance
-        {
-            get
-            {
-                if (_phieuThu == null)
-                    _phieuThu = new PhieuThu();
-                return _phieuThu;
-            }
-        }
 
         public PhieuThu()
         {
@@ -42,9 +33,18 @@ namespace MisaOnline.ThuChi
             SelectedDepositReason = DepositReason[0];
         }
 
+        public void Focus()
+        {
+
+        }
+
         public void Render()
         {
-            Html.Context = Document.GetElementById("thuTien");
+            var tab = Document.QuerySelector($"#tab-content #{ControlName}");
+            if (tab != null) return;
+            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
+            Html.Take("#tab-content").Div.Id(ControlName).End.Render();
+            Html.Context = Document.GetElementById(ControlName);
             ThongTinChung();
             ChungTu();
             HoachToan();
@@ -79,10 +79,7 @@ namespace MisaOnline.ThuChi
                         .TData.Span.Text("Chứng từ gốc").End.End
                     .End.TRow
                         .TData.Text("Tham chiếu").End
-                        .TData.Attr("colspan", "4").Button.Event(EventType.Click, (e) =>
-                        {
-                            Headers.RemoveAt(0);
-                        })
+                        .TData.Attr("colspan", "4").Button
                         .ClassName("button small").Span.ClassName("fa fa-search")
                 .EndOf(".cell").Render();
         }
@@ -107,7 +104,6 @@ namespace MisaOnline.ThuChi
 
         private void HoachToan()
         {
-            Console.WriteLine(Html.Context);
             Html.Instance.Grid().GridRow().GridCell(9)
                 .Table(Headers, new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },

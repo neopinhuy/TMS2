@@ -6,15 +6,16 @@ using System.Collections.Generic;
 
 namespace MisaOnline.ThuChi
 {
-    public class DanhSachThuChi : IControl
+    public class DanhSachThuChi : IComponent
     {
+        public string ControlName { get; set; } = "DanhSachThuChi";
+        public string Title { get; set; } = "Danh sách thu chi";
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }
         public List<SelectListItem> States { get; set; }
         public SelectListItem SelectedState { get; set; }
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
-        public static PhieuThu _phieuThu { get; set; }
 
         public DanhSachThuChi()
         {
@@ -62,6 +63,11 @@ namespace MisaOnline.ThuChi
             SelectedType = Types[2];
         }
 
+        public void Focus()
+        {
+
+        }
+
         public void Render()
         {
             RenderSearch();
@@ -100,19 +106,7 @@ namespace MisaOnline.ThuChi
                             .End
                         .End
                         .TData.End
-                        .TData.Button.ClassName("button small info").Event(EventType.Click, (e) =>
-                        {
-                            e.PreventDefault();
-                            _phieuThu.Headers.RemoveAt(0);
-                            _phieuThu.Headers.Add(new Header<object>
-                            {
-                                EditButton = true,
-                                EditEvent = (row) =>
-                                {
-                                    Console.WriteLine(row);
-                                }
-                            });
-                        }).Text("Lấy dữ liệu").End.End
+                        .TData.Button.ClassName("button small info").Text("Lấy dữ liệu").End.End
                 .EndOf(".row").Render(); // end of row
         }
 
@@ -133,10 +127,7 @@ namespace MisaOnline.ThuChi
                     new Header<object> {
                         EditButton = true,
                         EditEvent = (x) => {
-                            _phieuThu = PhieuThu.Instance;
-                            _phieuThu.Render();
-                            _phieuThu.Render();
-                            _phieuThu.Render();
+                            new PhieuThu().Render();
                         }
                     },
                 }), new ObservableArray<object>(new object[] {

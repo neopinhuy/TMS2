@@ -26,6 +26,12 @@ namespace MVVM
             Context = ele;
         }
 
+        public static Html Take(string selector)
+        {
+            Context = Document.QuerySelector(selector);
+            return Instance;
+        }
+
         public static Html Instance
         {
             get

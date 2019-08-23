@@ -10,7 +10,7 @@ using MisaOnline.ThuChi;
 
 namespace ESBootstrap
 {
-    public static class Program
+    public class Program
     {
         public static void Main()
         {

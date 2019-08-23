@@ -2,7 +2,7 @@
 
 namespace Components
 {
-    public class Table<Data> : IControl
+    public class Table<Data>
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
@@ -11,6 +11,7 @@ namespace Components
         {
             Headers = metadata;
             RowData = rowData;
+            Render();
         }
 
         public void Render()
