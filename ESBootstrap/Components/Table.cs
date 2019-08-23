@@ -17,16 +17,15 @@ namespace Components
         {
             var html = Html.Instance;
             html.Table.ClassName("table striped table-border mt-4")
-                .Attr("data-role", "table")
                 .Attr("data-cls-table-top", "row flex-nowrap")
                 .Attr("data-show-search", "false")
                 .Attr("data-show-rows-steps", "false")
                 .Attr("data-show-pagination", "false")
                 .Attr("data-show-activity", "false")
                 .Attr("data-cls-component", "shadow-1")
-            .Theader.ForEach(Headers, (metaData, index) =>
+            .Theader.TRow.ForEach(Headers, (metaData, index) =>
             {
-                html.TRow.Th.Render();
+                html.Th.Render();
                 if (metaData.ShowSort) html.Attr("data-sortable", "true");
                 if (metaData.EditButton || metaData.DeleteButton)
                 {
@@ -47,11 +46,7 @@ namespace Components
                     if (header.EditButton)
                     {
                         html.Button.ClassName("button small warning")
-                            .Event(Bridge.Html5.EventType.Click, (x) =>
-                            {
-                                System.Console.WriteLine(x);
-                                header.EditEvent(x);
-                            }, row)
+                            .Event(Bridge.Html5.EventType.Click, header.EditEvent, row)
                             .Span.ClassName("fa fa-edit").End.End.Render();
                     }
                     else if (header.DeleteButton)

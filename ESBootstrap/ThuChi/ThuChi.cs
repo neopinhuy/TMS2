@@ -1,4 +1,5 @@
-﻿using Components;
+﻿using Bridge.Html5;
+using Components;
 using MVVM;
 using System;
 using System.Collections.Generic;
