@@ -35,19 +35,20 @@ namespace MisaOnline.ThuChi
 
         public void Focus()
         {
-
+            var html = Html.Take($"a[href='#{ControlName}'");
+            html.Trigger(EventType.Click);
         }
 
         public void Render()
         {
             var tab = Document.QuerySelector($"#tab-content #{ControlName}");
             if (tab != null) return;
-            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
             Html.Take("#tab-content").Div.Id(ControlName).End.Render();
             Html.Context = Document.GetElementById(ControlName);
             ThongTinChung();
             ChungTu();
             HoachToan();
+            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
         }
 
         private void ThongTinChung()

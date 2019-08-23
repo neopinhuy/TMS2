@@ -55,5 +55,11 @@ namespace Components
             var table = new Table<Data>(metadata, rowData);
             return html;
         }
+
+        public static void RenderAndFocus(this IComponent component)
+        {
+            component.Render();
+            component.Focus();
+        }
     }
 }

@@ -127,7 +127,7 @@ namespace MisaOnline.ThuChi
                     new Header<object> {
                         EditButton = true,
                         EditEvent = (x) => {
-                            new PhieuThu().Render();
+                            new PhieuThu().RenderAndFocus();
                         }
                     },
                 }), new ObservableArray<object>(new object[] {

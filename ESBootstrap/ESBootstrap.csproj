@@ -63,7 +63,7 @@
     <Compile Include="Components\Table.cs" />
     <Compile Include="MVVM\ElementType.cs" />
     <Compile Include="MVVM\Html.cs" />
-    <Compile Include="Components\IControl.cs" />
+    <Compile Include="Components\IComponent.cs" />
     <Compile Include="MVVM\Observable.cs" />
     <Compile Include="MVVM\ObservableArray.cs" />
     <Compile Include="MVVM\ObservableArrayEvent.cs" />

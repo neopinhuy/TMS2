@@ -430,6 +430,12 @@ namespace MVVM
             return this;
         }
 
+        public Html Trigger(EventType type)
+        {
+            (Context[type.ToString()] as Action)();
+            return this;
+        }
+
         public void ClearContextContent()
         {
             Context.InnerHTML = string.Empty;
