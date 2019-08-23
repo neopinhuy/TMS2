@@ -1,14 +1,34 @@
-﻿using Components;
+﻿using Bridge.Html5;
+using Components;
 using MVVM;
 using System;
 using System.Collections.Generic;
+using ElementType = MVVM.ElementType;
 
 namespace MisaOnline.ThuChi
 {
     public class PhieuThu : IControl
     {
+        private static PhieuThu _phieuThu;
         public List<SelectListItem> DepositReason { get; set; }
         public SelectListItem SelectedDepositReason { get; set; }
+        public ObservableArray<Header<object>> Headers = new ObservableArray<Header<object>>(new Header<object>[] {
+            new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+            new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
+            new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
+            new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+            new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
+        });
+
+        public static PhieuThu Instance
+        {
+            get
+            {
+                if (_phieuThu == null)
+                    _phieuThu = new PhieuThu();
+                return _phieuThu;
+            }
+        }
 
         public PhieuThu()
         {
@@ -24,6 +44,7 @@ namespace MisaOnline.ThuChi
 
         public void Render()
         {
+            Html.Context = Document.GetElementById("thuTien");
             ThongTinChung();
             ChungTu();
             HoachToan();
@@ -58,7 +79,11 @@ namespace MisaOnline.ThuChi
                         .TData.Span.Text("Chứng từ gốc").End.End
                     .End.TRow
                         .TData.Text("Tham chiếu").End
-                        .TData.Attr("colspan", "4").Button.ClassName("button small").Span.ClassName("fa fa-search")
+                        .TData.Attr("colspan", "4").Button.Event(EventType.Click, (e) =>
+                        {
+                            Headers.RemoveAt(0);
+                        })
+                        .ClassName("button small").Span.ClassName("fa fa-search")
                 .EndOf(".cell").Render();
         }
 
@@ -84,13 +109,7 @@ namespace MisaOnline.ThuChi
         {
             Console.WriteLine(Html.Context);
             Html.Instance.Grid().GridRow().GridCell(9)
-                .Table(new ObservableArray<Header<object>>(new Header<object>[] {
-                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
-                    new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
-                    new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
-                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
-                    new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
-                }), new ObservableArray<object>(new object[] {
+                .Table(Headers, new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },

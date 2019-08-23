@@ -14,6 +14,7 @@ namespace MisaOnline.ThuChi
         public SelectListItem SelectedState { get; set; }
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
+        public static PhieuThu _phieuThu { get; set; }
 
         public DanhSachThuChi()
         {
@@ -99,7 +100,19 @@ namespace MisaOnline.ThuChi
                             .End
                         .End
                         .TData.End
-                        .TData.Button.ClassName("button small info").Text("Lấy dữ liệu").End.End
+                        .TData.Button.ClassName("button small info").Event(EventType.Click, (e) =>
+                        {
+                            e.PreventDefault();
+                            _phieuThu.Headers.RemoveAt(0);
+                            _phieuThu.Headers.Add(new Header<object>
+                            {
+                                EditButton = true,
+                                EditEvent = (row) =>
+                                {
+                                    Console.WriteLine(row);
+                                }
+                            });
+                        }).Text("Lấy dữ liệu").End.End
                 .EndOf(".row").Render(); // end of row
         }
 
@@ -120,7 +133,10 @@ namespace MisaOnline.ThuChi
                     new Header<object> {
                         EditButton = true,
                         EditEvent = (x) => {
-                            Console.WriteLine(x);
+                            _phieuThu = PhieuThu.Instance;
+                            _phieuThu.Render();
+                            _phieuThu.Render();
+                            _phieuThu.Render();
                         }
                     },
                 }), new ObservableArray<object>(new object[] {

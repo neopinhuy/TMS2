@@ -10,14 +10,12 @@ using MisaOnline.ThuChi;
 
 namespace ESBootstrap
 {
-    public class Program
-    {        
+    public static class Program
+    {
         public static void Main()
         {
             Html.Context = Document.GetElementById("thuChiTien");
             new DanhSachThuChi().Render();
-            Html.Context = Document.GetElementById("thuTien");
-            new PhieuThu().Render();
         }
     }
 }
