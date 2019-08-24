@@ -5,12 +5,12 @@ using System;
 using System.Collections.Generic;
 using ElementType = MVVM.ElementType;
 
-namespace MisaOnline.ThuChi
+namespace MisaOnline.NghiepVu.ThuChi
 {
-    public class PhieuThu : IComponent
+    public class PhieuThu : Component
     {
-        public string ControlName { get; set; } = "PhieuThu";
-        public string Title { get; set; } = "Phiếu thu";
+        public override string ControlName { get; set; } = "PhieuThu";
+        public override string Title { get; set; } = "Phiếu thu";
         public List<SelectListItem> DepositReason { get; set; }
         public SelectListItem SelectedDepositReason { get; set; }
         public ObservableArray<Header<object>> Headers = new ObservableArray<Header<object>>(new Header<object>[] {
@@ -33,13 +33,7 @@ namespace MisaOnline.ThuChi
             SelectedDepositReason = DepositReason[0];
         }
 
-        public void Focus()
-        {
-            var html = Html.Take($"a[href='#{ControlName}'");
-            html.Trigger(EventType.Click);
-        }
-
-        public void Render()
+        public override void Render()
         {
             var tab = Document.QuerySelector($"#tab-content #{ControlName}");
             if (tab != null) return;

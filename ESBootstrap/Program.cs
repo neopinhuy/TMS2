@@ -1,12 +1,6 @@
-﻿using Bridge;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 using MVVM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MisaOnline.ThuChi;
+using MisaOnline.NghiepVu.ThuChi;
 
 namespace ESBootstrap
 {

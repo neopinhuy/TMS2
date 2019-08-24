@@ -58,12 +58,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NghiepVu\Kho\NhapXuatKho.cs" />
     <Compile Include="Components\Header.cs" />
     <Compile Include="Components\Renderer.cs" />
     <Compile Include="Components\Table.cs" />
     <Compile Include="MVVM\ElementType.cs" />
     <Compile Include="MVVM\Html.cs" />
-    <Compile Include="Components\IComponent.cs" />
+    <Compile Include="Components\Component.cs" />
     <Compile Include="MVVM\Observable.cs" />
     <Compile Include="MVVM\ObservableArray.cs" />
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
@@ -77,8 +78,8 @@
     <Compile Include="SQLite\SQLiteStorageModes.cs" />
     <Compile Include="SQLite\SQLiteTableMeta.cs" />
     <Compile Include="SQLite\SQLiteTokenReader.cs" />
-    <Compile Include="ThuChi\PhieuThu.cs" />
-    <Compile Include="ThuChi\ThuChi.cs" />
+    <Compile Include="NghiepVu\ThuChi\PhieuThu.cs" />
+    <Compile Include="NghiepVu\ThuChi\ThuChi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />

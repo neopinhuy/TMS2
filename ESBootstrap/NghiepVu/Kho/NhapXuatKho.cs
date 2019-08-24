@@ -4,12 +4,12 @@ using MVVM;
 using System;
 using System.Collections.Generic;
 
-namespace MisaOnline.ThuChi
+namespace MisaOnline.NghiepVu.Kho
 {
-    public class DanhSachThuChi : IComponent
+    public class NhapXuatKho : Component
     {
-        public string ControlName { get; set; } = "DanhSachThuChi";
-        public string Title { get; set; } = "Danh sách thu chi";
+        public override string ControlName { get; set; } = "DanhSachThuChi";
+        public override string Title { get; set; } = "Danh sách thu chi";
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }
         public List<SelectListItem> States { get; set; }
@@ -17,7 +17,7 @@ namespace MisaOnline.ThuChi
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
 
-        public DanhSachThuChi()
+        public NhapXuatKho()
         {
             Ranges = new List<SelectListItem>
             {
@@ -63,13 +63,13 @@ namespace MisaOnline.ThuChi
             SelectedType = Types[2];
         }
 
-        public void Focus()
+        public override void Render()
         {
+            var tab = Document.QuerySelector($"#tab-content #{ControlName}");
+            if (tab != null) return;
+            Html.Take("#tab-content").Div.Id(ControlName).End.Render();
+            Html.Context = Document.GetElementById(ControlName);
 
-        }
-
-        public void Render()
-        {
             RenderSearch();
             RenderTables();
             ChiTiet();
@@ -119,42 +119,33 @@ namespace MisaOnline.ThuChi
                     new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
                     new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
                     new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
-                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                    new Header<object> { HeaderText = "Tổng tiền", FieldName = "TongTien" },
+                    new Header<object> { HeaderText = "Người giao nhận", FieldName = "NguoiGiaoNhan" },
                     new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
-                    new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
-                    new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
+                    new Header<object> { HeaderText = "Đã lập CT bán hàng", FieldName = "DaLapCTBanHang" },
+                    new Header<object> { HeaderText = "Ngày ghi sổ kho", FieldName = "NgayGhiSoKho" },
                     new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
                     new Header<object> {
                         EditButton = true,
-                        EditEvent = (x) => {
-                            new PhieuThu().RenderAndFocus();
-                        }
                     },
                 }), new ObservableArray<object>(new object[] {
                     new
                     {
                         NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                        TongTien = "100.000.000", NguoiGiaoNhan = "Lan Anh", DoiTuong = "Nhân JS", DaLapCTBanHang = false,
+                        NgayGhiSoKho = "20/08/2019", LoaiChungTu = "Công nợ"
                     },
                     new
                     {
                         NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                        TongTien = "100.000.000", NguoiGiaoNhan = "Lan Anh", DoiTuong = "Nhân JS", DaLapCTBanHang = false,
+                        NgayGhiSoKho = "20/08/2019", LoaiChungTu = "Công nợ"
                     },
                     new
                     {
                         NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                        TongTien = "100.000.000", NguoiGiaoNhan = "Lan Anh", DoiTuong = "Nhân JS", DaLapCTBanHang = false,
+                        NgayGhiSoKho = "20/08/2019", LoaiChungTu = "Công nợ"
                     },
                 })).EndOf(".cell").Render();
 
@@ -164,50 +155,49 @@ namespace MisaOnline.ThuChi
         {
             Html.Instance.Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
-                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+                    new Header<object> { HeaderText = "Mã hàng", FieldName = "MaHang" },
+                    new Header<object> { HeaderText = "Tên hàng", FieldName = "TenHang" },
+                    new Header<object> { HeaderText = "Kho", FieldName = "Kho" },
                     new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
-                    new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
-                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
-                    new Header<object> { HeaderText = "Nghiệp vụ", FieldName = "NghiepVu" },
-                    new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
-                    new Header<object> { HeaderText = "Tên đối tượng", FieldName = "TenDoiTuong" },
-                    new Header<object> { HeaderText = "TK ngân hàng", FieldName = "TKNganHang" },
-                    new Header<object> { HeaderText = "Đơn vị", FieldName = "DonVi" },
-                    new Header<object> { HeaderText = "Công trình", FieldName = "CongTrinh" },
-                    new Header<object> { HeaderText = "Hợp đồng bán", FieldName = "HopDongBan" },
-                    new Header<object> { HeaderText = "Mã thống kê", FieldName = "MaThongKe" },
+                    new Header<object> { HeaderText = "TKCo", FieldName = "TKCo" },
+                    new Header<object> { HeaderText = "ĐVT", FieldName = "DVT" },
+                    new Header<object> { HeaderText = "Số lượng", FieldName = "SoLuong" },
+                    new Header<object> { HeaderText = "Đơn giá", FieldName = "DonGia" },
+                    new Header<object> { HeaderText = "Thành tiền", FieldName = "ThanhTien" },
+                    new Header<object> { HeaderText = "Số lô", FieldName = "SoLo" },
+                    new Header<object> { HeaderText = "Hạn sử dụng", FieldName = "HanSuDung" },
                 }), new ObservableArray<object>(new object[] {
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        MaHang = "HH00003", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
                         NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
                         NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
                         NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
                         NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", SoTien = 10000000m,
+                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
                         NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",

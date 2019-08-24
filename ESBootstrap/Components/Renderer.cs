@@ -56,7 +56,7 @@ namespace Components
             return html;
         }
 
-        public static void RenderAndFocus(this IComponent component)
+        public static void RenderAndFocus(this Component component)
         {
             component.Render();
             component.Focus();
