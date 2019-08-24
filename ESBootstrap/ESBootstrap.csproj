@@ -79,7 +79,7 @@
     <Compile Include="SQLite\SQLiteTableMeta.cs" />
     <Compile Include="SQLite\SQLiteTokenReader.cs" />
     <Compile Include="NghiepVu\ThuChi\PhieuThu.cs" />
-    <Compile Include="NghiepVu\ThuChi\ThuChi.cs" />
+    <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />

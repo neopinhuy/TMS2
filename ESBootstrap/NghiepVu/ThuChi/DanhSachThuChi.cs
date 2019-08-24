@@ -65,6 +65,11 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         public override void Render()
         {
+            var tab = Document.QuerySelector($"#tab-content #{ControlName}");
+            if (tab != null) return;
+            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
+            Html.Take("#tab-content").Div.Id(ControlName).Render();
+
             RenderSearch();
             RenderTables();
             ChiTiet();

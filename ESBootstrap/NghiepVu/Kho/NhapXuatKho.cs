@@ -8,8 +8,8 @@ namespace MisaOnline.NghiepVu.Kho
 {
     public class NhapXuatKho : Component
     {
-        public override string ControlName { get; set; } = "DanhSachThuChi";
-        public override string Title { get; set; } = "Danh sách thu chi";
+        public override string ControlName { get; set; } = "NhapXuatKho";
+        public override string Title { get; set; } = "Nhập xuất kho";
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }
         public List<SelectListItem> States { get; set; }
@@ -67,8 +67,8 @@ namespace MisaOnline.NghiepVu.Kho
         {
             var tab = Document.QuerySelector($"#tab-content #{ControlName}");
             if (tab != null) return;
-            Html.Take("#tab-content").Div.Id(ControlName).End.Render();
-            Html.Context = Document.GetElementById(ControlName);
+            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
+            Html.Take("#tab-content").Div.Id(ControlName).Render();
 
             RenderSearch();
             RenderTables();
@@ -159,7 +159,7 @@ namespace MisaOnline.NghiepVu.Kho
                     new Header<object> { HeaderText = "Tên hàng", FieldName = "TenHang" },
                     new Header<object> { HeaderText = "Kho", FieldName = "Kho" },
                     new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
-                    new Header<object> { HeaderText = "TKCo", FieldName = "TKCo" },
+                    new Header<object> { HeaderText = "TK có", FieldName = "TKCo" },
                     new Header<object> { HeaderText = "ĐVT", FieldName = "DVT" },
                     new Header<object> { HeaderText = "Số lượng", FieldName = "SoLuong" },
                     new Header<object> { HeaderText = "Đơn giá", FieldName = "DonGia" },
@@ -169,38 +169,27 @@ namespace MisaOnline.NghiepVu.Kho
                 }), new ObservableArray<object>(new object[] {
                     new
                     {
-                        MaHang = "HH00003", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
-                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
-                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
-                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                        MaHang = "HH00003", TenHang = "Áo vest", Kho = "Kho quần áo", TKNo = "123 - Việt Nam đồng",
+                        TKCo = "444 - Bán hàng", DVT = "Cái", SoLuong = 12, DonGia = 10000000m,
+                        ThanhTien = 120000000, SoLo = "LO00002", HanSuDung = "20/08/2020",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
-                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
-                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
-                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                        MaHang = "HH00003", TenHang = "Áo vest", Kho = "Kho quần áo", TKNo = "123 - Việt Nam đồng",
+                        TKCo = "444 - Bán hàng", DVT = "Cái", SoLuong = 12, DonGia = 10000000m,
+                        ThanhTien = 120000000, SoLo = "LO00002", HanSuDung = "20/08/2020",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
-                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
-                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
-                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                        MaHang = "HH00003", TenHang = "Áo vest", Kho = "Kho quần áo", TKNo = "123 - Việt Nam đồng",
+                        TKCo = "444 - Bán hàng", DVT = "Cái", SoLuong = 12, DonGia = 10000000m,
+                        ThanhTien = 120000000, SoLo = "LO00002", HanSuDung = "20/08/2020",
                     },
                     new
                     {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
-                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
-                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
-                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
-                    },
-                    new
-                    {
-                        DienGiai = "Công nợ", TKNo = "111 - Nội tệ", TKCo = "112 - Công tác phí", TongTien = 10000000m,
-                        NghiepVu = "N/A", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS",
-                        TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
-                        HopDongBan = "HDB09233", MaThongKe = "TK0901229",
+                        MaHang = "HH00003", TenHang = "Áo vest", Kho = "Kho quần áo", TKNo = "123 - Việt Nam đồng",
+                        TKCo = "444 - Bán hàng", DVT = "Cái", SoLuong = 12, DonGia = 10000000m,
+                        ThanhTien = 120000000, SoLo = "LO00002", HanSuDung = "20/08/2020",
                     },
                 })).EndOf(".grid").Render();
         }

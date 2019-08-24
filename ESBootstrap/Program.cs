@@ -1,6 +1,8 @@
 ﻿using Bridge.Html5;
 using MVVM;
 using MisaOnline.NghiepVu.ThuChi;
+using MisaOnline.NghiepVu.Kho;
+using Components;
 
 namespace ESBootstrap
 {
@@ -8,8 +10,10 @@ namespace ESBootstrap
     {
         public static void Main()
         {
-            Html.Context = Document.GetElementById("thuChiTien");
-            new DanhSachThuChi().Render();
+            var thuChi = new DanhSachThuChi();
+            thuChi.Render();
+            new NhapXuatKho().Render();
+            thuChi.Focus();
         }
     }
 }

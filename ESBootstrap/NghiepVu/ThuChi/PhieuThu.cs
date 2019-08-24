@@ -37,12 +37,12 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             var tab = Document.QuerySelector($"#tab-content #{ControlName}");
             if (tab != null) return;
+            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
             Html.Take("#tab-content").Div.Id(ControlName).End.Render();
             Html.Context = Document.GetElementById(ControlName);
             ThongTinChung();
             ChungTu();
             HoachToan();
-            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
         }
 
         private void ThongTinChung()

@@ -56,6 +56,8 @@ namespace Components
                     }
                     else
                     {
+                        var cellData = row[header.FieldName];
+                        if (cellData == null) throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
                         html.Text(row[header.FieldName].ToString()).End.Render();
                     }
                 });
