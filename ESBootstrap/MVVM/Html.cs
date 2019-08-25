@@ -412,6 +412,15 @@ namespace MVVM
             return this;
         }
 
+        public Html Event<T>(EventType type, Action<Event, T> action, T model)
+        {
+            Context.AddEventListener(type, (e) =>
+            {
+                action(e, model);
+            });
+            return this;
+        }
+
         public Html AsyncEvent(EventType type, Func<Task> action)
         {
             Context.AddEventListener(type, async delegate(Event e)

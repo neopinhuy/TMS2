@@ -35,11 +35,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         public override void Render()
         {
-            var tab = Document.QuerySelector($"#tab-content #{ControlName}");
-            if (tab != null) return;
-            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
-            Html.Take("#tab-content").Div.Id(ControlName).End.Render();
-            Html.Context = Document.GetElementById(ControlName);
+            if (IsExisted()) return;
             ThongTinChung();
             ChungTu();
             HoachToan();
@@ -100,6 +96,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         private void HoachToan()
         {
             Html.Instance.Grid().GridRow().GridCell(9)
+                .Panel()
                 .Table(Headers, new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },

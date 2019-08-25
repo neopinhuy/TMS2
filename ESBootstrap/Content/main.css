@@ -22,3 +22,13 @@ table tbody td {
 ul.sidebar-menu ul {
     display: none;
 }
+ul.tabs-list > li > .icon {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #848484;
+}
+ul.tabs-list > li:hover > .icon {
+    display: inline;
+}

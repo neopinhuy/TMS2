@@ -30,7 +30,7 @@ namespace Components
                 if (metaData.ShowSort) html.Attr("data-sortable", "true");
                 if (metaData.EditButton || metaData.DeleteButton)
                 {
-                    html.Span.ClassName("mif-folder").End.Render();
+                    html.Span.ClassName("fg-cyan mif-folder-open").End.Render();
                 }
                 else
                 {

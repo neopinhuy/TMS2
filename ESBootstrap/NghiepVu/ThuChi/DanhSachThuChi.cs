@@ -65,11 +65,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         public override void Render()
         {
-            var tab = Document.QuerySelector($"#tab-content #{ControlName}");
-            if (tab != null) return;
-            Html.Take("#tabs").Li.Anchor.Href("#" + ControlName).Text(Title);
-            Html.Take("#tab-content").Div.Id(ControlName).Render();
-
+            if (IsExisted()) return;
             RenderSearch();
             RenderTables();
             ChiTiet();
@@ -114,6 +110,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             Html.Instance.Div.ClassName("row marginTop5")
                 .Div.ClassName("cell cell-md-9 cell-lg-9 cell-xl-9")
+                .Panel()
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
                     new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
@@ -163,6 +160,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         private static void ChiTiet()
         {
             Html.Instance.Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
+                .Panel().ClassName("marginTop5")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
                     new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
