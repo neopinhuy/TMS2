@@ -19,8 +19,11 @@ nav {
 table tbody td {
     padding: 2px !important;
 }
-ul.sidebar-menu ul {
+li ul {
     display: none;
+}
+li.active ul {
+    display: block;
 }
 ul.tabs-list > li > .icon {
     display: none;

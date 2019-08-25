@@ -290,6 +290,12 @@ namespace MVVM
             return this;
         }
 
+        public Html Clear()
+        {
+            Context.InnerHTML = string.Empty;
+            return this;
+        }
+
         public Html Value(string val)
         {
             var (input, textArea) = GetInputOrTextArea();
