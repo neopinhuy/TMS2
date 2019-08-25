@@ -36,12 +36,16 @@ namespace Components
             Html.Take($"#tabs a[href='#{ControlName}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");
             var previousTab = Html.Context.ParentElement.PreviousElementSibling;
+            var nextTab = Html.Context.ParentElement.NextElementSibling;
             Html.Context.ParentElement.Remove();
             Html.Take("#" + ControlName);
             Html.Context.Remove();
-            if (isActive && previousTab != null)
+            if (isActive)
             {
-                previousTab.FirstElementChild.Click();
+                if (previousTab != null)
+                    previousTab.FirstElementChild.Click();
+                if (nextTab != null)
+                    nextTab.FirstElementChild.Click();
             }
         }
 

@@ -22,7 +22,7 @@ namespace Components
 
         public static Html SmallDatePicker(this Html html)
         {
-            return html.SmallInput().Attr("type", "date");
+            return html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d %m %Y");
         }
 
         public static Html SmallInput(this Html html)
