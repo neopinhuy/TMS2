@@ -59,7 +59,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .End.TRow
                         .TData.Text("Lý do nộp").End
                         .TData.Attr("colspan", "3").SmallDropDown(DepositReason, SelectedDepositReason, "Display", "Value").End.End
-                        .TData.Input.Attr("data-role", "input").Value("Rút tiền gởi về nộp quỹ").End.End
+                        .TData.SmallInput().Value("Rút tiền gởi về nộp quỹ").End.End
                     .End.TRow
                         .TData.Text("Nhân viên thu").End
                         .TData.SmallInput().End.End

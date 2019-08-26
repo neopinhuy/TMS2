@@ -19,12 +19,6 @@ nav {
 table tbody td {
     padding: 2px !important;
 }
-li ul {
-    display: none;
-}
-li.active ul {
-    display: block;
-}
 ul.tabs-list > li > .icon {
     display: none;
     position: absolute;
@@ -47,6 +41,34 @@ ul.tabs-list > li:hover > .icon {
 .middle td {
     vertical-align: middle;
 }
-li.active a {
+li.active > a {
     font-weight: 700;
+}
+li > ul {
+    display: none;
+}
+li.active > ul {
+    display: block;
+}
+.sidebar {
+    overflow-y: hidden;
+}
+.sidebar:hover {
+    overflow-y: auto;
+}
+::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+    border-radius: 3px;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar:hover {
+    background: #c6c7ca;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #929292;
+    border-radius: 4px;
 }

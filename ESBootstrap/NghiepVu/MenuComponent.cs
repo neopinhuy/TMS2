@@ -1,4 +1,5 @@
-﻿using Components;
+﻿using Bridge.Html5;
+using Components;
 using MisaOnline.NghiepVu.ThuChi;
 using MVVM;
 using System;
@@ -27,7 +28,7 @@ namespace MisaOnline.NghiepVu
             MenuItems = new List<MenuItem> {
                 new MenuItem { IsGroup = true, ItemText = "Main" },
                 new MenuItem { ItemText = "Trang chủ", IconClass = "mif-home" },
-                new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars",
+                new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars", LinkedComponent = typeof(DanhSachThuChi),
                     MenuItems = new List<MenuItem> {
                         new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuThu) },
                         new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienKhachHang) },
@@ -69,13 +70,22 @@ namespace MisaOnline.NghiepVu
                 else
                 {
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
-                    .Event(Bridge.Html5.EventType.Click, (menu) =>
+                    .Event(EventType.Click, (menu, e) =>
                     {
+                        var li = e.Target as HTMLElement;
+                        var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
+                        foreach (HTMLElement active in activeLi)
+                        {
+                            if (active.Contains(li)) continue;
+                            active.ClassName = active.ClassName.Replace("active", "").Trim();
+                        }
+                        var className = li.ParentElement.ClassName + " active";
+                        li.ParentElement.ClassName = className.Trim();
                         var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
                         instance.RenderAndFocus();
                     }, item)
                         .Span.ClassName("icon " + item.IconClass).End
-                        .Text(item.ItemText).EndOf(ElementType.li).Render();
+                        .Text(item.ItemText).EndOf(MVVM.ElementType.a).Render();
                     if (item.MenuItems != null && item.MenuItems.Count > 0)
                     {
                         RenderMenuItems(item.MenuItems);
