@@ -456,19 +456,21 @@ namespace MVVM
             Context.InnerHTML = string.Empty;
         }
 
-        public Html ForEach<T>(T[] list, Action<T, int> renderer)
+        public Html ForEach<T>(IEnumerable<T> list, Action<T, int> renderer)
         {
             if (list == null)
                 throw new ArgumentNullException(nameof(list));
             var element = Context;
 
-            var length = list.Length;
+            var length = list.Count();
             var index = -1;
+            var enumerator = list.GetEnumerator();
 
             while (++index < length)
             {
                 Context = element;
-                renderer.Call(element, list[index], index);
+                enumerator.MoveNext();
+                renderer.Call(element, enumerator.Current, index);
             }
             return this;
         }

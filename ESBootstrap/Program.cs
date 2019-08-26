@@ -1,18 +1,16 @@
-﻿using Bridge.Html5;
-using MVVM;
-using MisaOnline.NghiepVu.ThuChi;
+﻿using MisaOnline.NghiepVu.ThuChi;
 using MisaOnline.NghiepVu.Kho;
-using Components;
+using MisaOnline.NghiepVu;
 
 namespace ESBootstrap
 {
-    public class Program
+    public static class Program
     {
         public static void Main()
         {
+            new MenuComponent().Render();
             var thuChi = new DanhSachThuChi();
             thuChi.Render();
-            new NhapXuatKho().Render();
             thuChi.Focus();
         }
     }

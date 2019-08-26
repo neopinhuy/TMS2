@@ -8,7 +8,7 @@ namespace MisaOnline.NghiepVu
     public class MenuItem
     {
         public bool IsGroup { get; set; }
-        public string GroupName { get; set; }
+        public bool IsDevider { get; set; }
         public string ItemText { get; set; }
         public string IconClass { get; set; }
         public Type LinkedComponent { get; set; }
@@ -24,21 +24,63 @@ namespace MisaOnline.NghiepVu
         public MenuComponent()
         {
             MenuItems = new List<MenuItem> {
-                new MenuItem { IsGroup = true, GroupName = "Main" },
+                new MenuItem { IsGroup = true, ItemText = "Main" },
                 new MenuItem { ItemText = "Trang chủ", IconClass = "mif-home" },
                 new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars",
                     MenuItems = new List<MenuItem> {
-                        new MenuItem { ItemText = "Thu tiền", IconClass = "fa fa-file-word" },
-                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word" },
+                        new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuChi.PhieuThu) },
+                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(Kho.NhapXuatKho) },
                         new MenuItem { ItemText = "Thu tiền khách hàng hàng loạt", IconClass = "fa fa-file-word" },
                     }
                 },
+                new MenuItem { ItemText = "Ngân hàng", IconClass = "mif-library" },
+                new MenuItem { ItemText = "Mua hàng", IconClass = "mif-add-shopping-cart" },
+                new MenuItem { ItemText = "Bán hàng", IconClass = "mif-truck" },
+                new MenuItem { ItemText = "Hóa đơn", IconClass = "fa fa-file-invoice" },
+                new MenuItem { ItemText = "Kho", IconClass = "fa fa-warehouse" },
+                new MenuItem { ItemText = "Settings", IsGroup = true },
+                new MenuItem { ItemText = "Thiết lập", IconClass = "mif-cogs" },
+                new MenuItem { ItemText = "Tài khoản", IconClass = "mif-user" },
+                new MenuItem { IsDevider = true },
+                new MenuItem { ItemText = "Đăng xuất", IconClass = "mif-exit" },
             };
         }
 
         public override void Render()
         {
-            Html.Take(".sidebar-menu");
+            Html.Take(".sidebar-wrapper");
+            RenderMenuItems(MenuItems);
+            Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
+        }
+
+        private void RenderMenuItems(List<MenuItem> menuItems)
+        {
+            Html.Instance.Ul.ForEach(menuItems, (item, index) =>
+            {
+                if (item.IsGroup)
+                {
+                    Html.Instance.Li.ClassName("group-title").Text(item.ItemText).End.Render();
+                }
+                else if (item.IsDevider)
+                {
+                    Html.Instance.Li.ClassName("divider").End.Render();
+                }
+                else
+                {
+                    Html.Instance.Li.Anchor.Attr("data-role", "ripple")
+                    .Event(Bridge.Html5.EventType.Click, (menu) =>
+                    {
+                        var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
+                        instance.RenderAndFocus();
+                    }, item)
+                        .Span.ClassName("icon " + item.IconClass).End
+                        .Text(item.ItemText).EndOf(ElementType.li).Render();
+                    if (item.MenuItems != null && item.MenuItems.Count > 0)
+                    {
+                        RenderMenuItems(item.MenuItems);
+                    }
+                }
+            });
         }
     }
 }
