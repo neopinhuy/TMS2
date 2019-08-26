@@ -47,3 +47,6 @@ ul.tabs-list > li:hover > .icon {
 .middle td {
     vertical-align: middle;
 }
+li.active a {
+    font-weight: 700;
+}

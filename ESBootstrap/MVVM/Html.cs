@@ -339,6 +339,12 @@ namespace MVVM
             return this;
         }
 
+        public Html Style(string style)
+        {
+            Context["style"]["cssText"] = style.Trim();
+            return this;
+        }
+
         public Html Clear()
         {
             Context.InnerHTML = string.Empty;

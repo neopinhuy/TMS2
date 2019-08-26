@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Components
 {
+    public enum Direction
+    {
+        top, right, bottom, left
+    }
+
     public static class Renderer
     {
         public static Html EditButton(this Html html)
@@ -57,9 +62,14 @@ namespace Components
             return html.Div.ClassName("cell cell-" + size);
         }
 
+        public static Html Margin(this Html html, Direction direction, float margin, string unit = "px")
+        {
+            return html.Style($"margin-{direction} : {margin}{unit}");
+        }
+
         public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
         {
-            var table = new Table<Data>(metadata, rowData);
+            new Table<Data>(metadata, rowData);
             return html;
         }
 

@@ -88,13 +88,12 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.Text("Số chứng từ").End
                     .TData.SmallInput()
                 .EndOf(ElementType.tr)
-                .EndOf(".grid").Render();
+                .EndOf(".panel").Render();
         }
 
         private void HoachToan()
         {
-            Html.Instance.Grid().GridRow().GridCell(9)
-                .Panel()
+            Html.Instance.Panel().ClassName("marginTop5")
                 .Table(Headers, new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
