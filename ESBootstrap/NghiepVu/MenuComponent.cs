@@ -1,4 +1,5 @@
 ﻿using Components;
+using MisaOnline.NghiepVu.ThuChi;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,8 @@ namespace MisaOnline.NghiepVu
                 new MenuItem { ItemText = "Trang chủ", IconClass = "mif-home" },
                 new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars",
                     MenuItems = new List<MenuItem> {
-                        new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuChi.PhieuThu) },
-                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(Kho.NhapXuatKho) },
+                        new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuThu) },
+                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienKhachHang) },
                         new MenuItem { ItemText = "Thu tiền khách hàng hàng loạt", IconClass = "fa fa-file-word" },
                     }
                 },

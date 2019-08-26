@@ -35,3 +35,15 @@ ul.tabs-list > li > .icon {
 ul.tabs-list > li:hover > .icon {
     display: inline;
 }
+.bottom {
+    vertical-align: bottom;
+}
+.left input {
+    text-align: left;
+}
+.right input {
+    text-align: right;
+}
+.middle td {
+    vertical-align: middle;
+}

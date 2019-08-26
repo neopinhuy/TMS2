@@ -25,14 +25,21 @@ namespace Components
             return html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
         }
 
-        public static Html SmallInput(this Html html)
+        public static Html SmallInput(this Html html, string align = "left")
         {
-            return html.Input.ClassName("input-small").Attr("data-role", "input");
+            return html.Input.ClassName("input-small " + align).Attr("data-role", "input");
         }
 
         public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
         {
-            return html.Dropdown(list, selectedItem, displayField, valueField).ClassName("input-small").Attr("data-role", "select");
+            return html.Dropdown(list, selectedItem, displayField, valueField)
+                .ClassName("input-small").Attr("data-role", "select")
+                .Attr("style", "mind-width: 120px");
+        }
+
+        public static Html SmallRadio(this Html html, string name, string text)
+        {
+            return html.Input.ClassName("input-small").Type("radio").Attr("data-role", "radio").Attr("name", name).Attr("data-caption", text);
         }
 
         public static Html Grid(this Html html)

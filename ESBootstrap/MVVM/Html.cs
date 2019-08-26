@@ -49,6 +49,54 @@ namespace MVVM
             }
         }
 
+        public Html H1
+        {
+            get
+            {
+                return Add(ElementType.h1);
+            }
+        }
+
+        public Html H2
+        {
+            get
+            {
+                return Add(ElementType.h2);
+            }
+        }
+
+        public Html H3
+        {
+            get
+            {
+                return Add(ElementType.h3);
+            }
+        }
+
+        public Html H4
+        {
+            get
+            {
+                return Add(ElementType.h4);
+            }
+        }
+
+        public Html H5
+        {
+            get
+            {
+                return Add(ElementType.h5);
+            }
+        }
+
+        public Html H6
+        {
+            get
+            {
+                return Add(ElementType.h6);
+            }
+        }
+
         public Html Nav
         {
             get
@@ -286,7 +334,8 @@ namespace MVVM
 
         public Html ClassName(string className)
         {
-            Context.ClassName = className;
+            className = Context.ClassName + " " + className;
+            Context.ClassName = className.Trim();
             return this;
         }
 

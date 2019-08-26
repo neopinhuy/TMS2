@@ -73,10 +73,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderSearch()
         {
-            Html.Instance
-                .Div.ClassName("grid").Div.ClassName("row marginTop5")
-                .Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                .Panel()
+            Html.Instance.Panel().ClassName("marginTop5")
                 .Form.Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Kỳ").End
@@ -103,14 +100,12 @@ namespace MisaOnline.NghiepVu.ThuChi
                         .End
                         .TData.End
                         .TData.Button.ClassName("button small info").Text("Lấy dữ liệu").End.End
-                .EndOf(".row").Render(); // end of row
+                .EndOf(".panel").Render(); // end of row
         }
 
         private static void RenderTables()
         {
-            Html.Instance.Div.ClassName("row marginTop5")
-                .Div.ClassName("cell cell-md-9 cell-lg-9 cell-xl-9")
-                .Panel()
+            Html.Instance.Panel().ClassName("marginTop5")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
                     new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
@@ -153,14 +148,13 @@ namespace MisaOnline.NghiepVu.ThuChi
                         NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
                         SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
                     },
-                })).EndOf(".cell").Render();
+                })).EndOf(".panel").Render();
 
         }
 
         private static void ChiTiet()
         {
-            Html.Instance.Div.ClassName("cell-md-9 cell-lg-9 cell-xl-9")
-                .Panel().ClassName("marginTop5")
+            Html.Instance.Panel().ClassName("marginTop5")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
                     new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },
@@ -210,7 +204,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                         TKNganHang = "97042564869", DonVi = "Kế toán", CongTrinh = "Đập thủy điện Hòa Bình",
                         HopDongBan = "HDB09233", MaThongKe = "TK0901229",
                     },
-                })).EndOf(".grid").Render();
+                })).EndOf(".panel").Render();
         }
     }
 }

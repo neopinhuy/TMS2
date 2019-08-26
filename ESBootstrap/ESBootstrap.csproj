@@ -70,6 +70,7 @@
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
     <Compile Include="MVVM\SelectListItem.cs" />
     <Compile Include="NghiepVu\MenuComponent.cs" />
+    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHang.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLite\SQLiteCommand.cs" />
