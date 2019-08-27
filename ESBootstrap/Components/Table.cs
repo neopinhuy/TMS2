@@ -17,7 +17,7 @@ namespace Components
         public void Render()
         {
             var html = Html.Instance;
-            html.Table.ClassName("table striped table-border mt-4")
+            html.Table.ClassName("table striped table-border")
                 .Attr("data-cls-table-top", "row flex-nowrap")
                 .Attr("data-show-search", "false")
                 .Attr("data-show-rows-steps", "false")

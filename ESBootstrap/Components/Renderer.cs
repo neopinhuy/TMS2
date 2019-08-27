@@ -30,6 +30,11 @@ namespace Components
             return html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
         }
 
+        public static Html SmallButton(this Html html, string text = string.Empty)
+        {
+            return html.Button.ClassName("button small").Text(text);
+        }
+
         public static Html SmallInput(this Html html, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input");

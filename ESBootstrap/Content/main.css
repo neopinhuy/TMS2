@@ -1,5 +1,5 @@
 ﻿html {
-    font-size: 14px;
+    font-size: 13px;
 }
 .marginTop5 {
     margin-top: 5px;
@@ -16,8 +16,13 @@ nav {
 .table-info {
     display: none;
 }
-table tbody td {
+table td {
     padding: 2px !important;
+}
+td>.button.small {
+    top: -2px;
+    height: 27px !important;
+    line-height: 27px !important;
 }
 ul.tabs-list > li > .icon {
     display: none;
