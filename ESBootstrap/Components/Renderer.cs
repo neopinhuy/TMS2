@@ -20,9 +20,9 @@ namespace Components
             return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
         }
 
-        public static Html Panel(this Html html)
+        public static Html Panel(this Html html, string clsPanel = "shadow-1")
         {
-            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", "shadow-1");
+            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", clsPanel);
         }
 
         public static Html SmallDatePicker(this Html html)
@@ -58,7 +58,6 @@ namespace Components
                 .Attr("data-role", "radio")
                 .Attr("data-style", "2")
                 .Attr("name", name)
-                .Attr("data-cls-caption", "fg-cyan")
                 .Attr("data-cls-check", "bd-cyan myCheck")
                 .Attr("data-caption", text);
         }

@@ -51,6 +51,20 @@ namespace MisaOnline.NghiepVu.ThuChi
                     SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
                     TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
                 },
+                new
+                {
+                    NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
+                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
+                    TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
+                },
+                new
+                {
+                    NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
+                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
+                    TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
+                },
             });
         }
 
@@ -58,15 +72,13 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             if (IsExisted())
                 return;
-            RenderPhuongThucTT();
             RenderSearch();
             RenderChungTuCongNo();
         }
 
-        private void RenderPhuongThucTT()
+        private void RenderSearch()
         {
-            Html.Instance.H2.Text(Title).End.Render();
-            Html.Instance.Grid().GridRow().GridCell(12)
+            Html.Instance.Panel()
                 .Form.ClassName("middle").Table.ClassName("subcompact").TRow
                     .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
                     .TData.SmallRadio("PhuongThucThanhToan", "Tiền mặt").EndOf(ElementType.td)
@@ -75,14 +87,9 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
                     .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
                     .TData.SmallInput("right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
-                    .EndOf(ElementType.tr)
-                .EndOf(".grid")
-                .Render();
-        }
-
-        private void RenderSearch()
-        {
-            Html.Instance.Panel().Table.ClassName("subcompact").TRow
+                    .EndOf(ElementType.form)
+                .Hr
+                .Form.Table.ClassName("subcompact marginTop5 table-border").TRow
                     .TData.Label.Text("Khách hàng").End.End
                     .TData.SmallInput().Value("KH00001").End.End
                     .TData.Label.Text("Ngày thu tiền").End.End

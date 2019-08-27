@@ -235,6 +235,16 @@ namespace MVVM
             }
         }
 
+        public Html Hr
+        {
+            get
+            {
+                var hr = new HTMLHRElement();
+                Context.AppendChild(hr);
+                return this;
+            }
+        }
+
         public Html Ul
         {
             get
