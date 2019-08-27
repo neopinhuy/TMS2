@@ -7,6 +7,7 @@
     <title>Misa online</title>
     <link href="../Content/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="../Content/metro-all.min.css" rel="stylesheet" />
+    <link href="../Content/datatables.css" rel="stylesheet" />
     <link href="../Content/main.css" rel="stylesheet" />
 
     <script src="bridge.js"></script>
@@ -14,7 +15,7 @@
     <script src="newtonsoft.json.js"></script>
     <script src="jquery-2.2.4.js"></script>
     <script src="../Content/metro.js"></script>
-    <script src="../Content/jquery.dataTables.min.js"></script>
+    <script src="../Content/dataTables.js"></script>
     <script src="../Content/choosen.jquery.js"></script>
     <script src="MisaOnline.js"></script>
 </head>
@@ -54,6 +55,15 @@
     </div>
     <script>
         $('button#sidebar-toggle-2').click();
+        $('table.table').DataTable({
+            fixedColumns: {
+                leftColumns: 3
+            },
+            scrollY: 200,
+            scroller: true,
+            searching: false,
+            scrollX: true
+        });
     </script>
 </body>
 </html>

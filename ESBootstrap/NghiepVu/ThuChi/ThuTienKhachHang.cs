@@ -40,28 +40,28 @@ namespace MisaOnline.NghiepVu.ThuChi
                 new
                 {
                     NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
-                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    DienGiai = "Chứng từ hóa đơn", HanThanhToan = "20/08/2020",
                     SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
                     TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
                 },
                 new
                 {
                     NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
-                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    DienGiai = "Chứng từ hóa đơn", HanThanhToan = "20/08/2020",
                     SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
                     TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
                 },
                 new
                 {
                     NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
-                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    DienGiai = "Chứng từ hóa đơn", HanThanhToan = "20/08/2020",
                     SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
                     TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
                 },
                 new
                 {
                     NgayChungTu = "27/08/2019", SoChungTu = "CT00004", SoHoaDon = "HD909122",
-                    DienGiai = "Chứng từ hóa đơn của ", HanThanhToan = "20/08/2020",
+                    DienGiai = "Chứng từ hóa đơn", HanThanhToan = "20/08/2020",
                     SoPhaiThu = "11.000.000", SoChuaThu = "9.000.000", SoThu = "2.000.000", TKPhaiThu = "162", DieuKhoanTT = "",
                     TyLeChietKhau = "0", TienChietKhau = "0", TKChietKhau = ""
                 },

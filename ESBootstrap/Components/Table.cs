@@ -26,8 +26,7 @@ namespace Components
                 .Attr("data-cls-component", "shadow-1")
             .Theader.TRow.ForEach(Headers, (metaData, index) =>
             {
-                html.Th.Render();
-                if (metaData.ShowSort) html.Attr("data-sortable", "true");
+                html.Th.Attr("data-sortable", "false");
                 if (metaData.EditButton || metaData.DeleteButton)
                 {
                     html.Span.ClassName("fg-cyan mif-folder-open").End.Render();
