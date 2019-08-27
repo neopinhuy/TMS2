@@ -62,7 +62,7 @@ namespace Components
                     }
                 });
             })
-            .EndOf(ElementType.table).Render();
+            .EndOf(ElementType.tbody).Render();
         }
     }
 }

@@ -1,14 +1,24 @@
 ﻿html {
     font-size: 13px;
 }
+.borderTop0 {
+    border-top: 0;
+}
+.margin0 {
+    margin: 0;
+}
 .marginTop5 {
     margin-top: 5px;
 }
 .marginLeft20 {
   margin-left: 20px;
 }
+.myCheck::before {
+    border-color: #0b98da !important;
+    background: #0b98da !important;
+}
 nav {
-  margin-left: 250px;
+    margin-left: 250px;
 }
 [type="date"] + .button-group {
     display: none;

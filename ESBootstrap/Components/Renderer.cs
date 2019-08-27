@@ -30,11 +30,16 @@ namespace Components
             return html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
         }
 
-        public static Html SmallButton(this Html html, string text = string.Empty)
+        public static Html Button(this Html html, string text = string.Empty, string className = "button info small", string icon = string.Empty)
         {
-            return html.Button.ClassName("button small").Text(text);
+            html.Button.Render();
+            if (!string.IsNullOrEmpty(icon))
+            {
+                html.Span.ClassName(icon).End.Text(" ").Render();
+            }
+            return html.ClassName(className).Text(text);
         }
-
+        
         public static Html SmallInput(this Html html, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input");
@@ -49,7 +54,13 @@ namespace Components
 
         public static Html SmallRadio(this Html html, string name, string text)
         {
-            return html.Input.ClassName("input-small").Type("radio").Attr("data-role", "radio").Attr("name", name).Attr("data-caption", text);
+            return html.Input.ClassName("input-small").Type("radio")
+                .Attr("data-role", "radio")
+                .Attr("data-style", "2")
+                .Attr("name", name)
+                .Attr("data-cls-caption", "fg-cyan")
+                .Attr("data-cls-check", "bd-cyan myCheck")
+                .Attr("data-caption", text);
         }
 
         public static Html Grid(this Html html)

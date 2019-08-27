@@ -87,8 +87,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.SmallInput().Value("KH00001").End.End
                     .TData.Label.Text("Ngày thu tiền").End.End
                     .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
-                    .TData.SmallButton().ClassName("info")
-                        .Span.ClassName("fa fa-search").End.Text(" Lấy dữ liệu").EndOf(ElementType.tr)
+                    .TData.Button("Lấy dữ liệu", "button small info", "fa fa-search").EndOf(ElementType.tr)
                 .TRow
                     .TData.Label.Text("NV bán hàng").End.End
                     .TData.SmallInput().Value("NV34501").End.End
@@ -103,7 +102,9 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Li.ClassName("active").Anchor.Href("chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
                 .Div
                     .Div.Id("chungTuCongNo")
-                    .Table(ChungTuHeader, ChungTu)
+                    .Table(ChungTuHeader, ChungTu).ClassName("margin0 borderTop0").End
+                    .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
+                    .End
                 .Render();
         }
     }
