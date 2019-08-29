@@ -4,6 +4,7 @@ using MisaOnline.NghiepVu.Common;
 using MVVM;
 using System;
 using System.Collections.Generic;
+using Direction = Components.Direction;
 using ElementType = MVVM.ElementType;
 
 namespace MisaOnline.NghiepVu.ThuChi
@@ -28,13 +29,14 @@ namespace MisaOnline.NghiepVu.ThuChi
             if (IsExisted()) return;
             ThongTinChung();
             ChungTu.Render();
+            ChiTiet();
         }
 
         private void ThongTinChung()
         {
-            Html.Instance.H1.Text("Phiếu chi").End.Panel()
+            Html.Instance.H2.Text(Title).End
                 .Grid().GridRow().ClassName("marginTop5").GridCell(6)
-                .Panel("")
+                .Panel("Thông tin chung")
                 .Table.TBody.TRow
                     .TData.Text("Đối tượng").End
                     .TData.SmallInput().Value("KH00001").EndOf(ElementType.td)
@@ -60,6 +62,18 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.ColSpan(4).Button
                         .ClassName("button small").Span.ClassName("fa fa-search")
                 .EndOf(".cell").Render();
+        }
+
+        public void ChiTiet()
+        {
+            Html.Instance.EndOf(".row").GridRow().GridCell(12).Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
+                .Li.ClassName("active").Anchor.Href("hachToan").Text("Chứng từ công nợ").EndOf(ElementType.ul)
+                .Div
+                    .Div.Id("hachToan")
+                    //.Table(HachToanHeader, HachToan).ClassName("margin0 borderTop0").End
+                    .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
+                    .End
+                .Render();
         }
     }
 

@@ -78,7 +78,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void PhuongThucThanhToan()
         {
-            Html.Instance.Panel()
+            Html.Instance.H2.Text(Title).End.Panel()
                 .Form.ClassName("middle").Table.ClassName("subcompact").TRow
                     .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
                     .TData.SmallRadio("PhuongThucThanhToan", "Tiền mặt").EndOf(ElementType.td)
@@ -111,7 +111,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderChungTuCongNo()
         {
-            Html.Instance.Panel().Ul.Attr("data-role", "tabs").Attr("data-expand", "true")
+            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
                 .Li.ClassName("active").Anchor.Href("chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
                 .Div
                     .Div.Id("chungTuCongNo")

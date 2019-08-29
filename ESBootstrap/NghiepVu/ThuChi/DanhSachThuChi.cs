@@ -73,8 +73,9 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderSearch()
         {
-            Html.Instance.Panel().ClassName("marginTop5")
-                .Form.Table.ClassName("subcompact")
+            Html.Instance.H2.Text("Danh sách thu chi").End
+                .Panel("Thông tin chung").ClassName("marginTop5")
+                .Form.Table
                     .TBody.TRow
                         .TData.Text("Kỳ").End
                         .TData
@@ -105,7 +106,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private static void RenderTables()
         {
-            Html.Instance.Panel().ClassName("marginTop5")
+            Html.Instance.ClassName("marginTop5")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
                     new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
@@ -154,7 +155,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private static void ChiTiet()
         {
-            Html.Instance.Panel().ClassName("marginTop5")
+            Html.Instance.ClassName("marginTop5")
                 .Table(new ObservableArray<Header<object>>(new Header<object>[] {
                     new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
                     new Header<object> { HeaderText = "TK nợ", FieldName = "TKNo" },

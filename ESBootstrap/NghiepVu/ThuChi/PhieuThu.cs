@@ -43,7 +43,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void ThongTinChung()
         {
-            Html.Instance
+            Html.Instance.H2.Text(Title).End
                 .Grid().GridRow().ClassName("marginTop5").GridCell(6).Panel("Thông tin chung")
                 .Table.ClassName("subcompact")
                     .TBody.TRow
