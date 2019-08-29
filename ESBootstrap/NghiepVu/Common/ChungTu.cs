@@ -12,7 +12,7 @@ namespace MisaOnline.NghiepVu.Common
     {
         public static void Render()
         {
-            Html.Instance.GridCell(4).Panel("").Table.TBody
+            Html.Instance.GridCell(4).Panel("Chứng từ").Table.TBody
                 .TRow
                     .TData.Text("Ngày hạch toán").End
                     .TData.SmallDatePicker().Value(DateTime.Now.ToString())

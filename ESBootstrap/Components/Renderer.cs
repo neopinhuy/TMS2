@@ -25,9 +25,10 @@ namespace Components
             return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
         }
 
-        public static Html Panel(this Html html, string clsPanel = "shadow-1")
+        public static Html Panel(this Html html, string text = string.Empty, string clsPanel = string.Empty)
         {
-            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", clsPanel);
+            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", clsPanel)
+                .Label.ClassName("header").Text(text).End;
         }
 
         public static Html SmallDatePicker(this Html html)
