@@ -37,14 +37,14 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             if (IsExisted()) return;
             ThongTinChung();
-            ChungTu();
+            Common.ChungTu.Render();
             HoachToan();
         }
 
         private void ThongTinChung()
         {
             Html.Instance.Panel()
-                .Grid().GridRow().ClassName("marginTop5").GridCell(8)
+                .Grid().GridRow().ClassName("marginTop5").GridCell(6).Panel("")
                 .Table.ClassName("subcompact")
                     .TBody.TRow
                         .TData.Text("Đối tượng").End
@@ -73,27 +73,9 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .EndOf(".cell").Render();
         }
 
-        private void ChungTu()
-        {
-            Html.Instance.GridCell(4).Table.ClassName("subcompact").TBody
-                .TRow
-                    .TData.Text("Ngày hạch toán").End
-                    .TData.SmallDatePicker().Value(DateTime.Now.ToString())
-                .EndOf(ElementType.tr)
-                .TRow
-                    .TData.Text("Ngày chứng từ").End
-                    .TData.SmallDatePicker().Value(DateTime.Now.ToString())
-                .EndOf(ElementType.tr)
-                .TRow
-                    .TData.Text("Số chứng từ").End
-                    .TData.SmallInput()
-                .EndOf(ElementType.tr)
-                .EndOf(".panel").Render();
-        }
-
         private void HoachToan()
         {
-            Html.Instance.Panel().ClassName("marginTop5")
+            Html.Instance.EndOf(".row").GridRow().GridCell(12).ClassName("marginTop5")
                 .Table(Headers, new ObservableArray<object>(new object[] {
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },

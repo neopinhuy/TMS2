@@ -74,6 +74,9 @@ li.active > ul {
 .sidebar:hover {
     overflow-y: auto;
 }
+.cell > .panel {
+    height: 100%;
+}
 ::-webkit-scrollbar {
     height: 10px;
     width: 10px;
