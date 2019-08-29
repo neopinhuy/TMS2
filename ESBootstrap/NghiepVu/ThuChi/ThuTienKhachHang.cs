@@ -72,11 +72,11 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             if (IsExisted())
                 return;
-            RenderSearch();
+            PhuongThucThanhToan();
             RenderChungTuCongNo();
         }
 
-        private void RenderSearch()
+        private void PhuongThucThanhToan()
         {
             Html.Instance.Panel()
                 .Form.ClassName("middle").Table.ClassName("subcompact").TRow
@@ -88,19 +88,25 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
                     .TData.SmallInput("right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
                     .EndOf(ElementType.form)
-                .Hr
-                .Form.Table.ClassName("subcompact marginTop5 table-border").TRow
-                    .TData.Label.Text("Khách hàng").End.End
-                    .TData.SmallInput().Value("KH00001").End.End
-                    .TData.Label.Text("Ngày thu tiền").End.End
-                    .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
-                    .TData.Button("Lấy dữ liệu", "button small info", "fa fa-search").EndOf(ElementType.tr)
-                .TRow
-                    .TData.Label.Text("NV bán hàng").End.End
-                    .TData.SmallInput().Value("NV34501").End.End
-                    .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                    .TData.SmallInput("right").Value("0").EndOf(".panel")
-                .Render();
+                .Hr.Render();
+            RenderSearch();
+        }
+
+        protected virtual void RenderSearch()
+        {
+            Html.Instance.Form.Table.ClassName("subcompact marginTop5 table-border")
+            .TRow
+                .TData.Label.Text("Khách hàng").End.End
+                .TData.SmallInput().Value("KH00001").End.End
+                .TData.Label.Text("Ngày thu tiền").End.End
+                .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
+                .TData.Button("Lấy dữ liệu", "button small info", "fa fa-search").EndOf(ElementType.tr)
+            .TRow
+                .TData.Label.Text("NV bán hàng").End.End
+                .TData.SmallInput().Value("NV34501").End.End
+                .TData.Label.Text("Số tiền").EndOf(ElementType.td)
+                .TData.SmallInput("right").Value("0").EndOf(".panel")
+            .Render();
         }
 
         private void RenderChungTuCongNo()

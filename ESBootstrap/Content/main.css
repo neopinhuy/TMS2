@@ -26,6 +26,9 @@ nav {
 .table-info {
     display: none;
 }
+table th {
+    padding: 0.625rem !important;
+}
 table td {
     padding: 2px !important;
 }

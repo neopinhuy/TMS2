@@ -70,6 +70,7 @@
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
     <Compile Include="MVVM\SelectListItem.cs" />
     <Compile Include="NghiepVu\MenuComponent.cs" />
+    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHangHangLoat.cs" />
     <Compile Include="NghiepVu\ThuChi\ThuTienKhachHang.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,18 +132,42 @@
     <None Include="Content\fontawesome\scss\_shims.scss" />
     <None Include="Content\fontawesome\scss\_stacked.scss" />
     <None Include="Content\fontawesome\scss\_variables.scss" />
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.eot" />
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.ttf" />
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff" />
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff2" />
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.eot" />
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.ttf" />
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff" />
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff2" />
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.eot" />
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.ttf" />
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff" />
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff2" />
+    <None Include="Content\fontawesome\webfonts\fa-brands-400.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-brands-400.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-regular-400.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-regular-400.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-solid-900.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-solid-900.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\main.less">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -179,20 +204,48 @@
     <Content Include="Content\datatables.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fontawesome\css\all.css" />
-    <Content Include="Content\fontawesome\css\all.min.css" />
-    <Content Include="Content\fontawesome\css\brands.css" />
-    <Content Include="Content\fontawesome\css\brands.min.css" />
-    <Content Include="Content\fontawesome\css\fontawesome.css" />
-    <Content Include="Content\fontawesome\css\fontawesome.min.css" />
-    <Content Include="Content\fontawesome\css\regular.css" />
-    <Content Include="Content\fontawesome\css\regular.min.css" />
-    <Content Include="Content\fontawesome\css\solid.css" />
-    <Content Include="Content\fontawesome\css\solid.min.css" />
-    <Content Include="Content\fontawesome\css\svg-with-js.css" />
-    <Content Include="Content\fontawesome\css\svg-with-js.min.css" />
-    <Content Include="Content\fontawesome\css\v4-shims.css" />
-    <Content Include="Content\fontawesome\css\v4-shims.min.css" />
+    <Content Include="Content\fontawesome\css\all.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\all.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\brands.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\brands.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\fontawesome.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\fontawesome.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\regular.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\regular.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\solid.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\solid.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\svg-with-js.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\svg-with-js.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\v4-shims.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\css\v4-shims.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\fontawesome\js\all.js" />
     <Content Include="Content\fontawesome\js\all.min.js" />
     <Content Include="Content\fontawesome\js\brands.js" />
@@ -208,590 +261,1758 @@
     <Content Include="Content\fontawesome\js\v4-shims.js" />
     <Content Include="Content\fontawesome\js\v4-shims.min.js" />
     <Content Include="Content\fontawesome\LICENSE.txt" />
-    <Content Include="Content\fontawesome\sprites\brands.svg" />
-    <Content Include="Content\fontawesome\sprites\regular.svg" />
-    <Content Include="Content\fontawesome\sprites\solid.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\500px.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\accessible-icon.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\accusoft.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\acquisitions-incorporated.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\adn.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\adobe.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\adversal.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\affiliatetheme.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\airbnb.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\algolia.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\alipay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\amazon-pay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\amazon.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\amilia.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\android.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\angellist.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\angrycreative.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\angular.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\app-store-ios.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\app-store.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\apper.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\apple-pay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\apple.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\artstation.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\asymmetrik.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\atlassian.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\audible.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\autoprefixer.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\avianex.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\aviato.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\aws.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bandcamp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\battle-net.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\behance-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\behance.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bimobject.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bitbucket.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bitcoin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bity.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\black-tie.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\blackberry.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\blogger-b.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\blogger.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bluetooth-b.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bluetooth.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\bootstrap.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\btc.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\buffer.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\buromobelexperte.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\buysellads.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\canadian-maple-leaf.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-amazon-pay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-amex.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-apple-pay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-diners-club.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-discover.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-jcb.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-mastercard.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-paypal.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-stripe.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cc-visa.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\centercode.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\centos.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\chrome.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\chromecast.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cloudscale.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cloudsmith.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cloudversify.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\codepen.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\codiepie.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\confluence.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\connectdevelop.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\contao.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cotton-bureau.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cpanel.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-by.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc-eu.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc-jp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-pd-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-pd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-remix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sa.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sampling-plus.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sampling.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-share.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons-zero.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\creative-commons.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\critical-role.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\css3-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\css3.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\cuttlefish.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\d-and-d-beyond.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\d-and-d.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dashcube.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\delicious.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\deploydog.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\deskpro.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dev.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\deviantart.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dhl.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\diaspora.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\digg.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\digital-ocean.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\discord.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\discourse.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dochub.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\docker.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\draft2digital.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dribbble-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dribbble.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dropbox.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\drupal.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\dyalog.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\earlybirds.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ebay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\edge.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\elementor.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ello.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ember.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\empire.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\envira.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\erlang.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ethereum.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\etsy.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\evernote.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\expeditedssl.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\facebook-f.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\facebook-messenger.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\facebook-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\facebook.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fantasy-flight-games.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fedex.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fedora.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\figma.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\firefox.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\first-order-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\first-order.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\firstdraft.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\flickr.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\flipboard.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fly.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\font-awesome-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\font-awesome-flag.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\font-awesome-logo-full.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\font-awesome.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fonticons-fi.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fonticons.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fort-awesome-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fort-awesome.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\forumbee.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\foursquare.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\free-code-camp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\freebsd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\fulcrum.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\galactic-republic.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\galactic-senate.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\get-pocket.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gg-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gg.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\git-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\git-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\git.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\github-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\github-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\github.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gitkraken.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gitlab.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gitter.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\glide-g.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\glide.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gofore.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\goodreads-g.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\goodreads.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-drive.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-play.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-plus-g.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-plus-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-plus.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google-wallet.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\google.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gratipay.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\grav.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gripfire.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\grunt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\gulp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hacker-news-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hacker-news.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hackerrank.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hips.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hire-a-helper.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hooli.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hornbill.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hotjar.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\houzz.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\html5.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\hubspot.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\imdb.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\instagram.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\intercom.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\internet-explorer.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\invision.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ioxhost.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\itch-io.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\itunes-note.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\itunes.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\java.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\jedi-order.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\jenkins.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\jira.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\joget.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\joomla.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\js-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\js.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\jsfiddle.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\kaggle.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\keybase.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\keycdn.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\kickstarter-k.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\kickstarter.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\korvue.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\laravel.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\lastfm-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\lastfm.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\leanpub.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\less.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\line.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\linkedin-in.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\linkedin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\linode.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\linux.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\lyft.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\magento.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mailchimp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mandalorian.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\markdown.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mastodon.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\maxcdn.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\medapps.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\medium-m.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\medium.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\medrt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\meetup.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\megaport.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mendeley.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\microsoft.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mixcloud.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\mizuni.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\modx.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\monero.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\napster.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\neos.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\nimblr.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\node-js.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\node.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\npm.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ns8.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\nutritionix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\odnoklassniki-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\odnoklassniki.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\old-republic.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\opencart.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\openid.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\opera.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\optin-monster.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\osi.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\page4.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pagelines.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\palfed.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\patreon.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\paypal.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\penny-arcade.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\periscope.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\phabricator.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\phoenix-framework.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\phoenix-squadron.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\php.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pied-piper-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pied-piper-hat.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pied-piper-pp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pied-piper.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pinterest-p.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pinterest-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pinterest.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\playstation.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\product-hunt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\pushed.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\python.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\qq.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\quinscape.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\quora.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\r-project.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\raspberry-pi.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ravelry.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\react.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\reacteurope.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\readme.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\rebel.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\red-river.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\reddit-alien.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\reddit-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\reddit.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\redhat.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\renren.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\replyd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\researchgate.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\resolving.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\rev.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\rocketchat.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\rockrms.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\safari.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\salesforce.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sass.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\schlix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\scribd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\searchengin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sellcast.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sellsy.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\servicestack.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\shirtsinbulk.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\shopware.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\simplybuilt.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sistrix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sith.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sketch.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\skyatlas.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\skype.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\slack-hash.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\slack.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\slideshare.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\snapchat-ghost.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\snapchat-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\snapchat.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\soundcloud.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sourcetree.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\speakap.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\speaker-deck.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\spotify.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\squarespace.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stack-exchange.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stack-overflow.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stackpath.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\staylinked.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\steam-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\steam-symbol.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\steam.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\sticker-mule.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\strava.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stripe-s.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stripe.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\studiovinari.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stumbleupon-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\stumbleupon.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\superpowers.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\supple.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\suse.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\symfony.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\teamspeak.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\telegram-plane.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\telegram.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\tencent-weibo.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\the-red-yeti.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\themeco.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\themeisle.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\think-peaks.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\trade-federation.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\trello.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\tripadvisor.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\tumblr-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\tumblr.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\twitch.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\twitter-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\twitter.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\typo3.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\uber.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ubuntu.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\uikit.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\uniregistry.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\untappd.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ups.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\usb.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\usps.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\ussunnah.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vaadin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\viacoin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\viadeo-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\viadeo.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\viber.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vimeo-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vimeo-v.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vimeo.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vine.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vk.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vnv.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\vuejs.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\waze.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\weebly.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\weibo.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\weixin.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\whatsapp-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\whatsapp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\whmcs.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wikipedia-w.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\windows.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wix.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wizards-of-the-coast.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wolf-pack-battalion.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wordpress-simple.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wordpress.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wpbeginner.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wpexplorer.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wpforms.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\wpressr.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\xbox.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\xing-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\xing.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\y-combinator.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yahoo.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yammer.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yandex-international.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yandex.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yarn.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yelp.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\yoast.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\youtube-square.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\youtube.svg" />
-    <Content Include="Content\fontawesome\svgs\brands\zhihu.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\address-book.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\address-card.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\angry.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-down.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-left.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-right.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-up.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\bell-slash.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\bell.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\bookmark.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\building.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar-check.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar-minus.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar-plus.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar-times.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\calendar.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\caret-square-down.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\caret-square-left.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\caret-square-right.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\caret-square-up.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\chart-bar.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\check-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\check-square.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\clipboard.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\clock.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\clone.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\closed-captioning.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\comment-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\comment-dots.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\comment.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\comments.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\compass.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\copy.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\copyright.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\credit-card.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\dizzy.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\dot-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\edit.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\envelope-open.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\envelope.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\eye-slash.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\eye.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-archive.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-audio.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-code.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-excel.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-image.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-pdf.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-powerpoint.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-video.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file-word.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\file.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\flag.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\flushed.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\folder-open.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\folder.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\font-awesome-logo-full.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\frown-open.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\frown.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\futbol.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\gem.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grimace.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-beam-sweat.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-beam.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-hearts.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-squint-tears.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-squint.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-stars.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-tears.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-tongue-squint.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-tongue-wink.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-tongue.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin-wink.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\grin.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-lizard.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-paper.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-peace.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-point-down.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-point-left.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-point-right.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-point-up.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-pointer.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-rock.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-scissors.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hand-spock.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\handshake.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hdd.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\heart.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hospital.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\hourglass.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\id-badge.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\id-card.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\image.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\images.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\keyboard.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\kiss-beam.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\kiss-wink-heart.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\kiss.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\laugh-beam.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\laugh-squint.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\laugh-wink.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\laugh.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\lemon.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\life-ring.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\lightbulb.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\list-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\map.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\meh-blank.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\meh-rolling-eyes.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\meh.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\minus-square.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\money-bill-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\moon.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\newspaper.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\object-group.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\object-ungroup.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\paper-plane.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\pause-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\play-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\plus-square.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\question-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\registered.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\sad-cry.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\sad-tear.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\save.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\share-square.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\smile-beam.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\smile-wink.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\smile.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\snowflake.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\square.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\star-half.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\star.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\sticky-note.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\stop-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\sun.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\surprise.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\thumbs-down.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\thumbs-up.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\times-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\tired.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\trash-alt.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\user-circle.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\user.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\window-close.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\window-maximize.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\window-minimize.svg" />
-    <Content Include="Content\fontawesome\svgs\regular\window-restore.svg" />
+    <Content Include="Content\fontawesome\sprites\brands.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\sprites\regular.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\sprites\solid.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\500px.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\accessible-icon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\accusoft.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\acquisitions-incorporated.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\adn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\adobe.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\adversal.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\affiliatetheme.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\airbnb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\algolia.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\alipay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\amazon-pay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\amazon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\amilia.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\android.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\angellist.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\angrycreative.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\angular.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\app-store-ios.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\app-store.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\apper.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\apple-pay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\apple.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\artstation.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\asymmetrik.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\atlassian.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\audible.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\autoprefixer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\avianex.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\aviato.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\aws.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bandcamp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\battle-net.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\behance-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\behance.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bimobject.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bitbucket.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bitcoin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bity.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\black-tie.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\blackberry.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\blogger-b.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\blogger.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bluetooth-b.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bluetooth.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\bootstrap.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\btc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\buffer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\buromobelexperte.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\buysellads.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\canadian-maple-leaf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-amazon-pay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-amex.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-apple-pay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-diners-club.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-discover.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-jcb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-mastercard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-paypal.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-stripe.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cc-visa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\centercode.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\centos.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\chrome.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\chromecast.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cloudscale.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cloudsmith.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cloudversify.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\codepen.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\codiepie.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\confluence.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\connectdevelop.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\contao.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cotton-bureau.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cpanel.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-by.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc-eu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc-jp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nc.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-nd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-pd-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-pd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-remix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sa.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sampling-plus.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-sampling.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-share.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons-zero.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\creative-commons.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\critical-role.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\css3-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\css3.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\cuttlefish.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\d-and-d-beyond.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\d-and-d.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dashcube.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\delicious.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\deploydog.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\deskpro.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dev.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\deviantart.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dhl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\diaspora.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\digg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\digital-ocean.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\discord.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\discourse.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dochub.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\docker.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\draft2digital.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dribbble-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dribbble.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dropbox.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\drupal.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\dyalog.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\earlybirds.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ebay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\edge.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\elementor.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ello.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ember.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\empire.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\envira.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\erlang.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ethereum.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\etsy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\evernote.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\expeditedssl.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\facebook-f.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\facebook-messenger.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\facebook-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\facebook.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fantasy-flight-games.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fedex.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fedora.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\figma.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\firefox.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\first-order-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\first-order.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\firstdraft.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\flickr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\flipboard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fly.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\font-awesome-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\font-awesome-flag.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\font-awesome-logo-full.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\font-awesome.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fonticons-fi.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fonticons.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fort-awesome-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fort-awesome.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\forumbee.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\foursquare.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\free-code-camp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\freebsd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\fulcrum.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\galactic-republic.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\galactic-senate.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\get-pocket.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gg-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gg.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\git-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\git-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\git.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\github-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\github-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\github.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gitkraken.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gitlab.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gitter.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\glide-g.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\glide.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gofore.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\goodreads-g.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\goodreads.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-drive.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-play.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-plus-g.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-plus-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-plus.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google-wallet.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\google.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gratipay.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\grav.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gripfire.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\grunt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\gulp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hacker-news-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hacker-news.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hackerrank.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hips.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hire-a-helper.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hooli.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hornbill.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hotjar.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\houzz.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\html5.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\hubspot.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\imdb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\instagram.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\intercom.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\internet-explorer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\invision.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ioxhost.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\itch-io.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\itunes-note.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\itunes.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\java.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\jedi-order.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\jenkins.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\jira.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\joget.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\joomla.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\js-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\js.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\jsfiddle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\kaggle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\keybase.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\keycdn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\kickstarter-k.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\kickstarter.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\korvue.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\laravel.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\lastfm-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\lastfm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\leanpub.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\less.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\line.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\linkedin-in.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\linkedin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\linode.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\linux.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\lyft.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\magento.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mailchimp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mandalorian.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\markdown.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mastodon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\maxcdn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\medapps.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\medium-m.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\medium.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\medrt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\meetup.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\megaport.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mendeley.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\microsoft.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mixcloud.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\mizuni.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\modx.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\monero.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\napster.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\neos.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\nimblr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\node-js.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\node.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\npm.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ns8.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\nutritionix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\odnoklassniki-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\odnoklassniki.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\old-republic.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\opencart.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\openid.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\opera.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\optin-monster.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\osi.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\page4.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pagelines.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\palfed.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\patreon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\paypal.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\penny-arcade.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\periscope.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\phabricator.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\phoenix-framework.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\phoenix-squadron.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\php.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pied-piper-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pied-piper-hat.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pied-piper-pp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pied-piper.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pinterest-p.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pinterest-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pinterest.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\playstation.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\product-hunt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\pushed.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\python.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\qq.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\quinscape.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\quora.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\r-project.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\raspberry-pi.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ravelry.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\react.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\reacteurope.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\readme.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\rebel.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\red-river.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\reddit-alien.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\reddit-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\reddit.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\redhat.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\renren.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\replyd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\researchgate.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\resolving.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\rev.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\rocketchat.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\rockrms.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\safari.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\salesforce.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sass.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\schlix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\scribd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\searchengin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sellcast.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sellsy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\servicestack.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\shirtsinbulk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\shopware.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\simplybuilt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sistrix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sith.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sketch.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\skyatlas.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\skype.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\slack-hash.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\slack.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\slideshare.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\snapchat-ghost.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\snapchat-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\snapchat.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\soundcloud.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sourcetree.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\speakap.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\speaker-deck.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\spotify.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\squarespace.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stack-exchange.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stack-overflow.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stackpath.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\staylinked.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\steam-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\steam-symbol.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\steam.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\sticker-mule.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\strava.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stripe-s.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stripe.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\studiovinari.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stumbleupon-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\stumbleupon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\superpowers.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\supple.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\suse.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\symfony.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\teamspeak.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\telegram-plane.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\telegram.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\tencent-weibo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\the-red-yeti.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\themeco.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\themeisle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\think-peaks.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\trade-federation.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\trello.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\tripadvisor.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\tumblr-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\tumblr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\twitch.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\twitter-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\twitter.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\typo3.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\uber.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ubuntu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\uikit.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\uniregistry.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\untappd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ups.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\usb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\usps.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\ussunnah.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vaadin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\viacoin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\viadeo-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\viadeo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\viber.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vimeo-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vimeo-v.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vimeo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vine.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vk.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vnv.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\vuejs.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\waze.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\weebly.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\weibo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\weixin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\whatsapp-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\whatsapp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\whmcs.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wikipedia-w.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\windows.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wix.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wizards-of-the-coast.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wolf-pack-battalion.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wordpress-simple.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wordpress.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wpbeginner.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wpexplorer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wpforms.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\wpressr.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\xbox.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\xing-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\xing.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\y-combinator.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yahoo.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yammer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yandex-international.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yandex.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yarn.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yelp.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\yoast.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\youtube-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\youtube.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\brands\zhihu.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\address-book.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\address-card.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\angry.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-down.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-left.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-right.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\arrow-alt-circle-up.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\bell-slash.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\bell.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\bookmark.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\building.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar-check.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar-minus.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar-plus.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar-times.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\calendar.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\caret-square-down.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\caret-square-left.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\caret-square-right.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\caret-square-up.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\chart-bar.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\check-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\check-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\clipboard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\clock.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\clone.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\closed-captioning.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\comment-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\comment-dots.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\comment.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\comments.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\compass.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\copy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\copyright.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\credit-card.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\dizzy.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\dot-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\edit.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\envelope-open.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\envelope.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\eye-slash.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\eye.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-archive.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-audio.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-code.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-excel.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-image.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-pdf.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-powerpoint.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-video.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file-word.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\file.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\flag.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\flushed.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\folder-open.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\folder.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\font-awesome-logo-full.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\frown-open.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\frown.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\futbol.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\gem.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grimace.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-beam-sweat.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-beam.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-hearts.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-squint-tears.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-squint.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-stars.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-tears.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-tongue-squint.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-tongue-wink.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-tongue.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin-wink.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\grin.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-lizard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-paper.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-peace.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-point-down.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-point-left.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-point-right.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-point-up.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-pointer.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-rock.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-scissors.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hand-spock.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\handshake.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hdd.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\heart.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hospital.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\hourglass.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\id-badge.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\id-card.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\image.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\images.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\keyboard.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\kiss-beam.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\kiss-wink-heart.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\kiss.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\laugh-beam.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\laugh-squint.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\laugh-wink.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\laugh.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\lemon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\life-ring.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\lightbulb.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\list-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\map.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\meh-blank.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\meh-rolling-eyes.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\meh.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\minus-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\money-bill-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\moon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\newspaper.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\object-group.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\object-ungroup.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\paper-plane.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\pause-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\play-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\plus-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\question-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\registered.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\sad-cry.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\sad-tear.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\save.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\share-square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\smile-beam.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\smile-wink.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\smile.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\snowflake.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\square.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\star-half.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\star.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\sticky-note.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\stop-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\sun.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\surprise.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\thumbs-down.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\thumbs-up.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\times-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\tired.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\trash-alt.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\user-circle.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\user.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\window-close.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\window-maximize.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\window-minimize.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\svgs\regular\window-restore.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\fontawesome\svgs\solid\ad.svg" />
     <Content Include="Content\fontawesome\svgs\solid\address-book.svg" />
     <Content Include="Content\fontawesome\svgs\solid\address-card.svg" />
@@ -1749,9 +2970,15 @@
     <Content Include="Content\fontawesome\svgs\solid\x-ray.svg" />
     <Content Include="Content\fontawesome\svgs\solid\yen-sign.svg" />
     <Content Include="Content\fontawesome\svgs\solid\yin-yang.svg" />
-    <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg" />
-    <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg" />
-    <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\jquery.dataTables.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

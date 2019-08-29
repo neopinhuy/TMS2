@@ -11,6 +11,7 @@ namespace ESBootstrap
             new MenuComponent().Render();
             var thuChi = new DanhSachThuChi();
             thuChi.Render();
+            new ThuTienKhachHangHangLoat().Render();
             thuChi.Focus();
         }
     }

@@ -10,6 +10,11 @@ namespace Components
 
     public static class Renderer
     {
+        public static Html ColSpan(this Html html, int colSpan)
+        {
+            return html.Attr("colspan", colSpan.ToString());
+        }
+
         public static Html EditButton(this Html html)
         {
             return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").End;
