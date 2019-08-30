@@ -31,9 +31,14 @@ namespace Components
                 .Label.ClassName("header").Text(text).End;
         }
 
-        public static Html SmallDatePicker(this Html html)
+        public static Html SmallDatePicker(this Html html, string value = null)
         {
-            return html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
+            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
+            if (!string.IsNullOrEmpty(value))
+            {
+                html.Value(value);
+            }
+            return html;
         }
 
         public static Html Button(this Html html, string text = string.Empty, string className = "button info small", string icon = string.Empty)
@@ -65,6 +70,15 @@ namespace Components
                 .Attr("data-style", "2")
                 .Attr("name", name)
                 .Attr("data-cls-check", "bd-cyan myCheck")
+                .Attr("data-caption", text);
+        }
+
+        public static Html SmallCheckbox(this Html html, string text)
+        {
+            return html.Input.ClassName("input-small").Type("checkbox")
+                .Attr("data-role", "checkbox")
+                .Attr("data-style", "2")
+                .Attr("data-cls-check", "bd-cyan myCheckbox")
                 .Attr("data-caption", text);
         }
 

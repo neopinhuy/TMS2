@@ -1,25 +1,18 @@
 ﻿using Components;
 using MVVM;
 using System;
-using System.Collections.Generic;
 
 namespace MisaOnline.NghiepVu.ThuChi
 {
-    public class ThuTienKhachHang : Component
+    public class NopThue : Component
     {
-        public override string ControlName { get; set; } = "ThuTienKhachHang";
-        public override string Title { get; set; } = "Thu tiền khách hàng";
-        public List<SelectListItem> Currencies { get; set; }
+        public override string ControlName { get; set; } = "NopThue";
+        public override string Title { get; set; } = "Nộp thuế";
         public ObservableArray<Header<object>> ChungTuHeader { get; set; }
         public ObservableArray<object> ChungTu { get; set; }
 
-        public ThuTienKhachHang()
+        public NopThue()
         {
-            Currencies = new List<SelectListItem>
-            {
-                new SelectListItem { Value = 1, Display = "Việt Nam đồng" },
-                new SelectListItem { Value = 2, Display = "Đô la Mỹ" },
-            };
             ChungTuHeader = new ObservableArray<Header<object>>(new Header<object>[] {
                 new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
                 new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
@@ -70,56 +63,47 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         public override void Render()
         {
-            if (IsExisted())
-                return;
+            if (IsExisted()) return;
             PhuongThucThanhToan();
-            RenderChungTuCongNo();
+            CacLoaiThue();
+            ChungTuMuaHang();
         }
 
         protected void PhuongThucThanhToan()
         {
-            Html.Instance.H2.Text(Title).End.Panel()
-                .Form.ClassName("middle").Table.ClassName("subcompact").TRow
-                    .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
-                    .TData.SmallRadio("PhuongThucThanhToan", "Tiền mặt").EndOf(ElementType.td)
-                    .TData.SmallRadio("PhuongThucThanhToan", "Tiền gởi").EndOf(ElementType.td)
-                    .TData.Label.Text("Loại tiền").EndOf(ElementType.td)
-                    .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
-                    .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
-                    .TData.SmallInput("right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
-                    .EndOf(ElementType.form)
-                .Hr.Render();
-            RenderSearch();
+            Html.Instance.H2.Text(Title).End
+                .Form.ClassName("middle").Table.TRow
+                .TData.Label.Text("Ngày nộp thuế").EndOf(ElementType.td)
+                .TData.SmallDatePicker(DateTime.Now.ToString()).EndOf(ElementType.td)
+                .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
+                .TData.SmallRadio("phuongThucTT", "Tiền gửi").EndOf(ElementType.td)
+                .TData.SmallRadio("phuongThucTT", "Tiền mặt").EndOf(ElementType.td)
+                .EndOf(ElementType.form);
         }
 
-        protected virtual void RenderSearch()
+        protected void CacLoaiThue()
         {
-            Html.Instance.Form.Table.ClassName("subcompact marginTop5 table-border")
-            .TRow
-                .TData.Label.Text("Khách hàng").End.End
-                .TData.SmallInput().Value("KH00001").End.End
-                .TData.Label.Text("Ngày thu tiền").End.End
-                .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
-                .TData.Button("Lấy dữ liệu", "button small info", "fa fa-search").EndOf(ElementType.tr)
-            .TRow
-                .TData.Label.Text("NV bán hàng").End.End
-                .TData.SmallInput().Value("NV34501").End.End
-                .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                .TData.SmallInput("right").Value("0").EndOf(".panel")
-            .Render();
+            Html.Instance.Panel().Form.ClassName("middle").Table.TRow
+                .TData.SmallCheckbox("Thuế nhập khẩu").EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế TTĐB").EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế BVMT").EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế GTGT").EndOf(ElementType.td)
+            .End.TRow
+                .TData.ColSpan(3).SmallCheckbox("Không lấy thuế GTGT hàng nhập khẩu có TKĐƯ thuế GTGT là 133").EndOf(ElementType.td)
+            .End
+            .EndOf(".panel");
         }
 
-        private void RenderChungTuCongNo()
+        protected void ChungTuMuaHang()
         {
             Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
-                .Li.ClassName("active").Anchor.Href("#chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
+                .Li.ClassName("active").Anchor.Href("#chungMuaHang").Text("Chứng từ mua hàng").EndOf(ElementType.ul)
                 .Div
-                    .Div.Id("chungTuCongNo")
+                    .Div.Id("chungMuaHang")
                     .Table(ChungTuHeader, ChungTu).ClassName("margin0 borderTop0").End
-                    .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
-                    .End
+                    .Button("Nộp thuế", "button small primary marginTop5", "fa fa-check").End
+                    .Button("Trợ giúp", "button small primary marginTop5", "fa fa-question-circle").Margin(Direction.left, 5).End
                 .Render();
         }
     }
-
 }

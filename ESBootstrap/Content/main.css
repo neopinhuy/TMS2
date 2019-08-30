@@ -26,6 +26,9 @@ body {
     border-color: #0b98da !important;
     background: #0b98da !important;
 }
+.myCheckbox::before {
+    border-color: #0b98da !important;
+}
 nav {
     margin-left: 250px;
 }
