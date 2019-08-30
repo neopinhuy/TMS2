@@ -191,7 +191,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .Table(HachToanHeader, HachToan).ClassName("margin0 borderTop0").End
                     .EndOf("#hachToan")
                     
-                    .Div.Id("thue").Style("display: none;")
+                    .Div.Id("thue")
                     .Table(ThueHeader, Thue).ClassName("margin0 borderTop0").End
                     .EndOf("#thue")
                 .Render();

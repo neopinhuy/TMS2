@@ -76,7 +76,7 @@ namespace MisaOnline.NghiepVu.ThuChi
             RenderChungTuCongNo();
         }
 
-        private void PhuongThucThanhToan()
+        protected void PhuongThucThanhToan()
         {
             Html.Instance.H2.Text(Title).End.Panel()
                 .Form.ClassName("middle").Table.ClassName("subcompact").TRow
