@@ -45,7 +45,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             Html.Instance.H2.Text(Title).End
                 .Grid().GridRow().ClassName("marginTop5").GridCell(6).Panel("Thông tin chung")
-                .Table.ClassName("subcompact")
+                .Table
                     .TBody.TRow
                         .TData.Text("Đối tượng").End
                         .TData.SmallDatePicker().Value(DateTime.Now.ToString()).End.End
@@ -77,6 +77,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             Html.Instance.EndOf(".row").GridRow().GridCell(12).ClassName("marginTop5")
                 .Table(Headers, new ObservableArray<object>(new object[] {
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
+                    new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
                     new { DienGiai = "21/08/2019", TKNo = "111 - Ngoại tệ", TKCo = "112 - VND", SoTien = "15.000.123", MaThongKe = "123 9999" },
