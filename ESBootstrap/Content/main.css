@@ -1,6 +1,15 @@
 ﻿html {
     font-size: 13px;
 }
+body {
+    background-color: rgba(241, 241, 241, 0.3);
+}
+.tabs-wrapper {
+    background-color: transparent;
+}
+#tab-content {
+    background-color: #fff;
+}
 .borderTop0 {
     border-top: 0 !important;
 }

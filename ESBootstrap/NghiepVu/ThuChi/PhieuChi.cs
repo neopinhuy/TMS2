@@ -189,12 +189,10 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Div.ClassName("border bd-default no-border-top p-2")
                     .Div.Id("hachToan")
                     .Table(HachToanHeader, HachToan).ClassName("margin0 borderTop0").End
-                    .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
                     .EndOf("#hachToan")
                     
                     .Div.Id("thue").Style("display: none;")
                     .Table(ThueHeader, Thue).ClassName("margin0 borderTop0").End
-                    .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
                     .EndOf("#thue")
                 .Render();
         }
