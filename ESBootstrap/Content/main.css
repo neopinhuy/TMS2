@@ -92,6 +92,23 @@ li.active > ul {
 .cell > .panel {
     height: 100%;
 }
+.tabs-content .table-wrapper {
+    margin-top: 0;
+}
+.table-wrapper {
+    margin: 1rem 0;
+    border: 1px solid #dfdfdf;
+    border-top: 0;
+    top: -2px;
+    overflow: auto;
+}
+.table-wrapper table {
+    margin: 0;
+    border: 0;
+}
+.table-wrapper table th {
+    white-space: nowrap;
+}
 .panel label.header {
     font-weight: 700;
     font-size: 0.9rem;
@@ -101,8 +118,9 @@ li.active > ul {
     background-color: #fff;
 }
 ::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
+    height: 0.65rem;
+    width: 0.65rem;
+    border: 0;
     border-radius: 3px;
     background: transparent;
     transition: all 0.3s ease;

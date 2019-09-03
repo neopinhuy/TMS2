@@ -91,9 +91,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
                 .Li.ClassName("active").Anchor.Href("#chungMuaHang").Text("Chứng từ mua hàng").EndOf(ElementType.ul)
-                .Div
+                .Div.ClassName("tabs-content")
                     .Div.Id("chungMuaHang")
-                    .Table(ChungTuHeader, ChungTu).ClassName("margin0 borderTop0").End
+                    .Table(ChungTuHeader, ChungTu)
                     .Button("Nộp thuế", "button small primary marginTop5", "fa fa-check").End
                     .Button("Trợ giúp", "button small primary marginTop5", "fa fa-question-circle").Margin(Direction.left, 5).End
                 .Render();

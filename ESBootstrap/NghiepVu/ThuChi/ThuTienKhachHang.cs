@@ -113,9 +113,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
                 .Li.ClassName("active").Anchor.Href("#chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
-                .Div
+                .Div.ClassName("tabs-content")
                     .Div.Id("chungTuCongNo")
-                    .Table(ChungTuHeader, ChungTu).ClassName("margin0 borderTop0").End
+                    .Table(ChungTuHeader, ChungTu)
                     .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")
                     .End
                 .Render();

@@ -186,13 +186,13 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
                 .Li.ClassName("active").Anchor.Href("#hachToan").Text("1. Hạch toán").EndOf(ElementType.li)
                 .Li.Anchor.Href("#thue").Text("2. Thuế").EndOf(ElementType.ul)
-                .Div.ClassName("border bd-default no-border-top p-2")
+                .Div.ClassName("border bd-default no-border-top p-2 tabs-content")
                     .Div.Id("hachToan")
-                    .Table(HachToanHeader, HachToan).ClassName("margin0 borderTop0").End
+                    .Table(HachToanHeader, HachToan)
                     .EndOf("#hachToan")
                     
                     .Div.Id("thue")
-                    .Table(ThueHeader, Thue).ClassName("margin0 borderTop0").End
+                    .Table(ThueHeader, Thue)
                     .EndOf("#thue")
                 .Render();
         }

@@ -11,13 +11,12 @@ namespace Components
         {
             Headers = metadata;
             RowData = rowData;
-            Render();
         }
 
         public void Render()
         {
             var html = Html.Instance;
-            html.Table.ClassName("table striped table-border")
+            html.Div.ClassName("table-wrapper").Table.ClassName("table striped table-border")
                 .Attr("data-cls-table-top", "row flex-nowrap")
                 .Attr("data-show-search", "false")
                 .Attr("data-show-rows-steps", "false")
@@ -61,7 +60,7 @@ namespace Components
                     }
                 });
             })
-            .EndOf(ElementType.tbody).Render();
+            .EndOf(".table-wrapper").Render();
         }
     }
 }
