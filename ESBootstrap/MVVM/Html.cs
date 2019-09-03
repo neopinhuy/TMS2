@@ -32,6 +32,12 @@ namespace MVVM
             return Instance;
         }
 
+        public static Html Take(Element ele)
+        {
+            Context = ele;
+            return Instance;
+        }
+
         public static Html Instance
         {
             get

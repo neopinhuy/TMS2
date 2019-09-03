@@ -73,9 +73,10 @@ namespace Components
                 .Attr("data-caption", text);
         }
 
-        public static Html SmallCheckbox(this Html html, string text)
+        public static Html SmallCheckbox(this Html html, string text, bool check = false)
         {
             return html.Input.ClassName("input-small").Type("checkbox")
+                .Attr("checked", check.ToString())
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
                 .Attr("data-cls-check", "myCheckbox")

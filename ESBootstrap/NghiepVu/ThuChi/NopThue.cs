@@ -9,10 +9,20 @@ namespace MisaOnline.NghiepVu.ThuChi
         public override string ControlName { get; set; } = "NopThue";
         public override string Title { get; set; } = "Nộp thuế";
         public ObservableArray<Header<object>> ChungTuHeader { get; set; }
+        public Header<object>[] ThueGTGT { get; set; }
         public ObservableArray<object> ChungTu { get; set; }
 
         public NopThue()
         {
+            ThueGTGT = new Header<object>[]
+            {
+                new Header<object> { HeaderText = "Số phải nộp", FieldName = "GTGT_SoPhaiNop", GroupName = "Thuế GTGT" },
+                new Header<object> { HeaderText = "Số nộp lần này", FieldName = "GTGT_SoNopLanNay", GroupName = "Thuế GTGT" },
+                new Header<object> { HeaderText = "TKĐƯ thuế GTGT", FieldName = "GTGT_TKDUThue", GroupName = "Thuế GTGT" },
+                new Header<object> { HeaderText = "TK thuế GTGT khấu trừ", FieldName = "GTGT_TKKhauTru", GroupName = "Thuế GTGT" },
+                new Header<object> { HeaderText = "TK thuế GTGT", FieldName = "GTGT_TaiKhoan", GroupName = "Thuế GTGT" },
+            };
+
             ChungTuHeader = new ObservableArray<Header<object>>(new Header<object>[] {
                 new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
                 new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
@@ -30,13 +40,8 @@ namespace MisaOnline.NghiepVu.ThuChi
                 new Header<object> { HeaderText = "Số phải nộp", FieldName = "BVMT_SoPhaiNop", GroupName = "Thuế bảo vệ môi trường" },
                 new Header<object> { HeaderText = "Số nộp lần này", FieldName = "BVMT_SoNopLanNay", GroupName = "Thuế bảo vệ môi trường" },
                 new Header<object> { HeaderText = "TK thuế BVMT", FieldName = "BVMT_TKThue", GroupName = "Thuế bảo vệ môi trường" },
-
-                new Header<object> { HeaderText = "Số phải nộp", FieldName = "GTGT_SoPhaiNop", GroupName = "Thuế GTGT" },
-                new Header<object> { HeaderText = "Số nộp lần này", FieldName = "GTGT_SoNopLanNay", GroupName = "Thuế GTGT" },
-                new Header<object> { HeaderText = "TKĐƯ thuế GTGT", FieldName = "GTGT_TKDUThue", GroupName = "Thuế GTGT" },
-                new Header<object> { HeaderText = "TK thuế GTGT khấu trừ", FieldName = "GTGT_TKKhauTru", GroupName = "Thuế GTGT" },
-                new Header<object> { HeaderText = "TK thuế GTGT", FieldName = "GTGT_TaiKhoan", GroupName = "Thuế GTGT" },
             });
+            ChungTuHeader.AddRange(ThueGTGT);
             ChungTu = new ObservableArray<object>(new object[]
             {
                 new
@@ -77,10 +82,21 @@ namespace MisaOnline.NghiepVu.ThuChi
         protected void CacLoaiThue()
         {
             Html.Instance.Panel().Form.ClassName("middle").Table.TRow
-                .TData.SmallCheckbox("Thuế nhập khẩu").EndOf(ElementType.td)
-                .TData.SmallCheckbox("Thuế TTĐB").EndOf(ElementType.td)
-                .TData.SmallCheckbox("Thuế BVMT").EndOf(ElementType.td)
-                .TData.SmallCheckbox("Thuế GTGT").EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế nhập khẩu", true).EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế TTĐB", true).EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế BVMT", true).EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế GTGT", true).EndOf(ElementType.td)
+                .Event(Bridge.Html5.EventType.Change, (Bridge.Html5.Event e) =>
+                {
+                    if (e.Target["checked"].Cast<bool>())
+                    {
+                        ChungTuHeader.AddRange(ThueGTGT);
+                    }
+                    else
+                    {
+                        ThueGTGT.ForEach(ChungTuHeader.Remove);
+                    }
+                })
             .End.TRow
                 .TData.ColSpan(3).SmallCheckbox("Không lấy thuế GTGT hàng nhập khẩu có TKĐƯ thuế GTGT là 133").EndOf(ElementType.td)
             .End

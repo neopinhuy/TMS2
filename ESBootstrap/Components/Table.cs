@@ -1,5 +1,7 @@
-﻿using MVVM;
+﻿using Bridge.Html5;
+using MVVM;
 using System.Linq;
+using ElementType = MVVM.ElementType;
 
 namespace Components
 {
@@ -7,6 +9,7 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
+        private int? timeOut = null;
 
         public Table(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
         {
@@ -18,15 +21,34 @@ namespace Components
         {
             Html.Instance.Div.ClassName("table-wrapper")
                 .Table.ClassName("table striped");
-
-            RenderTableHeader();
-            RenderTableContent();
-            Headers.Subscribe(x => RenderTableHeader());
+            var table = Html.Context;
+            RenderTableHeader(table);
+            RenderTableContent(table);
+            Headers.Subscribe(x =>
+            {
+                Rerender(table);
+            });
+            RowData.Subscribe(x =>
+            {
+                Rerender(table);
+            });
         }
 
-        private void RenderTableHeader()
+        private void Rerender(Element table)
         {
-            var html = Html.Instance;
+            if (timeOut != null)
+            Window.ClearTimeout(timeOut.Value);
+            timeOut = Window.SetTimeout(() =>
+            {
+                Html.Take(table).Clear();
+                RenderTableHeader(table);
+                RenderTableContent(table);
+            });
+        }
+
+        private void RenderTableHeader(Element table)
+        {
+            var html = Html.Take(table);
             var headers = Headers.Data;
             bool hasGroup = Headers.Data.Any(x => !string.IsNullOrEmpty(x.GroupName));
             // Render first header
@@ -71,18 +93,18 @@ namespace Components
             html.EndOf(ElementType.thead);
         }
 
-        private void RenderTableContent()
+        private void RenderTableContent(Element table)
         {
-            var html = Html.Instance;
-            html.TBody.ForEach(RowData, (row, index) =>
+            var html = Html.Take(table);
+            html.TBody.ForEach(RowData.Data, (row, index) =>
             {
-                html.TRow.ForEach(Headers, (header, headerIndex) =>
+                html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
                 {
                     html.TData.Render();
                     if (header.EditButton)
                     {
                         html.Button.ClassName("button small warning")
-                            .Event(Bridge.Html5.EventType.Click, header.EditEvent, row)
+                            .Event(EventType.Click, header.EditEvent, row)
                             .Span.ClassName("fa fa-edit").End.End.Render();
                     }
                     else if (header.DeleteButton)
