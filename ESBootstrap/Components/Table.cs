@@ -17,13 +17,7 @@ namespace Components
         public void Render()
         {
             Html.Instance.Div.ClassName("table-wrapper")
-                .Table.ClassName("table striped table-border")
-                .Attr("data-cls-table-top", "row flex-nowrap")
-                .Attr("data-show-search", "false")
-                .Attr("data-show-rows-steps", "false")
-                .Attr("data-show-pagination", "false")
-                .Attr("data-show-activity", "false")
-                .Attr("data-cls-component", "shadow-1");
+                .Table.ClassName("table striped");
 
             RenderTableHeader();
             RenderTableContent();

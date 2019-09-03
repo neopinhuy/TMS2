@@ -69,7 +69,7 @@ namespace Components
                 .Attr("data-role", "radio")
                 .Attr("data-style", "2")
                 .Attr("name", name)
-                .Attr("data-cls-check", "bd-cyan myCheck")
+                .Attr("data-cls-check", "myCheck")
                 .Attr("data-caption", text);
         }
 
@@ -78,7 +78,7 @@ namespace Components
             return html.Input.ClassName("input-small").Type("checkbox")
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
-                .Attr("data-cls-check", "bd-cyan myCheckbox")
+                .Attr("data-cls-check", "myCheckbox")
                 .Attr("data-caption", text);
         }
 
