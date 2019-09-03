@@ -6,6 +6,7 @@ namespace Components
     {
         public string HeaderText { get; set; }
         public string FieldName { get; set; }
+        public string GroupName { get; set; }
         public bool ShowSort { get; set; }
         public Type DataType { get; set; }
         public string Format { get; set; }
