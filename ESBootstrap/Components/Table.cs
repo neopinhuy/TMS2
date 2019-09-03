@@ -1,4 +1,5 @@
 ﻿using MVVM;
+using System.Linq;
 
 namespace Components
 {
@@ -15,29 +16,71 @@ namespace Components
 
         public void Render()
         {
-            var html = Html.Instance;
-            html.Div.ClassName("table-wrapper").Table.ClassName("table striped table-border")
+            Html.Instance.Div.ClassName("table-wrapper")
+                .Table.ClassName("table striped table-border")
                 .Attr("data-cls-table-top", "row flex-nowrap")
                 .Attr("data-show-search", "false")
                 .Attr("data-show-rows-steps", "false")
                 .Attr("data-show-pagination", "false")
                 .Attr("data-show-activity", "false")
-                .Attr("data-cls-component", "shadow-1")
-            .Theader.TRow.ForEach(Headers, (metaData, index) =>
+                .Attr("data-cls-component", "shadow-1");
+
+            RenderTableHeader();
+            RenderTableContent();
+            Headers.Subscribe(x => RenderTableHeader());
+        }
+
+        private void RenderTableHeader()
+        {
+            var html = Html.Instance;
+            var headers = Headers.Data;
+            bool hasGroup = Headers.Data.Any(x => !string.IsNullOrEmpty(x.GroupName));
+            // Render first header
+            html.Thead.TRow.ForEach(headers, (header, index) =>
             {
-                html.Th.Attr("data-sortable", "false");
-                if (metaData.EditButton || metaData.DeleteButton)
+                if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
+                {
+                    if (header != headers.FirstOrDefault(x => x.GroupName == header.GroupName)) return;
+                    html.Th.Render();
+                    html.Attr("colspan", headers.Count(x => x.GroupName == header.GroupName).ToString());
+                    html.Text(header.GroupName).Render();
+                    return;
+                }
+                html.Th.Render();
+                if (hasGroup && string.IsNullOrEmpty(header.GroupName))
+                {
+                    html.Attr("rowspan", "2");
+                }
+                if (header.EditButton || header.DeleteButton)
                 {
                     html.Span.ClassName("fg-cyan mif-folder-open").End.Render();
                 }
                 else
                 {
-                    html.Text(metaData.HeaderText).Render();
+                    html.Text(header.HeaderText).Render();
                 }
-                html.EndOf(ElementType.tr);
-            })
-            .EndOf(ElementType.thead)
-            .TBody.ForEach(RowData, (row, index) =>
+                html.EndOf(ElementType.th);
+            }).EndOf(ElementType.tr).Render();
+
+            if (hasGroup)
+            {
+                html.TRow.ForEach(headers, (header, index) =>
+                {
+                    if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
+                    {
+                        html.Th.Render();
+                        html.Text(header.HeaderText).Render();
+                        html.EndOf(ElementType.th);
+                    }
+                });
+            }
+            html.EndOf(ElementType.thead);
+        }
+
+        private void RenderTableContent()
+        {
+            var html = Html.Instance;
+            html.TBody.ForEach(RowData, (row, index) =>
             {
                 html.TRow.ForEach(Headers, (header, headerIndex) =>
                 {
@@ -54,13 +97,12 @@ namespace Components
                     }
                     else
                     {
-                        var cellData = row[header.FieldName];
-                        if (cellData == null) throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
-                        html.Text(row[header.FieldName].ToString()).End.Render();
+                        object cellData = row[header.FieldName]
+                            ?? throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
+                        html.Text(cellData.ToString()).End.Render();
                     }
                 });
-            })
-            .EndOf(".table-wrapper").Render();
+            }).EndOf(".table-wrapper").Render();
         }
     }
 }

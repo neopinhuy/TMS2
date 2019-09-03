@@ -169,7 +169,7 @@ namespace MVVM
             }
         }
 
-        public Html Theader
+        public Html Thead
         {
             get
             {
@@ -546,6 +546,7 @@ namespace MVVM
                 enumerator.MoveNext();
                 renderer.Call(element, enumerator.Current, index);
             }
+            Context = element;
             return this;
         }
 

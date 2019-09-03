@@ -109,6 +109,15 @@ li.active > ul {
 .table-wrapper table th {
     white-space: nowrap;
 }
+.table-wrapper table [rowspan] {
+    vertical-align: middle;
+}
+.table-wrapper table [colspan] {
+    text-align: center;
+}
+.table-wrapper table th {
+    border: 1px solid #dfdfdf;
+}
 .panel label.header {
     font-weight: 700;
     font-size: 0.9rem;
