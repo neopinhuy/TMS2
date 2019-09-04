@@ -6,6 +6,9 @@
 @borderColor: #004c85;
 @darkCobalt: #0036a3;
 @primary: #0366d6;
+@info: #30abe6;
+@infoDark: #1891cb;
+@bgTab: #4a9dc5;
 
 html {
     font-size: 13px;
@@ -13,16 +16,6 @@ html {
 
 body {
     background-color: @whiteGrey;
-}
-
-.tabs-wrapper {
-    background-color: @transparent;
-
-    > ul.tabs-list {
-        > li.active {
-            border-bottom: 1px solid @grey;
-        }
-    }
 }
 
 #tab-content {
@@ -88,6 +81,15 @@ table {
     }
 }
 
+li.active {
+    > a {
+        font-weight: 700;
+    }
+    > ul {
+        display: block;
+    }
+}
+
 ul.tabs-list {
     > li {
         > .icon {
@@ -95,11 +97,26 @@ ul.tabs-list {
             position: absolute;
             right: 0;
             top: 0;
-            color: @dark;
+            color: @darkCobalt;
         }
         &:hover {
             > .icon {
                 display: inline;
+            }
+        }
+    }
+}
+
+.tabs-wrapper {
+    background-color: @transparent;
+    > ul.tabs-list {
+        > li.active {
+            border-color: @infoDark;
+            a {
+                font-weight: 500;
+                background-color: transparent;
+                color: #1a9bd8;
+                background-color: transparent;
             }
         }
     }
@@ -128,22 +145,6 @@ ul#tabs {
 .middle {
     td {
         vertical-align: middle;
-    }
-}
-
-li.active {
-    > a {
-        font-weight: 700;
-    }
-
-    > ul {
-        display: block;
-    }
-}
-
-li {
-    > ul {
-        display: none;
     }
 }
 

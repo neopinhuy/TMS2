@@ -53,7 +53,7 @@ namespace Components
         
         public static Html SmallInput(this Html html, string value = string.Empty, string align = "left")
         {
-            return html.Input.ClassName("input-small " + align).Attr("data-role", "input");
+            return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
         }
 
         public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
@@ -101,6 +101,11 @@ namespace Components
         public static Html Margin(this Html html, Direction direction, float margin, string unit = "px")
         {
             return html.Style($"margin-{direction} : {margin}{unit}");
+        }
+
+        public static Html Padding(this Html html, Direction direction, float padding, string unit = "px")
+        {
+            return html.Style($"padding-{direction} : {padding}{unit}");
         }
 
         public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
