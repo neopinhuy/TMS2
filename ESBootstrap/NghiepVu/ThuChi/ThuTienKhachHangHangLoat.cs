@@ -37,7 +37,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .TData.Label.Text("Đến").EndOf(ElementType.td)
                 .TData.SmallDatePicker().Value(DateTime.Now.ToString()).EndOf(ElementType.td)
                 .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                .TData.SmallInput("right").Value("0").EndOf(ElementType.td)
+                .TData.SmallInput("", "right").Value("0").EndOf(ElementType.td)
                 .TData.Button("Lấy dữ liệu", "button small info", "fa fa-search").EndOf(ElementType.tr)
             .EndOf(".panel")
             .Render();

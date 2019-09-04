@@ -86,7 +86,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.Label.Text("Loại tiền").EndOf(ElementType.td)
                     .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
                     .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
-                    .TData.SmallInput("right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
+                    .TData.SmallInput("", "right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
                     .EndOf(ElementType.form)
                 .Hr.Render();
             RenderSearch();
@@ -105,7 +105,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .TData.Label.Text("NV bán hàng").End.End
                 .TData.SmallInput().Value("NV34501").End.End
                 .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                .TData.SmallInput("right").Value("0").EndOf(".panel")
+                .TData.SmallInput("", "right").Value("0").EndOf(".panel")
             .Render();
         }
 

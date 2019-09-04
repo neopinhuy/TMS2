@@ -37,7 +37,9 @@ namespace Components
         private void Rerender(Element table)
         {
             if (timeOut != null)
-            Window.ClearTimeout(timeOut.Value);
+            {
+                Window.ClearTimeout(timeOut.Value);
+            }
             timeOut = Window.SetTimeout(() =>
             {
                 Html.Take(table).Clear();
@@ -96,7 +98,7 @@ namespace Components
         private void RenderTableContent(Element table)
         {
             var html = Html.Take(table);
-            html.TBody.ForEach(RowData.Data, (row, index) =>
+            html.TBody.ForEach(RowData.Data, (Data row, int index) =>
             {
                 html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
                 {

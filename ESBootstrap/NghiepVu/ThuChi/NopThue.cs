@@ -85,21 +85,23 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .TData.SmallCheckbox("Thuế nhập khẩu", true).EndOf(ElementType.td)
                 .TData.SmallCheckbox("Thuế TTĐB", true).EndOf(ElementType.td)
                 .TData.SmallCheckbox("Thuế BVMT", true).EndOf(ElementType.td)
-                .TData.SmallCheckbox("Thuế GTGT", true).Event(Bridge.Html5.EventType.Change, (Bridge.Html5.Event e) =>
-                {
-                    if (e.Target["checked"].Cast<bool>())
-                    {
-                        ChungTuHeader.AddRange(ThueGTGT);
-                    }
-                    else
-                    {
-                        ThueGTGT.ForEach(ChungTuHeader.Remove);
-                    }
-                }).EndOf(ElementType.td)
+                .TData.SmallCheckbox("Thuế GTGT", true).Event(Bridge.Html5.EventType.Change, ChangeGTGT).EndOf(ElementType.td)
             .End.TRow
                 .TData.ColSpan(3).SmallCheckbox("Không lấy thuế GTGT hàng nhập khẩu có TKĐƯ thuế GTGT là 133").EndOf(ElementType.td)
             .End
             .EndOf(".panel");
+        }
+
+        private void ChangeGTGT(Bridge.Html5.Event e)
+        {
+            if (e.Target["checked"].Cast<bool>())
+            {
+                ChungTuHeader.AddRange(ThueGTGT);
+            }
+            else
+            {
+                ThueGTGT.ForEach(ChungTuHeader.Remove);
+            }
         }
 
         protected void ChungTuMuaHang()

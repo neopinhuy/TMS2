@@ -51,7 +51,7 @@ namespace Components
             return html.ClassName(className).Text(text);
         }
         
-        public static Html SmallInput(this Html html, string align = "left")
+        public static Html SmallInput(this Html html, string value = string.Empty, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input");
         }
