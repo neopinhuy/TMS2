@@ -75,12 +75,16 @@ namespace Components
 
         public static Html SmallCheckbox(this Html html, string text, bool check = false)
         {
-            return html.Input.ClassName("input-small").Type("checkbox")
-                .Attr("checked", check.ToString())
+            html.Input.ClassName("input-small").Type("checkbox")
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
                 .Attr("data-cls-check", "myCheckbox")
                 .Attr("data-caption", text);
+            if (check)
+            {
+                html.Attr("checked", check.ToString());
+            }
+            return html;
         }
 
         public static Html Grid(this Html html)

@@ -12,6 +12,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         public ObservableArray<Header<object>> KiemKeHeader { get; set; }
         public ObservableArray<object> KiemKeData { get; set; }
 
+        public ObservableArray<Header<object>> NguoiThamGiaHeader { get; set; }
+        public ObservableArray<object> NguoiThamGiaData { get; set; }
+
         public KiemKeQuy()
         {
             KiemKeHeader = new ObservableArray<Header<object>>(new Header<object>[] {
@@ -35,6 +38,22 @@ namespace MisaOnline.NghiepVu.ThuChi
             KiemKeData.Add(KiemKeData.Data[0]);
             KiemKeData.AddRange(KiemKeData.Data);
             KiemKeData.AddRange(KiemKeData.Data);
+
+            NguoiThamGiaHeader = new ObservableArray<Header<object>>(new Header<object>[] {
+                new Header<object> { HeaderText = "Họ và tên", FieldName = "HoTen" },
+                new Header<object> { HeaderText = "Chức danh", FieldName = "ChucDanh" },
+                new Header<object> { HeaderText = "Đại diện", FieldName = "DaiDien" },
+            });
+            NguoiThamGiaData = new ObservableArray<object>(new object[]
+            {
+                new
+                {
+                    HoTen = "Nhân JS", ChucDanh = "Lập trình viên", DaiDien = "Thanh toán",
+                },
+            });
+            NguoiThamGiaData.Add(NguoiThamGiaData.Data[0]);
+            NguoiThamGiaData.Add(NguoiThamGiaData.Data[0]);
+            NguoiThamGiaData.AddRange(NguoiThamGiaData.Data);
         }
 
         public override void Render()
@@ -47,7 +66,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         protected void KiemKeThongTinChung()
         {
             Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true")
-                .Li.ClassName("active").Anchor.Href("#kiemKe").Text("Kiểm kê").EndOf(ElementType.ul)
+                .Li.ClassName("active").Anchor.Href("#kiemKe").Text("Kiểm kê").EndOf(ElementType.li)
+                .Li.ClassName("active").Anchor.Href("#thanhVienThamGia").Text("Thành viên tham gia").EndOf(ElementType.li)
+                .Li.ClassName("active").Anchor.Href("#ketQuaXuLy").Text("Kết quả xử lý").EndOf(ElementType.ul)
                 .Div.ClassName("tabs-content border-right-bottom-left bd-lightGray")
                 .Style("top: -1px; padding: 5px 10px 0px;")
                     .Div.Id("kiemKe").Padding(Direction.top, 5)
@@ -67,24 +88,45 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .EndOf(".cell").Render();
 
             BienBan();
+            NguoiThamGia();
+            KetQuaXuLy();
         }
 
         private static void BienBan()
         {
             Html.Instance.GridCell(4).Panel("Biên bản").Table.TBody
-                            .TRow
-                                .TData.Text("Số").End
-                                .TData.SmallInput().Value("KKQ00001")
-                            .EndOf(ElementType.tr)
-                            .TRow
-                                .TData.Text("Ngày").End
-                                .TData.SmallDatePicker().Value(DateTime.Now.ToString())
-                            .EndOf(ElementType.tr)
-                            .TRow
-                                .TData.Text("Giờ").End
-                                .TData.SmallInput()
-                            .EndOf(ElementType.tr)
-                            .EndOf(".grid").Render();
+                .TRow
+                    .TData.Text("Số").End
+                    .TData.SmallInput().Value("KKQ00001")
+                .EndOf(ElementType.tr)
+                .TRow
+                    .TData.Text("Ngày").End
+                    .TData.SmallDatePicker().Value(DateTime.Now.ToString())
+                .EndOf(ElementType.tr)
+                .TRow
+                    .TData.Text("Giờ").End
+                    .TData.SmallInput()
+                .EndOf(ElementType.tr)
+                .EndOf("#kiemKe").Render();
+        }
+
+        private void NguoiThamGia()
+        {
+            Html.Instance.Div.Id("thanhVienThamGia").Padding(Direction.top, 5)
+                .Table(NguoiThamGiaHeader, NguoiThamGiaData)
+                .EndOf("#thanhVienThamGia")
+                .Render();
+        }
+
+        private void KetQuaXuLy()
+        {
+            Html.Instance.Div.Id("ketQuaXuLy").Padding(Direction.top, 5)
+                .Table.Style("width: 100%")
+                    .TRow.TData.Style("width: 100px").Text("Lý do").End.TData.SmallInput().EndOf(ElementType.tr)
+                    .TRow.TData.Text("Kết luận").End.TData.SmallInput().EndOf(ElementType.tr)
+                    .TRow.TData.End.TData.SmallCheckbox("Đã xử lý chênh lệch")
+                .EndOf(".tabs-content")
+                .Render();
         }
 
         protected void ChungTuMuaHang()
