@@ -71,6 +71,7 @@
     <Compile Include="MVVM\ObservableArrayEvent.cs" />
     <Compile Include="MVVM\SelectListItem.cs" />
     <Compile Include="NghiepVu\MenuComponent.cs" />
+    <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.cs" />
     <Compile Include="NghiepVu\NganHang\ThuTienGoi.cs" />
     <Compile Include="NghiepVu\ThuChi\KiemKeQuy.cs" />
     <Compile Include="NghiepVu\ThuChi\TraLuong.cs" />

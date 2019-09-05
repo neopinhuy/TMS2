@@ -2,6 +2,7 @@
 using MVVM;
 using System;
 using System.Collections.Generic;
+using MisaOnline.NghiepVu;
 
 namespace MisaOnline.NghiepVu.ThuChi
 {
@@ -78,17 +79,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected void PhuongThucThanhToan()
         {
-            Html.Instance.H2.Text(Title).End.Panel()
-                .Form.ClassName("middle").Table.ClassName("subcompact").TRow
-                    .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
-                    .TData.SmallRadio("PhuongThucThanhToan", "Tiền mặt").EndOf(ElementType.td)
-                    .TData.SmallRadio("PhuongThucThanhToan", "Tiền gởi").EndOf(ElementType.td)
-                    .TData.Label.Text("Loại tiền").EndOf(ElementType.td)
-                    .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
-                    .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
-                    .TData.SmallInput("", "right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
-                    .EndOf(ElementType.form)
-                .Hr.Render();
+            Common.PhuongThucThanhToan(Currencies);
             RenderSearch();
         }
 

@@ -1,6 +1,6 @@
 ﻿using Bridge.Html5;
 using Components;
-using MisaOnline.NghiepVu.Common;
+using MisaOnline.NghiepVu;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -144,7 +144,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             if (IsExisted()) return;
             ThongTinChung();
-            ChungTu.Render();
+            Common.ChungTu();
             ChiTiet();
         }
 

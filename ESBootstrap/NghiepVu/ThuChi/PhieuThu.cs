@@ -37,7 +37,7 @@ namespace MisaOnline.NghiepVu.ThuChi
         {
             if (IsExisted()) return;
             ThongTinChung();
-            Common.ChungTu.Render();
+            Common.ChungTu();
             HoachToan();
         }
 

@@ -3,29 +3,24 @@ using System.Collections.Generic;
 using Bridge;
 using Components;
 using MVVM;
-using Newtonsoft.Json;
 
 namespace MisaOnline.NghiepVu.NganHang
 {
-    public class ThuTienGoi : Component
+    public class ThuTienKhachHang : Component
     {
         public override string ControlName { get; set; } = nameof(ThuTienGoi);
-        public override string Title { get; set; } = "Thu tiền gởi";
-        public List<SelectListItem> DepositReason { get; set; }
-        public SelectListItem SelectedDepositReason { get; set; }
+        public override string Title { get; set; } = "Thu tiền khách hàng";
+        public List<SelectListItem> Currencies { get; set; }
         public ObservableArray<Header<object>> Headers { get; set; }
         public ObservableArray<object> Data { get; set; }
 
-        public ThuTienGoi()
+        public ThuTienKhachHang()
         {
-            DepositReason = new List<SelectListItem>
+            Currencies = new List<SelectListItem>
             {
-                new SelectListItem { Value = 1, Display = "Rút tiền gởi về nộp quỹ" },
-                new SelectListItem { Value = 2, Display = "Thu hoàn thuế GTGT" },
-                new SelectListItem { Value = 3, Display = "Thu hoàn ứng" },
-                new SelectListItem { Value = 4, Display = "Thu khác" },
+                new SelectListItem { Value = 1, Display = "Việt Nam đồng" },
+                new SelectListItem { Value = 2, Display = "Đô la Mỹ" },
             };
-            SelectedDepositReason = DepositReason[0];
 
             Headers = new ObservableArray<Header<object>>(new Header<object>[] {
                 new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
@@ -58,37 +53,31 @@ namespace MisaOnline.NghiepVu.NganHang
         {
             if (IsExisted())
                 return;
+            Html.Instance.H2.Text(Title).End.Render();
+            Common.PhuongThucThanhToan(Currencies);
             ThongTinChung();
-            Common.ChungTu();
             HoachToan();
         }
 
         private void ThongTinChung()
         {
-            Html.Instance.H2.Text(Title).End
-                .Grid().GridRow().ClassName("marginTop5").GridCell(8)
-                .Panel("Thông tin chung")
+            Html.Instance
+                .Grid().GridRow().ClassName("marginTop5").GridCell(12)
+                .Panel()
                 .Table.Style("width: 100%")
                     .TBody
                     .TRow
-                        .TData.Text("Đối tượng").EndOf(ElementType.td)
+                        .TData.Text("Khách hàng").EndOf(ElementType.td)
                         .TData.SmallInput().Value("Nhân JS").EndOf(ElementType.td)
-                        .TData.SmallInput().Value("Nhân JS").EndOf(ElementType.tr)
+                        .TData.Text("Ngày thu tiền").EndOf(ElementType.td)
+                        .TData.SmallDatePicker(DateTime.Now.ToString()).EndOf(ElementType.td)
+                        .TData.Button("Lấy dữ liệu", "button info small", "fa fa-search").EndOf(ElementType.tr)
                     .TRow
-                        .TData.Text("Địa chỉ").EndOf(ElementType.td)
-                        .TData.ColSpan(2).SmallInput().Value("387A Lê Văn Khương").EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("Nộp vào TK").EndOf(ElementType.td)
-                        .TData.SmallInput().Value("00057898").EndOf(ElementType.td)
-                        .TData.SmallInput().Value("Lan Anh").EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("Lý do thu").EndOf(ElementType.td)
-                        .TData.SmallDropDown(DepositReason, SelectedDepositReason, "Display", "Value").EndOf(ElementType.td)
-                        .TData.SmallInput().PlaceHolder("Thu từ...").EndOf(ElementType.tr)
-                    .TRow
-                        .TData.Text("Tham chiếu").EndOf(ElementType.td)
-                        .TData.ColSpan(2).Button.ClassName("button info small").Span.ClassName("fa fa-search")
-                .EndOf(".cell").Render();
+                        .TData.Text("Nhân viên bán hàng").EndOf(ElementType.td)
+                        .TData.SmallInput("Lan Anh").EndOf(ElementType.td)
+                        .TData.Text("Số tiền").EndOf(ElementType.td)
+                        .TData.SmallInput("20.000.000").EndOf(ElementType.tr)
+                .EndOf(".row").Render();
         }
 
         private void HoachToan()

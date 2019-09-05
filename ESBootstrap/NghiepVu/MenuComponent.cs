@@ -32,7 +32,7 @@ namespace MisaOnline.NghiepVu
                 new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars", LinkedComponent = typeof(DanhSachThuChi),
                     MenuItems = new List<MenuItem> {
                         new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuThu) },
-                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienKhachHang) },
+                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuChi.ThuTienKhachHang) },
                         new MenuItem { ItemText = "Thu tiền khách hàng hàng loạt", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienKhachHangHangLoat) },
                         new MenuItem { ItemText = "Phiếu chi", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuChi) },
                         new MenuItem { IsDevider = true },
@@ -45,6 +45,7 @@ namespace MisaOnline.NghiepVu
                 new MenuItem { ItemText = "Ngân hàng", IconClass = "mif-library",
                     MenuItems = new List<MenuItem> {
                         new MenuItem { ItemText = "Thu tiền gởi", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienGoi) },
+                        new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(NganHang.ThuTienKhachHang) },
                     }},
                 new MenuItem { ItemText = "Mua hàng", IconClass = "mif-add-shopping-cart" },
                 new MenuItem { ItemText = "Bán hàng", IconClass = "mif-truck" },
