@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using Components;
+using MisaOnline.NghiepVu.NganHang;
 using MisaOnline.NghiepVu.ThuChi;
 using MVVM;
 using System;
@@ -41,7 +42,10 @@ namespace MisaOnline.NghiepVu
                         new MenuItem { ItemText = "Kiểm kê quỹ", IconClass = "fa fa-file-word", LinkedComponent = typeof(KiemKeQuy) },
                     }
                 },
-                new MenuItem { ItemText = "Ngân hàng", IconClass = "mif-library" },
+                new MenuItem { ItemText = "Ngân hàng", IconClass = "mif-library",
+                    MenuItems = new List<MenuItem> {
+                        new MenuItem { ItemText = "Thu tiền gởi", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienGoi) },
+                    }},
                 new MenuItem { ItemText = "Mua hàng", IconClass = "mif-add-shopping-cart" },
                 new MenuItem { ItemText = "Bán hàng", IconClass = "mif-truck" },
                 new MenuItem { ItemText = "Hóa đơn", IconClass = "fa fa-file-invoice" },

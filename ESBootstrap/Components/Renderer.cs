@@ -56,6 +56,11 @@ namespace Components
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
         }
 
+        public static Html PlaceHolder(this Html html, string value)
+        {
+            return html.Attr("placeholder", value);
+        }
+
         public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
         {
             return html.Dropdown(list, selectedItem, displayField, valueField)
