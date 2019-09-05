@@ -9,6 +9,7 @@
 @info: #30abe6;
 @infoDark: #1891cb;
 @bgTab: #4a9dc5;
+@bgBar: #dedede;
 
 html {
     font-size: 13px;
@@ -16,10 +17,15 @@ html {
 
 body {
     background-color: @whiteGrey;
+    min-height: 100vh;
 }
 
 #tab-content {
     background-color: @white;
+}
+
+.vh-100 {
+    height: 100vh;
 }
 
 .borderTop0 {
@@ -81,12 +87,17 @@ table {
     }
 }
 
-li.active {
-    > a {
-        font-weight: 700;
-    }
+li {
     > ul {
-        display: block;
+        display: none;
+    }
+    &.active {
+        > a {
+            font-weight: 600;
+        }
+        > ul {
+            display: block;
+        }
     }
 }
 
@@ -209,6 +220,13 @@ ul#tabs {
     }
 }
 
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: @bgBar;
+}
 
 ::-webkit-scrollbar {
     height: 0.65rem;
