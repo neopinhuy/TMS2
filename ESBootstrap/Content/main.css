@@ -117,7 +117,6 @@ td {
   margin: 1rem 0;
   border: 1px solid #cecece;
   border-top: 0;
-  border-bottom: 0;
   top: -2px;
   overflow: hidden;
 }
@@ -144,6 +143,7 @@ td {
 .table-wrapper table tr td {
   padding: 2px !important;
   border: 1px solid #e5e5e5;
+  white-space: nowrap;
 }
 .table-wrapper table tr td:first-child {
   border-left: 0;
@@ -152,7 +152,7 @@ td {
   border-right: 0;
 }
 .table-wrapper table tr:last-child td {
-  border-bottom-color: #cecece;
+  border-bottom: 0;
 }
 .table-wrapper table th {
   padding: 0.625rem !important;
@@ -195,11 +195,8 @@ td {
   width: 0.65rem;
   border: 0;
   border-radius: 3px;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-::-webkit-scrollbar:hover {
   background: #c6c7ca;
+  transition: all 0.45s ease;
 }
 ::-webkit-scrollbar-thumb {
   background: #929292;

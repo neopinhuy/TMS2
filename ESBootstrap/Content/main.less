@@ -171,7 +171,6 @@ td {
     margin: 1rem 0;
     border: 1px solid @grayNormal;
     border-top: 0;
-    border-bottom: 0;
     top: -2px;
     overflow: hidden;
     &:hover {
@@ -202,6 +201,7 @@ td {
             td {
                 padding: 2px !important;
                 border: 1px solid @grayLight;
+                white-space: nowrap;
 
                 &:first-child {
                     border-left: 0;
@@ -213,7 +213,7 @@ td {
             }
 
             &:last-child td {
-                border-bottom-color: @grayNormal;
+                border-bottom: 0;
             }
         }
 
@@ -269,12 +269,8 @@ td {
     width: 0.65rem;
     border: 0;
     border-radius: 3px;
-    background: transparent;
-    transition: all 0.3s ease;
-}
-
-::-webkit-scrollbar:hover {
     background: #c6c7ca;
+    transition: all 0.45s ease;
 }
 
 ::-webkit-scrollbar-thumb {
