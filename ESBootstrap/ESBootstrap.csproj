@@ -96,6 +96,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
+    <None Include="Content\color.less" />
     <None Include="Content\fontawesome\less\brands.less" />
     <None Include="Content\fontawesome\less\fontawesome.less" />
     <None Include="Content\fontawesome\less\regular.less" />

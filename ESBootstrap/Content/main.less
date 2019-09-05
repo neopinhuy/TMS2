@@ -1,15 +1,4 @@
-﻿@dark: #848484;
-@whiteGrey: rgba(241, 241, 241, 0.3);
-@transparent: transparent;
-@white: #fff;
-@grey: #dfdfdf;
-@borderColor: #004c85;
-@darkCobalt: #0036a3;
-@primary: #0366d6;
-@info: #30abe6;
-@infoDark: #1891cb;
-@bgTab: #4a9dc5;
-@bgBar: #dedede;
+﻿@import "color";
 
 html {
     font-size: 13px;
@@ -71,20 +60,6 @@ nav {
 
 .table-info {
     display: none;
-}
-
-table {
-    th {
-        padding: 0.625rem !important;
-    }
-    td {
-        padding: 2px !important;
-        > .button.small {
-            top: -2px;
-            height: 27px !important;
-            line-height: 27px !important;
-        }
-    }
 }
 
 li {
@@ -178,10 +153,17 @@ ul#tabs {
         margin-top: 0;
     }
 }
+
+td {
+    padding: 2px;
+    vertical-align: middle;
+}
+
 .table-wrapper {
     margin: 1rem 0;
-    border: 1px solid #dfdfdf;
+    border: 1px solid @grayNormal;
     border-top: 0;
+    border-bottom: 0;
     top: -2px;
     overflow: auto;
 
@@ -189,13 +171,52 @@ ul#tabs {
         margin: 0;
         border: 0;
 
+        > .button.small {
+            top: -2px;
+            height: 27px !important;
+            line-height: 27px !important;
+        }
+
+        thead {
+            background: @grayLight;
+            border-bottom: 0;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: @light;
+        }
+
+        tr {
+            td {
+                padding: 2px !important;
+                border: 1px solid @grayLight;
+
+                &:first-child {
+                    border-left: 0;
+                }
+
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+
+            &:last-child td {
+                border-bottom-color: @grayNormal;
+            }
+        }
+
         th {
+            padding: 0.625rem !important;
             white-space: nowrap;
-            border-top: 1px solid #dfdfdf;
-            border-right: 1px solid #dfdfdf;
+            border: 1px solid @grayNormal;
+
+            &:first-child {
+                border-left: none;
+            }
 
             &:last-child {
                 border-right: none;
+                position: relative;
             }
         }
 
@@ -225,7 +246,7 @@ ul#tabs {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: @bgBar;
+    background-color: @grayLight;
 }
 
 ::-webkit-scrollbar {
