@@ -27,7 +27,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .TData.Label.Text("NV mua hàng").End.End
                 .TData.SmallInput().Value("NV34501").End.End
                 .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                .TData.SmallInput("", "right").Value("0").EndOf(".panel")
+                .TData.SmallInput("", "right").Value("0").EndOf(ElementType.form)
             .Render();
         }
 

@@ -23,7 +23,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected virtual void RenderSearch()
         {
-            Html.Instance.Form.Table.ClassName("subcompact marginTop5 table-border")
+            Html.Instance.Table
             .TRow
                 .TData.Label.Text("Khách hàng").End.End
                 .TData.SmallInput().Value("KH00001").End.End
@@ -34,7 +34,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .TData.Label.Text("NV bán hàng").End.End
                 .TData.SmallInput().Value("NV34501").End.End
                 .TData.Label.Text("Số tiền").EndOf(ElementType.td)
-                .TData.SmallInput("", "right").Value("0").EndOf(".panel")
+                .TData.SmallInput("", "right").Value("0").EndOf(ElementType.table)
             .Render();
         }
 

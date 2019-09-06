@@ -27,8 +27,8 @@ namespace MisaOnline.NghiepVu
 
         public static void PhuongThucThanhToan(List<SelectListItem> Currencies)
         {
-            Html.Instance.Panel()
-                .Form.ClassName("middle").Table.ClassName("subcompact").TRow
+            Html.Instance
+                .Table.TRow
                     .TData.Label.Text("Phương thức thanh toán").EndOf(ElementType.td)
                     .TData.SmallRadio("PhuongThucThanhToan", "Tiền mặt").EndOf(ElementType.td)
                     .TData.SmallRadio("PhuongThucThanhToan", "Tiền gởi").EndOf(ElementType.td)
@@ -36,7 +36,7 @@ namespace MisaOnline.NghiepVu
                     .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
                     .TData.Label.Text("Tỷ giá").EndOf(ElementType.td)
                     .TData.SmallInput("", "right").Value("1.00").Attr("readonly", "readonly").EndOf(ElementType.td)
-                    .EndOf(ElementType.form)
+                    .EndOf(ElementType.table)
                 .Hr.Render();
         }
     }
