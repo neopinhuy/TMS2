@@ -9,7 +9,11 @@ body {
 }
 
 #tab-content {
+    top: -2px;
     background-color: @white;
+    h1, h2 {
+        .header(1.7rem);
+    }
 }
 
 .vh-100 {
@@ -86,6 +90,11 @@ li {
 
 ul.tabs-list {
     > li {
+        border-bottom: 1px solid @infoDark !important;
+        &.active {
+            border-bottom: 0 !important;
+        }
+
         > .icon {
             display: none;
             position: absolute;
@@ -93,6 +102,7 @@ ul.tabs-list {
             top: 0;
             color: @darkCobalt;
         }
+
         &:hover {
             > .icon {
                 display: inline;
@@ -104,12 +114,11 @@ ul.tabs-list {
 .tabs-wrapper {
     background-color: @transparent;
     > ul.tabs-list {
+        border-bottom: 1px solid @infoDark !important;
         > li.active {
             border-color: @infoDark;
             a {
-                font-weight: 500;
-                background-color: transparent;
-                color: #1a9bd8;
+                .header(0.9rem);
                 background-color: transparent;
             }
         }
@@ -150,6 +159,10 @@ ul#tabs {
     }
 }
 
+.panel {
+    border-color: @infoDark;
+}
+
 .cell {
     > .panel {
         height: 100%;
@@ -159,6 +172,9 @@ ul#tabs {
 .tabs-content {
     .table-wrapper {
         margin-top: 0;
+        border: 1px solid @infoDark;
+        border-top: 0;
+        top: -1px;
     }
 }
 

@@ -1,8 +1,7 @@
-﻿using Bridge.Html5;
-using Components;
+﻿using Components;
 using MVVM;
 using System;
-using System.Collections.Generic;
+using Direction = Components.Direction;
 
 namespace MisaOnline.NghiepVu.ThuChi
 {
@@ -18,9 +17,10 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderSearch()
         {
-            Html.Instance.H2.Text("Danh sách thu chi").End
-                .Panel("Thông tin chung").ClassName("marginTop5")
-                .Form.Table
+            Html.Instance.H2.Text(Title).End
+                .Grid().GridRow().GridCell(7)
+                .Panel("Thông tin chung").Margin(Direction.top, 10)
+                .Form.Table.WidthPercentage(100)
                     .TBody.TRow
                         .TData.Text("Kỳ").End
                         .TData
@@ -46,56 +46,13 @@ namespace MisaOnline.NghiepVu.ThuChi
                         .End
                         .TData.End
                         .TData.Button.ClassName("button small info").Text("Lấy dữ liệu").End.End
-                .EndOf(".panel").Render(); // end of row
+                .EndOf(".grid").Render(); // end of row
         }
 
-        private static void RenderTables()
+        private void RenderTables()
         {
-            Html.Instance.ClassName("marginTop5")
-                .Table(new ObservableArray<Header<object>>(new Header<object>[] {
-                    new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
-                    new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
-                    new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
-                    new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
-                    new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
-                    new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
-                    new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
-                    new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
-                    new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
-                    new Header<object> {
-                        EditButton = true,
-                        EditEvent = (x) => {
-                            new PhieuThu().RenderAndFocus();
-                        }
-                    },
-                }), new ObservableArray<object>(new object[] {
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                    new
-                    {
-                        NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                        SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
-                    },
-                })).EndOf(".panel").Render();
-
+            Html.Instance.Margin(Direction.top, 10)
+                .Table(ThuChiHeader, ThuChiData).EndOf(".panel").Render();
         }
 
         private static void ChiTiet()

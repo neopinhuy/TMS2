@@ -49,11 +49,11 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         public void ChiTiet()
         {
-            Html.Instance.EndOf(".row").GridRow().GridCell(12)
-                .Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
+            Html.Instance.EndOf(".row").GridRow().GridCell(12).Margin(Direction.top, 10)
+                .Ul.Attr("data-role", "tabs").Attr("data-expand", "true")
                 .Li.ClassName("active").Anchor.Href("#hachToan").Text("1. Hạch toán").EndOf(ElementType.li)
                 .Li.Anchor.Href("#thue").Text("2. Thuế").EndOf(ElementType.ul)
-                .Div.ClassName("border bd-default no-border-top p-2 tabs-content")
+                .Div.ClassName("tabs-content")
                     .Div.Id("hachToan")
                     .Table(HachToanHeader, HachToan)
                     .EndOf("#hachToan")

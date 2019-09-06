@@ -117,6 +117,16 @@ namespace Components
             return html.Style($"padding-{direction} : {padding}{unit}");
         }
 
+        public static Html Width(this Html html, int width)
+        {
+            return html.Style($"width: {width}px");
+        }
+
+        public static Html WidthPercentage(this Html html, int width)
+        {
+            return html.Style($"width: {width}%");
+        }
+
         public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
         {
             var table = new Table<Data>(metadata, rowData);

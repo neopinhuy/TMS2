@@ -16,6 +16,8 @@ namespace MisaOnline.NghiepVu.ThuChi
         public SelectListItem SelectedState { get; set; }
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
+        public ObservableArray<Header<object>> ThuChiHeader { get; set; }
+        public ObservableArray<object> ThuChiData { get; set; }
 
         public DanhSachThuChi()
         {
@@ -61,6 +63,33 @@ namespace MisaOnline.NghiepVu.ThuChi
                 new SelectListItem { Value = 3, Display = "Tất cả" },
             };
             SelectedType = Types[2];
+            ThuChiHeader = new ObservableArray<Header<object>>(new Header<object>[] {
+                new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
+                new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
+                new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
+                new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
+                new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
+                new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
+                new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
+                new Header<object> {
+                    EditButton = true,
+                    EditEvent = (x) => {
+                        new PhieuThu().RenderAndFocus();
+                    }
+                },
+            });
+            ThuChiData = new ObservableArray<object>(new object[] {
+                new
+                {
+                    NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
+                    SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                },
+            });
+            ThuChiData.AddRange(ThuChiData.Data);
+            ThuChiData.AddRange(ThuChiData.Data);
+            ThuChiData.AddRange(ThuChiData.Data);
         }
     }
 }

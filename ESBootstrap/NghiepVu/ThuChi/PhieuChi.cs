@@ -50,35 +50,10 @@ namespace MisaOnline.NghiepVu.ThuChi
                     KhoanMucCP = "N/A", DonVi = "Board", DoiTuongTHCP = "", CongTrinh = "N/A",
                     DonDatHang = "DH-2019-08-17", DonMuaHang = "MH-2019-01-01", HopDongMua = "", HopDongBan = "",
                 },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKNo = "452 - Chi khác", TKCo = "", SoTien = "10.500.000",
-                    NghiepVu = "Chi tiền du lịch", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS", TenNganHang = "VCB",
-                    KhoanMucCP = "N/A", DonVi = "Board", DoiTuongTHCP = "", CongTrinh = "N/A",
-                    DonDatHang = "DH-2019-08-17", DonMuaHang = "MH-2019-01-01", HopDongMua = "", HopDongBan = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKNo = "452 - Chi khác", TKCo = "", SoTien = "10.500.000",
-                    NghiepVu = "Chi tiền du lịch", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS", TenNganHang = "VCB",
-                    KhoanMucCP = "N/A", DonVi = "Board", DoiTuongTHCP = "", CongTrinh = "N/A",
-                    DonDatHang = "DH-2019-08-17", DonMuaHang = "MH-2019-01-01", HopDongMua = "", HopDongBan = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKNo = "452 - Chi khác", TKCo = "", SoTien = "10.500.000",
-                    NghiepVu = "Chi tiền du lịch", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS", TenNganHang = "VCB",
-                    KhoanMucCP = "N/A", DonVi = "Board", DoiTuongTHCP = "", CongTrinh = "N/A",
-                    DonDatHang = "DH-2019-08-17", DonMuaHang = "MH-2019-01-01", HopDongMua = "", HopDongBan = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKNo = "452 - Chi khác", TKCo = "", SoTien = "10.500.000",
-                    NghiepVu = "Chi tiền du lịch", DoiTuong = "Nhân JS", TenDoiTuong = "Nhân JS", TenNganHang = "VCB",
-                    KhoanMucCP = "N/A", DonVi = "Board", DoiTuongTHCP = "", CongTrinh = "N/A",
-                    DonDatHang = "DH-2019-08-17", DonMuaHang = "MH-2019-01-01", HopDongMua = "", HopDongBan = "",
-                }
             });
+            HachToan.AddRange(HachToan.Data);
+            HachToan.AddRange(HachToan.Data);
+            HachToan.AddRange(HachToan.Data);
 
             ThueHeader = new ObservableArray<Header<object>>(new Header<object>[]
             {
@@ -102,37 +77,10 @@ namespace MisaOnline.NghiepVu.ThuChi
                     GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
                     MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
                 },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKThueGTGT = "452 - Chi khác", TienThueGTGT = "", PTThueGTGT = "10.500.000",
-                    GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
-                    MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKThueGTGT = "452 - Chi khác", TienThueGTGT = "", PTThueGTGT = "10.500.000",
-                    GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
-                    MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKThueGTGT = "452 - Chi khác", TienThueGTGT = "", PTThueGTGT = "10.500.000",
-                    GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
-                    MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKThueGTGT = "452 - Chi khác", TienThueGTGT = "", PTThueGTGT = "10.500.000",
-                    GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
-                    MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
-                },
-                new
-                {
-                    DienGiai = "Hạch toán chi", TKThueGTGT = "452 - Chi khác", TienThueGTGT = "", PTThueGTGT = "10.500.000",
-                    GiaTriHHDVChuaThue = "Chi tiền du lịch", NgayHoaDon = "Nhân JS", SoHoaDon = "Nhân JS", NhomHHDVMuaVao = "VCB",
-                    MaNCC = "N/A", TenNCC = "Board", MaSoThueNCC = "",
-                },
             });
+            Thue.AddRange(Thue.Data);
+            Thue.AddRange(Thue.Data);
+            Thue.AddRange(Thue.Data);
         }
     }
 }

@@ -5,7 +5,14 @@ body {
   background-color: rgba(241, 241, 241, 0.3);
 }
 #tab-content {
+  top: -2px;
   background-color: #fff;
+}
+#tab-content h1,
+#tab-content h2 {
+  color: #0c83bb;
+  font-weight: 700;
+  font-size: 1.7rem;
 }
 .vh-100 {
   position: relative;
@@ -61,6 +68,12 @@ li.active > a {
 li.active > ul {
   display: block;
 }
+ul.tabs-list > li {
+  border-bottom: 1px solid #1891cb !important;
+}
+ul.tabs-list > li.active {
+  border-bottom: 0 !important;
+}
 ul.tabs-list > li > .icon {
   display: none;
   position: absolute;
@@ -74,12 +87,16 @@ ul.tabs-list > li:hover > .icon {
 .tabs-wrapper {
   background-color: transparent;
 }
+.tabs-wrapper > ul.tabs-list {
+  border-bottom: 1px solid #1891cb !important;
+}
 .tabs-wrapper > ul.tabs-list > li.active {
   border-color: #1891cb;
 }
 .tabs-wrapper > ul.tabs-list > li.active a {
-  font-weight: 500;
-  color: #1a9bd8;
+  color: #0c83bb;
+  font-weight: 700;
+  font-size: 0.9rem;
   background-color: transparent;
 }
 ul#tabs {
@@ -103,11 +120,17 @@ ul#tabs {
 .sidebar:hover {
   overflow-y: auto;
 }
+.panel {
+  border-color: #1891cb;
+}
 .cell > .panel {
   height: 100%;
 }
 .tabs-content .table-wrapper {
   margin-top: 0;
+  border: 1px solid #1891cb;
+  border-top: 0;
+  top: -1px;
 }
 td {
   padding: 2px;

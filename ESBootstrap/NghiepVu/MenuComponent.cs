@@ -1,4 +1,5 @@
 ﻿using Components;
+using MisaOnline.NghiepVu.Kho;
 using MisaOnline.NghiepVu.NganHang;
 using MisaOnline.NghiepVu.ThuChi;
 using System;
@@ -48,7 +49,11 @@ namespace MisaOnline.NghiepVu
                 new MenuItem { ItemText = "Mua hàng", IconClass = "mif-add-shopping-cart" },
                 new MenuItem { ItemText = "Bán hàng", IconClass = "mif-truck" },
                 new MenuItem { ItemText = "Hóa đơn", IconClass = "fa fa-file-invoice" },
-                new MenuItem { ItemText = "Kho", IconClass = "fa fa-warehouse" },
+                new MenuItem { ItemText = "Kho", IconClass = "fa fa-warehouse",
+                    MenuItems = new List<MenuItem> {
+                        new MenuItem { ItemText = "Nhập xuất kho", IconClass = "fa fa-file-word", LinkedComponent = typeof(NhapXuatKho) },
+                    },
+                },
                 new MenuItem { ItemText = "Settings", IsGroup = true },
                 new MenuItem { ItemText = "Thiết lập", IconClass = "mif-cogs" },
                 new MenuItem { ItemText = "Tài khoản", IconClass = "mif-user" },
