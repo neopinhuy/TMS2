@@ -17,8 +17,10 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected void PhuongThucThanhToan()
         {
+            Html.Instance.H2.Text(Title).End.Grid().GridRow().GridCell(9).Panel();
             Common.PhuongThucThanhToan(Currencies);
             RenderSearch();
+            Html.Instance.EndOf(".grid");
         }
 
         protected virtual void RenderSearch()
@@ -40,7 +42,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderChungTuCongNo()
         {
-            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
+            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 10)
                 .Li.ClassName("active").Anchor.Href("#chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
                 .Div.ClassName("tabs-content")
                     .Div.Id("chungTuCongNo")

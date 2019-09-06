@@ -20,7 +20,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Li.ClassName("active").Anchor.Href("#kiemKe").Text("Kiểm kê").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#thanhVienThamGia").Text("Thành viên tham gia").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#ketQuaXuLy").Text("Kết quả xử lý").EndOf(ElementType.ul)
-                .Div.ClassName("tabs-content border-right-bottom-left bd-lightGray")
+                .Div
                 .Style("top: -1px; padding: 5px 10px 0px;")
                     .Div.Id("kiemKe").Padding(Direction.top, 5)
                     .Grid().GridRow().GridCell(8)

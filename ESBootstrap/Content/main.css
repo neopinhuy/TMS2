@@ -11,7 +11,7 @@ body {
 #tab-content h1,
 #tab-content h2 {
   color: #0c83bb;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.7rem;
 }
 .vh-100 {
@@ -148,7 +148,7 @@ td {
   overflow: overlay;
 }
 .table-wrapper table {
-  margin: 0;
+  margin: -1px 0 0 0;
   border: 0;
 }
 .table-wrapper table > .button.small {

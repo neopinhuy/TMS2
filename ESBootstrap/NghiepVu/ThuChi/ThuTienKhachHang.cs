@@ -48,6 +48,7 @@ namespace MisaOnline.NghiepVu.ThuChi
             ChungTu.AddRange(ChungTu.Data);
             ChungTu.AddRange(ChungTu.Data);
             ChungTu.AddRange(ChungTu.Data);
+            ChungTu.AddRange(ChungTu.Data);
         }
     }
 
