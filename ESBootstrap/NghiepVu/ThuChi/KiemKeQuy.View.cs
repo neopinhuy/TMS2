@@ -20,9 +20,8 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Li.ClassName("active").Anchor.Href("#kiemKe").Text("Kiểm kê").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#thanhVienThamGia").Text("Thành viên tham gia").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#ketQuaXuLy").Text("Kết quả xử lý").EndOf(ElementType.ul)
-                .Div
-                .Style("top: -1px; padding: 5px 10px 0px;")
-                    .Div.Id("kiemKe").Padding(Direction.top, 5)
+                .Div.ClassName("tabs-content")
+                    .Div.Id("kiemKe").Style("padding: 10px;")
                     .Grid().GridRow().GridCell(8)
                     .Panel("Thông tin chung")
                         .Table.Style("width: 100%;")
@@ -39,8 +38,10 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .EndOf(".cell").Render();
 
             BienBan();
+            Html.Instance.EndOf("#kiemKe");
             NguoiThamGia();
             KetQuaXuLy();
+            Html.Instance.EndOf(".tabs-content");
         }
 
         private static void BienBan()
@@ -58,7 +59,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TData.Text("Giờ").End
                     .TData.SmallInput()
                 .EndOf(ElementType.tr)
-                .EndOf("#kiemKe").Render();
+                .EndOf(".cell").Render();
         }
 
         private void NguoiThamGia()
@@ -76,7 +77,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                     .TRow.TData.Style("width: 100px").Text("Lý do").End.TData.SmallInput().EndOf(ElementType.tr)
                     .TRow.TData.Text("Kết luận").End.TData.SmallInput().EndOf(ElementType.tr)
                     .TRow.TData.End.TData.SmallCheckbox("Đã xử lý chênh lệch")
-                .EndOf(".tabs-content")
+                .EndOf("#ketQuaXuLy")
                 .Render();
         }
 

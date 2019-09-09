@@ -357,7 +357,7 @@ namespace MVVM
 
         public Html Style(string style)
         {
-            Context["style"]["cssText"] = style.Trim();
+            Context["style"]["cssText"] += style.Trim();
             return this;
         }
 
