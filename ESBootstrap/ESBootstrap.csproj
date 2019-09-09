@@ -137,45 +137,52 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
+    <None Include="bundleconfig.json" />
+    <None Include="bundleconfig.json.bindings">
+      <DependentUpon>bundleconfig.json</DependentUpon>
+    </None>
     <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.bindings">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\color.less" />
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.eot">
+    <None Include="Content\webfonts\fa-brands-400.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.ttf">
+    <None Include="Content\webfonts\fa-brands-400.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff">
+    <None Include="Content\webfonts\fa-brands-400.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-brands-400.woff2">
+    <None Include="Content\webfonts\fa-brands-400.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.eot">
+    <None Include="Content\webfonts\fa-regular-400.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.ttf">
+    <None Include="Content\webfonts\fa-regular-400.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff">
+    <None Include="Content\webfonts\fa-regular-400.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-regular-400.woff2">
+    <None Include="Content\webfonts\fa-regular-400.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.eot">
+    <None Include="Content\webfonts\fa-solid-900.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.ttf">
+    <None Include="Content\webfonts\fa-solid-900.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff">
+    <None Include="Content\webfonts\fa-solid-900.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Content\fontawesome\webfonts\fa-solid-900.woff2">
+    <None Include="Content\webfonts\fa-solid-900.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Content\main.less">
@@ -187,34 +194,32 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\fontawesome\css\all.css">
+    <Content Include="bin\Debug\bridge\bundle.css" />
+    <Content Include="bin\Debug\bridge\bundle.js" />
+    <Content Include="bin\Debug\bridge\bundle.min.css">
+      <DependentUpon>bundle.css</DependentUpon>
+    </Content>
+    <Content Include="bin\Debug\bridge\bundle.min.js">
+      <DependentUpon>bundle.js</DependentUpon>
+    </Content>
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\webfonts\fa-brands-400.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fontawesome\LICENSE.txt" />
-    <Content Include="Content\fontawesome\webfonts\fa-brands-400.svg">
+    <Content Include="Content\webfonts\fa-regular-400.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\fontawesome\webfonts\fa-regular-400.svg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\fontawesome\webfonts\fa-solid-900.svg">
+    <Content Include="Content\webfonts\fa-solid-900.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\main.css">
       <DependentUpon>main.less</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\main.min.css">
       <DependentUpon>main.css</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\metro-all.min.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Content\metro-all.css" />
     <Content Include="Content\metro.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\metro.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\sb-bg-1.jpg">
@@ -235,8 +240,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets'))" />
+    <Error Condition="!Exists('..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets'))" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)index.html" "$(TargetDir)bridge" /F /Y</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets" Condition="Exists('..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets')" />
 </Project>
