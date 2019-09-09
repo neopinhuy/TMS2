@@ -6,7 +6,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class PhieuChi : Component
     {
-        public override string ControlName { get; set; } = "PhieuChi";
         public override string Title { get; set; } = "Phiếu chi";
         public List<SelectListItem> WithdrawReason { get; set; } = new List<SelectListItem>()
         {

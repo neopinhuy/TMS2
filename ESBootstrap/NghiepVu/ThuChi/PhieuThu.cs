@@ -6,7 +6,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class PhieuThu : Component
     {
-        public override string ControlName { get; set; } = "PhieuThu";
         public override string Title { get; set; } = "Phiếu thu";
         public List<SelectListItem> DepositReason { get; set; }
         public SelectListItem SelectedDepositReason { get; set; }

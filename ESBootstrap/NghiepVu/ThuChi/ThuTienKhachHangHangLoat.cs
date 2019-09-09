@@ -5,7 +5,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class ThuTienKhachHangHangLoat : ThuTienKhachHang
     {
-        public override string ControlName { get; set; } = "ThuTienKhachHangHangLoat";
         public override string Title { get; set; } = "Thu tiền khách hàng hàng loạt";
         public List<SelectListItem> Ranges { get; set; } = new List<SelectListItem>
         {

@@ -6,7 +6,6 @@ namespace MisaOnline.NghiepVu.Kho
 {
     public partial class NhapXuatKho : Component
     {
-        public override string ControlName { get; set; } = "NhapXuatKho";
         public override string Title { get; set; } = "Nhập xuất kho";
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }

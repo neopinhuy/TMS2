@@ -112,6 +112,11 @@ namespace Components
             return html.Style($"margin-{direction} : {margin}{unit}");
         }
 
+        public static Html MarginRem(this Html html, Direction direction, float margin)
+        {
+            return html.Style($"margin-{direction} : {margin}rem");
+        }
+
         public static Html Padding(this Html html, Direction direction, float padding, string unit = "px")
         {
             return html.Style($"padding-{direction} : {padding}{unit}");

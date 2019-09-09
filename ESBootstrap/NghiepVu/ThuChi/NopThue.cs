@@ -6,7 +6,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class NopThue : Component
     {
-        public override string ControlName { get; set; } = "NopThue";
         public override string Title { get; set; } = "Nộp thuế";
         public ObservableArray<Header<object>> ChungTuHeader { get; set; }
         public Header<object>[] ThueGTGT { get; set; }

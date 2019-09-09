@@ -9,7 +9,6 @@ namespace MisaOnline.NghiepVu.NganHang
 {
     public partial class ThuTienGoi : Component
     {
-        public override string ControlName { get; set; } = nameof(ThuTienGoi);
         public override string Title { get; set; } = "Thu tiền gởi";
         public List<SelectListItem> DepositReason { get; set; }
         public SelectListItem SelectedDepositReason { get; set; }

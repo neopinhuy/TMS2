@@ -6,19 +6,21 @@ using System.Collections.Generic;
 
 namespace MisaOnline.NghiepVu.ThuChi
 {
-    public partial class DanhSachThuChi : Component
+    public partial class KiemKe : Component
     {
-        public override string Title { get; set; } = "Danh sách thu chi";
+        public override string Title { get; set; } = "Kết quả kiểm kê";
         public List<SelectListItem> Ranges { get; set; }
         public SelectListItem SelectedRange { get; set; }
         public List<SelectListItem> States { get; set; }
         public SelectListItem SelectedState { get; set; }
         public List<SelectListItem> Types { get; set; }
         public SelectListItem SelectedType { get; set; }
-        public ObservableArray<Header<object>> ThuChiHeader { get; set; }
-        public ObservableArray<object> ThuChiData { get; set; }
+        public ObservableArray<Header<object>> KiemKeHeader { get; set; }
+        public ObservableArray<object> KiemKeData { get; set; }
+        public ObservableArray<Header<object>> ChiTietHeader { get; set; }
+        public ObservableArray<object> ChiTietData { get; set; }
 
-        public DanhSachThuChi()
+        public KiemKe()
         {
             Ranges = new List<SelectListItem>
             {
@@ -62,33 +64,48 @@ namespace MisaOnline.NghiepVu.ThuChi
                 new SelectListItem { Value = 3, Display = "Tất cả" },
             };
             SelectedType = Types[2];
-            ThuChiHeader = new ObservableArray<Header<object>>(new Header<object>[] {
-                new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
-                new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
-                new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
-                new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
-                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
-                new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
-                new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
-                new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
-                new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
+            KiemKeHeader = new ObservableArray<Header<object>>(new Header<object>[] {
+                new Header<object> { HeaderText = "Ngày", FieldName = "Ngay" },
+                new Header<object> { HeaderText = "Giờ", FieldName = "Gio" },
+                new Header<object> { HeaderText = "Số kiểm kê", FieldName = "SoKiemKe" },
+                new Header<object> { HeaderText = "Kiểm kê đến ngày", FieldName = "KiemKeDenNgay" },
+                new Header<object> { HeaderText = "Loại tiền", FieldName = "LoaiTien" },
+                new Header<object> { HeaderText = "Mục đích", FieldName = "MucDich" },
+                new Header<object> { HeaderText = "Kết luận", FieldName = "KetLuan" },
+                new Header<object> { HeaderText = "Đã xử lý", FieldName = "DaXuLy" },
                 new Header<object> {
                     EditButton = true,
                     EditEvent = (x) => {
-                        new PhieuThu().RenderAndFocus();
+                        new KiemKeQuy().RenderAndFocus();
                     }
                 },
             });
-            ThuChiData = new ObservableArray<object>(new object[] {
+            KiemKeData = new ObservableArray<object>(new object[] {
                 new
                 {
-                    NgayHachToan = "20/08/2019", NgayChungTu = "20/08/2019", SoChungTu = "CT00001", DienGiai = "Chug tu 000001",
-                    SoTien = "100.000.000", DoiTuong = "Nhân JS", LyDoThuChi = "Thu tiền công nợ", NgayGhiSoQuy = "20/08/2019", LoaiChungTu = "Công nợ"
+                    Ngay = "20/08/2019", Gio = "10:12", SoKiemKe = "KKQ123l2", KiemKeDenNgay = "20/07/2019",
+                    LoaiTien = "VNĐ", MucDich = "Tại sao nhiều tiền vậy", KetLuan = "Lợi nhuận cao", DaXuLy = "Nộp về NH"
                 },
             });
-            ThuChiData.AddRange(ThuChiData.Data);
-            ThuChiData.AddRange(ThuChiData.Data);
-            ThuChiData.AddRange(ThuChiData.Data);
+            KiemKeData.AddRange(KiemKeData.Data);
+            KiemKeData.AddRange(KiemKeData.Data);
+            KiemKeData.AddRange(KiemKeData.Data);
+
+            ChiTietHeader = new ObservableArray<Header<object>>(new Header<object>[] {
+                new Header<object> { HeaderText = "Mệnh giá", FieldName = "MenhGia" },
+                new Header<object> { HeaderText = "Số lượng (tờ)", FieldName = "SoLuongTo" },
+                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
+            });
+            ChiTietData = new ObservableArray<object>(new object[] {
+                new
+                {
+                    MenhGia = "500.000", SoLuongTo = "1000", SoTien = "5.000.000", DienGiai = "",
+                },
+            });
+            ChiTietData.AddRange(ChiTietData.Data);
+            ChiTietData.AddRange(ChiTietData.Data);
+            ChiTietData.AddRange(ChiTietData.Data);
         }
     }
 }

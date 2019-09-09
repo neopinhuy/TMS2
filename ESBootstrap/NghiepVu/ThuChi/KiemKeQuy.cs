@@ -7,7 +7,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class KiemKeQuy : Component
     {
-        public override string ControlName { get; set; } = "KiemKeQuy";
         public override string Title { get; set; } = "Bảng kiểm kê quỹ";
         public ObservableArray<Header<object>> KiemKeHeader { get; set; }
         public ObservableArray<object> KiemKeData { get; set; }

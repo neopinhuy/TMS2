@@ -5,7 +5,6 @@ namespace Components
 {
     public abstract class Component
     {
-        public abstract string ControlName { get; set; }
         public abstract string Title { get; set; }
         public abstract void Render();
         protected string FullClassName => GetType().FullName.Replace(".", "_");

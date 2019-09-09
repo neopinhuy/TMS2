@@ -72,7 +72,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void KetQuaXuLy()
         {
-            Html.Instance.Div.Id("ketQuaXuLy").Padding(Direction.top, 1, "rem")
+            Html.Instance.Div.Id("ketQuaXuLy").Padding(Direction.top, 1, "rem").ClassName("border")
                 .Table.Style("width: 100%")
                     .TRow.TData.Style("width: 100px").Text("Lý do").End.TData.SmallInput().EndOf(ElementType.tr)
                     .TRow.TData.Text("Kết luận").End.TData.SmallInput().EndOf(ElementType.tr)

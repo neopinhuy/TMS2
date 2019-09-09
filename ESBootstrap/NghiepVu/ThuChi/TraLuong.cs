@@ -5,7 +5,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class TraLuong : Component
     {
-        public override string ControlName { get; set; } = "TraLuong";
         public override string Title { get; set; } = "Trả lương";
         public ObservableArray<Header<object>> TraLuongHeader { get; set; }
         public ObservableArray<object> TraLuongData { get; set; }

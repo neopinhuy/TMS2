@@ -19,7 +19,6 @@ namespace MisaOnline.NghiepVu
 
     public partial class MenuComponent : Component
     {
-        public override string ControlName { get; set; }
         public override string Title { get; set; }
         public List<MenuItem> MenuItems { get; set; }
 
@@ -38,6 +37,7 @@ namespace MisaOnline.NghiepVu
                         new MenuItem { ItemText = "Trả tiền NCC", IconClass = "fa fa-file-word", LinkedComponent = typeof(TraTienNCC) },
                         new MenuItem { ItemText = "Nộp thuế", IconClass = "fa fa-file-word", LinkedComponent = typeof(NopThue) },
                         new MenuItem { ItemText = "Trả lương", IconClass = "fa fa-file-word", LinkedComponent = typeof(TraLuong) },
+                        new MenuItem { ItemText = "Kết quả kiểm kê", IconClass = "fa fa-file-word", LinkedComponent = typeof(KiemKe) },
                         new MenuItem { ItemText = "Kiểm kê quỹ", IconClass = "fa fa-file-word", LinkedComponent = typeof(KiemKeQuy) },
                     }
                 },

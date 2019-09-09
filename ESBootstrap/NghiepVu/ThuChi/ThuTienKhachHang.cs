@@ -7,7 +7,6 @@ namespace MisaOnline.NghiepVu.ThuChi
 {
     public partial class ThuTienKhachHang : Component
     {
-        public override string ControlName { get; set; } = "ThuTienKhachHang";
         public override string Title { get; set; } = "Thu tiền khách hàng";
         public List<SelectListItem> Currencies { get; set; }
         public ObservableArray<Header<object>> ChungTuHeader { get; set; }

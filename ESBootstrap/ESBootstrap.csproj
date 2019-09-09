@@ -85,8 +85,12 @@
     <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.View.cs">
       <DependentUpon>ThuTienKhachHang.cs</DependentUpon>
     </Compile>
+    <Compile Include="NghiepVu\ThuChi\KiemKe.cs" />
     <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.View.cs">
       <DependentUpon>DanhSachThuChi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NghiepVu\ThuChi\KiemKe.View.cs">
+      <DependentUpon>KiemKe.cs</DependentUpon>
     </Compile>
     <Compile Include="NghiepVu\ThuChi\KiemKeQuy.cs" />
     <Compile Include="NghiepVu\ThuChi\KiemKeQuy.View.cs">
