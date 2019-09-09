@@ -122,6 +122,11 @@ namespace Components
             return html.Style($"padding-{direction} : {padding}{unit}");
         }
 
+        public static Html PaddingRem(this Html html, Direction direction, float margin)
+        {
+            return html.Style($"padding-{direction} : {margin}rem");
+        }
+
         public static Html Width(this Html html, int width)
         {
             return html.Style($"width: {width}px");
