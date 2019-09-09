@@ -21,7 +21,7 @@ namespace MisaOnline.NghiepVu.ThuChi
                 .Li.ClassName("active").Anchor.Href("#thanhVienThamGia").Text("Thành viên tham gia").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#ketQuaXuLy").Text("Kết quả xử lý").EndOf(ElementType.ul)
                 .Div.ClassName("tabs-content")
-                    .Div.Id("kiemKe").Style("padding: 10px;")
+                    .Div.Id("kiemKe").Style("padding-top: 1rem;")
                     .Grid().GridRow().GridCell(8)
                     .Panel("Thông tin chung")
                         .Table.Style("width: 100%;")
@@ -64,7 +64,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void NguoiThamGia()
         {
-            Html.Instance.Div.Id("thanhVienThamGia").Padding(Direction.top, 5)
+            Html.Instance.Div.Id("thanhVienThamGia")
                 .Table(NguoiThamGiaHeader, NguoiThamGiaData)
                 .EndOf("#thanhVienThamGia")
                 .Render();
@@ -72,7 +72,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void KetQuaXuLy()
         {
-            Html.Instance.Div.Id("ketQuaXuLy").Padding(Direction.top, 5)
+            Html.Instance.Div.Id("ketQuaXuLy").Padding(Direction.top, 1, "rem")
                 .Table.Style("width: 100%")
                     .TRow.TData.Style("width: 100px").Text("Lý do").End.TData.SmallInput().EndOf(ElementType.tr)
                     .TRow.TData.Text("Kết luận").End.TData.SmallInput().EndOf(ElementType.tr)

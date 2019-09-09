@@ -8,15 +8,16 @@ namespace Components
         public abstract string ControlName { get; set; }
         public abstract string Title { get; set; }
         public abstract void Render();
+        protected string FullClassName => GetType().FullName.Replace(".", "_");
 
         public bool IsExisted()
         {
-            var tab = Document.QuerySelector($"#tab-content #tab_{ControlName}");
+            var tab = Document.QuerySelector($"#tab-content #{FullClassName}");
             if (tab != null) return true;
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#tab_{ControlName}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
+                .Li.Anchor.Href($"#{FullClassName}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Close).End.Render();
-            Html.Take("#tab-content").Div.Id("tab_" + ControlName).Render();
+            Html.Take("#tab-content").Div.Id(FullClassName).Render();
             return false;
         }
 
@@ -33,12 +34,12 @@ namespace Components
 
         private void Close()
         {
-            Html.Take($"#tabs a[href='#tab_{ControlName}']");
+            Html.Take($"#tabs a[href='#{FullClassName}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");
             var previousTab = Html.Context.ParentElement.PreviousElementSibling;
             var nextTab = Html.Context.ParentElement.NextElementSibling;
             Html.Context.ParentElement.Remove();
-            Html.Take("#tab_" + ControlName);
+            Html.Take("#" + FullClassName);
             Html.Context.Remove();
             if (isActive)
             {
@@ -51,7 +52,7 @@ namespace Components
 
         public void Focus()
         {
-            var html = Html.Take($"a[href='#tab_{ControlName}'");
+            var html = Html.Take($"a[href='#{FullClassName}'");
             html.Trigger(EventType.Click);
         }
     }
