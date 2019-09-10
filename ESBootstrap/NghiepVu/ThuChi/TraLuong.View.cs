@@ -27,7 +27,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected void ChungTuMuaHang()
         {
-            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 5)
+            Html.Instance.Tab().Margin(Direction.top, 5)
                 .Li.ClassName("active").Anchor.Href("#traLuong").Text("Thông tin trả lương").EndOf(ElementType.ul)
                 .Div.ClassName("tabs-content")
                     .Div.Id("traLuong")

@@ -35,29 +35,6 @@
     <NoStdLib>true</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bridge, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bridge.Core.17.9.0\lib\net40\Bridge.dll</HintPath>
-    </Reference>
-    <Reference Include="Bridge.Html5, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bridge.Html5.17.9.0\lib\net40\Bridge.Html5.dll</HintPath>
-    </Reference>
-    <Reference Include="Bridge.jQuery2, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bridge.jQuery.2.9.4\lib\net40\Bridge.jQuery2.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bridge.Newtonsoft.Json.1.16.0\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Retyped.Core, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Retyped.Core.1.6.6733\lib\net40\Retyped.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Retyped.dom, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Retyped.dom.2.8.6733\lib\net40\Retyped.dom.dll</HintPath>
-    </Reference>
-    <Reference Include="Retyped.es5, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Retyped.es5.2.8.6733\lib\net40\Retyped.es5.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="NghiepVu\Common\ChungTu.cs" />
     <Compile Include="NghiepVu\Kho\NhapXuatKho.cs" />
     <Compile Include="Components\Header.cs" />
@@ -89,6 +66,9 @@
     <Compile Include="NghiepVu\ThuChi\KiemKe.cs" />
     <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.View.cs">
       <DependentUpon>DanhSachThuChi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NghiepVu\ThuChi\DuBaoDongTien.View.cs">
+      <DependentUpon>DuBaoDongTien.cs</DependentUpon>
     </Compile>
     <Compile Include="NghiepVu\ThuChi\KiemKe.View.cs">
       <DependentUpon>KiemKe.cs</DependentUpon>
@@ -138,6 +118,7 @@
     <Compile Include="SQLite\SQLiteTokenReader.cs" />
     <Compile Include="NghiepVu\ThuChi\PhieuThu.cs" />
     <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.cs" />
+    <Compile Include="NghiepVu\ThuChi\DuBaoDongTien.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
@@ -198,6 +179,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bridge.json">
+      <Paket>True</Paket>
+    </Content>
     <Content Include="bin\Debug\bridge\bundle.css" />
     <Content Include="bin\Debug\bridge\bundle.js" />
     <Content Include="bin\Debug\bridge\bundle.min.css">
@@ -245,9 +229,89 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets'))" />
     <Error Condition="!Exists('..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets'))" />
+    <Error Condition="!Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets'))" />
   </Target>
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)index.html" "$(TargetDir)bridge" /F /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets" Condition="Exists('..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets')" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Bridge">
+          <HintPath>..\packages\Bridge.Core\lib\net40\Bridge.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Bridge.Html5">
+          <HintPath>..\packages\Bridge.Html5\lib\net40\Bridge.Html5.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Bridge.jQuery2">
+          <HintPath>..\packages\Bridge.jQuery\lib\net40\Bridge.jQuery2.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+          <HintPath>..\packages\Bridge.Newtonsoft.Json\lib\net40\Newtonsoft.Json.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Retyped.Core">
+          <HintPath>..\packages\Retyped.Core\lib\net40\Retyped.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Retyped.dom">
+          <HintPath>..\packages\Retyped.dom\lib\net40\Retyped.dom.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
+      <ItemGroup>
+        <Reference Include="Retyped.es5">
+          <HintPath>..\packages\Retyped.es5\lib\net40\Retyped.es5.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="..\packages\Bridge.Min\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min\build\Bridge.Min.targets')" Label="Paket" />
+  <Import Project="..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
 </Project>

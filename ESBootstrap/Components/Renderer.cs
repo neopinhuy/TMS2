@@ -144,6 +144,23 @@ namespace Components
             return html;
         }
 
+        public static Html Tab(this Html html)
+        {
+            return html.Ul.Attr("data-role", "tabs").Attr("data-expand", "true");
+        }
+
+        public static Html TabItem(this Html html, string title, string reference, bool active = false)
+        {
+            html.Li.Anchor.Href("#" + reference).Text(title).End.Render();
+            if (active) html.ClassName("active");
+            return html.End;
+        }
+
+        public static Html TabContent(this Html html)
+        {
+            return html.Div.ClassName("tabs-content");
+        }
+
         public static void RenderAndFocus(this Component component)
         {
             component.Render();

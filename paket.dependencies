@@ -1,5 +1,6 @@
 source https://api.nuget.org/v3/index.json
 
+nuget BuildWebCompiler 1.12.405
 nuget NuGet.CommandLine
 nuget Bridge 17.9.0 prerelease restriction: >= net461
 nuget Bridge.Core 17.9.0 prerelease restriction: >= net461

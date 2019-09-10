@@ -1,7 +1,6 @@
 ﻿using Components;
 using MVVM;
 using System;
-using System.Collections.Generic;
 
 namespace MisaOnline.NghiepVu.ThuChi
 {
@@ -42,9 +41,9 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         private void RenderChungTuCongNo()
         {
-            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 10)
-                .Li.ClassName("active").Anchor.Href("#chungTuCongNo").Text("Chứng từ công nợ").EndOf(ElementType.ul)
-                .Div.ClassName("tabs-content")
+            Html.Instance.Tab().Margin(Direction.top, 10)
+                .TabItem("Chứng từ công nợ", "chungTuCongNo", active: true).EndOf(ElementType.ul)
+                .TabContent()
                     .Div.Id("chungTuCongNo")
                     .Table(ChungTuHeader, ChungTu)
                     .Button("Thu tiền", "button small primary marginTop5", "mif-floppy-disk")

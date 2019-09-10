@@ -16,7 +16,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected void KiemKeThongTinChung()
         {
-            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true")
+            Html.Instance.Tab()
                 .Li.ClassName("active").Anchor.Href("#kiemKe").Text("Kiểm kê").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#thanhVienThamGia").Text("Thành viên tham gia").EndOf(ElementType.li)
                 .Li.ClassName("active").Anchor.Href("#ketQuaXuLy").Text("Kết quả xử lý").EndOf(ElementType.ul)
@@ -83,7 +83,7 @@ namespace MisaOnline.NghiepVu.ThuChi
 
         protected void ChungTuMuaHang()
         {
-            Html.Instance.Ul.Attr("data-role", "tabs").Attr("data-expand", "true").Margin(Direction.top, 10)
+            Html.Instance.Tab().Margin(Direction.top, 10)
                 .Li.ClassName("active").Anchor.Href("#kiemKeThucTe").Text("Kiểm kê thực tế").EndOf(ElementType.ul)
                 .Div.ClassName("tabs-content")
                     .Div.Id("kiemKeThucTe")
