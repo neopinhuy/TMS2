@@ -1,4 +1,2 @@
-# ESBootstrap
-Bootstrap wrapper in C# using Bridge.net to Javascript
-
-Nuget: https://www.nuget.org/packages/ESBootstrap
+# MisaOnline
+We are building a billion dollar application
