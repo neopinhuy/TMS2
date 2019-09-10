@@ -107,22 +107,22 @@ namespace Components
             return html.Div.ClassName("cell cell-" + size);
         }
 
-        public static Html Margin(this Html html, Direction direction, float margin, string unit = "px")
+        public static Html Margin(this Html html, Direction direction, decimal margin, string unit = "px")
         {
             return html.Style($"margin-{direction} : {margin}{unit}");
         }
 
-        public static Html MarginRem(this Html html, Direction direction, float margin)
+        public static Html MarginRem(this Html html, Direction direction, decimal margin)
         {
             return html.Style($"margin-{direction} : {margin}rem");
         }
 
-        public static Html Padding(this Html html, Direction direction, float padding, string unit = "px")
+        public static Html Padding(this Html html, Direction direction, decimal padding, string unit = "px")
         {
             return html.Style($"padding-{direction} : {padding}{unit}");
         }
 
-        public static Html PaddingRem(this Html html, Direction direction, float margin)
+        public static Html PaddingRem(this Html html, Direction direction, decimal margin)
         {
             return html.Style($"padding-{direction} : {margin}rem");
         }

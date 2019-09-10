@@ -21,7 +21,8 @@ namespace MisaOnline.NghiepVu.NganHang
         private void DoiChieuOnline()
         {
             Html.Instance.TabContent().Panel()
-                .Grid().GridRow().GridCell(8)
+                .Grid().GridRow().GridCell(8).MarginRem(Direction.top, 0.5m)
+                .Panel("Lọc")
                 .Table
                     .TBody
                     .TRow
@@ -37,9 +38,37 @@ namespace MisaOnline.NghiepVu.NganHang
                         .TData.Text("Loại tiền").EndOf(ElementType.td)
                         .TData.SmallDropDown(Currencies, Currencies[0], "Display", "Value").EndOf(ElementType.td)
                         .TData.Button("Lấy dữ liệu")
-                    .EndOf(".cell")
-                    .GridCell(12)
-                    .Table(DoiChieuOnlineHeaders, DoiChieuData).MarginRem(Direction.top, 1)
+                    .EndOf(".row")
+                    .GridRow().GridCell(12)
+                    .Table(DoiChieuOnlineHeaders, DoiChieuData)
+                    .EndOf(".row")
+
+                .GridRow().GridCell(12).Panel()
+                .Table.TBody
+                    .TRow.TData.EndOf(ElementType.td)
+                    .TData.Text("Sổ phụ ngân hàng").EndOf(ElementType.td)
+                    .TData.Text("Sổ kế toán tiền gởi").EndOf(ElementType.td)
+                    .TData.Text("Chênh lệch").EndOf(ElementType.tr)
+
+                    .TRow.TData.Text("Số dư đầu kỳ").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.tr)
+
+                    .TRow.TData.Text("Tổng thu").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.tr)
+
+                    .TRow.TData.Text("Tổng chi").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.tr)
+
+                    .TRow.TData.Text("Số dư cuối kỳ").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.td)
+                    .TData.SmallInput("0", "right").EndOf(ElementType.tr)
                 .EndOf(".tabs-content").Render();
         }
 
