@@ -129,16 +129,6 @@ ul#tabs {
 .cell > .panel {
   height: 100%;
 }
-.tabs-content > .panel {
-  margin-top: -1px;
-  border-top: 0;
-}
-.tabs-content > .table-wrapper {
-  margin-top: 0;
-  border: 1px solid #1891cb;
-  border-top: 0;
-  top: -1px;
-}
 td {
   padding: 2px;
   vertical-align: middle;
@@ -146,7 +136,6 @@ td {
 .table-wrapper {
   margin: 1rem 0;
   border: 1px solid #cecece;
-  border-top: 0;
   top: -2px;
   overflow: hidden;
 }
@@ -201,6 +190,16 @@ td {
 }
 .table-wrapper table [colspan] {
   text-align: center;
+}
+.tabs-content > .panel {
+  margin-top: -1px;
+  border-top: 0;
+}
+.tabs-content > div > .table-wrapper {
+  margin-top: 0;
+  border: 1px solid #1891cb;
+  border-top: 0;
+  top: -1px;
 }
 .panel label.header {
   font-weight: 700;

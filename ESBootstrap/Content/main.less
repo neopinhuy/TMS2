@@ -174,19 +174,6 @@ ul#tabs {
     }
 }
 
-.tabs-content {
-    > .panel {
-        margin-top: -1px;
-        border-top: 0;
-    }
-    > .table-wrapper {
-        margin-top: 0;
-        border: 1px solid @infoDark;
-        border-top: 0;
-        top: -1px;
-    }
-}
-
 td {
     padding: 2px;
     vertical-align: middle;
@@ -195,7 +182,6 @@ td {
 .table-wrapper {
     margin: 1rem 0;
     border: 1px solid @grayNormal;
-    border-top: 0;
     top: -2px;
     overflow: hidden;
     &:hover {
@@ -264,6 +250,19 @@ td {
         [colspan] {
             text-align: center;
         }
+    }
+}
+
+.tabs-content {
+    > .panel {
+        margin-top: -1px;
+        border-top: 0;
+    }
+    > div > .table-wrapper {
+        margin-top: 0;
+        border: 1px solid @infoDark;
+        border-top: 0;
+        top: -1px;
     }
 }
 
