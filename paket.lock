@@ -1,0 +1,20 @@
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    Bridge (17.9) - restriction: >= net461
+      Bridge.Min (>= 17.9)
+    Bridge.Core (17.9) - restriction: >= net461
+    Bridge.Html5 (17.9) - restriction: >= net461
+      Bridge.Core (>= 17.9)
+    Bridge.jQuery (2.9.4) - restriction: >= net461
+      Bridge.Html5 (>= 16.0)
+    Bridge.Min (17.9) - restriction: >= net461
+      Bridge.Core (>= 17.9)
+    Bridge.Newtonsoft.Json (1.16) - restriction: >= net461
+      Bridge.Min (>= 17.9)
+    NuGet.CommandLine (5.2)
+    Retyped.Core (1.6.6733) - restriction: >= net461
+      Bridge.Core (>= 17.1)
+    Retyped.dom (2.8.6733) - restriction: >= net461
+      Retyped.es5 (>= 2.8.6733)
+    Retyped.es5 (2.8.6733) - restriction: >= net461
+      Retyped.Core (>= 1.6.6733)
