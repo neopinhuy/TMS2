@@ -317,5 +317,8 @@
     </When>
   </Choose>
   <Import Project="..\packages\Bridge.Min\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min\build\Bridge.Min.targets')" Label="Paket" />
+<<<<<<< Updated upstream
   <Import Project="..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
+=======
+>>>>>>> Stashed changes
 </Project>
