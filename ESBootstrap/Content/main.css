@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 13px;
 }
 body {
@@ -129,7 +129,11 @@ ul#tabs {
 .cell > .panel {
   height: 100%;
 }
-.tabs-content .table-wrapper {
+.tabs-content > .panel {
+  margin-top: -1px;
+  border-top: 0;
+}
+.tabs-content > .table-wrapper {
   margin-top: 0;
   border: 1px solid #1891cb;
   border-top: 0;

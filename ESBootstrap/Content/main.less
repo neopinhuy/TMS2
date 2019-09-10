@@ -175,7 +175,11 @@ ul#tabs {
 }
 
 .tabs-content {
-    .table-wrapper {
+    > .panel {
+        margin-top: -1px;
+        border-top: 0;
+    }
+    > .table-wrapper {
         margin-top: 0;
         border: 1px solid @infoDark;
         border-top: 0;

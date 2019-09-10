@@ -45,8 +45,10 @@ namespace MisaOnline.NghiepVu
                 },
                 new MenuItem { ItemText = "Ngân hàng", IconClass = "mif-library",
                     MenuItems = new List<MenuItem> {
+                    new MenuItem { ItemText = "Thu, chi tiền", IconClass = "fa fa-file-word", LinkedComponent = typeof(DanhSachThuChi) },
                         new MenuItem { ItemText = "Thu tiền gởi", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienGoi) },
                         new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(NganHang.ThuTienKhachHang) },
+                        new MenuItem { ItemText = "Đối chiếu ngân hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(NganHang.DoiChieuNganHang) },
                     }},
                 new MenuItem { ItemText = "Mua hàng", IconClass = "mif-add-shopping-cart" },
                 new MenuItem { ItemText = "Bán hàng", IconClass = "mif-truck" },
