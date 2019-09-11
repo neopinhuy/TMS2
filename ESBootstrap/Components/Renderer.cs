@@ -25,9 +25,9 @@ namespace Components
             return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
         }
 
-        public static Html Panel(this Html html, string text = string.Empty, string clsPanel = string.Empty)
+        public static Html Panel(this Html html, string text = string.Empty)
         {
-            return html.Div.Attr("data-role", "panel").ClassName("panel").Attr("data-cls-panel", clsPanel)
+            return html.Div.Attr("data-role", "panel").ClassName("panel")
                 .Label.ClassName("header").Text(text).End;
         }
 
@@ -90,6 +90,16 @@ namespace Components
                 html.Attr("checked", check.ToString());
             }
             return html;
+        }
+
+        public static Html Disabled(this Html html)
+        {
+            return html.Attr("disabled", "disabled");
+        }
+
+        public static Html Readonly(this Html html)
+        {
+            return html.Attr("readonly", "readonly");
         }
 
         public static Html Grid(this Html html)

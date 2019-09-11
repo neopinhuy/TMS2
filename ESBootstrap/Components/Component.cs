@@ -9,6 +9,10 @@ namespace Components
         public abstract void Render();
         protected string FullClassName => GetType().FullName.Replace(".", "_");
 
+        /// <summary>
+        /// Check if the component has been mounted to the main tab
+        /// </summary>
+        /// <returns>True if it has been mounted, and vice versa</returns>
         public bool IsExisted()
         {
             var tab = Document.QuerySelector($"#tab-content #{FullClassName}");

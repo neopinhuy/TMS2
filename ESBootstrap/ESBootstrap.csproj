@@ -194,7 +194,9 @@
     <Content Include="bin\Debug\bridge\bundle.min.js">
       <DependentUpon>bundle.js</DependentUpon>
     </Content>
-    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\webfonts\fa-brands-400.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
