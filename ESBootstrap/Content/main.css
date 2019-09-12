@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 13px;
 }
 body {
@@ -199,7 +199,7 @@ td {
 .table-wrapper table [colspan] {
   text-align: center;
 }
-.tabs-content > .panel {
+.tabs-content > div > .panel {
   margin-top: -1px;
   border-top: 0;
 }

@@ -15,11 +15,6 @@ namespace Components
             return html.Attr("colspan", colSpan.ToString());
         }
 
-        public static Html EditButton(this Html html)
-        {
-            return html.TData.Button.ClassName("button small warning").I.ClassName("fa fa-edit").End;
-        }
-
         public static Html ActionColumn(this Html html)
         {
             return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
@@ -147,9 +142,17 @@ namespace Components
             return html.Style($"width: {width}%");
         }
 
-        public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
+        /// <summary>
+        /// Render the table and its wrapper, auto enclosing component
+        /// </summary>
+        /// <param name="html">Html</param>
+        /// <param name="headerData">Header description</param>
+        /// <param name="rowData">Row data</param>
+        /// <typeparam name="Data">Generic type of the data row</typeparam>
+        /// <returns></returns>
+        public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> headerData, ObservableArray<Data> rowData)
         {
-            var table = new Table<Data>(metadata, rowData);
+            var table = new Table<Data>(headerData, rowData);
             table.Render();
             return html;
         }
@@ -169,6 +172,11 @@ namespace Components
         public static Html TabContent(this Html html)
         {
             return html.Div.ClassName("tabs-content");
+        }
+
+        public static Html TextAlign(this Html html, Direction direction)
+        {
+            return html.Style("text-align: " + direction.ToString());
         }
 
         public static void RenderAndFocus(this Component component)

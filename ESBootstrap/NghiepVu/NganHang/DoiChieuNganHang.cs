@@ -13,6 +13,11 @@ namespace MisaOnline.NghiepVu.NganHang
         public List<SelectListItem> KySelectList { get; set; }
         public ObservableArray<Header<object>> DoiChieuOnlineHeaders { get; set; }
         public ObservableArray<object> DoiChieuData { get; set; }
+
+        public ObservableArray<Header<object>> ChungTuThuTienHeaders { get; set; }
+        public ObservableArray<object> ChungTuThuTienData { get; set; }
+        public ObservableArray<Header<object>> ChungTuChiTienHeaders { get; set; }
+        public ObservableArray<object> ChungTuChiTienData { get; set; }
         public List<SelectListItem> Currencies = new List<SelectListItem>
         {
             new SelectListItem { Value = 1, Display = "Việt Nam đồng" },
@@ -58,6 +63,22 @@ namespace MisaOnline.NghiepVu.NganHang
             DoiChieuData.AddRange(DoiChieuData.Data);
             DoiChieuData.AddRange(DoiChieuData.Data);
             DoiChieuData.AddRange(DoiChieuData.Data);
+
+            ChungTuThuTienHeaders = new ObservableArray<Header<object>>(new Header<object>[] {
+                new Header<object> { HeaderText = "Ngày", FieldName = "Ngay" },
+                new Header<object> { HeaderText = "Số", FieldName = "So" },
+                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
+                new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
+            });
+
+            ChungTuThuTienData = new ObservableArray<object>(new object[] {
+                new {
+                    Ngay = "Thu tiền gởi", So = "123 - Gởi tiền", SoTien = "874 - ddd", DoiTuong = "15.000.000",
+                }
+            });
+            ChungTuThuTienData.AddRange(ChungTuThuTienData.Data);
+            ChungTuThuTienData.AddRange(ChungTuThuTienData.Data);
+            ChungTuThuTienData.AddRange(ChungTuThuTienData.Data);
         }
     }
 }
