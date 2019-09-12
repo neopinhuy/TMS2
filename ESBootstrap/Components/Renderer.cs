@@ -8,6 +8,10 @@ namespace Components
         top, right, bottom, left
     }
 
+    public enum BorderType {
+        dotted, dasheddashed, solid, @double, groove, ridge, inset, outset, none, hidden
+    }
+
     public static class Renderer
     {
         public static Html ColSpan(this Html html, int colSpan)
@@ -22,8 +26,9 @@ namespace Components
 
         public static Html Panel(this Html html, string text = string.Empty)
         {
-            return html.Div.Attr("data-role", "panel").ClassName("panel")
-                .Label.ClassName("header").Text(text).End;
+            html.Div.ClassName("panel");
+            if (!string.IsNullOrEmpty(text)) html.Label.ClassName("header").Text(text).End.Render();
+            return html;
         }
 
         public static Html SmallDatePicker(this Html html, string value = null)
@@ -140,6 +145,28 @@ namespace Components
         public static Html WidthPercentage(this Html html, int width)
         {
             return html.Style($"width: {width}%");
+        }
+
+        public static Html Height(this Html html, int height)
+        {
+            return html.Style($"height: {height}px");
+        }
+
+        public static Html HeightPercentage(this Html html, int height)
+        {
+            return html.Style($"height: {height}%");
+        }
+
+        public static Html Border(this Html html, int width = 0, BorderType borderType = BorderType.solid, string color = "000", Direction? direction = null)
+        {
+            if (direction != null)
+                return html.Style($"border-{direction}: {width}px {borderType} #{color}");
+            return html.Style($"border: {width}px {borderType} #{color}");
+        }
+
+        public static Html Display(this Html html, string display)
+        {
+            return html.Style($"display: {display};");
         }
 
         /// <summary>

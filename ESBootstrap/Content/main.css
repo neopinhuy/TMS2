@@ -132,10 +132,23 @@ ul#tabs {
   vertical-align: middle;
 }
 .panel {
+  padding: 0.5rem;
   border-color: #1891cb;
 }
-.cell > .panel {
-  height: 100%;
+.panel .header {
+  position: absolute;
+  top: -1.6rem;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  padding: 0 5px;
+  background-color: #fff;
+  color: #0c83bb;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.panel .header + * {
+  margin-top: 0.5rem;
 }
 td {
   padding: 2px;
@@ -200,23 +213,14 @@ td {
   text-align: center;
 }
 .tabs-content > div > .panel {
-  margin-top: -1px;
   border-top: 0;
+  margin-top: -1px;
 }
 .tabs-content > div > .table-wrapper {
   margin-top: 0;
   border: 1px solid #1891cb;
   border-top: 0;
   top: -1px;
-}
-.panel label.header {
-  font-weight: 700;
-  font-size: 0.9rem;
-  position: absolute;
-  top: -1.6rem;
-  padding: 0 5px;
-  background-color: #fff;
-  color: #0c83bb;
 }
 .bottom-bar {
   position: absolute;

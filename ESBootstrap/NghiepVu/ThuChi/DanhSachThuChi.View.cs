@@ -18,9 +18,9 @@ namespace MisaOnline.NghiepVu.ThuChi
         private void RenderSearch()
         {
             Html.Instance.H2.Text(Title).End
-                .Grid().GridRow().GridCell(7)
-                .Panel("Thông tin chung").Margin(Direction.top, 10)
-                .Form.Table.WidthPercentage(100)
+                .Grid().GridRow().Margin(Direction.top, 10).GridCell(8)
+                .Panel("Thông tin chung")
+                .Table.WidthPercentage(100)
                     .TBody.TRow
                         .TData.Text("Kỳ").End
                         .TData

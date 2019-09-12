@@ -90,33 +90,41 @@ namespace MisaOnline.NghiepVu.NganHang
                         .TData.Text("Đến").EndOf(ElementType.td)
                         .TData.SmallDatePicker(DateTime.Now.ToString()).EndOf(ElementType.td)
                         .TData.Button("Lấy dữ liệu")
-                .EndOf(".grid").EndOf(".panel")
-                .Grid().MarginRem(Direction.top, 1.6m).GridRow().GridCell(6)
-                    .Panel("Chứng từ thu tiền")
-                    .Table(ChungTuThuTienHeaders, ChungTuThuTienData)
-                    .Panel().Table.WidthPercentage(100)
-                        .TRow.TData.Text("I. Số dư đầu kỳ").EndOf(ElementType.td)
-                            .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
-                        .TRow.TData.Text("II. Tổng tiền thu đối chiếu trong kỳ").EndOf(ElementType.td)
-                            .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
-                        .TRow.TData.Text("II. Tổng tiền chi đối chiếu trong kỳ").EndOf(ElementType.td)
-                            .TData.TextAlign(Direction.right).Text("0").EndOf(".panel")
-                    .Panel().Style("border-top: 0").Label.Text("Ngày đối chiếu gần nhất ").End
-                        .Label.Text(DateTime.Now.ToString("dd/MM/yyyy")).End
-                        .Button("Bỏ đối chiếu")
-                .EndOf(".cell").GridCell(6)
-                    .Panel("Chứng từ chi tiền")
-                    .Table(ChungTuThuTienHeaders, ChungTuThuTienData)
-                    .Panel().Table.WidthPercentage(100)
-                        .TRow.TData.Text("IV. Số dư cuối kỳ sau khi đối chiếu (I + II - III):").EndOf(ElementType.td)
-                            .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
-                        .TRow.TData.Text("V. Số dư cuối kỳ trên sổ ngân hàng:").EndOf(ElementType.td)
-                            .TData.Input.TextAlign(Direction.right).Value("0").EndOf(ElementType.tr)
-                        .TRow.TData.Text("VI. Chênh lệch (IV - V):").EndOf(ElementType.td)
-                            .TData.TextAlign(Direction.right).Text("0").EndOf(".panel")
-                    .Panel().TextAlign(Direction.right).Style("border-top: 0")
-                        .Button("Lưu tạm").End.Button("Xác nhận đối chiếu").Margin(Direction.left, 5).End
-                .EndOf("#DoiChieuOffline");
+                .EndOf(".grid").EndOf(".panel");
+
+            Html.Instance.Grid().MarginRem(Direction.top, 1).GridRow().GridCell(6)
+                .Panel("Chứng từ thu tiền")
+                .Table(ChungTuThuTienHeaders, ChungTuThuTienData).EndOf(".panel")
+                .Panel().Border(width: 0, direction: Direction.top).Table.WidthPercentage(100)
+                    .TRow.TData.Text("I. Số dư đầu kỳ").EndOf(ElementType.td)
+                        .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
+                    .TRow.TData.Text("II. Tổng tiền thu đối chiếu trong kỳ").EndOf(ElementType.td)
+                        .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
+                    .TRow.TData.Text("II. Tổng tiền chi đối chiếu trong kỳ").EndOf(ElementType.td)
+                        .TData.TextAlign(Direction.right).Text("0").EndOf(".panel")
+                .Panel().Display("block").Border(0, direction: Direction.top).Label.Text("Ngày đối chiếu gần nhất ").End
+                    .Label.Text(DateTime.Now.ToString("dd/MM/yyyy")).End
+                    .Button("Bỏ đối chiếu")
+            .EndOf(".cell");
+            
+            ChungTuChiTien();
+
+            Html.Instance.EndOf("#DoiChieuOffline");
+        }
+
+        private void ChungTuChiTien() {
+            Html.Instance.GridCell(6)
+                .Panel("Chứng từ chi tiền")
+                .Table(ChungTuThuTienHeaders, ChungTuThuTienData).EndOf(".panel")
+                .Panel().Border(width: 0, direction: Direction.top).Table.WidthPercentage(100)
+                    .TRow.TData.Text("IV. Số dư cuối kỳ sau khi đối chiếu (I + II - III):").EndOf(ElementType.td)
+                        .TData.TextAlign(Direction.right).Text("0").EndOf(ElementType.tr)
+                    .TRow.TData.Text("V. Số dư cuối kỳ trên sổ ngân hàng:").EndOf(ElementType.td)
+                        .TData.Input.TextAlign(Direction.right).Value("0").EndOf(ElementType.tr)
+                    .TRow.TData.Text("VI. Chênh lệch (IV - V):").EndOf(ElementType.td)
+                        .TData.TextAlign(Direction.right).Text("0").EndOf(".panel")
+                .Panel().Display("block").TextAlign(Direction.right).Border(0, direction: Direction.top)
+                    .Button("Lưu tạm").End.Button("Xác nhận đối chiếu").Margin(Direction.left, 5).End.Render();
         }
     }
 }

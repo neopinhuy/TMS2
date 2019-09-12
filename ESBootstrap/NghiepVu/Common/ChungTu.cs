@@ -9,7 +9,7 @@ namespace MisaOnline.NghiepVu
     {
         public static void ChungTu()
         {
-            Html.Instance.GridCell(4).Panel("Chứng từ").Table.TBody
+            Html.Instance.GridCell(4).Panel("Chứng từ").HeightPercentage(100).Table.TBody
                 .TRow
                     .TData.Text("Ngày hạch toán").End
                     .TData.SmallDatePicker().Value(DateTime.Now.ToString())

@@ -172,12 +172,16 @@ ul#tabs {
 }
 
 .panel {
+    padding: .5rem;
     border-color: @infoDark;
-}
-
-.cell {
-    > .panel {
-        height: 100%;
+    .header {
+        .absolute(-1.6rem);
+        padding: 0 5px;
+        background-color: @white;
+        .header(0.9rem, 700);
+        & + * {
+            margin-top: 0.5rem;
+        }
     }
 }
 
@@ -262,26 +266,14 @@ td {
 
 .tabs-content {
     > div > .panel {
-        margin-top: -1px;
         border-top: 0;
+        margin-top: -1px;
     }
     > div > .table-wrapper {
         margin-top: 0;
         border: 1px solid @infoDark;
         border-top: 0;
         top: -1px;
-    }
-}
-
-.panel {
-    label.header {
-        font-weight: 700;
-        font-size: 0.9rem;
-        position: absolute;
-        top: -1.6rem;
-        padding: 0 5px;
-        background-color: @white;
-        color: #0c83bb;
     }
 }
 
