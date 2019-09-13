@@ -14,6 +14,9 @@
       "bin/Debug/bridge/newtonsoft.json.js",
       "bin/Debug/bridge/jquery-2.2.4.js",
       "bin/Debug/Content/metro.js",
+      "bin/Debug/bridge/SQLite.js",
+      "bin/Debug/bridge/MVVM.js",
+      "bin/Debug/bridge/Components.js",
       "bin/Debug/bridge/MisaOnline.js"
     ]
   }

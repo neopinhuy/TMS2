@@ -37,16 +37,6 @@
   <ItemGroup>
     <Compile Include="NghiepVu\Common\ChungTu.cs" />
     <Compile Include="NghiepVu\Kho\NhapXuatKho.cs" />
-    <Compile Include="Components\Header.cs" />
-    <Compile Include="Components\Renderer.cs" />
-    <Compile Include="Components\Table.cs" />
-    <Compile Include="MVVM\ElementType.cs" />
-    <Compile Include="MVVM\Html.cs" />
-    <Compile Include="Components\Component.cs" />
-    <Compile Include="MVVM\Observable.cs" />
-    <Compile Include="MVVM\ObservableArray.cs" />
-    <Compile Include="MVVM\ObservableArrayEvent.cs" />
-    <Compile Include="MVVM\SelectListItem.cs" />
     <Compile Include="NghiepVu\Kho\NhapXuatKho.View.cs">
       <DependentUpon>NhapXuatKho.cs</DependentUpon>
     </Compile>
@@ -54,14 +44,14 @@
     <Compile Include="NghiepVu\MenuComponent.View.cs">
       <DependentUpon>MenuComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="NghiepVu\NganHang\DoiChieuNganHang.View.cs">
+      <DependentUpon>DoiChieuNganHang.cs</DependentUpon>
+    </Compile>
     <Compile Include="NghiepVu\NganHang\ThuTienGoi.View.cs">
       <DependentUpon>ThuTienGoi.cs</DependentUpon>
     </Compile>
     <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.cs" />
     <Compile Include="NghiepVu\NganHang\DoiChieuNganHang.cs" />
-    <Compile Include="NghiepVu\NganHang\DoiChieuNganHang.View.cs">
-      <DependentUpon>DoiChieuNganHang.View.cs</DependentUpon>
-    </Compile>
     <Compile Include="NghiepVu\NganHang\ThuTienGoi.cs" />
     <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.View.cs">
       <DependentUpon>ThuTienKhachHang.cs</DependentUpon>
@@ -113,13 +103,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLite\SQLiteCommand.cs" />
-    <Compile Include="SQLite\SQLiteConnection.cs" />
-    <Compile Include="SQLite\SQLiteParameter.cs" />
-    <Compile Include="SQLite\SQLiteParser.cs" />
-    <Compile Include="SQLite\SQLiteStorageModes.cs" />
-    <Compile Include="SQLite\SQLiteTableMeta.cs" />
-    <Compile Include="SQLite\SQLiteTokenReader.cs" />
     <Compile Include="NghiepVu\ThuChi\PhieuThu.cs" />
     <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.cs" />
     <Compile Include="NghiepVu\ThuChi\DuBaoDongTien.cs" />
@@ -181,11 +164,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bridge.json">
-      <Paket>True</Paket>
-    </Content>
     <Content Include="bin\Debug\bridge\bundle.css" />
     <Content Include="bin\Debug\bridge\bundle.js" />
     <Content Include="bin\Debug\bridge\bundle.min.css">
@@ -224,8 +205,23 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="ViewModels\" />
+    <Reference Include="Bridge.jQuery2, Version=2.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bridge.jQuery.2.23.0\lib\net40\Bridge.jQuery2.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Components\Components.csproj">
+      <Project>{da6b732d-83f8-420f-af5e-343b32a75969}</Project>
+      <Name>Components</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVVM\MVVM.csproj">
+      <Project>{71801c9a-4feb-4a2f-8ec0-44366ff4d5b1}</Project>
+      <Name>MVVM</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLite\SQLite.csproj">
+      <Project>{8c53ed8f-b67c-4e79-a3b8-c424b23e9d4f}</Project>
+      <Name>SQLite</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" />
@@ -241,6 +237,7 @@
     <PostBuildEvent>xcopy "$(ProjectDir)index.html" "$(TargetDir)bridge" /F /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets" Condition="Exists('..\packages\BuildBundlerMinifier.2.9.406\build\BuildBundlerMinifier.targets')" />
+  <Import Project="..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
       <ItemGroup>
@@ -264,15 +261,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
-      <ItemGroup>
-        <Reference Include="Bridge.jQuery2">
-          <HintPath>..\packages\Bridge.jQuery\lib\net40\Bridge.jQuery2.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')" />
   </Choose>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3' Or $(TargetFrameworkVersion) == 'v4.7' Or $(TargetFrameworkVersion) == 'v4.7.1' Or $(TargetFrameworkVersion) == 'v4.7.2' Or $(TargetFrameworkVersion) == 'v4.8')">
@@ -319,5 +308,4 @@
     </When>
   </Choose>
   <Import Project="..\packages\Bridge.Min\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min\build\Bridge.Min.targets')" Label="Paket" />
-  <Import Project="..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets" Condition="Exists('..\packages\BuildWebCompiler.1.12.394\build\BuildWebCompiler.targets')" />
 </Project>
