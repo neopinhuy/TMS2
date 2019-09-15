@@ -1,6 +1,6 @@
 ﻿[
   {
-    "outputFile": "Content/main.css",
+    "outputFile": "./bin/debug/bridge/main.css",
     "inputFile": "Content/main.less"
   }
 ]
