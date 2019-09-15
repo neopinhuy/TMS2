@@ -9,6 +9,11 @@
     <link href="../Content/metro-all.css" rel="stylesheet" />
     <link href="../Content/main.css" rel="stylesheet" />
 
+    <script>
+        String.prototype.startsWith = String.prototype.startsWith || function (str) {
+            return this.indexOf(str) === 0;
+        };
+    </script>
     <script src="bridge.js"></script>
     <script src="newtonsoft.json.js"></script>
     <script src="jquery-2.2.4.js"></script>
