@@ -78,7 +78,12 @@ namespace Components
                     html.Text(header.HeaderText).Render();
                     if (header.Sortable)
                     {
-                        html.Span.ClassName("fa fa-filter").Margin(Direction.left, 5).End.Render();
+                        html.Span.ClassName("fa fa-filter").Event(EventType.Click, () =>
+                        {
+                            var filter = new ColumnFilter();
+                            filter.Render();
+                            filter.Toggle();
+                        }).End.Render();
                     }
                 }
                 html.EndOf(ElementType.th);

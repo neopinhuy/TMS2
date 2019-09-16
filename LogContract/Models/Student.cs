@@ -9,5 +9,6 @@ namespace LogAPI.Models
     {
         public string Name { get; set; }
         public string Age { get; set; }
+        public void Log() => Console.WriteLine(Age + Name);
     }
 }

@@ -1,4 +1,7 @@
-﻿html {
+﻿.hide {
+  display: none;
+}
+html {
   font-size: 13px;
 }
 body {
@@ -234,8 +237,7 @@ td {
 .fa-filter {
   font-size: 0.7rem;
   color: #999;
-  margin: 5px 0 0 5px;
-  float: right;
+  margin: 5px 0 0 2.3rem;
 }
 .fa-filter:hover {
   color: #444;

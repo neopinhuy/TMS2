@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Html5;
 using Bridge.jQuery2;
+using LogAPI.Models;
 using LogContract.Interfaces;
 using Newtonsoft.Json;
 
@@ -39,7 +40,8 @@ namespace LogOne.APIClients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    tcs.SetResult(JsonConvert.DeserializeObject<T>(xhr.ResponseText));
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
                 }
                 else
                 {
