@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 
 namespace LogAPI.Controllers
 {
-    [Route("api/studentcontroller")]
+    [Route("api/student")]
     public class TestController : BaseController<Student>
     {
+        [HttpGet]
+        [Route("{id}")]
         public override async Task<Student> Get(int id)
         {
             return new Student

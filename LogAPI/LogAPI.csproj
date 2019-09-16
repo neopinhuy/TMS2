@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\LogContract\IRestful.cs" Link="Contracts\IRestful.cs" />
+    <Compile Include="..\LogContract\Interfaces\IRestful.cs" Link="Contracts\IRestful.cs" />
   </ItemGroup>
 
   <ItemGroup>

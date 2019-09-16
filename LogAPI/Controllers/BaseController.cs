@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LogContract.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LogAPI.Controllers
 {
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class BaseController<T> : ControllerBase, IRestful<T> where T : class
     {
         [HttpGet]

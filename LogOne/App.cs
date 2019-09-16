@@ -4,15 +4,15 @@ using LogOne.NghiepVu;
 
 namespace LogOne
 {
-    public class App
+    public static class App
     {
-        public static void Main()
+        public async static void Main()
         {
-            new MenuComponent().Render();
             var thuChi = new DanhSachThuChi();
             thuChi.Render();
             new ThuTienKhachHangHangLoat().Render();
             thuChi.Focus();
+            await new MenuComponent().RenderAsync();
         }
     }
 }

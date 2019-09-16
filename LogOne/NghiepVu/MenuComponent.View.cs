@@ -1,8 +1,11 @@
 ﻿using Bridge.Html5;
 using Components;
+using LogAPI.Models;
+using LogOne.APIClients;
 using MVVM;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LogOne.NghiepVu
 {
@@ -13,6 +16,15 @@ namespace LogOne.NghiepVu
             Html.Take(".sidebar-wrapper");
             RenderMenuItems(MenuItems);
             Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
+        }
+
+        public override async Task RenderAsync()
+        {
+            Render();
+            // Load Get student
+            var client = new BaseClient<Student>();
+            var result = await client.Get(1);
+            Console.WriteLine(result);
         }
 
         private void RenderMenuItems(List<MenuItem> menuItems)

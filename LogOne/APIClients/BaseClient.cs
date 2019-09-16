@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Bridge.Html5;
+using Bridge.jQuery2;
 using LogContract.Interfaces;
+using Newtonsoft.Json;
 
 namespace LogOne.APIClients
 {
-    public class BaseClient<T> : IRestful<T>
+    public class BaseClient<T> : IRestful<T> where T : class
     {
+        public string BaseUrl { get; set; }
+        public BaseClient()
+        {
+            BaseUrl = "https://localhost:44331";
+        }
+        public BaseClient(string url)
+        {
+            BaseUrl = url;
+        }
         public IEnumerable<T> Get()
         {
             throw new NotImplementedException();
@@ -15,7 +27,27 @@ namespace LogOne.APIClients
         public async Task<T> Get(int id)
         {
             var type = typeof(T);
-            return default(T);
+            var tcs = new TaskCompletionSource<T>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}/{id}", true);
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    tcs.SetResult(JsonConvert.DeserializeObject<T>(xhr.ResponseText));
+                }
+                else
+                {
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                }
+            };
+            xhr.Send();
+            return await tcs.Task;
         }
 
         public void Post(T value)
