@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ColumnFilter.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

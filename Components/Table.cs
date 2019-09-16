@@ -76,6 +76,10 @@ namespace Components
                 else
                 {
                     html.Text(header.HeaderText).Render();
+                    if (header.Sortable)
+                    {
+                        html.Span.ClassName("fa fa-filter").Margin(Direction.left, 5).End.Render();
+                    }
                 }
                 html.EndOf(ElementType.th);
             }).EndOf(ElementType.tr).Render();
@@ -86,9 +90,7 @@ namespace Components
                 {
                     if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                     {
-                        html.Th.Render();
-                        html.Text(header.HeaderText).Render();
-                        html.EndOf(ElementType.th);
+                        html.Th.Text(header.HeaderText).EndOf(ElementType.th);
                     }
                 });
             }

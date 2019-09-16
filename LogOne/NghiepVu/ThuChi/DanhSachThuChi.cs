@@ -63,15 +63,15 @@ namespace LogOne.NghiepVu.ThuChi
             };
             SelectedType = Types[2];
             ThuChiHeader = new ObservableArray<Header<object>>(new Header<object>[] {
-                new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan" },
-                new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu" },
-                new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu" },
-                new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai" },
-                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien" },
-                new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong" },
-                new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi" },
-                new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy" },
-                new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu" },
+                new Header<object> { HeaderText = "Ngày hạch toán", FieldName = "NgayHachToan", Sortable = true },
+                new Header<object> { HeaderText = "Ngày chứng từ", FieldName = "NgayChungTu", Sortable = true },
+                new Header<object> { HeaderText = "Số chứng từ", FieldName = "SoChungTu", Sortable = true },
+                new Header<object> { HeaderText = "Diễn giải", FieldName = "DienGiai", Sortable = true },
+                new Header<object> { HeaderText = "Số tiền", FieldName = "SoTien", Sortable = true },
+                new Header<object> { HeaderText = "Đối tượng", FieldName = "DoiTuong", Sortable = true },
+                new Header<object> { HeaderText = "Lý do thu/chi", FieldName = "LyDoThuChi", Sortable = true },
+                new Header<object> { HeaderText = "Ngày ghi sổ quỹ", FieldName = "NgayGhiSoQuy", Sortable = true },
+                new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu", Sortable = true },
                 new Header<object> {
                     EditButton = true,
                     EditEvent = (x) => {
