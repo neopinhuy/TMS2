@@ -24,9 +24,13 @@ body {
   border-right: rgba(241, 241, 241, 0.3);
   border-bottom: 0;
 }
+#content {
+  max-width: calc(100% - 300px);
+}
 #tab-content {
   top: -2px;
   background-color: #fff;
+  min-height: calc(100vh - 167px);
 }
 #tab-content h1,
 #tab-content h2 {
@@ -242,6 +246,45 @@ td {
 .fa-filter:hover {
   color: #444;
   cursor: pointer;
+}
+#columnFilter {
+  position: fixed;
+  top: 307px;
+  left: 500px;
+  min-width: 230px;
+  z-index: 1500;
+  background-color: #fff;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 6px 9px 8px 2px rgba(0, 0, 0, 0.22);
+}
+#columnFilter .div-sort button {
+  height: 30px;
+  line-height: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 100px;
+}
+#columnFilter .div-sort button:last-child {
+  margin-left: 10px;
+}
+#columnFilter .div-type {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  text-align: right;
+}
+#columnFilter .div-type a:first-child {
+  margin-right: 5px;
+}
+#columnFilter .div-type a:last-child {
+  padding-left: 5px;
+  border-left: 1px solid #dfdfdf;
+}
+#columnFilter .searchbox {
+  margin-top: 1rem;
+}
+#columnFilter .div-edt-val > label {
+  font-weight: 600;
 }
 ::-webkit-scrollbar {
   height: 0.65rem;
