@@ -24,7 +24,6 @@ namespace LogOne.NghiepVu
             // Load Get student
             var client = new BaseClient<Student>();
             var result = await client.Get(1);
-            result.Log();
         }
 
         private void RenderMenuItems(List<MenuItem> menuItems)
