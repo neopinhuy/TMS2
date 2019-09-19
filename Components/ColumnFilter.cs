@@ -44,14 +44,14 @@ namespace Components
             {
                 throw new InvalidOperationException("Column filter hasn't been initialized");
             }
-            bool isShown = Html.Context.ClassName.Contains("show");
-            if (isShown)
+            bool isHidden = Html.Context.ClassName.Contains("hide");
+            if (isHidden)
             {
-                Html.Context.ClassName.Replace("show", "hide");
+                Html.Context.ClassName = Html.Context.ClassName.Replace(new RegExp("\\s?hide\\s?"), "");
             }
             else
             {
-                Html.Context.ClassName.Replace("hide", "show");
+                Html.Context.ClassName += "hide";
             }
         }
     }
