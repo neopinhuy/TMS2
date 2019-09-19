@@ -1,17 +1,20 @@
 ﻿using LogOne.NghiepVu.ThuChi;
 using LogOne.NghiepVu.Kho;
 using LogOne.NghiepVu;
+using LogOne.NghiepVu.Dashboard;
+using System.Threading.Tasks;
 
 namespace LogOne
 {
     public static class App
     {
-        public async static void Main()
+        public async static Task Main()
         {
-            var thuChi = new DanhSachThuChi();
-            thuChi.Render();
+            var tk = new ThongKe();
+            tk.Render();
+            new DanhSachThuChi().Render();
             new ThuTienKhachHangHangLoat().Render();
-            thuChi.Focus();
+            tk.Focus();
             await new MenuComponent().RenderAsync();
         }
     }

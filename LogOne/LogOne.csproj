@@ -37,6 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="NghiepVu\Common\ChungTu.cs" />
+    <Compile Include="NghiepVu\Dashboard\ThongKe.cs" />
+    <Compile Include="NghiepVu\Dashboard\ThongKe.View.cs">
+      <DependentUpon>ThongKe.cs</DependentUpon>
+    </Compile>
     <Compile Include="NghiepVu\Kho\NhapXuatKho.cs" />
     <Compile Include="NghiepVu\Kho\NhapXuatKho.View.cs">
       <DependentUpon>NhapXuatKho.cs</DependentUpon>
@@ -172,6 +176,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.Newtonsoft.Json.1.16.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Retyped.canvasjs, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Retyped.canvasjs.1.9.6733\lib\net40\Retyped.canvasjs.dll</HintPath>
     </Reference>
     <Reference Include="Retyped.promise-polyfill, Version=6.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Retyped.promise-polyfill.6.0.6733\lib\net40\Retyped.promise-polyfill.dll</HintPath>

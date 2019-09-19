@@ -286,6 +286,12 @@ td {
 #columnFilter .div-edt-val > label {
   font-weight: 600;
 }
+.icon-box .content {
+  font-size: 1.24rem;
+}
+.icon-box .text-small {
+  font-size: 0.95rem;
+}
 ::-webkit-scrollbar {
   height: 0.65rem;
   width: 0.65rem;

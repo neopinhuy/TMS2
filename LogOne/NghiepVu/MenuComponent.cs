@@ -1,4 +1,5 @@
 ﻿using Components;
+using LogOne.NghiepVu.Dashboard;
 using LogOne.NghiepVu.Kho;
 using LogOne.NghiepVu.NganHang;
 using LogOne.NghiepVu.ThuChi;
@@ -26,7 +27,7 @@ namespace LogOne.NghiepVu
         {
             MenuItems = new List<MenuItem> {
                 new MenuItem { IsGroup = true, ItemText = "Main" },
-                new MenuItem { ItemText = "Trang chủ", IconClass = "mif-home" },
+                new MenuItem { ItemText = "Trang chủ", IconClass = "mif-home", LinkedComponent = typeof(ThongKe) },
                 new MenuItem { ItemText = "Quỹ", IconClass = "mif-dollars", LinkedComponent = typeof(DanhSachThuChi),
                     MenuItems = new List<MenuItem> {
                         new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuThu) },
