@@ -67,18 +67,25 @@ namespace LogOne.NghiepVu.Dashboard
 
         private void ChartPanels()
         {
-            Html.Instance.Grid().GridRow()
-                .GridCell(6).Div.Id("Fortune500")
-                .Render();
+            Html.Instance.Grid().GridRow();
+            Customers();
+            SaleAnalysis();
+        }
+
+        private static void Customers()
+        {
+            Html.Instance.GridCell(6).Div.Id("Fortune500").End.End.Render();
+
             var chart = new Chart("Fortune500", new ChartOptions
             {
                 animationEnabled = true,
-                title = new ChartTitleOptions { text = "Fortune 500 Companies by Country" },
+                title = new ChartTitleOptions { text = "Top customers" },
                 axisX = new ChartAxisXOptions { interval = 1 },
-                axisY2 = new ChartAxisYOptions {
+                axisY2 = new ChartAxisYOptions
+                {
                     interlacedColor = "rgba(1,77,101,.2)",
                     gridColor = "rgba(1,77,101,.1)",
-                    title = "Number of Companies",
+                    title = "Sales (USD)",
                 },
                 data = new ChartDataSeriesOptions[]
                 {
@@ -112,6 +119,56 @@ namespace LogOne.NghiepVu.Dashboard
                 }
             });
             chart.render();
+        }
+
+        private void SaleAnalysis()
+        {
+            var id = nameof(SaleAnalysis);
+            Html.Instance.GridCell(6).Div.Id(id).End.End.Render();
+
+            var chart = new Chart(id, new ChartOptions
+            {
+                animationEnabled = true,
+                theme = "light2",
+                title = new ChartTitleOptions { text = "Sales Analysis - June 2019" },
+                data = new ChartDataSeriesOptions[]
+                {
+                    new ChartDataSeriesOptions {
+                        type = "funnel",
+                        indexLabelPlacement = "insider",
+                        indexLabelFontColor = "white",
+                        toolTipContent =  "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+                        indexLabel = "{label} ({percentage}%)",
+                        dataPoints = new ChartDataPoint [] {
+                            new ChartDataPoint { y =  1400, label =  "Leads" },
+                            new ChartDataPoint { y =  1212, label =  "Initial Communication" },
+                            new ChartDataPoint { y =  1080, label =  "Customer Evaluation" },
+                            new ChartDataPoint { y =  665,  label =  "Negotiation" },
+                            new ChartDataPoint { y =  578, label =  "Order Received" },
+                            new ChartDataPoint { y =  549, label =  "Payment" }
+                        }
+                    }
+                }
+            });
+            CalculatePercentage(chart);
+            chart.render();
+        }
+
+        private void CalculatePercentage(Chart chart)
+        {
+            var dataPoint = chart.options.data[0].dataPoints;
+            var total = dataPoint[0].y;
+            for (var i = 0; i < dataPoint.Length; i++)
+            {
+                if (i == 0)
+                {
+                    chart.options.data[0].dataPoints[i]["percentage"] = 100;
+                }
+                else
+                {
+                    chart.options.data[0].dataPoints[i]["percentage"] = dataPoint[i].y / total * 100;
+                }
+            }
         }
     }
 }
