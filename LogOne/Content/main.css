@@ -292,6 +292,10 @@ td {
 .icon-box .text-small {
   font-size: 0.95rem;
 }
+#ThongKe .panel {
+  height: 320px;
+  border: 1px solid #cecece;
+}
 ::-webkit-scrollbar {
   height: 0.65rem;
   width: 0.65rem;
