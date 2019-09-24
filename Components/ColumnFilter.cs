@@ -8,6 +8,9 @@ namespace Components
     {
         public override string Title { get; set; }
 
+        public double Left { get; set; }
+        public double Top { get; set; }
+
         public override void Render()
         {
             Html.Take("#columnFilter");
@@ -16,8 +19,7 @@ namespace Components
                 return;
             }
 
-            Html.Take(Document.Body).Div.Id("columnFilter");
-            Html.Instance.Div
+            Html.Take(Document.Body).Div.Id("columnFilter").ClassName("hide").Div
             .Div.ClassName("div-sort")
                 .Button.ClassName("button small rounded").Span.ClassName("fa fa-sort-amount-up-alt").End.Text(" Ascending").End
                 .Button.ClassName("button small rounded").Span.ClassName("fa fa-sort-amount-down-alt").End.Text(" Descending").End.End
@@ -53,6 +55,9 @@ namespace Components
             {
                 Html.Context.ClassName += "hide";
             }
+            var filter = Html.Context as HTMLElement;
+            filter.Style.Top = Top + "px";
+            filter.Style.Left = Left + "px";
         }
     }
 }

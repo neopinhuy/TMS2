@@ -58,7 +58,7 @@ namespace Components
             }
         }
 
-        public void Focus()
+        public virtual void Focus()
         {
             var html = Html.Take($"a[href='#{FullClassName}'");
             html.Trigger(EventType.Click);

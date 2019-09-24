@@ -32,6 +32,12 @@ namespace MVVM
             return Instance;
         }
 
+        public static Html Take(HTMLElement ele)
+        {
+            Context = ele;
+            return Instance;
+        }
+
         public static Html Take(Element ele)
         {
             Context = ele;
@@ -311,6 +317,30 @@ namespace MVVM
             while (result != null)
             {
                 if (result.QuerySelector(selector) != null)
+                {
+                    break;
+                }
+                else
+                {
+                    result = result.ParentElement;
+                }
+            }
+
+            Context = result ?? throw new InvalidOperationException("Cannot find the element of selector " + selector);
+            return this;
+        }
+
+        public Html Closest(ElementType type)
+        {
+            return Closest(type.ToString());
+        }
+
+        public Html Closest(string selector)
+        {
+            var result = Context;
+            while (result != null)
+            {
+                if (result.ParentElement != null && result.ParentElement.QuerySelector(selector) != null)
                 {
                     break;
                 }
