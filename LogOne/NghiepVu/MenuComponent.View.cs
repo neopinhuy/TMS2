@@ -1,6 +1,5 @@
 ﻿using Bridge.Html5;
 using Components;
-using LogAPI.Models;
 using LogOne.APIClients;
 using MVVM;
 using System;
@@ -21,9 +20,9 @@ namespace LogOne.NghiepVu
         public override async Task RenderAsync()
         {
             Render();
-            // Load Get student
-            var client = new BaseClient<Student>();
-            var result = await client.Get(1);
+            // Load truck
+            var client = new BaseClient<LogAPI.Models.Truck>(); 
+            var result = await client.Get();
         }
 
         private void RenderMenuItems(List<MenuItem> menuItems)

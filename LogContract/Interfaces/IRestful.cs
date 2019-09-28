@@ -5,14 +5,14 @@ namespace LogContract.Interfaces
 {
     public interface IRestful<T>
     {
-        IEnumerable<T> Get();
+        Task<IEnumerable<T>> Get();
 
         Task<T> Get(int id);
 
-        void Post(T value);
+        Task Post(T value);
 
-        void Put(T value);
+        Task Put(T value);
 
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

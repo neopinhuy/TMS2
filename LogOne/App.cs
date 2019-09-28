@@ -10,7 +10,7 @@ namespace LogOne
     {
         public async static Task Main()
         {
-            var tk = new ThongKe();
+            var tk = new Dashboard();
             tk.Render();
             new DanhSachThuChi().Render();
             new ThuTienKhachHangHangLoat().Render();

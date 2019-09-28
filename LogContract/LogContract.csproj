@@ -37,8 +37,50 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IRestful.cs" />
+    <Compile Include="Models\Accessory.cs" />
+    <Compile Include="Models\CommodityType.cs" />
+    <Compile Include="Models\Container.cs" />
+    <Compile Include="Models\ContainerMaintenance.cs" />
+    <Compile Include="Models\ContainerMonitorConfig.cs" />
+    <Compile Include="Models\ContainerType.cs" />
+    <Compile Include="Models\Contract.cs" />
+    <Compile Include="Models\Coordination.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerGroup.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Feature.cs" />
+    <Compile Include="Models\FreightBalance.cs" />
+    <Compile Include="Models\FreightHistory.cs" />
+    <Compile Include="Models\FreightProof.cs" />
+    <Compile Include="Models\FreightState.cs" />
+    <Compile Include="Models\GroupRole.cs" />
+    <Compile Include="Models\MaintenanceTicket.cs" />
+    <Compile Include="Models\Nationality.cs" />
+    <Compile Include="Models\Objective.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetail.cs" />
+    <Compile Include="Models\PaymentApproval.cs" />
+    <Compile Include="Models\PaymentApprovalConfig.cs" />
+    <Compile Include="Models\Quotation.cs" />
+    <Compile Include="Models\RightByGroup.cs" />
+    <Compile Include="Models\RightByRole.cs" />
+    <Compile Include="Models\RightByUser.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />
-    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Surcharge.cs" />
+    <Compile Include="Models\Terminal.cs" />
+    <Compile Include="Models\TicketState.cs" />
+    <Compile Include="Models\Timebox.cs" />
+    <Compile Include="Models\Truck.cs" />
+    <Compile Include="Models\TruckMaintenance.cs" />
+    <Compile Include="Models\TruckMaintenanceDetail.cs" />
+    <Compile Include="Models\TruckMonitorConfig.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserBalance.cs" />
+    <Compile Include="Models\Vendor.cs" />
+    <Compile Include="Models\VendorType.cs" />
+    <Compile Include="Models\VolumeRange.cs" />
+    <Compile Include="Models\WeightRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

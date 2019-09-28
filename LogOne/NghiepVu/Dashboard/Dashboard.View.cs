@@ -6,7 +6,7 @@ using static Retyped.canvasjs.CanvasJS;
 
 namespace LogOne.NghiepVu.Dashboard
 {
-    public partial class ThongKe : Component
+    public partial class Dashboard : Component
     {
         public override void Render()
         {
@@ -69,7 +69,7 @@ namespace LogOne.NghiepVu.Dashboard
 
         private void ChartPanels()
         {
-            Html.Instance.Div.Id(nameof(ThongKe)).Grid().GridRow();
+            Html.Instance.Div.Id(nameof(Dashboard)).Grid().GridRow();
             Customers();
             SaleAnalysis();
             SaleLeaderBoard();
@@ -292,39 +292,39 @@ namespace LogOne.NghiepVu.Dashboard
                         yValueFormatString= "$#,##0",
                         dataPoints = new ChartDataPoint [] {
                             new ChartDataPoint { x= new Date(2016, 0).GetTime(), y= 40000 },
-			                new ChartDataPoint { x= new Date(2016, 1).GetTime(), y= 42000 },
-			                new ChartDataPoint { x= new Date(2016, 2).GetTime(), y= 45000 },
-			                new ChartDataPoint { x= new Date(2016, 3).GetTime(), y= 45000 },
-			                new ChartDataPoint { x= new Date(2016, 4).GetTime(), y= 47000 },
-			                new ChartDataPoint { x= new Date(2016, 5).GetTime(), y= 43000 },
-			                new ChartDataPoint { x= new Date(2016, 6).GetTime(), y= 42000 },
-			                new ChartDataPoint { x= new Date(2016, 7).GetTime(), y= 43000 },
-			                new ChartDataPoint { x= new Date(2016, 8).GetTime(), y= 41000 },
-			                new ChartDataPoint { x= new Date(2016, 9).GetTime(), y= 45000 },
-			                new ChartDataPoint { x= new Date(2016, 10).GetTime(), y= 42000 },
+                            new ChartDataPoint { x= new Date(2016, 1).GetTime(), y= 42000 },
+                            new ChartDataPoint { x= new Date(2016, 2).GetTime(), y= 45000 },
+                            new ChartDataPoint { x= new Date(2016, 3).GetTime(), y= 45000 },
+                            new ChartDataPoint { x= new Date(2016, 4).GetTime(), y= 47000 },
+                            new ChartDataPoint { x= new Date(2016, 5).GetTime(), y= 43000 },
+                            new ChartDataPoint { x= new Date(2016, 6).GetTime(), y= 42000 },
+                            new ChartDataPoint { x= new Date(2016, 7).GetTime(), y= 43000 },
+                            new ChartDataPoint { x= new Date(2016, 8).GetTime(), y= 41000 },
+                            new ChartDataPoint { x= new Date(2016, 9).GetTime(), y= 45000 },
+                            new ChartDataPoint { x= new Date(2016, 10).GetTime(), y= 42000 },
                             new ChartDataPoint { x= new Date(2016, 11).GetTime(), y= 50000 }
                         }
                     },
                     new ChartDataSeriesOptions
                     {
                         type= "area",
-		                name= "Profit",
-		                markerBorderColor= "white",
-		                markerBorderThickness= 2,
-		                showInLegend= true,
-		                yValueFormatString= "$#,##0",
+                        name= "Profit",
+                        markerBorderColor= "white",
+                        markerBorderThickness= 2,
+                        showInLegend= true,
+                        yValueFormatString= "$#,##0",
                         dataPoints = new ChartDataPoint [] {
                             new ChartDataPoint { x= new Date(2016, 0).GetTime(), y= 5000 },
-			                new ChartDataPoint { x= new Date(2016, 1).GetTime(), y= 7000 },
-			                new ChartDataPoint { x= new Date(2016, 2).GetTime(), y= 6000},
-			                new ChartDataPoint { x= new Date(2016, 3).GetTime(), y= 30000 },
-			                new ChartDataPoint { x= new Date(2016, 4).GetTime(), y= 20000 },
-			                new ChartDataPoint { x= new Date(2016, 5).GetTime(), y= 15000 },
-			                new ChartDataPoint { x= new Date(2016, 6).GetTime(), y= 13000 },
-			                new ChartDataPoint { x= new Date(2016, 7).GetTime(), y= 20000 },
-			                new ChartDataPoint { x= new Date(2016, 8).GetTime(), y= 15000 },
-			                new ChartDataPoint { x= new Date(2016, 9).GetTime(), y=  10000},
-			                new ChartDataPoint { x= new Date(2016, 10).GetTime(), y= 19000 },
+                            new ChartDataPoint { x= new Date(2016, 1).GetTime(), y= 7000 },
+                            new ChartDataPoint { x= new Date(2016, 2).GetTime(), y= 6000},
+                            new ChartDataPoint { x= new Date(2016, 3).GetTime(), y= 30000 },
+                            new ChartDataPoint { x= new Date(2016, 4).GetTime(), y= 20000 },
+                            new ChartDataPoint { x= new Date(2016, 5).GetTime(), y= 15000 },
+                            new ChartDataPoint { x= new Date(2016, 6).GetTime(), y= 13000 },
+                            new ChartDataPoint { x= new Date(2016, 7).GetTime(), y= 20000 },
+                            new ChartDataPoint { x= new Date(2016, 8).GetTime(), y= 15000 },
+                            new ChartDataPoint { x= new Date(2016, 9).GetTime(), y=  10000},
+                            new ChartDataPoint { x= new Date(2016, 10).GetTime(), y= 19000 },
                             new ChartDataPoint { x= new Date(2016, 11).GetTime(), y= 22000 }
                         }
                     }
@@ -353,17 +353,17 @@ namespace LogOne.NghiepVu.Dashboard
                 {
                     new ChartDataSeriesOptions {
                         type= "doughnut",
-		                innerRadius= 90,
-		                showInLegend= true,
-		                toolTipContent= "<b>{name}</b>= ${y} (#percent%)",
-		                indexLabel= "{name} - #percent%",
+                        innerRadius= 90,
+                        showInLegend= true,
+                        toolTipContent= "<b>{name}</b>= ${y} (#percent%)",
+                        indexLabel= "{name} - #percent%",
                         dataPoints = new ChartDataPoint [] {
                             new ChartDataPoint { y= 450, name= "Food" },
-			                new ChartDataPoint { y= 120, name= "Insurance" },
-			                new ChartDataPoint { y= 300, name= "Travelling" },
-			                new ChartDataPoint { y= 800, name= "Housing" },
-			                new ChartDataPoint { y= 150, name= "Education" },
-			                new ChartDataPoint { y= 150, name= "Shopping"},
+                            new ChartDataPoint { y= 120, name= "Insurance" },
+                            new ChartDataPoint { y= 300, name= "Travelling" },
+                            new ChartDataPoint { y= 800, name= "Housing" },
+                            new ChartDataPoint { y= 150, name= "Education" },
+                            new ChartDataPoint { y= 150, name= "Shopping"},
                             new ChartDataPoint { y= 250, name= "Others" }
                         }
                     }
