@@ -1,4 +1,8 @@
-﻿using Components;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Components;
+using LogAPI.Models;
+using LogOne.APIClients;
 using MVVM;
 
 namespace LogOne.NghiepVu.TruckManagement
@@ -7,9 +11,15 @@ namespace LogOne.NghiepVu.TruckManagement
     {
         public override void Render()
         {
+        }
+
+        public override async Task RenderAsync() {
             if (IsExisted()) return;
             RenderImageCorner();
             RenderTruckDetail();
+            // Load truck data
+            var client = new BaseClient<Truck>();
+            TruckData.Data = (await client.Get()).ToArray();
         }
 
         public void RenderImageCorner() 
@@ -34,8 +44,8 @@ namespace LogOne.NghiepVu.TruckManagement
             .Tab().TabItem("Truck info", "truckInfo", true)
                 .TabItem("Maintenance", "truck-maintenance")
                 .TabItem("Accessory", "truck-accessory").EndOf(ElementType.ul)
-            .TabContent()
-                .Panel().Id("truckInfo").PaddingRem(Direction.top, 0.8)
+            .TabContent().HeightPercentage(100)
+                .Panel().Id("truckInfo").HeightPercentage(100).PaddingRem(Direction.top, 0.8)
                 .Table.TRow.TData.Text("Truck plate").End
                 .TData.SmallInput("0982-K8").EndOf(ElementType.td)
                 .TData.Text("Freight state").End

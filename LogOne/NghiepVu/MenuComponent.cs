@@ -1,5 +1,4 @@
 ﻿using Components;
-using LogOne.NghiepVu.Dashboard;
 using LogOne.NghiepVu.Kho;
 using LogOne.NghiepVu.NganHang;
 using LogOne.NghiepVu.ThuChi;

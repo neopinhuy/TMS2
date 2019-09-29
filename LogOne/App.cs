@@ -14,8 +14,10 @@ namespace LogOne
             new Dashboard().Render();
             new DanhSachThuChi().Render();
             new ThuTienKhachHangHangLoat().Render();
-            new AllTruck().RenderAndFocus();
-            await new MenuComponent().RenderAsync();
+            new MenuComponent().Render();
+            var truck = new AllTruck();
+            await truck.RenderAsync();
+            truck.Focus();
         }
     }
 }

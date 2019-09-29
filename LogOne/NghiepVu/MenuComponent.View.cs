@@ -17,15 +17,6 @@ namespace LogOne.NghiepVu
             Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
         }
 
-        public override async Task RenderAsync()
-        {
-            Render();
-            // Load truck
-            var client = new BaseClient<LogAPI.Models.Truck>(); 
-            var result = await client.Get();
-            Console.WriteLine(result);
-        }
-
         private void RenderMenuItems(List<MenuItem> menuItems)
         {
             Html.Instance.Ul.ForEach(menuItems, (item, index) =>
@@ -41,7 +32,7 @@ namespace LogOne.NghiepVu
                 else
                 {
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
-                    .Event(EventType.Click, (menu, e) =>
+                    .Event(EventType.Click, async (menu, e) =>
                     {
                         var li = e.Target as HTMLElement;
                         var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
@@ -57,7 +48,8 @@ namespace LogOne.NghiepVu
                         string className = li.ParentElement.ClassName + " active";
                         li.ParentElement.ClassName = className.Trim();
                         var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
-                        instance.RenderAndFocus();
+                        await instance.RenderAsync();
+                        instance.Focus();
                     }, item)
                         .Span.ClassName("icon " + item.IconClass).End
                         .Text(item.ItemText).EndOf(MVVM.ElementType.a).Render();
