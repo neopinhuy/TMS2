@@ -33,7 +33,7 @@ namespace LogOne.APIClients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<IEnumerable<T>>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<List<T>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else

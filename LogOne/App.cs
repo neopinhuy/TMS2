@@ -1,7 +1,8 @@
-﻿using Bridge;
+﻿using Components;
 using LogOne.NghiepVu;
 using LogOne.NghiepVu.Dashboard;
 using LogOne.NghiepVu.ThuChi;
+using LogOne.NghiepVu.TruckManagement;
 using System.Threading.Tasks;
 
 namespace LogOne
@@ -10,11 +11,10 @@ namespace LogOne
     {
         public async static Task Main()
         {
-            var tk = new Dashboard();
-            tk.Render();
+            new Dashboard().Render();
             new DanhSachThuChi().Render();
             new ThuTienKhachHangHangLoat().Render();
-            tk.Focus();
+            new AllTruck().RenderAndFocus();
             await new MenuComponent().RenderAsync();
         }
     }

@@ -23,6 +23,7 @@ namespace LogOne.NghiepVu
             // Load truck
             var client = new BaseClient<LogAPI.Models.Truck>(); 
             var result = await client.Get();
+            Console.WriteLine(result);
         }
 
         private void RenderMenuItems(List<MenuItem> menuItems)

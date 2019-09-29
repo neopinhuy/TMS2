@@ -1,4 +1,4 @@
-﻿.hide {
+.hide {
   display: none;
 }
 html {
@@ -139,7 +139,7 @@ ul#tabs {
   vertical-align: middle;
 }
 .panel {
-  padding: 0.5rem;
+  padding: .5rem;
   border-color: #1891cb;
 }
 .panel .header {
@@ -295,6 +295,15 @@ td {
 #Dashboard .panel {
   height: 320px;
   border: 1px solid #cecece;
+}
+#truck-image img {
+  float: left;
+  width: 190px;
+  height: auto;
+}
+#truck-image img + div {
+  float: left;
+  margin-left: 5px;
 }
 ::-webkit-scrollbar {
   height: 0.65rem;

@@ -3,7 +3,7 @@ using LogOne.NghiepVu.Dashboard;
 using LogOne.NghiepVu.Kho;
 using LogOne.NghiepVu.NganHang;
 using LogOne.NghiepVu.ThuChi;
-using LogOne.NghiepVu.Truck;
+using LogOne.NghiepVu.TruckManagement;
 using System;
 using System.Collections.Generic;
 
@@ -29,9 +29,9 @@ namespace LogOne.NghiepVu
             MenuItems = new List<MenuItem> {
                 new MenuItem { IsGroup = true, ItemText = "Main" },
                 new MenuItem { ItemText = "Dashboard", IconClass = "mif-home", LinkedComponent = typeof(Dashboard.Dashboard) },
-                new MenuItem { ItemText = "Truck", IconClass = "mif-dollars", LinkedComponent = typeof(TruckManagement),
+                new MenuItem { ItemText = "Truck", IconClass = "mif-truck", LinkedComponent = typeof(AllTruck),
                     MenuItems = new List<MenuItem> {
-                        new MenuItem { ItemText = "Phiếu thu", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuThu) },
+                        new MenuItem { ItemText = "Accessory", IconClass = "fa fa-file-word" },
                         new MenuItem { ItemText = "Thu tiền khách hàng", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuChi.ThuTienKhachHang) },
                         new MenuItem { ItemText = "Thu tiền khách hàng hàng loạt", IconClass = "fa fa-file-word", LinkedComponent = typeof(ThuTienKhachHangHangLoat) },
                         new MenuItem { ItemText = "Phiếu chi", IconClass = "fa fa-file-word", LinkedComponent = typeof(PhieuChi) },

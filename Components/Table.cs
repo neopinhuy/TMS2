@@ -127,9 +127,10 @@ namespace Components
                     }
                     else
                     {
-                        object cellData = row[header.FieldName]
-                            ?? throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
-                        html.Text(cellData.ToString()).End.Render();
+                        if (!row.HasOwnProperty(header.FieldName))
+                            throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
+                        object cellData = row[header.FieldName];
+                        html.Text(cellData != null ? cellData.ToString() : string.Empty).End.Render();
                     }
                 });
             }).EndOf(".table-wrapper").Render();
