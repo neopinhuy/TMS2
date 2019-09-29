@@ -219,7 +219,8 @@ td {
 .table-wrapper table [colspan] {
   text-align: center;
 }
-.tabs-content > div > .panel {
+.tabs-content > div > .panel,
+.tabs-content > .panel {
   border-top: 0;
   margin-top: -1px;
 }
@@ -296,12 +297,12 @@ td {
   height: 320px;
   border: 1px solid #cecece;
 }
-#truck-image img {
+.image-corner img {
   float: left;
-  width: 190px;
+  width: 55%;
   height: auto;
 }
-#truck-image img + div {
+.image-corner img + div {
   float: left;
   margin-left: 5px;
 }

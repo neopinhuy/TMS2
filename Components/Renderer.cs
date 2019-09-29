@@ -51,6 +51,13 @@ namespace Components
             return html.ClassName(className).Text(text);
         }
         
+        /// <summary>
+        /// Render small input, not an auto enclosing component
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="value"></param>
+        /// <param name="align"></param>
+        /// <returns></returns>
         public static Html SmallInput(this Html html, string value = string.Empty, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
@@ -117,22 +124,22 @@ namespace Components
             return html.Div.ClassName("cell cell-" + size);
         }
 
-        public static Html Margin(this Html html, Direction direction, decimal margin, string unit = "px")
+        public static Html Margin(this Html html, Direction direction, double margin, string unit = "px")
         {
             return html.Style($"margin-{direction} : {margin}{unit}");
         }
 
-        public static Html MarginRem(this Html html, Direction direction, decimal margin)
+        public static Html MarginRem(this Html html, Direction direction, double margin)
         {
             return html.Style($"margin-{direction} : {margin}rem");
         }
 
-        public static Html Padding(this Html html, Direction direction, decimal padding, string unit = "px")
+        public static Html Padding(this Html html, Direction direction, double padding, string unit = "px")
         {
             return html.Style($"padding-{direction} : {padding}{unit}");
         }
 
-        public static Html PaddingRem(this Html html, Direction direction, decimal margin)
+        public static Html PaddingRem(this Html html, Direction direction, double margin)
         {
             return html.Style($"padding-{direction} : {margin}rem");
         }
