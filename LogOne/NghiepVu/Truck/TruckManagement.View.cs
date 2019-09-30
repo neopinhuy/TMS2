@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Components;
 using LogAPI.Models;
@@ -19,7 +20,8 @@ namespace LogOne.NghiepVu.TruckManagement
             RenderTruckDetail();
             // Load truck data
             var client = new BaseClient<Truck>();
-            TruckData.Data = (await client.Get()).ToArray();
+            var trucks = await client.Get();
+            TruckData.Data = trucks.ToArray();
         }
 
         public void RenderImageCorner() 
@@ -63,7 +65,13 @@ namespace LogOne.NghiepVu.TruckManagement
                 .TData.Text("Active date").End
                 .TData.SmallInput("20/01/2018").EndOf(ElementType.td)
                 .TData.Text("Expiry date").End
-                .TData.SmallInput("20/01/2018").EndOf(ElementType.tr);
+                .TData.SmallInput("20/01/2018").EndOf(".panel");
+
+            Html.Instance.Panel().Id("truck-maintenance")
+                .Table.TRow.TData.Text("Maintenance start date").End
+                .TData.SmallDatePicker(DateTime.Now.ToString()).EndOf(ElementType.td)
+                .TData.Text("Maintenance end date").End
+                .TData.SmallInput(DateTime.Now.AddDays(3).ToString()).EndOf(ElementType.td);
         }
     }
 }

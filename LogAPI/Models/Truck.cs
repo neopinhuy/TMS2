@@ -55,7 +55,7 @@ namespace LogAPI.Models
         public DateTime ActiveDate { get; set; }
 
         [StringLength(10)]
-        public string ExpiredDate { get; set; }
+        public DateTime ExpiredDate { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime? MaintenanceStart { get; set; }
