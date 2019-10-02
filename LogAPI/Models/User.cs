@@ -65,7 +65,6 @@ namespace LogAPI.Models
             RightByUserUpdatedBy = new HashSet<RightByUser>();
             UserRight = new HashSet<RightByUser>();
             RightByUserInserted = new HashSet<RightByUser>();
-            RightByUser3 = new HashSet<RightByUser>();
             SurchargeInsertedBy = new HashSet<Surcharge>();
             TerminalUpdated = new HashSet<Terminal>();
             TicketStateInsertedBy = new HashSet<TicketState>();
