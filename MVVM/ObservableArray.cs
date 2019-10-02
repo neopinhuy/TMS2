@@ -15,6 +15,10 @@ namespace MVVM
 
     public class ObservableArray<T> : Observable<T[]>
     {
+        public ObservableArray() : base(default(T[]))
+        {
+        }
+
         public ObservableArray(T[] data) : base(data)
         {
         }

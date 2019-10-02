@@ -49,10 +49,11 @@ namespace LogOne.NghiepVu.TruckManagement
                     UpdatedBy = null, UpdatedDate = null
                 }
             });
+        }
 
-            TruckData.AddRange(TruckData.Data);
-            TruckData.AddRange(TruckData.Data);
-            TruckData.AddRange(TruckData.Data);
+        public void CreateNewTruck()
+        {
+
         }
     }
 }

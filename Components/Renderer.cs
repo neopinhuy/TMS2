@@ -41,6 +41,14 @@ namespace Components
             return html;
         }
 
+        /// <summary>
+        /// Non auto enclosing element
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="text"></param>
+        /// <param name="className"></param>
+        /// <param name="icon"></param>
+        /// <returns></returns>
         public static Html Button(this Html html, string text = string.Empty, string className = "button info small", string icon = string.Empty)
         {
             html.Button.Render();
@@ -61,6 +69,18 @@ namespace Components
         public static Html SmallInput(this Html html, string value = string.Empty, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
+        }
+
+        /// <summary>
+        /// Render small search input, not an auto enclosing component
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="value"></param>
+        /// <param name="align"></param>
+        /// <returns></returns>
+        public static Html SmallSearchInput(this Html html, string value = string.Empty, string align = "left")
+        {
+            return html.SmallInput(value, align).PlaceHolder("Search...").Attr("data-search-button", true.ToString());
         }
 
         public static Html PlaceHolder(this Html html, string value)

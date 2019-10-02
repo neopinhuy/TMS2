@@ -256,7 +256,7 @@
     <Error Condition="!Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)index.html" "$(TargetDir)bridge" /F /Y
-xcopy "$(ProjectDir)Content\canvasjs.js" "$(TargetDir)bridge" /F /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)index.html" "$(TargetDir)bridge" /D /F /Y
+xcopy "$(ProjectDir)Content\canvasjs.js" "$(TargetDir)bridge" /D /F /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

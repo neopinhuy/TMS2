@@ -1,4 +1,4 @@
-.hide {
+﻿.hide {
   display: none;
 }
 html {
@@ -139,7 +139,7 @@ ul#tabs {
   vertical-align: middle;
 }
 .panel {
-  padding: .5rem;
+  padding: 0.5rem;
   border-color: #1891cb;
 }
 .panel .header {
@@ -302,9 +302,15 @@ td {
   width: 55%;
   height: auto;
 }
-.image-corner img + div {
+.image-corner div {
   float: left;
-  margin-left: 5px;
+  margin-left: 1.2rem;
+}
+.image-corner div h5 {
+  margin-bottom: 0;
+}
+.image-corner div h5:first-child {
+  margin-top: 0;
 }
 ::-webkit-scrollbar {
   height: 0.65rem;
