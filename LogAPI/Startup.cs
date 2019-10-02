@@ -33,7 +33,11 @@ namespace LogAPI
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowOrigin",
-                    builder => builder.WithOrigins("http://localhost:81"));
+                    builder => {
+                        builder.WithOrigins("http://localhost:81");
+                        builder.AllowAnyHeader();
+                        builder.WithMethods("GET", "PUT", "POST", "DELETE");
+                    });
             });
         }
 
@@ -51,12 +55,7 @@ namespace LogAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseCors(options =>
-            {
-                options.WithOrigins("http://localhost:81");
-                options.AllowAnyHeader();
-                options.AllowAnyMethod();
-            });
+            app.UseCors("AllowOrigin");
         }
     }
 }

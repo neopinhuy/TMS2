@@ -1,5 +1,6 @@
 namespace LogAPI.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -42,7 +43,8 @@ namespace LogAPI.Models
 
         public int DriverId { get; set; }
 
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(20, 5)")]
+        public decimal Price { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -80,18 +82,22 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Accessory> Accessory { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Coordination> Coordination { get; set; }
 
+        [JsonIgnore]
         public virtual FreightState FreightState { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
 
-
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
 
-
+        [JsonIgnore]
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
     }
 }

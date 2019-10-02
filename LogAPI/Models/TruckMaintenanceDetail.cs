@@ -19,7 +19,8 @@ namespace LogAPI.Models
         [StringLength(200)]
         public string Detail { get; set; }
 
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(20, 5)")]
+        public decimal Price { get; set; }
 
         [Required]
         [StringLength(50)]

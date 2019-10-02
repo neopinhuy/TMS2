@@ -41,7 +41,8 @@ namespace LogAPI.Models
         [Column(TypeName = "datetime2")]
         public DateTime ExpiredDate { get; set; }
 
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(20, 5)")]
+        public decimal Price { get; set; }
 
         [Required]
         [StringLength(50)]

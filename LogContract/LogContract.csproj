@@ -36,51 +36,137 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\LogAPI\Models\Accessory.cs">
+      <Link>Models\Accessory.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\CommodityType.cs">
+      <Link>Models\CommodityType.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Container.cs">
+      <Link>Models\Container.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\ContainerMaintenance.cs">
+      <Link>Models\ContainerMaintenance.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\ContainerMonitorConfig.cs">
+      <Link>Models\ContainerMonitorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\ContainerType.cs">
+      <Link>Models\ContainerType.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Contract.cs">
+      <Link>Models\Contract.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Coordination.cs">
+      <Link>Models\Coordination.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Customer.cs">
+      <Link>Models\Customer.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\CustomerGroup.cs">
+      <Link>Models\CustomerGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Department.cs">
+      <Link>Models\Department.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Feature.cs">
+      <Link>Models\Feature.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\FreightBalance.cs">
+      <Link>Models\FreightBalance.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\FreightHistory.cs">
+      <Link>Models\FreightHistory.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\FreightProof.cs">
+      <Link>Models\FreightProof.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\FreightState.cs">
+      <Link>Models\FreightState.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\GroupRole.cs">
+      <Link>Models\GroupRole.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\MaintenanceTicket.cs">
+      <Link>Models\MaintenanceTicket.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Nationality.cs">
+      <Link>Models\Nationality.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Objective.cs">
+      <Link>Models\Objective.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Order.cs">
+      <Link>Models\Order.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\OrderDetail.cs">
+      <Link>Models\OrderDetail.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\PaymentApproval.cs">
+      <Link>Models\PaymentApproval.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\PaymentApprovalConfig.cs">
+      <Link>Models\PaymentApprovalConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Quotation.cs">
+      <Link>Models\Quotation.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\RightByGroup.cs">
+      <Link>Models\RightByGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\RightByRole.cs">
+      <Link>Models\RightByRole.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\RightByUser.cs">
+      <Link>Models\RightByUser.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Role.cs">
+      <Link>Models\Role.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Surcharge.cs">
+      <Link>Models\Surcharge.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Terminal.cs">
+      <Link>Models\Terminal.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\TicketState.cs">
+      <Link>Models\TicketState.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Timebox.cs">
+      <Link>Models\Timebox.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Truck.cs">
+      <Link>Models\Truck.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\TruckMaintenance.cs">
+      <Link>Models\TruckMaintenance.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\TruckMaintenanceDetail.cs">
+      <Link>Models\TruckMaintenanceDetail.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\TruckMonitorConfig.cs">
+      <Link>Models\TruckMonitorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\User.cs">
+      <Link>Models\User.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\UserBalance.cs">
+      <Link>Models\UserBalance.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\Vendor.cs">
+      <Link>Models\Vendor.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\VendorType.cs">
+      <Link>Models\VendorType.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\VolumeRange.cs">
+      <Link>Models\VolumeRange.cs</Link>
+    </Compile>
+    <Compile Include="..\LogAPI\Models\WeightRange.cs">
+      <Link>Models\WeightRange.cs</Link>
+    </Compile>
     <Compile Include="Interfaces\IRestful.cs" />
-    <Compile Include="Models\Accessory.cs" />
-    <Compile Include="Models\CommodityType.cs" />
-    <Compile Include="Models\Container.cs" />
-    <Compile Include="Models\ContainerMaintenance.cs" />
-    <Compile Include="Models\ContainerMonitorConfig.cs" />
-    <Compile Include="Models\ContainerType.cs" />
-    <Compile Include="Models\Contract.cs" />
-    <Compile Include="Models\Coordination.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerGroup.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Feature.cs" />
-    <Compile Include="Models\FreightBalance.cs" />
-    <Compile Include="Models\FreightHistory.cs" />
-    <Compile Include="Models\FreightProof.cs" />
-    <Compile Include="Models\FreightState.cs" />
-    <Compile Include="Models\GroupRole.cs" />
-    <Compile Include="Models\MaintenanceTicket.cs" />
-    <Compile Include="Models\Nationality.cs" />
-    <Compile Include="Models\Objective.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\PaymentApproval.cs" />
-    <Compile Include="Models\PaymentApprovalConfig.cs" />
-    <Compile Include="Models\Quotation.cs" />
-    <Compile Include="Models\RightByGroup.cs" />
-    <Compile Include="Models\RightByRole.cs" />
-    <Compile Include="Models\RightByUser.cs" />
-    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />
-    <Compile Include="Models\Surcharge.cs" />
-    <Compile Include="Models\Terminal.cs" />
-    <Compile Include="Models\TicketState.cs" />
-    <Compile Include="Models\Timebox.cs" />
-    <Compile Include="Models\Truck.cs" />
-    <Compile Include="Models\TruckMaintenance.cs" />
-    <Compile Include="Models\TruckMaintenanceDetail.cs" />
-    <Compile Include="Models\TruckMonitorConfig.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserBalance.cs" />
-    <Compile Include="Models\Vendor.cs" />
-    <Compile Include="Models\VendorType.cs" />
-    <Compile Include="Models\VolumeRange.cs" />
-    <Compile Include="Models\WeightRange.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -27,7 +27,8 @@ namespace LogAPI.Models
         [Column(TypeName = "datetime2")]
         public DateTime EndDate { get; set; }
 
-        public double AdvancedPaid { get; set; }
+        [Column(TypeName = "decimal(20, 5)")]
+        public decimal AdvancedPaid { get; set; }
 
         public bool Paid { get; set; }
 

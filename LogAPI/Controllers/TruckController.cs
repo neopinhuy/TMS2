@@ -1,16 +1,16 @@
-﻿using LogAPI.Models;
+﻿using LogAPI.Attributes;
+using LogAPI.Models;
 using LogContract.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LogAPI.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [EnableCors("AllowOrigin")]
     public class TruckController : BaseController, IRestful<Truck>
     {
         FMS db = new FMS();
@@ -33,13 +33,12 @@ namespace LogAPI.Controllers
             throw new System.NotImplementedException();
         }
 
-        [EnableCors("AllowOrigin")]
         [HttpPut]
         public async Task<Truck> Put([FromBody]Truck truck)
         {
-            if (truck == null)
+            if (truck == null || !ModelState.IsValid)
             {
-                HttpContext.Response.StatusCode = 404;
+                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return null;
             }
 

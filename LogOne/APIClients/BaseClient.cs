@@ -83,6 +83,7 @@ namespace LogOne.APIClients
             var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
             xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}", true);
+            xhr.SetRequestHeader("Content-type", "application/json");
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -100,7 +101,7 @@ namespace LogOne.APIClients
                     tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
-            xhr.Send(JSON.Stringify(value));
+            xhr.Send(JsonConvert.SerializeObject(value));
             return await tcs.Task;
         }
 
