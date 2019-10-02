@@ -74,6 +74,10 @@ body {
 .myCheckbox::before {
   border-color: #0366d6 !important;
 }
+.button.info {
+  outline-color: #30abe6;
+  background-color: #1891cb;
+}
 nav {
   margin-left: 250px;
 }
@@ -181,7 +185,7 @@ td {
   line-height: 27px !important;
 }
 .table-wrapper table thead {
-  background: #e5e5e5;
+  background: #1891cb;
   border-bottom: 0;
 }
 .table-wrapper table tbody tr:nth-child(odd) {
@@ -205,6 +209,7 @@ td {
   padding: 0.625rem !important;
   white-space: nowrap;
   border: 1px solid #cecece;
+  color: #fff;
 }
 .table-wrapper table th:first-child {
   border-left: none;
@@ -241,11 +246,11 @@ td {
 }
 .fa-filter {
   font-size: 0.7rem;
-  color: #999;
+  color: #fff;
   margin: 5px 0 0 2.3rem;
 }
 .fa-filter:hover {
-  color: #444;
+  color: #efc6c6;
   cursor: pointer;
 }
 #columnFilter {

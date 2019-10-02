@@ -28,8 +28,8 @@ namespace LogOne.NghiepVu.TruckManagement
         private void RenderMenuButton ()
         {
             Html.Instance.Table
-                .TRow.TData.Button("New", "button secondary small", "fa fa-plus").EndOf(ElementType.td)
-                .TRow.TData.Button("Delete", "button secondary small", "fa fa-trash").EndOf(ElementType.td)
+                .TRow.TData.Button("New", icon: "fa fa-plus").EndOf(ElementType.td)
+                .TRow.TData.Button("Delete", icon: "fa fa-trash").EndOf(ElementType.td)
                 .TRow.TData.SmallSearchInput().EndOf(ElementType.td)
                 .TData.Button("Search", icon: "fa fa-search").EndOf(ElementType.table).Render();
         }
@@ -74,8 +74,8 @@ namespace LogOne.NghiepVu.TruckManagement
                 .TData.SmallDatePicker().EndOf(ElementType.td)
                 .TData.Text("Expiry date").End
                 .TData.SmallDatePicker().EndOf(ElementType.tr)
-                .TRow.TData.Button("Save", icon: "fa fa-save").EndOf(ElementType.td)
-                .TData.Button("Clear", icon: "fa fa-times").EndOf(ElementType.td)
+                .TRow.TData.End.TData.Button("Save", icon: "fa fa-save").End
+                    .Button("Clear", icon: "fa fa-times").Margin(Direction.left, 5).EndOf(ElementType.td)
                 .EndOf(".panel");
 
             Html.Instance.Panel().Id("truck-maintenance")

@@ -84,6 +84,11 @@ body {
     }
 }
 
+.button.info {
+    outline-color: @info;
+    background-color: @infoDark;
+}
+
 nav {
     margin-left: 250px;
 }
@@ -199,6 +204,7 @@ td {
     border: 1px solid @grayNormal;
     top: -2px;
     overflow: hidden;
+
     &:hover {
         overflow: auto;
         overflow: overlay;
@@ -215,7 +221,7 @@ td {
         }
 
         thead {
-            background: @grayLight;
+            background: @infoDark;
             border-bottom: 0;
         }
 
@@ -247,6 +253,7 @@ td {
             padding: 0.625rem !important;
             white-space: nowrap;
             border: 1px solid @grayNormal;
+            color: @white;
 
             &:first-child {
                 border-left: none;
@@ -293,10 +300,11 @@ td {
 
 .fa-filter {
     font-size: 0.7rem;
-    color: #999;
+    color: @white;
     margin: 5px 0 0 2.3rem;
+
     &:hover {
-        color: #444;
+        color: #efc6c6;
         cursor: pointer;
     }
 }

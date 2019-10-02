@@ -48,7 +48,7 @@ namespace LogAPI.Models
             MaintenanceTicket = new HashSet<MaintenanceTicket>();
             MaintenanceTicket1 = new HashSet<MaintenanceTicket>();
             MaintenanceTicket2 = new HashSet<MaintenanceTicket>();
-            Nationality1 = new HashSet<Nationality>();
+            NationalityInsertedBy = new HashSet<Nationality>();
             Order = new HashSet<Order>();
             Order1 = new HashSet<Order>();
             OrderDetail = new HashSet<OrderDetail>();
@@ -56,41 +56,41 @@ namespace LogAPI.Models
             PaymentApprovalConfig = new HashSet<PaymentApprovalConfig>();
             PaymentApprovalConfig1 = new HashSet<PaymentApprovalConfig>();
             PaymentApprovalConfig2 = new HashSet<PaymentApprovalConfig>();
-            Quotation = new HashSet<Quotation>();
-            Quotation1 = new HashSet<Quotation>();
-            RightByGroup = new HashSet<RightByGroup>();
-            RightByGroup1 = new HashSet<RightByGroup>();
-            RightByRole = new HashSet<RightByRole>();
-            RightByRole1 = new HashSet<RightByRole>();
-            RightByUser = new HashSet<RightByUser>();
-            RightByUser1 = new HashSet<RightByUser>();
-            RightByUser2 = new HashSet<RightByUser>();
+            QuotationInsertdBy = new HashSet<Quotation>();
+            QuotationUpdatedBy = new HashSet<Quotation>();
+            RightByGroupInsertedBy = new HashSet<RightByGroup>();
+            RightByGroupUpdated = new HashSet<RightByGroup>();
+            RightByRoleInsertedBy = new HashSet<RightByRole>();
+            RightByRoleUpdatedBy = new HashSet<RightByRole>();
+            RightByUserUpdatedBy = new HashSet<RightByUser>();
+            UserRight = new HashSet<RightByUser>();
+            RightByUserInserted = new HashSet<RightByUser>();
             RightByUser3 = new HashSet<RightByUser>();
-            SurchargeInserted = new HashSet<Surcharge>();
+            SurchargeInsertedBy = new HashSet<Surcharge>();
             TerminalUpdated = new HashSet<Terminal>();
-            TicketState = new HashSet<TicketState>();
-            TicketState1 = new HashSet<TicketState>();
-            Timebox = new HashSet<Timebox>();
-            Timebox1 = new HashSet<Timebox>();
-            TruckMaintenance = new HashSet<TruckMaintenance>();
-            TruckMaintenance1 = new HashSet<TruckMaintenance>();
-            TruckMaintenance2 = new HashSet<TruckMaintenance>();
-            TruckMaintenanceDetail = new HashSet<TruckMaintenanceDetail>();
-            TruckMaintenanceDetail1 = new HashSet<TruckMaintenanceDetail>();
+            TicketStateInsertedBy = new HashSet<TicketState>();
+            TicketStateUpdatedBy = new HashSet<TicketState>();
+            TimeboxInsertedBy = new HashSet<Timebox>();
+            TimeboxUpdatedBy = new HashSet<Timebox>();
+            TruckMaintenanceAccountable = new HashSet<TruckMaintenance>();
+            TruckMaintenanceInsertedBy = new HashSet<TruckMaintenance>();
+            TruckMaintenanceUpdatedBY = new HashSet<TruckMaintenance>();
+            TruckMaintenanceDetailInsertedBy = new HashSet<TruckMaintenanceDetail>();
+            TruckMaintenanceDetailUpdatedBy = new HashSet<TruckMaintenanceDetail>();
             TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
-            TruckMonitorConfig1 = new HashSet<TruckMonitorConfig>();
-            TruckMonitorConfig2 = new HashSet<TruckMonitorConfig>();
-            User1 = new HashSet<User>();
-            User11 = new HashSet<User>();
+            TruckMonitorConfigInsertedBy = new HashSet<TruckMonitorConfig>();
+            TruckMonitorConfigUpdatedBy = new HashSet<TruckMonitorConfig>();
+            UserInsertedBy = new HashSet<User>();
+            UserUpdatedBy = new HashSet<User>();
             UserBalance = new HashSet<UserBalance>();
-            UserBalance1 = new HashSet<UserBalance>();
-            UserBalance2 = new HashSet<UserBalance>();
-            VendorType = new HashSet<VendorType>();
-            VendorType1 = new HashSet<VendorType>();
-            VolumeRange = new HashSet<VolumeRange>();
-            VolumeRange1 = new HashSet<VolumeRange>();
-            WeightRange = new HashSet<WeightRange>();
-            WeightRange1 = new HashSet<WeightRange>();
+            UserBalanceInsertedBy = new HashSet<UserBalance>();
+            UserBalanceUpdatedBy = new HashSet<UserBalance>();
+            VendorTypeInsertedBy = new HashSet<VendorType>();
+            VendorTypeUpdatedBy = new HashSet<VendorType>();
+            VolumeRangeInsertedBy = new HashSet<VolumeRange>();
+            VolumeRangeUpdatedBy = new HashSet<VolumeRange>();
+            WeightRangeInsertedBy = new HashSet<WeightRange>();
+            WeightRangeUpdatedBy = new HashSet<WeightRange>();
         }
 
         public int Id { get; set; }
@@ -128,8 +128,6 @@ namespace LogAPI.Models
         public string PhoneNumber2 { get; set; }
 
         public int NationalityId { get; set; }
-
-        public int ContractId { get; set; }
 
         public int DepartmentId { get; set; }
 
@@ -188,9 +186,6 @@ namespace LogAPI.Models
 
 
         public virtual ICollection<Contract> UpdatedContract { get; set; }
-
-        public virtual Contract Contract3 { get; set; }
-
 
         public virtual ICollection<Coordination> Coordination { get; set; }
 
@@ -259,9 +254,9 @@ namespace LogAPI.Models
 
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket2 { get; set; }
 
-        public virtual ICollection<Nationality> Nationality1 { get; set; }
+        public virtual ICollection<Nationality> NationalityInsertedBy { get; set; }
 
-        public virtual ICollection<Nationality> Nationality2 { get; set; }
+        public virtual ICollection<Nationality> NationalityUpdatedBy { get; set; }
 
 
         public virtual ICollection<Order> Order { get; set; }
@@ -285,38 +280,35 @@ namespace LogAPI.Models
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig2 { get; set; }
 
 
-        public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<Quotation> QuotationInsertdBy { get; set; }
 
 
-        public virtual ICollection<Quotation> Quotation1 { get; set; }
+        public virtual ICollection<Quotation> QuotationUpdatedBy { get; set; }
 
 
-        public virtual ICollection<RightByGroup> RightByGroup { get; set; }
+        public virtual ICollection<RightByGroup> RightByGroupInsertedBy { get; set; }
 
 
-        public virtual ICollection<RightByGroup> RightByGroup1 { get; set; }
+        public virtual ICollection<RightByGroup> RightByGroupUpdated { get; set; }
 
 
-        public virtual ICollection<RightByRole> RightByRole { get; set; }
+        public virtual ICollection<RightByRole> RightByRoleInsertedBy { get; set; }
 
 
-        public virtual ICollection<RightByRole> RightByRole1 { get; set; }
+        public virtual ICollection<RightByRole> RightByRoleUpdatedBy { get; set; }
 
 
-        public virtual ICollection<RightByUser> RightByUser { get; set; }
+        public virtual ICollection<RightByUser> RightByUserUpdatedBy { get; set; }
 
 
-        public virtual ICollection<RightByUser> RightByUser1 { get; set; }
+        public virtual ICollection<RightByUser> UserRight { get; set; }
 
 
-        public virtual ICollection<RightByUser> RightByUser2 { get; set; }
-
-
-        public virtual ICollection<RightByUser> RightByUser3 { get; set; }
+        public virtual ICollection<RightByUser> RightByUserInserted { get; set; }
 
         public virtual Role Role { get; set; }
 
-        public virtual ICollection<Surcharge> SurchargeInserted { get; set; }
+        public virtual ICollection<Surcharge> SurchargeInsertedBy { get; set; }
 
         public virtual ICollection<Surcharge> SurchargeUpdated { get; set; }
 
@@ -325,76 +317,76 @@ namespace LogAPI.Models
         public virtual ICollection<Terminal> TerminalUpdated { get; set; }
 
 
-        public virtual ICollection<TicketState> TicketState { get; set; }
+        public virtual ICollection<TicketState> TicketStateInsertedBy { get; set; }
 
 
-        public virtual ICollection<TicketState> TicketState1 { get; set; }
+        public virtual ICollection<TicketState> TicketStateUpdatedBy { get; set; }
 
 
-        public virtual ICollection<Timebox> Timebox { get; set; }
+        public virtual ICollection<Timebox> TimeboxInsertedBy { get; set; }
 
 
-        public virtual ICollection<Timebox> Timebox1 { get; set; }
+        public virtual ICollection<Timebox> TimeboxUpdatedBy { get; set; }
 
 
-        public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountable { get; set; }
 
 
-        public virtual ICollection<TruckMaintenance> TruckMaintenance1 { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceInsertedBy { get; set; }
 
 
-        public virtual ICollection<TruckMaintenance> TruckMaintenance2 { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceUpdatedBY { get; set; }
 
 
-        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetail { get; set; }
+        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailInsertedBy { get; set; }
 
 
-        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetail1 { get; set; }
+        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailUpdatedBy { get; set; }
 
 
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
 
 
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig1 { get; set; }
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigInsertedBy { get; set; }
 
 
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig2 { get; set; }
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedBy { get; set; }
 
 
-        public virtual ICollection<User> User1 { get; set; }
+        public virtual ICollection<User> UserInsertedBy { get; set; }
 
-        public virtual User User2 { get; set; }
+        public virtual User UserInserted { get; set; }
 
 
-        public virtual ICollection<User> User11 { get; set; }
+        public virtual ICollection<User> UserUpdatedBy { get; set; }
 
-        public virtual User User3 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
 
         public virtual ICollection<UserBalance> UserBalance { get; set; }
 
 
-        public virtual ICollection<UserBalance> UserBalance1 { get; set; }
+        public virtual ICollection<UserBalance> UserBalanceInsertedBy { get; set; }
 
 
-        public virtual ICollection<UserBalance> UserBalance2 { get; set; }
+        public virtual ICollection<UserBalance> UserBalanceUpdatedBy { get; set; }
 
 
-        public virtual ICollection<VendorType> VendorType { get; set; }
+        public virtual ICollection<VendorType> VendorTypeInsertedBy { get; set; }
 
 
-        public virtual ICollection<VendorType> VendorType1 { get; set; }
+        public virtual ICollection<VendorType> VendorTypeUpdatedBy { get; set; }
 
 
-        public virtual ICollection<VolumeRange> VolumeRange { get; set; }
+        public virtual ICollection<VolumeRange> VolumeRangeInsertedBy { get; set; }
 
 
-        public virtual ICollection<VolumeRange> VolumeRange1 { get; set; }
+        public virtual ICollection<VolumeRange> VolumeRangeUpdatedBy { get; set; }
 
 
-        public virtual ICollection<WeightRange> WeightRange { get; set; }
+        public virtual ICollection<WeightRange> WeightRangeInsertedBy { get; set; }
 
 
-        public virtual ICollection<WeightRange> WeightRange1 { get; set; }
+        public virtual ICollection<WeightRange> WeightRangeUpdatedBy { get; set; }
     }
 }

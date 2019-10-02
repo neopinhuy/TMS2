@@ -38,9 +38,9 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
 
         public virtual ICollection<Vendor> Vendor { get; set; }

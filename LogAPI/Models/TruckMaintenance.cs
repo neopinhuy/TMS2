@@ -60,11 +60,11 @@ namespace LogAPI.Models
 
         public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetail { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User AccoutableUser { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User User2 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
         public virtual Vendor Vendor { get; set; }
     }

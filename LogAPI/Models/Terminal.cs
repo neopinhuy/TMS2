@@ -77,8 +77,8 @@ namespace LogAPI.Models
 
         public virtual ICollection<Quotation> QuotationToTerminal { get; set; }
 
-        public virtual User InsertedUser { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User UpdatedUser { get; set; }
+        public virtual User UserUpdated { get; set; }
     }
 }

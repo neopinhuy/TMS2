@@ -36,8 +36,8 @@ namespace LogAPI.Models
 
         public virtual ICollection<Quotation> Quotation { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserUpdated { get; set; }
     }
 }

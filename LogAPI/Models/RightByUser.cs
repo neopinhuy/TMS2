@@ -33,12 +33,10 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User UserUpdated { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserRight { get; set; }
 
-        public virtual User User2 { get; set; }
-
-        public virtual User User3 { get; set; }
+        public virtual User UserInserted { get; set; }
     }
 }
