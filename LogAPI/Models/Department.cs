@@ -12,7 +12,7 @@ namespace LogAPI.Models
 
         public Department()
         {
-            User3 = new HashSet<User>();
+            UserInDepartment = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -44,6 +44,6 @@ namespace LogAPI.Models
         public virtual User UserUpdated { get; set; }
 
 
-        public virtual ICollection<User> User3 { get; set; }
+        public virtual ICollection<User> UserInDepartment { get; set; }
     }
 }

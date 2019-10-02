@@ -49,9 +49,9 @@ namespace LogAPI.Models
 
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
 
         public virtual ICollection<Truck> Truck { get; set; }

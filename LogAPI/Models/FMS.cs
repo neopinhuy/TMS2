@@ -150,8 +150,8 @@ namespace LogAPI.Models
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Department>()
-                .HasMany(e => e.User3)
-                .WithOne(e => e.Department3)
+                .HasMany(e => e.UserInDepartment)
+                .WithOne(e => e.Department)
                 .HasForeignKey(e => e.DepartmentId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
@@ -391,35 +391,35 @@ namespace LogAPI.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedAccessory)
+                .HasMany(e => e.AccessoryInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedAccessory)
+                .HasMany(e => e.AccessoryUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedCommodityType)
+                .HasMany(e => e.CommodityTypeInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedCommodityType)
+                .HasMany(e => e.CommodityTypeUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedContainer)
+                .HasMany(e => e.ContainerInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedContainer)
+                .HasMany(e => e.ContainerUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
@@ -429,24 +429,24 @@ namespace LogAPI.Models
                 .HasForeignKey(e => e.AssigneeId);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedContainerMonitorConfig)
+                .HasMany(e => e.ContainerMonitorConfigInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedContainerMonitorConfig)
+                .HasMany(e => e.ContainerMonitorConfigUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedContainerType)
+                .HasMany(e => e.ContainerTypeInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedContainerType)
+                .HasMany(e => e.ContainerTypeUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
@@ -457,13 +457,13 @@ namespace LogAPI.Models
                 .IsRequired().OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedContract)
+                .HasMany(e => e.ContractInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedContract)
+                .HasMany(e => e.ContractUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
@@ -474,46 +474,46 @@ namespace LogAPI.Models
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedCoordination)
+                .HasMany(e => e.CoordinationInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedCoordination)
+                .HasMany(e => e.CoordinationUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedCustomer)
+                .HasMany(e => e.CustomerInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedCustomer)
+                .HasMany(e => e.CustomerUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Department)
+                .HasMany(e => e.DepartmentLeader)
                 .WithOne(e => e.Leader)
                 .HasForeignKey(e => e.LeaderId)
                 .IsRequired().OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedDepartment)
+                .HasMany(e => e.DepartmentInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.UpdatedDepartment)
+                .HasMany(e => e.DepartmentUpdatedBy)
                 .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.InsertedFeature)
+                .HasMany(e => e.FeatureInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
@@ -525,68 +525,68 @@ namespace LogAPI.Models
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightBalance1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.FreightBalanceUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightHistory)
-                .WithOne(e => e.User)
+                .HasMany(e => e.FreightHistoryInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightHistory1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.FreightHistoryUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightProof)
-                .WithOne(e => e.User)
+                .HasMany(e => e.FreightProofInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightProof1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.FreightProofUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightState)
-                .WithOne(e => e.User)
+                .HasMany(e => e.FreightStateInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.FreightState1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.FreightStateUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.GroupRole)
-                .WithOne(e => e.User)
+                .HasMany(e => e.GroupRoleInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.GroupRole1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.GroupRoleUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.MaintenanceTicket)
-                .WithOne(e => e.User)
+                .HasMany(e => e.MaintenanceTicketAssignee)
+                .WithOne(e => e.Assignee)
                 .HasForeignKey(e => e.AssigneeId);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.MaintenanceTicket1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.MaintenanceTicketInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.MaintenanceTicket2)
-                .WithOne(e => e.User2)
+                .HasMany(e => e.MaintenanceTicketUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
@@ -609,8 +609,8 @@ namespace LogAPI.Models
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Order1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.OrderUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
@@ -620,8 +620,8 @@ namespace LogAPI.Models
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.OrderDetail1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.OrderDetailUpdatedBy)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()
@@ -630,14 +630,14 @@ namespace LogAPI.Models
                 .HasForeignKey(e => e.UserId);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.PaymentApprovalConfig1)
-                .WithOne(e => e.User1)
+                .HasMany(e => e.PaymentApprovalConfigInsertedBy)
+                .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.PaymentApprovalConfig2)
-                .WithOne(e => e.User2)
+                .HasMany(e => e.PaymentApprovalConfigUpdated)
+                .WithOne(e => e.UserUpdated)
                 .HasForeignKey(e => e.UpdatedBy);
 
             modelBuilder.Entity<User>()

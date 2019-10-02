@@ -51,7 +51,7 @@ namespace LogAPI.Models
 
         public virtual GroupRole GroupRole { get; set; }
 
-        public virtual User User { get; set; }
+        public virtual User Assignee { get; set; }
 
         public virtual Role Role { get; set; }
 
@@ -59,9 +59,9 @@ namespace LogAPI.Models
 
         public virtual Truck Truck { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserInserted { get; set; }
 
-        public virtual User User2 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
 
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }

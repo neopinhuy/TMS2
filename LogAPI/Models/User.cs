@@ -12,50 +12,50 @@ namespace LogAPI.Models
 
         public User()
         {
-            InsertedAccessory = new HashSet<Accessory>();
-            UpdatedAccessory = new HashSet<Accessory>();
-            InsertedCommodityType = new HashSet<CommodityType>();
-            UpdatedCommodityType = new HashSet<CommodityType>();
-            InsertedContainer = new HashSet<Container>();
-            UpdatedContainer = new HashSet<Container>();
-            InsertedContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
-            UpdatedContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
+            AccessoryInsertedBy = new HashSet<Accessory>();
+            AccessoryUpdatedBy = new HashSet<Accessory>();
+            CommodityTypeInsertedBy = new HashSet<CommodityType>();
+            CommodityTypeUpdatedBy = new HashSet<CommodityType>();
+            ContainerInsertedBy = new HashSet<Container>();
+            ContainerUpdatedBy = new HashSet<Container>();
+            ContainerMonitorConfigInsertedBy = new HashSet<ContainerMonitorConfig>();
+            ContainerMonitorConfigUpdatedBy = new HashSet<ContainerMonitorConfig>();
             AssignedContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
-            InsertedContainerType = new HashSet<ContainerType>();
-            UpdatedContainerType = new HashSet<ContainerType>();
+            ContainerTypeInsertedBy = new HashSet<ContainerType>();
+            ContainerTypeUpdatedBy = new HashSet<ContainerType>();
             Contract = new HashSet<Contract>();
-            InsertedContract = new HashSet<Contract>();
-            UpdatedContract = new HashSet<Contract>();
+            ContractInsertedBy = new HashSet<Contract>();
+            ContractUpdatedBy = new HashSet<Contract>();
             Coordination = new HashSet<Coordination>();
-            InsertedCoordination = new HashSet<Coordination>();
-            UpdatedCoordination = new HashSet<Coordination>();
-            InsertedCustomer = new HashSet<Customer>();
-            UpdatedCustomer = new HashSet<Customer>();
-            Department = new HashSet<Department>();
-            InsertedDepartment = new HashSet<Department>();
-            UpdatedDepartment = new HashSet<Department>();
-            InsertedFeature = new HashSet<Feature>();
+            CoordinationInsertedBy = new HashSet<Coordination>();
+            CoordinationUpdatedBy = new HashSet<Coordination>();
+            CustomerInsertedBy = new HashSet<Customer>();
+            CustomerUpdatedBy = new HashSet<Customer>();
+            DepartmentLeader = new HashSet<Department>();
+            DepartmentInsertedBy = new HashSet<Department>();
+            DepartmentUpdatedBy = new HashSet<Department>();
+            FeatureInsertedBy = new HashSet<Feature>();
             FreightBalance = new HashSet<FreightBalance>();
-            FreightBalance1 = new HashSet<FreightBalance>();
-            FreightHistory = new HashSet<FreightHistory>();
-            FreightHistory1 = new HashSet<FreightHistory>();
-            FreightProof = new HashSet<FreightProof>();
-            FreightProof1 = new HashSet<FreightProof>();
-            FreightState = new HashSet<FreightState>();
-            FreightState1 = new HashSet<FreightState>();
-            GroupRole = new HashSet<GroupRole>();
-            GroupRole1 = new HashSet<GroupRole>();
-            MaintenanceTicket = new HashSet<MaintenanceTicket>();
-            MaintenanceTicket1 = new HashSet<MaintenanceTicket>();
-            MaintenanceTicket2 = new HashSet<MaintenanceTicket>();
+            FreightBalanceUpdatedBy = new HashSet<FreightBalance>();
+            FreightHistoryInsertedBy = new HashSet<FreightHistory>();
+            FreightHistoryUpdatedBy = new HashSet<FreightHistory>();
+            FreightProofInsertedBy = new HashSet<FreightProof>();
+            FreightProofUpdatedBy = new HashSet<FreightProof>();
+            FreightStateInsertedBy = new HashSet<FreightState>();
+            FreightStateUpdatedBy = new HashSet<FreightState>();
+            GroupRoleInsertedBy = new HashSet<GroupRole>();
+            GroupRoleUpdatedBy = new HashSet<GroupRole>();
+            MaintenanceTicketAssignee = new HashSet<MaintenanceTicket>();
+            MaintenanceTicketInsertedBy = new HashSet<MaintenanceTicket>();
+            MaintenanceTicketUpdatedBy = new HashSet<MaintenanceTicket>();
             NationalityInsertedBy = new HashSet<Nationality>();
             Order = new HashSet<Order>();
-            Order1 = new HashSet<Order>();
+            OrderUpdatedBy = new HashSet<Order>();
             OrderDetail = new HashSet<OrderDetail>();
-            OrderDetail1 = new HashSet<OrderDetail>();
+            OrderDetailUpdatedBy = new HashSet<OrderDetail>();
             PaymentApprovalConfig = new HashSet<PaymentApprovalConfig>();
-            PaymentApprovalConfig1 = new HashSet<PaymentApprovalConfig>();
-            PaymentApprovalConfig2 = new HashSet<PaymentApprovalConfig>();
+            PaymentApprovalConfigInsertedBy = new HashSet<PaymentApprovalConfig>();
+            PaymentApprovalConfigUpdated = new HashSet<PaymentApprovalConfig>();
             QuotationInsertdBy = new HashSet<Quotation>();
             QuotationUpdatedBy = new HashSet<Quotation>();
             RightByGroupInsertedBy = new HashSet<RightByGroup>();
@@ -145,113 +145,113 @@ namespace LogAPI.Models
         public int? UpdatedBy { get; set; }
 
 
-        public virtual ICollection<Accessory> InsertedAccessory { get; set; }
+        public virtual ICollection<Accessory> AccessoryInsertedBy { get; set; }
 
 
-        public virtual ICollection<Accessory> UpdatedAccessory { get; set; }
+        public virtual ICollection<Accessory> AccessoryUpdatedBy { get; set; }
 
 
-        public virtual ICollection<CommodityType> InsertedCommodityType { get; set; }
+        public virtual ICollection<CommodityType> CommodityTypeInsertedBy { get; set; }
 
 
-        public virtual ICollection<CommodityType> UpdatedCommodityType { get; set; }
+        public virtual ICollection<CommodityType> CommodityTypeUpdatedBy { get; set; }
 
 
-        public virtual ICollection<Container> InsertedContainer { get; set; }
+        public virtual ICollection<Container> ContainerInsertedBy { get; set; }
 
 
-        public virtual ICollection<Container> UpdatedContainer { get; set; }
+        public virtual ICollection<Container> ContainerUpdatedBy { get; set; }
 
 
-        public virtual ICollection<ContainerMonitorConfig> InsertedContainerMonitorConfig { get; set; }
+        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigInsertedBy { get; set; }
 
 
-        public virtual ICollection<ContainerMonitorConfig> UpdatedContainerMonitorConfig { get; set; }
+        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigUpdatedBy { get; set; }
 
 
         public virtual ICollection<ContainerMonitorConfig> AssignedContainerMonitorConfig { get; set; }
 
 
-        public virtual ICollection<ContainerType> InsertedContainerType { get; set; }
+        public virtual ICollection<ContainerType> ContainerTypeInsertedBy { get; set; }
 
 
-        public virtual ICollection<ContainerType> UpdatedContainerType { get; set; }
+        public virtual ICollection<ContainerType> ContainerTypeUpdatedBy { get; set; }
 
 
         public virtual ICollection<Contract> Contract { get; set; }
 
 
-        public virtual ICollection<Contract> InsertedContract { get; set; }
+        public virtual ICollection<Contract> ContractInsertedBy { get; set; }
 
 
-        public virtual ICollection<Contract> UpdatedContract { get; set; }
+        public virtual ICollection<Contract> ContractUpdatedBy { get; set; }
 
         public virtual ICollection<Coordination> Coordination { get; set; }
 
 
-        public virtual ICollection<Coordination> InsertedCoordination { get; set; }
+        public virtual ICollection<Coordination> CoordinationInsertedBy { get; set; }
 
 
-        public virtual ICollection<Coordination> UpdatedCoordination { get; set; }
+        public virtual ICollection<Coordination> CoordinationUpdatedBy { get; set; }
 
 
-        public virtual ICollection<Customer> InsertedCustomer { get; set; }
+        public virtual ICollection<Customer> CustomerInsertedBy { get; set; }
 
 
-        public virtual ICollection<Customer> UpdatedCustomer { get; set; }
+        public virtual ICollection<Customer> CustomerUpdatedBy { get; set; }
 
 
-        public virtual ICollection<Department> Department { get; set; }
+        public virtual ICollection<Department> DepartmentLeader { get; set; }
 
 
-        public virtual ICollection<Department> InsertedDepartment { get; set; }
+        public virtual ICollection<Department> DepartmentInsertedBy { get; set; }
 
 
-        public virtual ICollection<Department> UpdatedDepartment { get; set; }
+        public virtual ICollection<Department> DepartmentUpdatedBy { get; set; }
 
-        public virtual Department Department3 { get; set; }
+        public virtual Department Department { get; set; }
 
 
-        public virtual ICollection<Feature> InsertedFeature { get; set; }
+        public virtual ICollection<Feature> FeatureInsertedBy { get; set; }
 
 
         public virtual ICollection<FreightBalance> FreightBalance { get; set; }
 
 
-        public virtual ICollection<FreightBalance> FreightBalance1 { get; set; }
+        public virtual ICollection<FreightBalance> FreightBalanceUpdatedBy { get; set; }
 
 
-        public virtual ICollection<FreightHistory> FreightHistory { get; set; }
+        public virtual ICollection<FreightHistory> FreightHistoryInsertedBy { get; set; }
 
 
-        public virtual ICollection<FreightHistory> FreightHistory1 { get; set; }
+        public virtual ICollection<FreightHistory> FreightHistoryUpdatedBy { get; set; }
 
 
-        public virtual ICollection<FreightProof> FreightProof { get; set; }
+        public virtual ICollection<FreightProof> FreightProofInsertedBy { get; set; }
 
 
-        public virtual ICollection<FreightProof> FreightProof1 { get; set; }
+        public virtual ICollection<FreightProof> FreightProofUpdatedBy { get; set; }
 
 
-        public virtual ICollection<FreightState> FreightState { get; set; }
+        public virtual ICollection<FreightState> FreightStateInsertedBy { get; set; }
 
 
-        public virtual ICollection<FreightState> FreightState1 { get; set; }
+        public virtual ICollection<FreightState> FreightStateUpdatedBy { get; set; }
 
 
-        public virtual ICollection<GroupRole> GroupRole { get; set; }
+        public virtual ICollection<GroupRole> GroupRoleInsertedBy { get; set; }
 
 
-        public virtual ICollection<GroupRole> GroupRole1 { get; set; }
+        public virtual ICollection<GroupRole> GroupRoleUpdatedBy { get; set; }
 
 
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
 
 
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicket1 { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedBy { get; set; }
 
 
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicket2 { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedBy { get; set; }
 
         public virtual ICollection<Nationality> NationalityInsertedBy { get; set; }
 
@@ -261,22 +261,22 @@ namespace LogAPI.Models
         public virtual ICollection<Order> Order { get; set; }
 
 
-        public virtual ICollection<Order> Order1 { get; set; }
+        public virtual ICollection<Order> OrderUpdatedBy { get; set; }
 
 
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
 
-        public virtual ICollection<OrderDetail> OrderDetail1 { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailUpdatedBy { get; set; }
 
 
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig { get; set; }
 
 
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig1 { get; set; }
+        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigInsertedBy { get; set; }
 
 
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig2 { get; set; }
+        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUpdated { get; set; }
 
 
         public virtual ICollection<Quotation> QuotationInsertdBy { get; set; }

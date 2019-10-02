@@ -67,7 +67,7 @@ namespace LogAPI.Models
 
         public virtual User User { get; set; }
 
-        public virtual User User1 { get; set; }
+        public virtual User UserUpdated { get; set; }
 
         public virtual Vendor Vendor { get; set; }
 
