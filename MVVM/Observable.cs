@@ -126,6 +126,11 @@ namespace MVVM
 
     public class Observable<T> : Observable
     {
+        public Observable() : base(default(T))
+        {
+
+        }
+
         public Observable(T data): base(data)
         {
 

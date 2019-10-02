@@ -72,17 +72,39 @@ namespace LogOne.APIClients
             return await tcs.Task;
         }
 
-        public Task Post(T value)
+        public async Task<T> Post(T value)
         {
             throw new NotImplementedException();
         }
 
-        public Task Put(T value)
+        public async Task<T> Put(T value)
         {
-            throw new NotImplementedException();
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<T>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}", true);
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else
+                {
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                }
+            };
+            xhr.Send(JSON.Stringify(value));
+            return await tcs.Task;
         }
 
-        public Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             throw new NotImplementedException();
         }

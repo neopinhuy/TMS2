@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using LogAPI.Models;
+﻿using LogAPI.Models;
 using LogContract.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LogAPI.Controllers
 {
@@ -15,39 +14,47 @@ namespace LogAPI.Controllers
     public class TruckController : BaseController, IRestful<Truck>
     {
         FMS db = new FMS();
-        // GET: api/<controller>
+
         [HttpGet]
         public async Task<IEnumerable<Truck>> Get()
         {
             return await db.Truck.ToListAsync();
         }
 
-        // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<Truck> Get(int id)
         {
             return new Truck();
         }
 
-        // POST api/<controller>
         [HttpPost]
-        public Task Post([FromBody]Truck truck)
+        public async Task<Truck> Post([FromBody]Truck truck)
         {
             throw new System.NotImplementedException();
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public Task Put([FromBody]Truck value)
+        [EnableCors("AllowOrigin")]
+        [HttpPut]
+        public async Task<Truck> Put([FromBody]Truck truck)
         {
-            throw new System.NotImplementedException();
+            if (truck == null)
+            {
+                HttpContext.Response.StatusCode = 404;
+                return null;
+            }
+
+            db.Truck.Add(truck);
+            await db.SaveChangesAsync();
+            return truck;
         }
 
-        // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            var truck = db.Truck.Find(id);
+            db.Truck.Remove(truck);
+            await db.SaveChangesAsync();
+            return true;
         }
     }
 }

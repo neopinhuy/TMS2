@@ -411,31 +411,31 @@ namespace MVVM
             return this;
         }
 
-        public Html Value(Observable val)
+        public Html Value<T>(Observable<T> val)
         {
             var (input, textArea) = GetInputOrTextArea();
             if (input != null)
             {
-                input.Value = val.Data.ToString();
+                input.Value = val.Data?.ToString();
                 input.OnInput += (e) =>
                 {
-                    val.Data = input.Value;
+                    val.Data = string.IsNullOrEmpty(input.Value) ? default(T) : (T)Convert.ChangeType(input.Value, typeof(T));
                 };
                 val.Subscribe(arg =>
                 {
-                    input.Value = arg.NewData.ToString();
+                    input.Value = arg.NewData?.ToString();
                 });
             }
             else if (textArea != null)
             {
-                textArea.Value = val.Data.ToString();
+                textArea.Value = val.Data?.ToString();
                 textArea.OnInput += (e) =>
                 {
-                    val.Data = textArea.Value;
+                    val.Data = string.IsNullOrEmpty(textArea.Value) ? default(T) : (T)Convert.ChangeType(textArea.Value, typeof(T));
                 };
                 val.Subscribe(arg =>
                 {
-                    textArea.Value = arg.NewData.ToString();
+                    textArea.Value = arg.NewData?.ToString();
                 });
             }
             return this;

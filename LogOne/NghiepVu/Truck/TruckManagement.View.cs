@@ -28,8 +28,8 @@ namespace LogOne.NghiepVu.TruckManagement
         private void RenderMenuButton ()
         {
             Html.Instance.Table
-                .TRow.TData.Button("New", icon: "fa fa-plus").EndOf(ElementType.td)
-                .TRow.TData.Button("Delete", icon: "fa fa-trash").EndOf(ElementType.td)
+                .TRow.TData.Button("New", "button info small", "fa fa-plus").EndOf(ElementType.td)
+                .TRow.TData.Button("Delete", "button secondary small", "fa fa-trash").EndOf(ElementType.td)
                 .TRow.TData.SmallSearchInput().EndOf(ElementType.td)
                 .TData.Button("Search", icon: "fa fa-search").EndOf(ElementType.table).Render();
         }
@@ -57,25 +57,29 @@ namespace LogOne.NghiepVu.TruckManagement
             .TabContent().HeightPercentage(100)
                 .Panel().Id("truckInfo").HeightPercentage(100).PaddingRem(Direction.top, 0.8)
                 .Table.TRow.TData.Text("Truck plate").End
-                .TData.SmallInput().EndOf(ElementType.td)
-                .TData.Text("Freight state").End
-                .TData.SmallInput().EndOf(ElementType.td)
+                .TData.SmallInput(TruckPlate).EndOf(ElementType.td);
+
+            Html.Instance.TData.Text("Freight state").End
+                .TData.SmallInput(FreightStateId).EndOf(ElementType.td)
                 .TData.Text("Band name").End
-                .TData.SmallInput().EndOf(ElementType.tr)
+                .TData.SmallInput(BrandName).EndOf(ElementType.tr)
                 .TRow.TData.Text("Version").End
-                .TData.SmallInput().EndOf(ElementType.td)
+                .TData.SmallInput(Version).EndOf(ElementType.td)
                 .TData.Text("Vendor").End
-                .TData.SmallInput().EndOf(ElementType.td)
+                .TData.SmallInput(VendorId).EndOf(ElementType.td)
                 .TData.Text("Price").End
-                .TData.SmallInput().EndOf(ElementType.tr)
+                .TData.SmallInput(Price).EndOf(ElementType.tr)
                 .TRow.TData.Text("Currency").End
-                .TData.SmallInput().EndOf(ElementType.td)
+                .TData.SmallInput(Currency).EndOf(ElementType.td)
                 .TData.Text("Active date").End
-                .TData.SmallDatePicker().EndOf(ElementType.td)
+                .TData.SmallDatePicker(ActiveDate).EndOf(ElementType.td)
                 .TData.Text("Expiry date").End
-                .TData.SmallDatePicker().EndOf(ElementType.tr)
-                .TRow.TData.End.TData.Button("Save", icon: "fa fa-save").End
-                    .Button("Clear", icon: "fa fa-times").Margin(Direction.left, 5).EndOf(ElementType.td)
+                .TData.SmallDatePicker(ExpiredDate).EndOf(ElementType.tr)
+                .TRow.TData.End.TData
+                    .Button("Save", "button info small", "fa fa-save")
+                    .AsyncEvent(Bridge.Html5.EventType.Click, CreateNewTruckAsync)
+                    .End
+                    .Button("Clear", "button secondary small", "fa fa-times").Margin(Direction.left, 5).EndOf(ElementType.td)
                 .EndOf(".panel");
 
             Html.Instance.Panel().Id("truck-maintenance")

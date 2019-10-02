@@ -64,9 +64,9 @@ namespace LogAPI.Models
         public DateTime? MaintenanceEnd { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime NextMaintenanceDate { get; set; }
+        public DateTime? NextMaintenanceDate { get; set; }
 
-        public TimeSpan MaintenancePeriod { get; set; }
+        public TimeSpan? MaintenancePeriod { get; set; }
 
         public bool Active { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using MVVM;
+using System;
 using System.Collections.Generic;
 
 namespace Components
@@ -41,6 +42,12 @@ namespace Components
             return html;
         }
 
+        public static Html SmallDatePicker(this Html html, Observable<DateTime> value)
+        {
+            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y").Value(value);
+            return html;
+        }
+
         /// <summary>
         /// Non auto enclosing element
         /// </summary>
@@ -67,6 +74,18 @@ namespace Components
         /// <param name="align"></param>
         /// <returns></returns>
         public static Html SmallInput(this Html html, string value = string.Empty, string align = "left")
+        {
+            return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
+        }
+
+        /// <summary>
+        /// Render small input, not an auto enclosing component
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="value"></param>
+        /// <param name="align"></param>
+        /// <returns></returns>
+        public static Html SmallInput<T>(this Html html, Observable<T> value, string align = "left")
         {
             return html.Input.ClassName("input-small " + align).Attr("data-role", "input").Value(value);
         }

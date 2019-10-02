@@ -2,6 +2,8 @@
 using MVVM;
 using LogAPI.Models;
 using System;
+using System.Threading.Tasks;
+using LogOne.APIClients;
 
 namespace LogOne.NghiepVu.TruckManagement
 {
@@ -10,6 +12,16 @@ namespace LogOne.NghiepVu.TruckManagement
         public override string Title { get; set; } = "Truck";
         public ObservableArray<Header<Truck>> TruckHeader { get; set; }
         public ObservableArray<Truck> TruckData { get; set; }
+
+        public Observable<string> TruckPlate { get; set; } = new Observable<string>();
+        public Observable<int> FreightStateId { get; set; } = new Observable<int>();
+        public Observable<string> BrandName { get; set; } = new Observable<string>();
+        public Observable<string> Version { get; set; } = new Observable<string>();
+        public Observable<int> VendorId { get; set; } = new Observable<int>();
+        public Observable<decimal> Price { get; set; } = new Observable<decimal>();
+        public Observable<string> Currency { get; set; } = new Observable<string>();
+        public Observable<DateTime> ActiveDate { get; set; } = new Observable<DateTime>();
+        public Observable<DateTime> ExpiredDate { get; set; } = new Observable<DateTime>();
 
         public AllTruck()
         {
@@ -51,9 +63,27 @@ namespace LogOne.NghiepVu.TruckManagement
             });
         }
 
-        public void CreateNewTruck()
+        public async Task CreateNewTruckAsync()
         {
-
+            var truck = new Truck
+            {
+                TruckPlate = TruckPlate.Data,
+                FreightStateId = FreightStateId.Data,
+                BrandName = BrandName.Data,
+                Version = Version.Data,
+                VendorId = VendorId.Data,
+                Price = Price.Data,
+                Currency = Currency.Data,
+                Active = true,
+                ActiveDate = ActiveDate.Data,
+                ExpiredDate = ExpiredDate.Data,
+                InsertedBy = 1,
+                InsertedDate = DateTime.Now,
+                DriverId = 1
+            };
+            var client = new BaseClient<Truck>();
+            var addedTruck = await client.Put(truck);
+            TruckData.Add(addedTruck);
         }
     }
 }
