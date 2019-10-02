@@ -82,11 +82,24 @@ namespace LogOne.NghiepVu.TruckManagement
                     .Button("Clear", "button secondary small", "fa fa-times").Margin(Direction.left, 5).EndOf(ElementType.td)
                 .EndOf(".panel");
 
-            Html.Instance.Panel().Id("truck-maintenance")
+            Html.Instance.Panel().Id("truck-maintenance").HeightPercentage(100).PaddingRem(Direction.top, 0.8)
                 .Table.TRow.TData.Text("Maintenance start date").End
                 .TData.SmallDatePicker(DateTime.Now.ToString()).EndOf(ElementType.td)
                 .TData.Text("Maintenance end date").End
-                .TData.SmallInput(DateTime.Now.AddDays(3).ToString()).EndOf(ElementType.td);
+                .TData.SmallInput(DateTime.Now.AddDays(3).ToString()).EndOf(ElementType.td)
+                .TData.Text("Advance Paid").End
+                .TData.SmallInput("1.000.000").EndOf(ElementType.tr)
+                .TData.Text("Paid").End
+                .TData.SmallInput("Incomplete").EndOf(ElementType.td)
+                .TData.Text("Total").End
+                .TData.SmallInput("1.200.000.000").EndOf(ElementType.td)
+                .TData.Text("Currency").End
+                .TData.SmallInput("VND").EndOf(ElementType.tr)
+                .TData.Text("Vendor").End
+                .TData.SmallInput("Me Koong Distributor").EndOf(ElementType.td)
+                .TData.Text("Accountable User").End
+                .TData.SmallInput("aaa").EndOf(ElementType.td).EndOf(".panel");
+                
         }
     }
 }
