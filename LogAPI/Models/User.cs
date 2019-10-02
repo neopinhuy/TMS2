@@ -128,9 +128,11 @@ namespace LogAPI.Models
 
         public int NationalityId { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int? SupervisorId { get; set; }
 
-        public int RoleId { get; set; }
+        public int? DepartmentId { get; set; }
+
+        public int? RoleId { get; set; }
 
         public bool Active { get; set; }
 
@@ -208,6 +210,10 @@ namespace LogAPI.Models
 
 
         public virtual ICollection<Department> DepartmentUpdatedBy { get; set; }
+
+        public virtual User Supervisor { get; set; }
+
+        public virtual ICollection<User> Reporter { get; set; }
 
         public virtual Department Department { get; set; }
 

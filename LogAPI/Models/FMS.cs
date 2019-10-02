@@ -391,6 +391,12 @@ namespace LogAPI.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()
+                .HasMany(e => e.Reporter)
+                .WithOne(e => e.Supervisor)
+                .HasForeignKey(e => e.SupervisorId)
+                .IsRequired(false).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.AccessoryInsertedBy)
                 .WithOne(e => e.UserInserted)
                 .HasForeignKey(e => e.InsertedBy)
