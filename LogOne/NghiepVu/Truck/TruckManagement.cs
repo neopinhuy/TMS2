@@ -27,6 +27,10 @@ namespace LogOne.NghiepVu.TruckManagement
         {
             TruckHeader.Data = new Header<Truck>[]
             {
+                new Header<Truck> { EditButton = true, EditEvent = async (Truck truck) => {
+                    Console.WriteLine("Delete truck here");
+                    await DeleteTruckAsync(truck);
+                }},
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
                 new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
@@ -54,6 +58,7 @@ namespace LogOne.NghiepVu.TruckManagement
 
         public async Task CreateNewTruckAsync()
         {
+            TruckPlate.Data = "Test asdasd";
             var truck = new Truck
             {
                 TruckPlate = TruckPlate.Data,
@@ -73,6 +78,14 @@ namespace LogOne.NghiepVu.TruckManagement
             var client = new BaseClient<Truck>();
             var addedTruck = await client.Put(truck);
             TruckData.Add(addedTruck);
+        }
+
+        public async Task DeleteTruckAsync(Truck truck)
+        {
+            Console.WriteLine("Delete truck network");
+            var client = new BaseClient<Truck>();
+            await client.Delete(truck.Id);
+            TruckData.Remove(truck);
         }
     }
 }

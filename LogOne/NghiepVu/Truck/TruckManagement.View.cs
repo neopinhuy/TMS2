@@ -95,7 +95,7 @@ namespace LogOne.NghiepVu.TruckManagement
                 .TData.SmallInput("1.200.000.000").EndOf(ElementType.td)
                 .TData.Text("Currency").End
                 .TData.SmallInput("VND").EndOf(ElementType.tr)
-                .TData.Text("Vendor").End
+                .TRow.TData.Text("Vendor").End
                 .TData.SmallInput("Me Koong Distributor").EndOf(ElementType.td)
                 .TData.Text("Accountable User").End
                 .TData.SmallInput("aaa").EndOf(ElementType.td).EndOf(".panel");

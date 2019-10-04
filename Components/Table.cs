@@ -118,7 +118,7 @@ namespace Components
                     if (header.EditButton)
                     {
                         html.Button.ClassName("button small warning")
-                            .Event(EventType.Click, header.EditEvent, row)
+                            .EventAsync(EventType.Click, header.EditEvent, row)
                             .Span.ClassName("fa fa-edit").End.End.Render();
                     }
                     else if (header.DeleteButton)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Components
 {
@@ -12,6 +13,6 @@ namespace Components
         public string Format { get; set; }
         public bool EditButton { get; set; }
         public bool DeleteButton { get; set; }
-        public Action<T> EditEvent { get; set; }
+        public Func<T, Task> EditEvent { get; set; }
     }
 }

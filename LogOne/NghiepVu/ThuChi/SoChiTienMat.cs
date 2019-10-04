@@ -74,7 +74,7 @@ namespace LogOne.NghiepVu.ThuChi
                 new Header<object> { HeaderText = "Người nhận/Người nộp", FieldName = "NguoiNhanNop" },
                 new Header<object> {
                     EditButton = true,
-                    EditEvent = (x) => {
+                    EditEvent = async (x) => {
                         new KiemKeQuy().RenderAndFocus();
                     }
                 },

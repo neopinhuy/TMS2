@@ -75,7 +75,7 @@ namespace LogOne.NghiepVu.ThuChi
                 new Header<object> { HeaderText = "Đã xử lý", FieldName = "DaXuLy" },
                 new Header<object> {
                     EditButton = true,
-                    EditEvent = (x) => {
+                    EditEvent = async (x) => {
                         new KiemKeQuy().RenderAndFocus();
                     }
                 },

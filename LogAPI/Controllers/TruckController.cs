@@ -1,7 +1,5 @@
-﻿using LogAPI.Attributes;
-using LogAPI.Models;
+﻿using LogAPI.Models;
 using LogContract.Interfaces;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -24,13 +22,16 @@ namespace LogAPI.Controllers
         [HttpGet("{id}")]
         public async Task<Truck> Get(int id)
         {
-            return new Truck();
+            return await db.Truck.FindAsync(id);
         }
 
         [HttpPost]
         public async Task<Truck> Post([FromBody]Truck truck)
         {
-            throw new System.NotImplementedException();
+            db.Truck.Attach(truck);
+            db.Entry(truck).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return truck;
         }
 
         [HttpPut]

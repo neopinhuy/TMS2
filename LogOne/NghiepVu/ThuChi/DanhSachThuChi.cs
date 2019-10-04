@@ -74,7 +74,7 @@ namespace LogOne.NghiepVu.ThuChi
                 new Header<object> { HeaderText = "Loại chứng từ", FieldName = "LoaiChungTu", Sortable = true },
                 new Header<object> {
                     EditButton = true,
-                    EditEvent = (x) => {
+                    EditEvent = async (x) => {
                         new PhieuThu().RenderAndFocus();
                     }
                 },
