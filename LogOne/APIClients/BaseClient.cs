@@ -72,18 +72,41 @@ namespace LogOne.APIClients
             return await tcs.Task;
         }
 
-        public async Task<T> Post(T value)
+        public async Task<T> PostAsync(T value)
         {
-            throw new NotImplementedException();
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<T>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("POST", $"{BaseUrl}/api/{type.Name}", true);
+            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else
+                {
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                }
+            };
+            xhr.Send(JsonConvert.SerializeObject(value));
+            return await tcs.Task;
         }
 
-        public async Task<T> Put(T value)
+        public async Task<T> PutAsync(T value)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
             xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}", true);
-            xhr.SetRequestHeader("Content-type", "application/json");
+            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)

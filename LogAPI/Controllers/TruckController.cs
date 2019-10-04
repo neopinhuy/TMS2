@@ -1,4 +1,5 @@
-﻿using LogAPI.Models;
+﻿using LogAPI.Attributes;
+using LogAPI.Models;
 using LogContract.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,16 +27,8 @@ namespace LogAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<Truck> Post([FromBody]Truck truck)
-        {
-            db.Truck.Attach(truck);
-            db.Entry(truck).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return truck;
-        }
-
-        [HttpPut]
-        public async Task<Truck> Put([FromBody]Truck truck)
+        [ValidateModel]
+        public async Task<Truck> PostAsync([FromBody]Truck truck)
         {
             if (truck == null || !ModelState.IsValid)
             {
@@ -44,6 +37,15 @@ namespace LogAPI.Controllers
             }
 
             db.Truck.Add(truck);
+            await db.SaveChangesAsync();
+            return truck;
+        }
+
+        [HttpPut]
+        public async Task<Truck> PutAsync([FromBody]Truck truck)
+        {
+            db.Truck.Attach(truck);
+            db.Entry(truck).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return truck;
         }

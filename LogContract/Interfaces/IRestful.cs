@@ -9,9 +9,9 @@ namespace LogContract.Interfaces
 
         Task<T> Get(int id);
 
-        Task<T> Post(T value);
+        Task<T> PostAsync(T value);
 
-        Task<T> Put(T value);
+        Task<T> PutAsync(T value);
 
         Task<bool> Delete(int id);
     }
