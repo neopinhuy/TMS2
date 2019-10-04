@@ -36,75 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NghiepVu\Common\ChungTu.cs" />
     <Compile Include="NghiepVu\Dashboard\Dashboard.cs" />
-    <Compile Include="NghiepVu\Kho\NhapXuatKho.cs" />
-    <Compile Include="NghiepVu\Kho\NhapXuatKho.View.cs">
-      <DependentUpon>NhapXuatKho.cs</DependentUpon>
-    </Compile>
     <Compile Include="NghiepVu\MenuComponent.cs" />
     <Compile Include="NghiepVu\MenuComponent.View.cs">
       <DependentUpon>MenuComponent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\NganHang\DoiChieuNganHang.cs" />
-    <Compile Include="NghiepVu\NganHang\DoiChieuNganHang.View.cs">
-      <DependentUpon>DoiChieuNganHang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\NganHang\ThuTienGoi.cs" />
-    <Compile Include="NghiepVu\NganHang\ThuTienGoi.View.cs">
-      <DependentUpon>ThuTienGoi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.cs" />
-    <Compile Include="NghiepVu\NganHang\ThuTienKhachHang.View.cs">
-      <DependentUpon>ThuTienKhachHang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.cs" />
-    <Compile Include="NghiepVu\ThuChi\DanhSachThuChi.View.cs">
-      <DependentUpon>DanhSachThuChi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\DuBaoDongTien.cs" />
-    <Compile Include="NghiepVu\ThuChi\DuBaoDongTien.View.cs">
-      <DependentUpon>DuBaoDongTien.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\KiemKe.cs" />
-    <Compile Include="NghiepVu\ThuChi\KiemKe.View.cs">
-      <DependentUpon>KiemKe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\KiemKeQuy.cs" />
-    <Compile Include="NghiepVu\ThuChi\KiemKeQuy.View.cs">
-      <DependentUpon>KiemKeQuy.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\NopThue.cs" />
-    <Compile Include="NghiepVu\ThuChi\NopThue.View.cs">
-      <DependentUpon>NopThue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\PhieuChi.cs" />
-    <Compile Include="NghiepVu\ThuChi\PhieuChi.View.cs">
-      <DependentUpon>PhieuChi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\PhieuThu.cs" />
-    <Compile Include="NghiepVu\ThuChi\PhieuThu.View.cs">
-      <DependentUpon>PhieuThu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\SoChiTienMat.cs" />
-    <Compile Include="NghiepVu\ThuChi\SoChiTienMat.View.cs">
-      <DependentUpon>SoChiTienMat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHang.cs" />
-    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHang.View.cs">
-      <DependentUpon>ThuTienKhachHang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHangHangLoat.cs" />
-    <Compile Include="NghiepVu\ThuChi\ThuTienKhachHangHangLoat.View.cs">
-      <DependentUpon>ThuTienKhachHangHangLoat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\TraLuong.cs" />
-    <Compile Include="NghiepVu\ThuChi\TraLuong.View.cs">
-      <DependentUpon>TraLuong.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NghiepVu\ThuChi\TraTienNCC.cs" />
-    <Compile Include="NghiepVu\ThuChi\TraTienNCC.View.cs">
-      <DependentUpon>TraTienNCC.cs</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="NghiepVu\Truck\TruckManagement.View.cs" />

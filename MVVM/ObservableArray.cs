@@ -98,6 +98,14 @@ namespace MVVM
             });
         }
 
+        public void Replace(T item, T itemUpdated)
+        {
+            var array = Data;
+            var index = Array.IndexOf(array, item);
+            RemoveAt(index);
+            Add(itemUpdated, index);
+        }
+
         public void Update(T item, int index)
         {
             var array = Data;

@@ -11,6 +11,7 @@ namespace LogOne.NghiepVu.TruckManagement
     public partial class AllTruck : Component
     {
         public override string Title { get; set; } = "Truck";
+        public int TruckId { get; set; }
         public ObservableArray<Header<Truck>> TruckHeader { get; set; } = new ObservableArray<Header<Truck>>();
         public ObservableArray<Truck> TruckData { get; set; } = new ObservableArray<Truck>();
         public Observable<string> TruckPlate { get; set; } = new Observable<string>();
@@ -22,12 +23,13 @@ namespace LogOne.NghiepVu.TruckManagement
         public Observable<string> Currency { get; set; } = new Observable<string>();
         public Observable<DateTime> ActiveDate { get; set; } = new Observable<DateTime>();
         public Observable<DateTime> ExpiredDate { get; set; } = new Observable<DateTime>();
+        public Observable<int> DriverId { get; set; } = new Observable<int>();
 
         public AllTruck()
         {
             TruckHeader.Data = new Header<Truck>[]
             {
-                new Header<Truck> { EditButton = true, EditEvent = DeleteTruckAsync },
+                new Header<Truck> { DeleteEvent = DeleteTruckAsync, EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
                 new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
@@ -57,6 +59,7 @@ namespace LogOne.NghiepVu.TruckManagement
         {
             var truck = new Truck
             {
+                Id = TruckId,
                 TruckPlate = TruckPlate.Data,
                 FreightStateId = FreightStateId.Data,
                 BrandName = BrandName.Data,
@@ -72,8 +75,33 @@ namespace LogOne.NghiepVu.TruckManagement
                 DriverId = 1
             };
             var client = new BaseClient<Truck>();
-            var addedTruck = await client.PostAsync(truck);
-            TruckData.Add(addedTruck);
+            if (TruckId == 0)
+            {
+                var addedTruck = await client.PostAsync(truck);
+                TruckData.Add(addedTruck);
+            }
+            else
+            {
+                var updatedTruck = await client.PutAsync(truck);
+                var oldTruck = TruckData.Data.First(x => x.Id == TruckId);
+                TruckData.Replace(oldTruck, updatedTruck);
+            }
+            TruckId = 0;
+        }
+
+        public async Task EditTruck(Truck truck)
+        {
+            TruckId = truck.Id;
+            TruckPlate.Data = truck.TruckPlate;
+            FreightStateId.Data = truck.FreightStateId;
+            BrandName.Data = truck.BrandName;
+            Version.Data = truck.Version;
+            VendorId.Data = truck.VendorId;
+            Price.Data = truck.Price;
+            Currency.Data = truck.Currency;
+            ActiveDate.Data = truck.ActiveDate;
+            ExpiredDate.Data = truck.ExpiredDate;
+            DriverId.Data = truck.DriverId;
         }
 
         public async Task DeleteTruckAsync(Truck truck)

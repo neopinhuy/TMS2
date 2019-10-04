@@ -69,7 +69,7 @@ namespace Components
                 {
                     html.Attr("rowspan", "2");
                 }
-                if (header.EditButton || header.DeleteButton)
+                if (header.EditEvent != null || header.DeleteEvent != null)
                 {
                     html.Span.ClassName("fg-cyan mif-folder-open").End.Render();
                 }
@@ -115,15 +115,17 @@ namespace Components
                 html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
                 {
                     html.TData.Render();
-                    if (header.EditButton)
+                    if (header.EditEvent != null)
                     {
                         html.Button.ClassName("button small warning")
                             .EventAsync(EventType.Click, header.EditEvent, row)
-                            .Span.ClassName("fa fa-edit").End.End.Render();
+                            .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
                     }
-                    else if (header.DeleteButton)
+                    if (header.DeleteEvent != null)
                     {
-                        html.Button.ClassName("button small danger").Span.ClassName("fa fa-remove").End.End.Render();
+                        html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
+                            .EventAsync(EventType.Click, header.DeleteEvent, row)
+                            .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
                     }
                     else
                     {

@@ -11,8 +11,7 @@ namespace Components
         public bool Sortable { get; set; }
         public Type DataType { get; set; }
         public string Format { get; set; }
-        public bool EditButton { get; set; }
-        public bool DeleteButton { get; set; }
         public Func<T, Task> EditEvent { get; set; }
+        public Func<T, Task> DeleteEvent { get; set; }
     }
 }
