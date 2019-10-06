@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 namespace Components
 {
+    public enum TextAlign
+    {
+        center, end, inherit, initial, justify, left, right, start, unset
+    }
+
     public enum Direction
     {
         top, right, bottom, left
@@ -20,9 +25,9 @@ namespace Components
             return html.Attr("colspan", colSpan.ToString());
         }
 
-        public static Html ActionColumn(this Html html)
+        public static Html RowSpan(this Html html, int colSpan)
         {
-            return html.Th.Span.ClassName("mif-folder-open fg-cyan").End.End;
+            return html.Attr("rowspan", colSpan.ToString());
         }
 
         public static Html Panel(this Html html, string text = string.Empty)
@@ -247,9 +252,14 @@ namespace Components
             return html.Div.ClassName("tabs-content");
         }
 
-        public static Html TextAlign(this Html html, Direction direction)
+        public static Html TextAlign(this Html html, TextAlign alignment)
         {
-            return html.Style("text-align: " + direction.ToString());
+            return html.Style("text-align: " + alignment.ToString());
+        }
+
+        public static Html Icon(this Html html, string iconClass)
+        {
+            return html.Span.ClassName(iconClass);
         }
 
         public static void RenderAndFocus(this Component component)

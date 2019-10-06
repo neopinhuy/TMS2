@@ -2,9 +2,9 @@ namespace LogAPI.Models
 {
     using Microsoft.EntityFrameworkCore;
 
-    public partial class FMS : DbContext
+    public partial class TMS : DbContext
     {
-        public FMS() : base()
+        public TMS() : base()
         {
         }
 
@@ -54,7 +54,7 @@ namespace LogAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;database=FMS;Integrated Security=true;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=localhost;database=TMS;Integrated Security=true;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder);
         }
 

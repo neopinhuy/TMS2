@@ -30,6 +30,7 @@ namespace LogOne.NghiepVu.TruckManagement
             TruckHeader.Data = new Header<Truck>[]
             {
                 new Header<Truck> { DeleteEvent = DeleteTruckAsync, EditEvent = EditTruck },
+                new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
                 new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
@@ -42,7 +43,6 @@ namespace LogOne.NghiepVu.TruckManagement
                 new Header<Truck> { HeaderText = "Currency", FieldName = "Currency", Sortable = true },
                 new Header<Truck> { HeaderText = "Bought date", FieldName = "BoughtDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Active date", FieldName = "ActiveDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Maintenance start", FieldName = "MaintenanceStart", Sortable = true },
                 new Header<Truck> { HeaderText = "Maintenance end", FieldName = "MaintenanceEnd", Sortable = true },
                 new Header<Truck> { HeaderText = "Next maintenance date", FieldName = "NextMaintenanceDate", Sortable = true },

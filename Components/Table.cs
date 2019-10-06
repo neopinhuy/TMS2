@@ -1,4 +1,5 @@
 ﻿using Bridge.Html5;
+using Components;
 using MVVM;
 using System.Linq;
 using ElementType = MVVM.ElementType;
@@ -60,22 +61,22 @@ namespace Components
                 {
                     if (header != headers.FirstOrDefault(x => x.GroupName == header.GroupName)) return;
                     html.Th.Render();
-                    html.Attr("colspan", headers.Count(x => x.GroupName == header.GroupName).ToString());
+                    html.ColSpan(headers.Count(x => x.GroupName == header.GroupName));
                     html.Text(header.GroupName).Render();
                     return;
                 }
                 html.Th.Render();
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
-                    html.Attr("rowspan", "2");
+                    html.RowSpan(2);
                 }
                 if (header.EditEvent != null || header.DeleteEvent != null)
                 {
-                    html.Span.ClassName("fg-cyan mif-folder-open").End.Render();
+                    html.TextAlign(TextAlign.center).Icon("mif-folder-open").Margin(Direction.right, 0).End.Render();
                 }
                 else
                 {
-                    html.Text(header.HeaderText).Render();
+                    html.Span.Text(header.HeaderText).End.Render();
                     if (header.Sortable)
                     {
                         html.Span.ClassName("fa fa-filter").Event(EventType.Click, (e) =>
@@ -100,7 +101,7 @@ namespace Components
                 {
                     if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                     {
-                        html.Th.Text(header.HeaderText).EndOf(ElementType.th);
+                        html.Th.Span.Text(header.HeaderText).EndOf(ElementType.th);
                     }
                 });
             }

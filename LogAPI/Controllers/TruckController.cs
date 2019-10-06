@@ -12,7 +12,7 @@ namespace LogAPI.Controllers
     [Route("api/[controller]")]
     public class TruckController : BaseController, IRestful<Truck>
     {
-        FMS db = new FMS();
+        TMS db = new TMS();
 
         [HttpGet]
         public async Task<IEnumerable<Truck>> Get()

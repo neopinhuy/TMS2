@@ -188,6 +188,16 @@ td {
   background: #1891cb;
   border-bottom: 0;
 }
+.table-wrapper table thead th {
+  position: relative;
+}
+.table-wrapper table thead th span:first-child {
+  margin-right: 2.5rem;
+}
+.table-wrapper table thead th span.fa-filter {
+  position: absolute;
+  right: 0.5rem;
+}
 .table-wrapper table tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
 }
