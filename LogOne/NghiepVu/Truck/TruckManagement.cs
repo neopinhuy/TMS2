@@ -12,32 +12,31 @@ namespace LogOne.NghiepVu.TruckManagement
     {
         public override string Title { get; set; } = "Truck";
         public int TruckId { get; set; }
-        public ObservableArray<Header<Truck>> TruckHeader { get; set; } = new ObservableArray<Header<Truck>>();
-        public ObservableArray<Truck> TruckData { get; set; } = new ObservableArray<Truck>();
-        public Observable<string> TruckPlate { get; set; } = new Observable<string>();
-        public Observable<int> FreightStateId { get; set; } = new Observable<int>();
-        public Observable<string> BrandName { get; set; } = new Observable<string>();
-        public Observable<string> Version { get; set; } = new Observable<string>();
-        public Observable<int> VendorId { get; set; } = new Observable<int>();
-        public Observable<decimal> Price { get; set; } = new Observable<decimal>();
-        public Observable<string> Currency { get; set; } = new Observable<string>();
-        public Observable<DateTime> ActiveDate { get; set; } = new Observable<DateTime>();
-        public Observable<DateTime> ExpiredDate { get; set; } = new Observable<DateTime>();
-        public Observable<int> DriverId { get; set; } = new Observable<int>();
+        public ObservableArray<Header<Truck>> TruckHeader = new ObservableArray<Header<Truck>>();
+        public ObservableArray<Truck> TruckData = new ObservableArray<Truck>();
+        public Observable<string> TruckPlate = new Observable<string>();
+        public Observable<int> FreightStateId = new Observable<int>();
+        public Observable<string> BrandName = new Observable<string>();
+        public Observable<string> Version = new Observable<string>();
+        public Observable<int> VendorId = new Observable<int>();
+        public Observable<decimal> Price = new Observable<decimal>();
+        public Observable<string> Currency = new Observable<string>();
+        public Observable<DateTime?> ActiveDate = new Observable<DateTime?>();
+        public Observable<DateTime?> ExpiredDate = new Observable<DateTime?>();
+        public Observable<int> DriverId = new Observable<int>();
 
         public AllTruck()
         {
             TruckHeader.Data = new Header<Truck>[]
             {
-                new Header<Truck> { DeleteEvent = DeleteTruckAsync, EditEvent = EditTruck },
-                new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
+                new Header<Truck> { EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true },
+                new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId",  Sortable = true },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
                 new Header<Truck> { HeaderText = "Version", FieldName = "Version", Sortable = true },
                 new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true },
-                new Header<Truck> { HeaderText = "Long", FieldName = "Long", Sortable = true },
-                new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", Sortable = true },
+                new Header<Truck> { HeaderText = "Long", FieldName = "Long", TextAlign = TextAlign.right, Sortable = true },
+                new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", TextAlign = TextAlign.right, Sortable = true },
                 new Header<Truck> { HeaderText = "Driver", FieldName = "DriverId", Sortable = true },
                 new Header<Truck> { HeaderText = "Price", FieldName = "Price", Sortable = true },
                 new Header<Truck> { HeaderText = "Currency", FieldName = "Currency", Sortable = true },
@@ -48,6 +47,7 @@ namespace LogOne.NghiepVu.TruckManagement
                 new Header<Truck> { HeaderText = "Next maintenance date", FieldName = "NextMaintenanceDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Maintenance period", FieldName = "MaintenancePeriod", Sortable = true },
                 new Header<Truck> { HeaderText = "Active", FieldName = "Active", Sortable = true },
+                new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Inserted date", FieldName = "InsertedDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Inserted by", FieldName = "InsertedBy", Sortable = true },
                 new Header<Truck> { HeaderText = "Updated date", FieldName = "UpdatedDate", Sortable = true },
@@ -86,7 +86,23 @@ namespace LogOne.NghiepVu.TruckManagement
                 var oldTruck = TruckData.Data.First(x => x.Id == TruckId);
                 TruckData.Replace(oldTruck, updatedTruck);
             }
+            ResetTruck();
+        }
+
+        private void ResetTruck()
+        {
             TruckId = 0;
+            TruckPlate.Data = null;
+            FreightStateId.Data = 0;
+            FreightStateId.Data = 0;
+            BrandName.Data = null;
+            Version.Data = null;
+            VendorId.Data = 0;
+            Price.Data = 0;
+            Currency.Data = null;
+            ActiveDate.Data = null;
+            ExpiredDate.Data = null;
+            DriverId.Data = 0;
         }
 
         public async Task EditTruck(Truck truck)

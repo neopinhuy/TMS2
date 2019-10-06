@@ -47,7 +47,7 @@ namespace Components
             return html;
         }
 
-        public static Html SmallDatePicker(this Html html, Observable<DateTime> value)
+        public static Html SmallDatePicker<T>(this Html html, Observable<T> value)
         {
             html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y").Value(value);
             return html;
@@ -252,7 +252,7 @@ namespace Components
             return html.Div.ClassName("tabs-content");
         }
 
-        public static Html TextAlign(this Html html, TextAlign alignment)
+        public static Html TextAlign(this Html html, TextAlign? alignment = Components.TextAlign.unset)
         {
             return html.Style("text-align: " + alignment.ToString());
         }

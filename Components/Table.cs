@@ -1,6 +1,7 @@
 ﻿using Bridge.Html5;
 using Components;
 using MVVM;
+using System;
 using System.Linq;
 using ElementType = MVVM.ElementType;
 
@@ -83,10 +84,9 @@ namespace Components
                         {
                             Html.Take(e.Target as HTMLElement).Closest(ElementType.th);
                             var boudingRect = Html.Context.GetBoundingClientRect();
-
                             var filter = new ColumnFilter();
                             filter.Render();
-                            filter.Top = boudingRect.Top + boudingRect.Height;
+                            filter.Top = boudingRect.Bottom;
                             filter.Left = boudingRect.Left;
                             filter.Toggle();
                         }).End.Render();
@@ -128,15 +128,36 @@ namespace Components
                             .EventAsync(EventType.Click, header.DeleteEvent, row)
                             .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
                     }
-                    else
+                    if (!string.IsNullOrEmpty(header.FieldName))
                     {
                         if (!row.HasOwnProperty(header.FieldName))
                             throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
                         object cellData = row[header.FieldName];
-                        html.Text(cellData?.ToString()).End.Render();
+                        string cellText = cellData?.ToString() ?? string.Empty;
+                        if (cellData != null && cellData is DateTime)
+                        {
+                            cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
+                        }
+                        header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+                        html.TextAlign(header.TextAlign).Text(cellText).End.Render();
                     }
                 });
             }).EndOf(".table-wrapper").Render();
+        }
+
+        private static TextAlign? CalcTextAlign(TextAlign? textAlign, object cellData)
+        {
+            if (textAlign != null || cellData is null)
+                return textAlign;
+            if (Util.IsNumber(cellData))
+            {
+                return TextAlign.right;
+            }
+            else if (cellData is string)
+            {
+                return TextAlign.left;
+            }
+            return TextAlign.center;
         }
     }
 }

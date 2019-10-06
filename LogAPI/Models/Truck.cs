@@ -54,10 +54,10 @@ namespace LogAPI.Models
         public DateTime BoughtDate { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime ActiveDate { get; set; }
+        public DateTime? ActiveDate { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime ExpiredDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime? MaintenanceStart { get; set; }
