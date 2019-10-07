@@ -5,11 +5,9 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("FreightState")]
     public partial class FreightState
     {
-
         public FreightState()
         {
             Container = new HashSet<Container>();
@@ -40,19 +38,15 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<Container> Container { get; set; }
 
-
         public virtual ICollection<Coordination> Coordination { get; set; }
-
 
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
 
         public virtual User UserInserted { get; set; }
 
         public virtual User UserUpdated { get; set; }
-
 
         public virtual ICollection<Truck> Truck { get; set; }
     }

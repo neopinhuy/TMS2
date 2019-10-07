@@ -3,8 +3,8 @@ using MVVM;
 using LogAPI.Models;
 using System;
 using System.Threading.Tasks;
-using LogOne.APIClients;
 using System.Linq;
+using LogContract.Interfaces;
 
 namespace LogOne.NghiepVu.TruckManagement
 {
@@ -31,7 +31,7 @@ namespace LogOne.NghiepVu.TruckManagement
             {
                 new Header<Truck> { EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId",  Sortable = true },
+                new Header<Truck> { HeaderText = "Freight state", Source = typeof(FreightState), FieldName = "FreightStateId",  Sortable = true },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
                 new Header<Truck> { HeaderText = "Version", FieldName = "Version", Sortable = true },
                 new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true },

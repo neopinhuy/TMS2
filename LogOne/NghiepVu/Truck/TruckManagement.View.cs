@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Components;
 using LogAPI.Models;
-using LogOne.APIClients;
+using LogContract.Interfaces;
 using MVVM;
 
 namespace LogOne.NghiepVu.TruckManagement
@@ -21,7 +21,7 @@ namespace LogOne.NghiepVu.TruckManagement
             RenderTruckDetail();
             // Load truck data
             var client = new BaseClient<Truck>();
-            var trucks = await client.Get();
+            var trucks = await client.GetList();
             TruckData.Data = trucks.ToArray();
         }
 

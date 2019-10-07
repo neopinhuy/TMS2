@@ -165,6 +165,7 @@
     <Compile Include="..\LogAPI\Models\WeightRange.cs">
       <Link>Models\WeightRange.cs</Link>
     </Compile>
+    <Compile Include="Interfaces\BaseClient.cs" />
     <Compile Include="Interfaces\IRestful.cs" />
     <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +177,9 @@
   <ItemGroup>
     <Reference Include="Bridge, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.Core.17.9.0\lib\net40\Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="Bridge.Html5, Version=17.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bridge.Html5.17.9.0\lib\net40\Bridge.Html5.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bridge.Newtonsoft.Json.1.16.0\lib\net40\Newtonsoft.Json.dll</HintPath>

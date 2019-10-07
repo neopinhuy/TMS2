@@ -5,7 +5,7 @@ namespace LogContract.Interfaces
 {
     public interface IRestful<T>
     {
-        Task<IEnumerable<T>> Get();
+        Task<IEnumerable<T>> GetList();
 
         Task<T> Get(int id);
 

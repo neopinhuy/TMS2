@@ -15,7 +15,7 @@ namespace LogAPI.Controllers
         TMS db = new TMS();
 
         [HttpGet]
-        public async Task<IEnumerable<Truck>> Get()
+        public async Task<IEnumerable<Truck>> GetList()
         {
             return await db.Truck.ToListAsync();
         }
@@ -54,7 +54,7 @@ namespace LogAPI.Controllers
         public async Task<bool> Delete(int id)
         {
             var truck = db.Truck.Find(id);
-            db.Truck.Remove(truck);
+            truck.Active = false;
             await db.SaveChangesAsync();
             return true;
         }

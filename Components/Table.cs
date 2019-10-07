@@ -1,8 +1,10 @@
 ﻿using Bridge.Html5;
-using Components;
+using LogContract.Interfaces;
 using MVVM;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ElementType = MVVM.ElementType;
 
 namespace Components
@@ -24,8 +26,8 @@ namespace Components
             Html.Instance.Div.ClassName("table-wrapper")
                 .Table.ClassName("table striped");
             var table = Html.Context;
-            RenderTableHeader(table);
-            RenderTableContent(table);
+            Rerender(table);
+            Html.Instance.End.End.Render();
             Headers.Subscribe(x =>
             {
                 Rerender(table);
@@ -42,11 +44,11 @@ namespace Components
             {
                 Window.ClearTimeout(timeOut.Value);
             }
-            timeOut = Window.SetTimeout(() =>
+            timeOut = Window.SetTimeout(async () =>
             {
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
-                RenderTableContent(table);
+                await RenderTableContent(table);
             });
         }
 
@@ -108,8 +110,19 @@ namespace Components
             html.EndOf(ElementType.thead);
         }
 
-        private void RenderTableContent(Element table)
+        private async Task RenderTableContent(Element table)
         {
+            var headerSources = Headers.Data.Where(x => x.Source != null)
+                .Select(x =>
+                {
+                    var sourceType = new Type[] { x.Source };
+                    var type = typeof(BaseClient<>).MakeGenericType(sourceType); 
+                    var httpGet = type.GetMethod("GetList");
+                    var client = Activator.CreateInstance(type);
+                    return httpGet.Invoke(client).As<Task<object>>();
+                });
+            var sources = await Task.WhenAll(headerSources);
+
             var html = Html.Take(table);
             html.TBody.ForEach(RowData.Data, (Data row, int index) =>
             {

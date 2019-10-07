@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Html5;
-using LogContract.Interfaces;
 using Newtonsoft.Json;
 
-namespace LogOne.APIClients
+namespace LogContract.Interfaces
 {
     public class BaseClient<T> : IRestful<T> where T : class
     {
@@ -14,11 +13,13 @@ namespace LogOne.APIClients
         {
             BaseUrl = "https://localhost:44331";
         }
+
         public BaseClient(string url)
         {
             BaseUrl = url;
         }
-        public async Task<IEnumerable<T>> Get()
+
+        public async Task<IEnumerable<T>> GetList()
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<IEnumerable<T>>();
