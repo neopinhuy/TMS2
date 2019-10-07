@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Coordination")]
     public partial class Coordination
     {
@@ -65,12 +64,9 @@ namespace LogAPI.Models
 
         public virtual User UserUpdated { get; set; }
 
-
         public virtual ICollection<FreightBalance> FreightBalance { get; set; }
 
-
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
-
 
         public virtual ICollection<UserBalance> UserBalance { get; set; }
     }

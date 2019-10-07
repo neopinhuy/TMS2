@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("RightByUser")]
     public partial class RightByUser
     {

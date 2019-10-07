@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Feature")]
     public partial class Feature
     {
@@ -39,9 +38,7 @@ namespace LogAPI.Models
 
         public virtual User UserInserted { get; set; }
 
-
         public virtual ICollection<RightByGroup> RightByGroup { get; set; }
-
 
         public virtual ICollection<RightByRole> RightByRole { get; set; }
     }

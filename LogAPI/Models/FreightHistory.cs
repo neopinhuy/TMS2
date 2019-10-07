@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("FreightHistory")]
     public partial class FreightHistory
     {
@@ -44,7 +43,6 @@ namespace LogAPI.Models
         public virtual User UserInserted { get; set; }
 
         public virtual User UserUpdated { get; set; }
-
 
         public virtual ICollection<FreightProof> FreightProof { get; set; }
     }

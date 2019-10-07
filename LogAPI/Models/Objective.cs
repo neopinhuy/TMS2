@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Objective")]
     public partial class Objective
     {
@@ -34,9 +33,7 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<FreightBalance> FreightBalance { get; set; }
-
 
         public virtual ICollection<UserBalance> UserBalance { get; set; }
     }

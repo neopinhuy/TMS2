@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Department")]
     public partial class Department
     {
@@ -42,7 +41,6 @@ namespace LogAPI.Models
         public virtual User UserInserted { get; set; }
 
         public virtual User UserUpdated { get; set; }
-
 
         public virtual ICollection<User> UserInDepartment { get; set; }
     }

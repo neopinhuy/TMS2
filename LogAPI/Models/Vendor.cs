@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Vendor")]
     public partial class Vendor
     {
@@ -56,18 +55,13 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<Accessory> Accessory { get; set; }
-
 
         public virtual ICollection<Container> Container { get; set; }
 
-
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
 
-
         public virtual ICollection<Quotation> Quotation { get; set; }
-
 
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
 

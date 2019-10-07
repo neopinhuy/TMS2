@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("GroupRole")]
     public partial class GroupRole
     {
@@ -39,9 +38,7 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfig { get; set; }
-
 
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig { get; set; }
 
@@ -49,9 +46,7 @@ namespace LogAPI.Models
 
         public virtual User UserUpdated { get; set; }
 
-
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
-
 
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
     }

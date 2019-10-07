@@ -31,13 +31,22 @@ namespace LogOne.NghiepVu.TruckManagement
             {
                 new Header<Truck> { EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { HeaderText = "Freight state", Source = typeof(FreightState), FieldName = "FreightStateId",  Sortable = true },
+                new Header<Truck> { 
+                    HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true,
+                    Reference = typeof(FreightState), RefDisplayField = nameof(FreightState.Name), RefValueField = nameof(FreightState.Id),
+                },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
                 new Header<Truck> { HeaderText = "Version", FieldName = "Version", Sortable = true },
-                new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true },
+                new Header<Truck> { 
+                    HeaderText = "Vendor", FieldName = "VendorId", Sortable = true,
+                    Reference = typeof(Vendor), RefDisplayField = nameof(Vendor.Name), RefValueField = nameof(Vendor.Id),
+                },
                 new Header<Truck> { HeaderText = "Long", FieldName = "Long", TextAlign = TextAlign.right, Sortable = true },
                 new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", TextAlign = TextAlign.right, Sortable = true },
-                new Header<Truck> { HeaderText = "Driver", FieldName = "DriverId", Sortable = true },
+                new Header<Truck> { 
+                    HeaderText = "Driver", FieldName = "DriverId", Sortable = true,
+                    Reference = typeof(User), RefDisplayField = nameof(User.FullName), RefValueField = nameof(User.Id),
+                },
                 new Header<Truck> { HeaderText = "Price", FieldName = "Price", Sortable = true },
                 new Header<Truck> { HeaderText = "Currency", FieldName = "Currency", Sortable = true },
                 new Header<Truck> { HeaderText = "Bought date", FieldName = "BoughtDate", Sortable = true },

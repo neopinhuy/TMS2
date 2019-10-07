@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("TruckMaintenanceDetail")]
     public partial class TruckMaintenanceDetail
     {

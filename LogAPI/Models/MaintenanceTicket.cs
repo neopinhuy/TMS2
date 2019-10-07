@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("MaintenanceTicket")]
     public partial class MaintenanceTicket
     {
@@ -62,7 +61,6 @@ namespace LogAPI.Models
         public virtual User UserInserted { get; set; }
 
         public virtual User UserUpdated { get; set; }
-
 
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
     }

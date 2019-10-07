@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Container")]
     public partial class Container
     {
@@ -70,12 +69,9 @@ namespace LogAPI.Models
 
         public virtual Vendor Vendor { get; set; }
 
-
         public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfig { get; set; }
 
-
         public virtual ICollection<Coordination> Coordination { get; set; }
-
 
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
     }

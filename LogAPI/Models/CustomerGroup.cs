@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("CustomerGroup")]
     public partial class CustomerGroup
     {
@@ -38,9 +37,7 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<Customer> Customer { get; set; }
-
 
         public virtual ICollection<Quotation> Quotation { get; set; }
     }

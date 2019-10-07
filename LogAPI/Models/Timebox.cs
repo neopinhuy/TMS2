@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Timebox")]
     public partial class Timebox
     {
@@ -34,9 +33,7 @@ namespace LogAPI.Models
 
         public int? UpdatedBy { get; set; }
 
-
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
-
 
         public virtual ICollection<Quotation> Quotation { get; set; }
 

@@ -153,8 +153,7 @@ namespace LogAPI.Models
                 .HasMany(e => e.UserInDepartment)
                 .WithOne(e => e.Department)
                 .HasForeignKey(e => e.DepartmentId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .IsRequired(false).OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Feature>()
                 .HasMany(e => e.RightByGroup)

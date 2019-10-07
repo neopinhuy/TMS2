@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("CommodityType")]
     public partial class CommodityType
     {
@@ -42,9 +41,7 @@ namespace LogAPI.Models
 
         public virtual User UserUpdated { get; set; }
 
-
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
-
 
         public virtual ICollection<Quotation> Quotation { get; set; }
     }

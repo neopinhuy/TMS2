@@ -29,5 +29,18 @@ namespace Components
                     || value is DateTimeOffset
                     || value is TimeSpan;
         }
+
+        public static IEnumerable<T> DistinctBy<T, Key> (this IEnumerable<T> source, Func<T, Key> keySelector)
+        {
+            HashSet<Key> seenKeys = new HashSet<Key>();
+            foreach (T element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
+
     }
 }

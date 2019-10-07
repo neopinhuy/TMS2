@@ -112,10 +112,11 @@ namespace Components
 
         private async Task RenderTableContent(Element table)
         {
-            var headerSources = Headers.Data.Where(x => x.Source != null)
+            var headerSources = Headers.Data.Where(x => x.Reference != null)
+                .DistinctBy(x => x.Reference)
                 .Select(x =>
                 {
-                    var sourceType = new Type[] { x.Source };
+                    var sourceType = new Type[] { x.Reference };
                     var type = typeof(BaseClient<>).MakeGenericType(sourceType); 
                     var httpGet = type.GetMethod("GetList");
                     var client = Activator.CreateInstance(type);
@@ -144,19 +145,20 @@ namespace Components
                     if (!string.IsNullOrEmpty(header.FieldName))
                     {
                         if (!row.HasOwnProperty(header.FieldName))
-                            throw new System.InvalidOperationException("Cannot find property " + header.FieldName);
+                            throw new InvalidOperationException("Cannot find property " + header.FieldName);
                         object cellData = row[header.FieldName];
                         string cellText = cellData?.ToString() ?? string.Empty;
                         if (cellData != null && cellData is DateTime)
                         {
                             cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
                         }
-                        if (header.Source != null)
+                        if (header.Reference != null)
                         {
-                            var source = sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Source)
-                                .As<IEnumerable<object>>();
-                            cellText = source.FirstOrDefault(x => x["Id"] == cellData)?["Name"]?.ToString();
-                            header.TextAlign = TextAlign.left;
+                            var source = sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
+                                ?.As<IEnumerable<object>>();
+                            cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
+                                ?[header.RefDisplayField]?.ToString();
+                            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
                         }
                         header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
                         html.TextAlign(header.TextAlign).Text(cellText).End.Render();

@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("Order")]
     public partial class Order
     {
@@ -74,7 +73,6 @@ namespace LogAPI.Models
         public virtual User User { get; set; }
 
         public virtual User UserUpdated { get; set; }
-
 
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }

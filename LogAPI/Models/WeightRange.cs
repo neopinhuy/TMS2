@@ -5,7 +5,6 @@ namespace LogAPI.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-
     [Table("WeightRange")]
     public partial class WeightRange
     {
@@ -32,7 +31,6 @@ namespace LogAPI.Models
         public DateTime? UpdatedDate { get; set; }
 
         public int? UpdatedBy { get; set; }
-
 
         public virtual ICollection<Quotation> Quotation { get; set; }
 

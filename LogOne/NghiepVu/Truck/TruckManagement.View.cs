@@ -55,7 +55,7 @@ namespace LogOne.NghiepVu.TruckManagement
                 .TabItem("Maintenance", "truck-maintenance")
                 .TabItem("Accessory", "truck-accessory").EndOf(ElementType.ul)
             .TabContent().HeightPercentage(100)
-                .Panel().Id("truckInfo").HeightPercentage(100).PaddingRem(Direction.top, 0.8)
+                .Panel().Id("truckInfo").PaddingRem(Direction.top, 0.8)
                 .Table.TRow.TData.Text("Truck plate").End
                 .TData.SmallInput(TruckPlate).EndOf(ElementType.td);
 
