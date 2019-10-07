@@ -204,62 +204,36 @@ td {
     border: 1px solid @grayNormal;
     top: -2px;
     overflow: hidden;
+
     &:hover {
         overflow: auto;
         overflow: overlay;
     }
+
     table {
         margin: -1px 0 0 0;
         border: 0;
-        > .button.small {
-            top: -2px;
-            height: 27px !important;
-            line-height: 27px !important;
-        }
-        thead {
-            background: @infoDark;
-            border-bottom: 0;
-            th {
-                position: relative;
-                span:first-child {
-                    margin-right: 2.5rem;
-                }
-                span.fa-filter {
-                    position: absolute;
-                    right: 0.5rem;
-                }
-            }
-        }
+    }
 
-        tbody tr:nth-child(odd) {
-            background-color: @light;
-        }
-
-        tr {
-            td {
-                padding: 2px !important;
-                border: 1px solid @grayLight;
-                white-space: nowrap;
-
-                &:first-child {
-                    border-left: 0;
-                }
-
-                &:last-child {
-                    border-right: 0;
-                }
-            }
-
-            &:last-child td {
-                border-bottom: 0;
-            }
-        }
+    thead {
+        background: @infoDark;
+        border-bottom: 0;
 
         th {
-            padding: 0.625rem !important;
+            padding: 0.625rem;
             white-space: nowrap;
             border: 1px solid @grayNormal;
             color: @white;
+            position: relative;
+
+            span:first-child {
+                margin-right: 2.5rem;
+            }
+
+            span.fa-filter {
+                position: absolute;
+                right: 0.5rem;
+            }
 
             &:first-child {
                 border-left: none;
@@ -270,14 +244,38 @@ td {
                 position: relative;
             }
         }
+    }
 
-        [rowspan] {
-            vertical-align: middle;
+    tbody {
+        tr:nth-child(odd) {
+            background-color: @light;
         }
 
-        [colspan] {
-            text-align: center;
+        td {
+            padding: 0 0.4rem;
+            border: 1px solid @grayLight;
+            white-space: nowrap;
+
+            &:first-child {
+                border-left: 0;
+            }
+
+            &:last-child {
+                border-right: 0;
+            }
         }
+    }
+
+    &:last-child td {
+        border-bottom: 0;
+    }
+
+    [rowspan] {
+        vertical-align: middle;
+    }
+
+    [colspan] {
+        text-align: center;
     }
 }
 

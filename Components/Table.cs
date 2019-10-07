@@ -156,6 +156,7 @@ namespace Components
                             var source = sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Source)
                                 .As<IEnumerable<object>>();
                             cellText = source.FirstOrDefault(x => x["Id"] == cellData)?["Name"]?.ToString();
+                            header.TextAlign = TextAlign.left;
                         }
                         header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
                         html.TextAlign(header.TextAlign).Text(cellText).End.Render();
