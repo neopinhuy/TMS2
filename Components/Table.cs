@@ -121,7 +121,7 @@ namespace Components
                     var client = Activator.CreateInstance(type);
                     return httpGet.Invoke(client).As<Task<object>>();
                 });
-            var sources = await Task.WhenAll(headerSources);
+            var sources = (await Task.WhenAll(headerSources)).As<IEnumerable<IEnumerable<object>>>();
 
             var html = Html.Take(table);
             html.TBody.ForEach(RowData.Data, (Data row, int index) =>
@@ -150,6 +150,12 @@ namespace Components
                         if (cellData != null && cellData is DateTime)
                         {
                             cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
+                        }
+                        if (header.Source != null)
+                        {
+                            var source = sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Source)
+                                .As<IEnumerable<object>>();
+                            cellText = source.FirstOrDefault(x => x["Id"] == cellData)?["Name"]?.ToString();
                         }
                         header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
                         html.TextAlign(header.TextAlign).Text(cellText).End.Render();
