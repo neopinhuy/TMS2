@@ -22,9 +22,9 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                                 $step = System.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        new LogOne.NghiepVu.Dashboard.Dashboard().Render();
-                                        new LogOne.NghiepVu.MenuComponent().Render();
-                                        truck = new LogOne.NghiepVu.TruckManagement.AllTruck();
+                                        new LogOne.Business.Dashboard.Dashboard().Render();
+                                        new LogOne.Business.MenuComponent().Render();
+                                        truck = new LogOne.Business.TruckManagement.AllTruck();
                                         $task1 = truck.RenderAsync();
                                         $step = 1;
                                         if ($task1.isCompleted()) {
@@ -56,7 +56,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
             }
         });
     
-        Bridge.define("LogOne.NghiepVu.Dashboard.Dashboard", {
+        Bridge.define("LogOne.Business.Dashboard.Dashboard", {
             inherits: [Components.Component],
             statics: {
                 methods: {
@@ -95,7 +95,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                 },
                 ChartPanels: function () {
                     Components.Renderer.GridRow(Components.Renderer.Grid(MVVM.Html.Instance.Div.Id("Dashboard")));
-                    LogOne.NghiepVu.Dashboard.Dashboard.Customers();
+                    LogOne.Business.Dashboard.Dashboard.Customers();
                     this.SaleAnalysis();
                     this.SaleLeaderBoard();
                     this.MarketShare();
@@ -154,7 +154,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
             }
         });
     
-        Bridge.define("LogOne.NghiepVu.MenuComponent", {
+        Bridge.define("LogOne.Business.MenuComponent", {
             inherits: [Components.Component],
             fields: {
                 Title: null,
@@ -166,47 +166,47 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                     Components.Component.ctor.call(this);
                     this.MenuItems = function (_o4) {
                             var $t;
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.IsGroup = true, $t.ItemText = "Main", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Dashboard", $t.IconClass = "mif-home", $t.LinkedComponent = LogOne.NghiepVu.Dashboard.Dashboard, $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Truck", $t.IconClass = "mif-truck", $t.LinkedComponent = LogOne.NghiepVu.TruckManagement.AllTruck, $t.MenuItems = function (_o1) {
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.IsGroup = true, $t.ItemText = "Main", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Dashboard", $t.IconClass = "mif-home", $t.LinkedComponent = LogOne.Business.Dashboard.Dashboard, $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Truck", $t.IconClass = "mif-truck", $t.LinkedComponent = LogOne.Business.TruckManagement.AllTruck, $t.MenuItems = function (_o1) {
                                     var $t1;
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Accessory", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng h\u00e0ng lo\u1ea1t", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Phi\u1ebfu chi", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.IsDevider = true, $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Tr\u1ea3 ti\u1ec1n NCC", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "N\u1ed9p thu\u1ebf", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Tr\u1ea3 l\u01b0\u01a1ng", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "K\u1ebft qu\u1ea3 ki\u1ec3m k\u00ea", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "S\u1ed5 chi ti\u1ec1n m\u1eb7t", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Ki\u1ec3m k\u00ea qu\u1ef9", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "D\u1ef1 b\u00e1o d\u00f2ng ti\u1ec1n", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Accessory", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng h\u00e0ng lo\u1ea1t", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Phi\u1ebfu chi", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.IsDevider = true, $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Tr\u1ea3 ti\u1ec1n NCC", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "N\u1ed9p thu\u1ebf", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Tr\u1ea3 l\u01b0\u01a1ng", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "K\u1ebft qu\u1ea3 ki\u1ec3m k\u00ea", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "S\u1ed5 chi ti\u1ec1n m\u1eb7t", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Ki\u1ec3m k\u00ea qu\u1ef9", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "D\u1ef1 b\u00e1o d\u00f2ng ti\u1ec1n", $t1.IconClass = "fa fa-file-word", $t1));
                                     return _o1;
-                                }(new (System.Collections.Generic.List$1(LogOne.NghiepVu.MenuItem)).ctor()), $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Ng\u00e2n h\u00e0ng", $t.IconClass = "mif-library", $t.MenuItems = function (_o2) {
+                                }(new (System.Collections.Generic.List$1(LogOne.Business.MenuItem)).ctor()), $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Ng\u00e2n h\u00e0ng", $t.IconClass = "mif-library", $t.MenuItems = function (_o2) {
                                     var $t1;
-                                    _o2.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Thu, chi ti\u1ec1n", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o2.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n g\u1edfi", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o2.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o2.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "\u0110\u1ed1i chi\u1ebfu ng\u00e2n h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o2.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Thu, chi ti\u1ec1n", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o2.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n g\u1edfi", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o2.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o2.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "\u0110\u1ed1i chi\u1ebfu ng\u00e2n h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
                                     return _o2;
-                                }(new (System.Collections.Generic.List$1(LogOne.NghiepVu.MenuItem)).ctor()), $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Mua h\u00e0ng", $t.IconClass = "mif-add-shopping-cart", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "B\u00e1n h\u00e0ng", $t.IconClass = "mif-truck", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "H\u00f3a \u0111\u01a1n", $t.IconClass = "fa fa-file-invoice", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Kho", $t.IconClass = "fa fa-warehouse", $t.MenuItems = function (_o3) {
+                                }(new (System.Collections.Generic.List$1(LogOne.Business.MenuItem)).ctor()), $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Mua h\u00e0ng", $t.IconClass = "mif-add-shopping-cart", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "B\u00e1n h\u00e0ng", $t.IconClass = "mif-truck", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "H\u00f3a \u0111\u01a1n", $t.IconClass = "fa fa-file-invoice", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Kho", $t.IconClass = "fa fa-warehouse", $t.MenuItems = function (_o3) {
                                     var $t1;
-                                    _o3.add(($t1 = new LogOne.NghiepVu.MenuItem(), $t1.ItemText = "Nh\u1eadp xu\u1ea5t kho", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o3.add(($t1 = new LogOne.Business.MenuItem(), $t1.ItemText = "Nh\u1eadp xu\u1ea5t kho", $t1.IconClass = "fa fa-file-word", $t1));
                                     return _o3;
-                                }(new (System.Collections.Generic.List$1(LogOne.NghiepVu.MenuItem)).ctor()), $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Settings", $t.IsGroup = true, $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "Thi\u1ebft l\u1eadp", $t.IconClass = "mif-cogs", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "T\u00e0i kho\u1ea3n", $t.IconClass = "mif-user", $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.IsDevider = true, $t));
-                            _o4.add(($t = new LogOne.NghiepVu.MenuItem(), $t.ItemText = "\u0110\u0103ng xu\u1ea5t", $t.IconClass = "mif-exit", $t));
+                                }(new (System.Collections.Generic.List$1(LogOne.Business.MenuItem)).ctor()), $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Settings", $t.IsGroup = true, $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "Thi\u1ebft l\u1eadp", $t.IconClass = "mif-cogs", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "T\u00e0i kho\u1ea3n", $t.IconClass = "mif-user", $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.IsDevider = true, $t));
+                            _o4.add(($t = new LogOne.Business.MenuItem(), $t.ItemText = "\u0110\u0103ng xu\u1ea5t", $t.IconClass = "mif-exit", $t));
                             return _o4;
-                        }(new (System.Collections.Generic.List$1(LogOne.NghiepVu.MenuItem)).ctor());
+                        }(new (System.Collections.Generic.List$1(LogOne.Business.MenuItem)).ctor());
                 }
             },
             methods: {
@@ -216,13 +216,13 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                     MVVM.Html.Take$2(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
                 },
                 RenderMenuItems: function (menuItems) {
-                    MVVM.Html.Instance.Ul.ForEach$1(LogOne.NghiepVu.MenuItem, menuItems, Bridge.fn.bind(this, function (item, index) {
+                    MVVM.Html.Instance.Ul.ForEach$1(LogOne.Business.MenuItem, menuItems, Bridge.fn.bind(this, function (item, index) {
                         if (item.IsGroup) {
                             MVVM.Html.Instance.Li.ClassName("group-title").Text$2(item.ItemText).End.Render();
                         } else if (item.IsDevider) {
                             MVVM.Html.Instance.Li.ClassName("divider").End.Render();
                         } else {
-                            MVVM.Html.Instance.Li.Anchor.Attr("data-role", "ripple").Event$3(LogOne.NghiepVu.MenuItem, "click", Bridge.fn.bind(this, function (menu, e) {
+                            MVVM.Html.Instance.Li.Anchor.Attr("data-role", "ripple").Event$3(LogOne.Business.MenuItem, "click", Bridge.fn.bind(this, function (menu, e) {
                                 var $step = 0,
                                     $task1, 
                                     $jumpFromFinally, 
@@ -288,7 +288,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
             }
         });
     
-        Bridge.define("LogOne.NghiepVu.MenuItem", {
+        Bridge.define("LogOne.Business.MenuItem", {
             fields: {
                 IsGroup: false,
                 IsDevider: false,
@@ -299,7 +299,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
             }
         });
     
-        Bridge.define("LogOne.NghiepVu.TruckManagement.AllTruck", {
+        Bridge.define("LogOne.Business.TruckManagement.AllTruck", {
             inherits: [Components.Component],
             fields: {
                 Title: null,

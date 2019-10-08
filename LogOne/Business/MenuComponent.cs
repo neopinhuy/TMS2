@@ -1,9 +1,9 @@
 ﻿using Components;
-using LogOne.NghiepVu.TruckManagement;
+using LogOne.Business.TruckManagement;
 using System;
 using System.Collections.Generic;
 
-namespace LogOne.NghiepVu
+namespace LogOne.Business
 {
     public class MenuItem
     {

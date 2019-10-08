@@ -6,7 +6,7 @@ using LogAPI.Models;
 using LogContract.Interfaces;
 using MVVM;
 
-namespace LogOne.NghiepVu.TruckManagement
+namespace LogOne.Business.TruckManagement
 {
     public partial class AllTruck : Component
     {

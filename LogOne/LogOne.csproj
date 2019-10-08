@@ -36,14 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NghiepVu\Dashboard\Dashboard.cs" />
-    <Compile Include="NghiepVu\MenuComponent.cs" />
-    <Compile Include="NghiepVu\MenuComponent.View.cs">
+    <Compile Include="Business\Dashboard\Dashboard.cs" />
+    <Compile Include="Business\MenuComponent.cs" />
+    <Compile Include="Business\MenuComponent.View.cs">
       <DependentUpon>MenuComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
-    <Compile Include="NghiepVu\Truck\TruckManagement.View.cs" />
-    <Compile Include="NghiepVu\Truck\TruckManagement.cs" />
+    <Compile Include="Business\Truck\TruckManagement.View.cs" />
+    <Compile Include="Business\Truck\TruckManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +52,7 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Compile Include="NghiepVu\Dashboard\Dashboard.View.cs" />
+    <Compile Include="Business\Dashboard\Dashboard.View.cs" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

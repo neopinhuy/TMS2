@@ -1,7 +1,7 @@
 ﻿using Components;
-using LogOne.NghiepVu;
-using LogOne.NghiepVu.Dashboard;
-using LogOne.NghiepVu.TruckManagement;
+using LogOne.Business;
+using LogOne.Business.Dashboard;
+using LogOne.Business.TruckManagement;
 using System.Threading.Tasks;
 
 namespace LogOne

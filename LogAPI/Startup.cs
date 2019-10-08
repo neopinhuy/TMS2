@@ -22,7 +22,6 @@ namespace LogAPI
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new Info
@@ -34,6 +33,7 @@ namespace LogAPI
                 });
                 options.DescribeAllEnumsAsStrings();
             });
+            services.AddResponseCompression();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -48,6 +48,7 @@ namespace LogAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseMvc();
             app.UseDefaultFiles();
             app.UseStaticFiles();

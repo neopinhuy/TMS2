@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using LogContract.Interfaces;
 
-namespace LogOne.NghiepVu.TruckManagement
+namespace LogOne.Business.TruckManagement
 {
     public partial class AllTruck : Component
     {

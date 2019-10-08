@@ -1,6 +1,6 @@
 ﻿using Components;
 
-namespace LogOne.NghiepVu.Dashboard
+namespace LogOne.Business.Dashboard
 {
     public partial class Dashboard : Component
     {

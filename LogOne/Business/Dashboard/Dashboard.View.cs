@@ -4,7 +4,7 @@ using LogContract.Models;
 using MVVM;
 using static Retyped.canvasjs.CanvasJS;
 
-namespace LogOne.NghiepVu.Dashboard
+namespace LogOne.Business.Dashboard
 {
     public partial class Dashboard : Component
     {

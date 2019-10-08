@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LogOne.NghiepVu
+namespace LogOne.Business
 {
     public partial class MenuComponent : Component
     {
