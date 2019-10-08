@@ -16,19 +16,19 @@
   <ItemGroup>
     <Content Remove="wwwRoot\css\color.less" />
     <Content Remove="wwwRoot\css\main.less" />
-    <Content Remove="wwwRoot\webfonts\fa-brands-400.eot" />
-    <Content Remove="wwwRoot\webfonts\fa-brands-400.ttf" />
-    <Content Remove="wwwRoot\webfonts\fa-brands-400.woff" />
-    <Content Remove="wwwRoot\webfonts\fa-brands-400.woff2" />
-    <Content Remove="wwwRoot\webfonts\fa-regular-400.eot" />
-    <Content Remove="wwwRoot\webfonts\fa-regular-400.ttf" />
-    <Content Remove="wwwRoot\webfonts\fa-regular-400.woff" />
-    <Content Remove="wwwRoot\webfonts\fa-regular-400.woff2" />
-    <Content Remove="wwwRoot\webfonts\fa-solid-900.eot" />
-    <Content Remove="wwwRoot\webfonts\fa-solid-900.ttf" />
-    <Content Remove="wwwRoot\webfonts\fa-solid-900.woff" />
-    <Content Remove="wwwRoot\webfonts\fa-solid-900.woff2" />
-    <Content Remove="wwwRoot\webfonts\metro.ttf" />
+    <Content Remove="wwwRoot\css\webfonts\fa-brands-400.eot" />
+    <Content Remove="wwwRoot\css\webfonts\fa-brands-400.ttf" />
+    <Content Remove="wwwRoot\css\webfonts\fa-brands-400.woff" />
+    <Content Remove="wwwRoot\css\webfonts\fa-brands-400.woff2" />
+    <Content Remove="wwwRoot\css\webfonts\fa-regular-400.eot" />
+    <Content Remove="wwwRoot\css\webfonts\fa-regular-400.ttf" />
+    <Content Remove="wwwRoot\css\webfonts\fa-regular-400.woff" />
+    <Content Remove="wwwRoot\css\webfonts\fa-regular-400.woff2" />
+    <Content Remove="wwwRoot\css\webfonts\fa-solid-900.eot" />
+    <Content Remove="wwwRoot\css\webfonts\fa-solid-900.ttf" />
+    <Content Remove="wwwRoot\css\webfonts\fa-solid-900.woff" />
+    <Content Remove="wwwRoot\css\webfonts\fa-solid-900.woff2" />
+    <Content Remove="wwwRoot\css\webfonts\metro.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,43 +57,43 @@
     <None Include="wwwRoot\css\main.less">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-brands-400.eot">
+    <None Include="wwwRoot\css\webfonts\fa-brands-400.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-brands-400.ttf">
+    <None Include="wwwRoot\css\webfonts\fa-brands-400.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-brands-400.woff">
+    <None Include="wwwRoot\css\webfonts\fa-brands-400.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-brands-400.woff2">
+    <None Include="wwwRoot\css\webfonts\fa-brands-400.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-regular-400.eot">
+    <None Include="wwwRoot\css\webfonts\fa-regular-400.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-regular-400.ttf">
+    <None Include="wwwRoot\css\webfonts\fa-regular-400.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-regular-400.woff">
+    <None Include="wwwRoot\css\webfonts\fa-regular-400.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-regular-400.woff2">
+    <None Include="wwwRoot\css\webfonts\fa-regular-400.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-solid-900.eot">
+    <None Include="wwwRoot\css\webfonts\fa-solid-900.eot">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-solid-900.ttf">
+    <None Include="wwwRoot\css\webfonts\fa-solid-900.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-solid-900.woff">
+    <None Include="wwwRoot\css\webfonts\fa-solid-900.woff">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\fa-solid-900.woff2">
+    <None Include="wwwRoot\css\webfonts\fa-solid-900.woff2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="wwwRoot\webfonts\metro.ttf">
+    <None Include="wwwRoot\mif\metro.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -125,13 +125,13 @@
     <Content Update="wwwroot\js\require.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\webfonts\fa-brands-400.svg">
+    <Content Update="wwwroot\css\webfonts\fa-brands-400.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\webfonts\fa-regular-400.svg">
+    <Content Update="wwwroot\css\webfonts\fa-regular-400.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\webfonts\fa-solid-900.svg">
+    <Content Update="wwwroot\css\webfonts\fa-solid-900.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
