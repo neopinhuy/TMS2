@@ -14,6 +14,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwRoot\css\color.less" />
+    <Content Remove="wwwRoot\css\main.less" />
+    <Content Remove="wwwRoot\webfonts\fa-brands-400.eot" />
+    <Content Remove="wwwRoot\webfonts\fa-brands-400.ttf" />
+    <Content Remove="wwwRoot\webfonts\fa-brands-400.woff" />
+    <Content Remove="wwwRoot\webfonts\fa-brands-400.woff2" />
+    <Content Remove="wwwRoot\webfonts\fa-regular-400.eot" />
+    <Content Remove="wwwRoot\webfonts\fa-regular-400.ttf" />
+    <Content Remove="wwwRoot\webfonts\fa-regular-400.woff" />
+    <Content Remove="wwwRoot\webfonts\fa-regular-400.woff2" />
+    <Content Remove="wwwRoot\webfonts\fa-solid-900.eot" />
+    <Content Remove="wwwRoot\webfonts\fa-solid-900.ttf" />
+    <Content Remove="wwwRoot\webfonts\fa-solid-900.woff" />
+    <Content Remove="wwwRoot\webfonts\fa-solid-900.woff2" />
+    <Content Remove="wwwRoot\webfonts\metro.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\LogContract\Interfaces\IRestful.cs" Link="Interfaces\IRestful.cs" />
   </ItemGroup>
 
@@ -32,6 +50,90 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwRoot\css\color.less" />
+    <None Include="wwwRoot\css\main.less">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-brands-400.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-brands-400.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-brands-400.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-brands-400.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-regular-400.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-regular-400.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-regular-400.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-regular-400.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-solid-900.eot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-solid-900.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-solid-900.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\fa-solid-900.woff2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwRoot\webfonts\metro.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\css\font-awesome.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\css\main.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>main.less</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\css\main.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
+    <Content Update="wwwroot\css\metro-all.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\image\sb-bg-1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\js\metro.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\js\require.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\webfonts\fa-brands-400.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\webfonts\fa-regular-400.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\webfonts\fa-solid-900.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

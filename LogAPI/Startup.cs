@@ -34,16 +34,6 @@ namespace LogAPI
                 });
                 options.DescribeAllEnumsAsStrings();
             });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowOrigin",
-                    builder => {
-                        builder.WithOrigins("http://localhost:81");
-                        builder.AllowAnyHeader();
-                        builder.WithMethods("GET", "PUT", "POST", "DELETE");
-                    });
-            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -59,12 +49,13 @@ namespace LogAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-            app.UseCors("AllowOrigin");
         }
     }
 }

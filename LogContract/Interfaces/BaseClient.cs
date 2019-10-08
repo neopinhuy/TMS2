@@ -11,7 +11,6 @@ namespace LogContract.Interfaces
         public string BaseUrl { get; set; }
         public BaseClient()
         {
-            BaseUrl = "https://localhost:44331";
         }
 
         public BaseClient(string url)
