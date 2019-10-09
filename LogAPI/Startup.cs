@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using LogAPI.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
@@ -33,6 +35,7 @@ namespace LogAPI
                 });
                 options.DescribeAllEnumsAsStrings();
             });
+            services.AddDbContext<TMS>(options => options.UseSqlServer(Configuration.GetConnectionString("TMS")));
             services.AddResponseCompression();
         }
 

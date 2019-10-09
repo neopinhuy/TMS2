@@ -11,7 +11,12 @@ namespace LogAPI.Controllers
     [Route("api/[controller]")]
     public class VendorController : BaseController, IRestful<Vendor>
     {
-        readonly TMS db = new TMS();
+        readonly TMS db;
+
+        public VendorController(TMS context)
+        {
+            db = context;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<Vendor>> GetList()

@@ -4,8 +4,9 @@ namespace LogAPI.Models
 
     public partial class TMS : DbContext
     {
-        public TMS() : base()
+        public TMS(DbContextOptions<TMS> options) : base(options)
         {
+
         }
 
         public virtual DbSet<Accessory> Accessory { get; set; }
@@ -54,7 +55,6 @@ namespace LogAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;database=TMS;Integrated Security=true;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder);
         }
 

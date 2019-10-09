@@ -11,7 +11,12 @@ namespace LogAPI.Controllers
     [Route("api/[controller]")]
     public class UserController : BaseController, IRestful<User>
     {
-        readonly TMS db = new TMS();
+        readonly TMS db;
+
+        public UserController(TMS context)
+        {
+            db = context;
+        }
 
         [HttpGet]
         public async Task<IEnumerable<User>> GetList()
