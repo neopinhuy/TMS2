@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Bridge.Html5;
 using Newtonsoft.Json;
 
-namespace LogContract.Interfaces
+namespace Common.Interfaces
 {
     public class BaseClient<T> : IRestful<T> where T : class
     {

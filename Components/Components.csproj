@@ -60,9 +60,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogContract\LogContract.csproj">
+    <ProjectReference Include="..\Common\Common.csproj">
       <Project>{fb937996-2ab2-4f80-8d2e-2abdf1881cf3}</Project>
-      <Name>LogContract</Name>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
       <Project>{71801c9a-4feb-4a2f-8ec0-44366ff4d5b1}</Project>

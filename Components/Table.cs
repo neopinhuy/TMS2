@@ -1,5 +1,5 @@
 ﻿using Bridge.Html5;
-using LogContract.Interfaces;
+using Common.Interfaces;
 using MVVM;
 using System;
 using System.Collections.Generic;

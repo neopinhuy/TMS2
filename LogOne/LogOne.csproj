@@ -87,13 +87,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{fb937996-2ab2-4f80-8d2e-2abdf1881cf3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Components\Components.csproj">
       <Project>{da6b732d-83f8-420f-af5e-343b32a75969}</Project>
       <Name>Components</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LogContract\LogContract.csproj">
-      <Project>{fb937996-2ab2-4f80-8d2e-2abdf1881cf3}</Project>
-      <Name>LogContract</Name>
     </ProjectReference>
     <ProjectReference Include="..\MVVM\MVVM.csproj">
       <Project>{71801c9a-4feb-4a2f-8ec0-44366ff4d5b1}</Project>

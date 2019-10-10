@@ -1,6 +1,6 @@
 ﻿using Bridge.Html5;
 using Components;
-using LogContract.Models;
+using Common.Models;
 using MVVM;
 using static Retyped.canvasjs.CanvasJS;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Components;
 using LogAPI.Models;
-using LogContract.Interfaces;
+using Common.Interfaces;
 using MVVM;
 
 namespace LogOne.Business.TruckManagement

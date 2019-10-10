@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static Retyped.canvasjs.CanvasJS;
 
-namespace LogContract.Models
+namespace Common.Models
 {
     public class SaleLeaderBoardDataPoint : ChartDataPoint
     {

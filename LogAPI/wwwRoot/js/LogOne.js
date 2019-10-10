@@ -127,7 +127,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                     var id = "SaleLeaderBoard";
                     Components.Renderer.Panel(Components.Renderer.GridCell(MVVM.Html.Instance, 4)).Div.Id(id).EndOf$1(".grid");
     
-                    var chart = new CanvasJS.Chart(id, { height: 300, animationEnabled: true, theme: "light2", title: { text: "Sale leaderboard" }, axisX: { interval: 1 }, axisY: { title: "Sale value (USD)" }, data: System.Array.init([{ type: "bar", toolTipContent: "<img src=\"https://canvasjs.com/wp-content/uploads/images/gallery/javascript-column-bar-charts/\"{url}\"\" style=\"width:40px; height:20px;\"> <b>{label}</b><br>Budget: ${y}bn<br>{gdp}% of GDP", indexLabelFontColor: "white", dataPoints: System.Array.init([($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "South Korea", $t.y = 36.8, $t.gdp = 2.7, $t.url = "skorea.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "Germany", $t.y = 41.1, $t.gdp = 1.2, $t.url = "germany.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "Japan", $t.y = 46.1, $t.gdp = 1.0, $t.url = "japan.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "United Kingdom", $t.y = 48.3, $t.gdp = 1.9, $t.url = "uk.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "India", $t.y = 55.9, $t.gdp = 2.5, $t.url = "india.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "Russia", $t.y = 69.2, $t.gdp = 5.3, $t.url = "russia.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "China", $t.y = 215.7, $t.gdp = 1.9, $t.url = "china.png", $t), ($t = new LogContract.Models.SaleLeaderBoardDataPoint(), $t.label = "United States", $t.y = 611.2, $t.gdp = 3.3, $t.url = "us.png", $t)], System.Object) }], System.Object) });
+                    var chart = new CanvasJS.Chart(id, { height: 300, animationEnabled: true, theme: "light2", title: { text: "Sale leaderboard" }, axisX: { interval: 1 }, axisY: { title: "Sale value (USD)" }, data: System.Array.init([{ type: "bar", toolTipContent: "<img src=\"https://canvasjs.com/wp-content/uploads/images/gallery/javascript-column-bar-charts/\"{url}\"\" style=\"width:40px; height:20px;\"> <b>{label}</b><br>Budget: ${y}bn<br>{gdp}% of GDP", indexLabelFontColor: "white", dataPoints: System.Array.init([($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "South Korea", $t.y = 36.8, $t.gdp = 2.7, $t.url = "skorea.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "Germany", $t.y = 41.1, $t.gdp = 1.2, $t.url = "germany.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "Japan", $t.y = 46.1, $t.gdp = 1.0, $t.url = "japan.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "United Kingdom", $t.y = 48.3, $t.gdp = 1.9, $t.url = "uk.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "India", $t.y = 55.9, $t.gdp = 2.5, $t.url = "india.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "Russia", $t.y = 69.2, $t.gdp = 5.3, $t.url = "russia.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "China", $t.y = 215.7, $t.gdp = 1.9, $t.url = "china.png", $t), ($t = new Common.Models.SaleLeaderBoardDataPoint(), $t.label = "United States", $t.y = 611.2, $t.gdp = 3.3, $t.url = "us.png", $t)], System.Object) }], System.Object) });
                     chart.render();
                 },
                 MarketShare: function () {
@@ -366,7 +366,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                                             this.RenderMenuButton();
                                             this.RenderImageCorner();
                                             this.RenderTruckDetail();
-                                            client = new (LogContract.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
+                                            client = new (Common.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
                                             $task1 = client.GetList();
                                             $step = 1;
                                             if ($task1.isCompleted()) {
@@ -433,7 +433,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                                     switch ($step) {
                                         case 0: {
                                             truck = ($t = new LogAPI.Models.Truck(), $t.Id = this.TruckId, $t.TruckPlate = this.TruckPlate.Data$1, $t.FreightStateId = this.FreightStateId.Data$1, $t.BrandName = this.BrandName.Data$1, $t.Version = this.Version.Data$1, $t.VendorId = this.VendorId.Data$1, $t.Price = this.Price.Data$1, $t.Currency = this.Currency.Data$1, $t.Active = true, $t.ActiveDate = this.ActiveDate.Data$1, $t.ExpiredDate = this.ExpiredDate.Data$1, $t.InsertedBy = 1, $t.InsertedDate = System.DateTime.getNow(), $t.DriverId = 1, $t);
-                                            client = new (LogContract.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
+                                            client = new (Common.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
                                             if (this.TruckId === 0) {
                                                 $step = 1;
                                                 continue;
@@ -567,7 +567,7 @@ Bridge.assembly("LogOne", function ($asm, globals) {
                                     $step = System.Array.min([0,1], $step);
                                     switch ($step) {
                                         case 0: {
-                                            client = new (LogContract.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
+                                            client = new (Common.Interfaces.BaseClient$1(LogAPI.Models.Truck)).ctor();
                                             $task1 = client.Delete(truck.Id);
                                             $step = 1;
                                             if ($task1.isCompleted()) {

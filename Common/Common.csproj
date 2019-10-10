@@ -13,8 +13,8 @@
     <ProjectGuid>{FB937996-2AB2-4F80-8D2E-2ABDF1881CF3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogContract</RootNamespace>
-    <AssemblyName>LogContract</AssemblyName>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

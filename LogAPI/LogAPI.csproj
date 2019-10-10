@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\LogContract\Interfaces\IRestful.cs" Link="Interfaces\IRestful.cs" />
+    <Compile Include="..\Common\Interfaces\IRestful.cs" Link="Interfaces\IRestful.cs" />
   </ItemGroup>
 
   <ItemGroup>

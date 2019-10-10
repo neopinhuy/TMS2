@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace LogContract.Interfaces
+namespace Common.Interfaces
 {
     public interface IRestful<T>
     {

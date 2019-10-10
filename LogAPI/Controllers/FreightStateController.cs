@@ -1,6 +1,6 @@
 ﻿using LogAPI.Attributes;
 using LogAPI.Models;
-using LogContract.Interfaces;
+using Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

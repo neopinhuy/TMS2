@@ -4,7 +4,7 @@ using LogAPI.Models;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
-using LogContract.Interfaces;
+using Common.Interfaces;
 
 namespace LogOne.Business.TruckManagement
 {

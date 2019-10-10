@@ -519,7 +519,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                                             return x.Reference;
                                         }), Components.Header$1(Data)).select(function (x) {
                                             var sourceType = System.Array.init([x.Reference], System.Type);
-                                            var type = LogContract.Interfaces.BaseClient$1.apply(null, sourceType);
+                                            var type = Common.Interfaces.BaseClient$1.apply(null, sourceType);
                                             var httpGet = Bridge.Reflection.getMembers(type, 8, 284, "GetList");
                                             var client = Bridge.createInstance(type);
                                             return Bridge.unbox(Bridge.Reflection.midel(httpGet, Bridge.unbox(client))(null));
