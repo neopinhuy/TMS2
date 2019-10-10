@@ -165,6 +165,7 @@
     <Compile Include="..\LogAPI\Models\WeightRange.cs">
       <Link>Models\WeightRange.cs</Link>
     </Compile>
+    <Compile Include="Extensions\Util.cs" />
     <Compile Include="Interfaces\BaseClient.cs" />
     <Compile Include="Interfaces\IRestful.cs" />
     <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />

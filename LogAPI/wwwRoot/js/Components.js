@@ -373,7 +373,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                     if (textAlign != null || cellData == null) {
                         return textAlign;
                     }
-                    if (Components.Util.IsNumber(cellData)) {
+                    if (Commmon.Extensions.Util.IsNumber(cellData)) {
                         return Components.TextAlign.right;
                     } else if (Bridge.is(cellData, System.String)) {
                         return Components.TextAlign.left;
@@ -513,7 +513,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                                 $step = System.Array.min([0,1], $step);
                                 switch ($step) {
                                     case 0: {
-                                        headerSources = System.Linq.Enumerable.from(Components.Util.DistinctBy(Components.Header$1(Data), System.Type, System.Linq.Enumerable.from(this.Headers.Data$1, Components.Header$1(Data)).where(function (x) {
+                                        headerSources = System.Linq.Enumerable.from(Commmon.Extensions.Util.DistinctBy(Components.Header$1(Data), System.Type, System.Linq.Enumerable.from(this.Headers.Data$1, Components.Header$1(Data)).where(function (x) {
                                             return x.Reference != null;
                                         }), function (x) {
                                             return x.Reference;
@@ -604,85 +604,6 @@ Bridge.assembly("Components", function ($asm, globals) {
                 right: 6,
                 start: 7,
                 unset: 8
-            }
-        }
-    });
-
-    Bridge.define("Components.Util", {
-        statics: {
-            methods: {
-                IsNumber: function (value) {
-                    return Bridge.is(value, System.SByte) || Bridge.is(value, System.Byte) || Bridge.is(value, System.Int16) || Bridge.is(value, System.UInt16) || Bridge.is(value, System.Int32) || Bridge.is(value, System.UInt32) || Bridge.is(value, System.Int64) || Bridge.is(value, System.UInt64) || Bridge.is(value, System.Single) || Bridge.is(value, System.Double) || Bridge.is(value, System.Decimal);
-                },
-                IsTime: function (value) {
-                    return Bridge.is(value, System.DateTime) || Bridge.is(value, System.DateTimeOffset) || Bridge.is(value, System.TimeSpan);
-                },
-                DistinctBy: function (T, Key, source, keySelector) {
-                    return new (Bridge.GeneratorEnumerable$1(T))(Bridge.fn.bind(this, function (T, Key, source, keySelector) {
-                        var $step = 0,
-                            $jumpFromFinally,
-                            $returnValue,
-                            seenKeys,
-                            $t,
-                            element,
-                            $async_e;
-
-                        var $enumerator = new (Bridge.GeneratorEnumerator$1(T))(Bridge.fn.bind(this, function () {
-                            try {
-                                for (;;) {
-                                    switch ($step) {
-                                        case 0: {
-                                            seenKeys = new (System.Collections.Generic.HashSet$1(Key)).ctor();
-                                                $t = Bridge.getEnumerator(source, T);
-                                                $step = 1;
-                                                continue;
-                                        }
-                                        case 1: {
-                                            if ($t.moveNext()) {
-                                                    element = $t.Current;
-                                                    $step = 2;
-                                                    continue;
-                                                }
-                                            $step = 6;
-                                            continue;
-                                        }
-                                        case 2: {
-                                            if (seenKeys.add(keySelector(element))) {
-                                                    $step = 3;
-                                                    continue;
-                                                } 
-                                                $step = 5;
-                                                continue;
-                                        }
-                                        case 3: {
-                                            $enumerator.current = element;
-                                                $step = 4;
-                                                return true;
-                                        }
-                                        case 4: {
-                                            $step = 5;
-                                            continue;
-                                        }
-                                        case 5: {
-                                            $step = 1;
-                                            continue;
-                                        }
-                                        case 6: {
-
-                                        }
-                                        default: {
-                                            return false;
-                                        }
-                                    }
-                                }
-                            } catch($async_e1) {
-                                $async_e = System.Exception.create($async_e1);
-                                throw $async_e;
-                            }
-                        }));
-                        return $enumerator;
-                    }, arguments));
-                }
             }
         }
     });

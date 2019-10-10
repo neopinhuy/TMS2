@@ -6,6 +6,22 @@
 Bridge.assembly("Common", function ($asm, globals) {
     "use strict";
 
+    Bridge.define("Commmon.Extensions.Util", {
+        statics: {
+            methods: {
+                IsNumber: function (value) {
+                    return Bridge.is(value, System.SByte) || Bridge.is(value, System.Byte) || Bridge.is(value, System.Int16) || Bridge.is(value, System.UInt16) || Bridge.is(value, System.Int32) || Bridge.is(value, System.UInt32) || Bridge.is(value, System.Int64) || Bridge.is(value, System.UInt64) || Bridge.is(value, System.Single) || Bridge.is(value, System.Double) || Bridge.is(value, System.Decimal);
+                },
+                IsTime: function (value) {
+                    return Bridge.is(value, System.DateTime) || Bridge.is(value, System.DateTimeOffset) || Bridge.is(value, System.TimeSpan);
+                },
+                DistinctBy: function (T, Key, source, keySelector) {
+                    return System.Linq.Enumerable.from(source, T).groupBy(keySelector).first();
+                }
+            }
+        }
+    });
+
     Bridge.definei("Common.Interfaces.IRestful$1", function (T) { return {
         $kind: "interface"
     }; });
