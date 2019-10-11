@@ -14,6 +14,7 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
+        public IEnumerable<IEnumerable<object>> Sources { get; set; }
         private int? timeOut = null;
 
         public Table(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
@@ -31,11 +32,15 @@ namespace Components
             Html.Instance.End.End.Render();
             Headers.Subscribe(x =>
             {
-                Rerender(table);
+                // Rerender(table);
             });
-            RowData.Subscribe(x =>
+            RowData.Subscribe(args =>
             {
-                Rerender(table);
+                if (args.Action == ObservableAction.Update)
+                {
+                    // Update the row
+                }
+                // Rerender(table);
             });
         }
 
@@ -49,8 +54,25 @@ namespace Components
             {
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
-                await RenderTableContent(table);
+                await GetMasterData();
+                RenderTableContent(table);
             });
+        }
+
+        private async Task GetMasterData()
+        {
+            var headerSources = Headers.Data.Where(x => x.Reference != null)
+                .DistinctBy(x => x.Reference).ToList();
+
+            var sourcesRequests = headerSources.Select(x =>
+            {
+                var sourceType = new Type[] { x.Reference };
+                var type = typeof(BaseClient<>).MakeGenericType(sourceType);
+                var httpGet = type.GetMethod("GetList");
+                var client = Activator.CreateInstance(type);
+                return httpGet.Invoke(client).As<Task<object>>();
+            });
+            Sources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>();
         }
 
         private void RenderTableHeader(Element table)
@@ -111,61 +133,52 @@ namespace Components
             html.EndOf(ElementType.thead);
         }
 
-        private async Task RenderTableContent(Element table)
+        private void RenderTableContent(Element table)
         {
-            var headerSources = Headers.Data.Where(x => x.Reference != null)
-                .DistinctBy(x => x.Reference)
-                .Select(x =>
-                {
-                    var sourceType = new Type[] { x.Reference };
-                    var type = typeof(BaseClient<>).MakeGenericType(sourceType); 
-                    var httpGet = type.GetMethod("GetList");
-                    var client = Activator.CreateInstance(type);
-                    return httpGet.Invoke(client).As<Task<object>>();
-                });
-            var sources = (await Task.WhenAll(headerSources)).As<IEnumerable<IEnumerable<object>>>();
-
             var html = Html.Take(table);
-            html.TBody.ForEach(RowData.Data, (Data row, int index) =>
+            html.TBody.ForEach(RowData.Data, RenderRowData).EndOf(".table-wrapper").Render();
+        }
+
+        private void RenderRowData(Data row, int index)
+        {
+            var html = Html.Instance;
+            html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
             {
-                html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
+                html.TData.Render();
+                if (header.EditEvent != null)
                 {
-                    html.TData.Render();
-                    if (header.EditEvent != null)
+                    html.Button.ClassName("button small warning")
+                        .EventAsync(EventType.Click, header.EditEvent, row)
+                        .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
+                }
+                if (header.DeleteEvent != null)
+                {
+                    html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
+                        .EventAsync(EventType.Click, header.DeleteEvent, row)
+                        .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
+                }
+                if (!string.IsNullOrEmpty(header.FieldName))
+                {
+                    if (!row.HasOwnProperty(header.FieldName))
+                        throw new InvalidOperationException("Cannot find property " + header.FieldName);
+                    object cellData = row[header.FieldName];
+                    string cellText = cellData?.ToString() ?? string.Empty;
+                    if (cellData != null && cellData is DateTime)
                     {
-                        html.Button.ClassName("button small warning")
-                            .EventAsync(EventType.Click, header.EditEvent, row)
-                            .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
+                        cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
                     }
-                    if (header.DeleteEvent != null)
+                    if (header.Reference != null)
                     {
-                        html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
-                            .EventAsync(EventType.Click, header.DeleteEvent, row)
-                            .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
+                        var source = Sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
+                            ?.As<IEnumerable<object>>();
+                        cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
+                            ?[header.RefDisplayField]?.ToString();
+                        header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
                     }
-                    if (!string.IsNullOrEmpty(header.FieldName))
-                    {
-                        if (!row.HasOwnProperty(header.FieldName))
-                            throw new InvalidOperationException("Cannot find property " + header.FieldName);
-                        object cellData = row[header.FieldName];
-                        string cellText = cellData?.ToString() ?? string.Empty;
-                        if (cellData != null && cellData is DateTime)
-                        {
-                            cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
-                        }
-                        if (header.Reference != null)
-                        {
-                            var source = sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
-                                ?.As<IEnumerable<object>>();
-                            cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
-                                ?[header.RefDisplayField]?.ToString();
-                            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-                        }
-                        header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
-                        html.TextAlign(header.TextAlign).Text(cellText).End.Render();
-                    }
-                });
-            }).EndOf(".table-wrapper").Render();
+                    header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+                    html.TextAlign(header.TextAlign).Text(cellText).End.Render();
+                }
+            });
         }
 
         private static TextAlign? CalcTextAlign(TextAlign? textAlign, object cellData)

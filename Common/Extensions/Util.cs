@@ -30,7 +30,7 @@ namespace Commmon.Extensions
 
         public static IEnumerable<T> DistinctBy<T, Key> (this IEnumerable<T> source, Func<T, Key> keySelector)
         {
-            return source.GroupBy(keySelector).First();
+            return source.GroupBy(keySelector).Select(g => g.First());
         }
     }
 }

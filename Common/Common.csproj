@@ -36,133 +36,133 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\LogAPI\Models\Accessory.cs">
+    <Compile Include="..\TMS.API\Models\Accessory.cs">
       <Link>Models\Accessory.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\CommodityType.cs">
+    <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Container.cs">
+    <Compile Include="..\TMS.API\Models\Container.cs">
       <Link>Models\Container.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\ContainerMaintenance.cs">
+    <Compile Include="..\TMS.API\Models\ContainerMaintenance.cs">
       <Link>Models\ContainerMaintenance.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\ContainerMonitorConfig.cs">
+    <Compile Include="..\TMS.API\Models\ContainerMonitorConfig.cs">
       <Link>Models\ContainerMonitorConfig.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\ContainerType.cs">
+    <Compile Include="..\TMS.API\Models\ContainerType.cs">
       <Link>Models\ContainerType.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Contract.cs">
+    <Compile Include="..\TMS.API\Models\Contract.cs">
       <Link>Models\Contract.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Coordination.cs">
+    <Compile Include="..\TMS.API\Models\Coordination.cs">
       <Link>Models\Coordination.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Customer.cs">
+    <Compile Include="..\TMS.API\Models\Customer.cs">
       <Link>Models\Customer.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\CustomerGroup.cs">
+    <Compile Include="..\TMS.API\Models\CustomerGroup.cs">
       <Link>Models\CustomerGroup.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Department.cs">
+    <Compile Include="..\TMS.API\Models\Department.cs">
       <Link>Models\Department.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Feature.cs">
+    <Compile Include="..\TMS.API\Models\Feature.cs">
       <Link>Models\Feature.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\FreightBalance.cs">
+    <Compile Include="..\TMS.API\Models\FreightBalance.cs">
       <Link>Models\FreightBalance.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\FreightHistory.cs">
+    <Compile Include="..\TMS.API\Models\FreightHistory.cs">
       <Link>Models\FreightHistory.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\FreightProof.cs">
+    <Compile Include="..\TMS.API\Models\FreightProof.cs">
       <Link>Models\FreightProof.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\FreightState.cs">
+    <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\GroupRole.cs">
+    <Compile Include="..\TMS.API\Models\GroupRole.cs">
       <Link>Models\GroupRole.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\MaintenanceTicket.cs">
+    <Compile Include="..\TMS.API\Models\MaintenanceTicket.cs">
       <Link>Models\MaintenanceTicket.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Nationality.cs">
+    <Compile Include="..\TMS.API\Models\Nationality.cs">
       <Link>Models\Nationality.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Objective.cs">
+    <Compile Include="..\TMS.API\Models\Objective.cs">
       <Link>Models\Objective.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Order.cs">
+    <Compile Include="..\TMS.API\Models\Order.cs">
       <Link>Models\Order.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\OrderDetail.cs">
+    <Compile Include="..\TMS.API\Models\OrderDetail.cs">
       <Link>Models\OrderDetail.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\PaymentApproval.cs">
+    <Compile Include="..\TMS.API\Models\PaymentApproval.cs">
       <Link>Models\PaymentApproval.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\PaymentApprovalConfig.cs">
+    <Compile Include="..\TMS.API\Models\PaymentApprovalConfig.cs">
       <Link>Models\PaymentApprovalConfig.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Quotation.cs">
+    <Compile Include="..\TMS.API\Models\Quotation.cs">
       <Link>Models\Quotation.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\RightByGroup.cs">
+    <Compile Include="..\TMS.API\Models\RightByGroup.cs">
       <Link>Models\RightByGroup.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\RightByRole.cs">
+    <Compile Include="..\TMS.API\Models\RightByRole.cs">
       <Link>Models\RightByRole.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\RightByUser.cs">
+    <Compile Include="..\TMS.API\Models\RightByUser.cs">
       <Link>Models\RightByUser.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Role.cs">
+    <Compile Include="..\TMS.API\Models\Role.cs">
       <Link>Models\Role.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Surcharge.cs">
+    <Compile Include="..\TMS.API\Models\Surcharge.cs">
       <Link>Models\Surcharge.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Terminal.cs">
+    <Compile Include="..\TMS.API\Models\Terminal.cs">
       <Link>Models\Terminal.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\TicketState.cs">
+    <Compile Include="..\TMS.API\Models\TicketState.cs">
       <Link>Models\TicketState.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Timebox.cs">
+    <Compile Include="..\TMS.API\Models\Timebox.cs">
       <Link>Models\Timebox.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Truck.cs">
+    <Compile Include="..\TMS.API\Models\Truck.cs">
       <Link>Models\Truck.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\TruckMaintenance.cs">
+    <Compile Include="..\TMS.API\Models\TruckMaintenance.cs">
       <Link>Models\TruckMaintenance.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\TruckMaintenanceDetail.cs">
+    <Compile Include="..\TMS.API\Models\TruckMaintenanceDetail.cs">
       <Link>Models\TruckMaintenanceDetail.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\TruckMonitorConfig.cs">
+    <Compile Include="..\TMS.API\Models\TruckMonitorConfig.cs">
       <Link>Models\TruckMonitorConfig.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\User.cs">
+    <Compile Include="..\TMS.API\Models\User.cs">
       <Link>Models\User.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\UserBalance.cs">
+    <Compile Include="..\TMS.API\Models\UserBalance.cs">
       <Link>Models\UserBalance.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\Vendor.cs">
+    <Compile Include="..\TMS.API\Models\Vendor.cs">
       <Link>Models\Vendor.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\VendorType.cs">
+    <Compile Include="..\TMS.API\Models\VendorType.cs">
       <Link>Models\VendorType.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\VolumeRange.cs">
+    <Compile Include="..\TMS.API\Models\VolumeRange.cs">
       <Link>Models\VolumeRange.cs</Link>
     </Compile>
-    <Compile Include="..\LogAPI\Models\WeightRange.cs">
+    <Compile Include="..\TMS.API\Models\WeightRange.cs">
       <Link>Models\WeightRange.cs</Link>
     </Compile>
     <Compile Include="Extensions\Util.cs" />
