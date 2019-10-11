@@ -24,7 +24,7 @@ Bridge.assembly("Common", function ($asm, globals) {
         }
     });
 
-    Bridge.definei("Common.Interfaces.IRestful$1", function (T) { return {
+    Bridge.definei("Common.Clients.IRestful$1", function (T) { return {
         $kind: "interface"
     }; });
 
@@ -1285,7 +1285,7 @@ Bridge.assembly("Common", function ($asm, globals) {
             WeightRangeUpdatedBy: null
         },
         props: {
-            FullName: {
+            Name: {
                 get: function () {
                     return (this.FirstName || "") + " " + (this.LastName || "");
                 }
@@ -1522,17 +1522,17 @@ Bridge.assembly("Common", function ($asm, globals) {
         }
     });
 
-    Bridge.define("Common.Interfaces.BaseClient$1", function (T) { return {
-        inherits: [Common.Interfaces.IRestful$1(T)],
+    Bridge.define("Common.Clients.BaseClient$1", function (T) { return {
+        inherits: [Common.Clients.IRestful$1(T)],
         fields: {
             BaseUrl: null
         },
         alias: [
-            "GetList", "Common$Interfaces$IRestful$1$" + Bridge.getTypeAlias(T) + "$GetList",
-            "Get", "Common$Interfaces$IRestful$1$" + Bridge.getTypeAlias(T) + "$Get",
-            "PostAsync", "Common$Interfaces$IRestful$1$" + Bridge.getTypeAlias(T) + "$PostAsync",
-            "PutAsync", "Common$Interfaces$IRestful$1$" + Bridge.getTypeAlias(T) + "$PutAsync",
-            "Delete", "Common$Interfaces$IRestful$1$" + Bridge.getTypeAlias(T) + "$Delete"
+            "GetList", "Common$Clients$IRestful$1$" + Bridge.getTypeAlias(T) + "$GetList",
+            "Get", "Common$Clients$IRestful$1$" + Bridge.getTypeAlias(T) + "$Get",
+            "PostAsync", "Common$Clients$IRestful$1$" + Bridge.getTypeAlias(T) + "$PostAsync",
+            "PutAsync", "Common$Clients$IRestful$1$" + Bridge.getTypeAlias(T) + "$PutAsync",
+            "Delete", "Common$Clients$IRestful$1$" + Bridge.getTypeAlias(T) + "$Delete"
         ],
         ctors: {
             ctor: function () {

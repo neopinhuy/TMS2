@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Components;
 using TMS.API.Models;
-using Common.Interfaces;
+using Common.Clients;
 using MVVM;
 
 namespace TMS.UI.Business.TruckManagement

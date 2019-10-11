@@ -140,6 +140,12 @@ Bridge.assembly("Components", function ($asm, globals) {
             TextAlign: null,
             EditEvent: null,
             DeleteEvent: null
+        },
+        ctors: {
+            init: function () {
+                this.RefValueField = "Id";
+                this.RefDisplayField = "Name";
+            }
         }
     }; });
 
@@ -401,13 +407,13 @@ Bridge.assembly("Components", function ($asm, globals) {
             Render: function () {
                 MVVM.Html.Instance.Div.ClassName("table-wrapper").Table.ClassName("table striped");
                 var table = MVVM.Html.Context;
-                this.Rerender(table);
                 MVVM.Html.Instance.End.End.Render();
                 this.Headers.Subscribe$2(function (x) { });
-                this.RowData.Subscribe$2(function (args) {
+                this.RowData.Subscribe$2(Bridge.fn.bind(this, function (args) {
                     if (System.Nullable.eq(args.Action, MVVM.ObservableAction.Update)) {
                     }
-                });
+                    this.Rerender(table);
+                }));
             },
             Rerender: function (table) {
                 if (this.timeOut != null) {
@@ -472,7 +478,7 @@ Bridge.assembly("Components", function ($asm, globals) {
 
                                         sourcesRequests = System.Linq.Enumerable.from(headerSources, Components.Header$1(Data)).select(function (x) {
                                             var sourceType = System.Array.init([x.Reference], System.Type);
-                                            var type = Common.Interfaces.BaseClient$1.apply(null, sourceType);
+                                            var type = Common.Clients.BaseClient$1.apply(null, sourceType);
                                             var httpGet = Bridge.Reflection.getMembers(type, 8, 284, "GetList");
                                             var client = Bridge.createInstance(type);
                                             return Bridge.unbox(Bridge.Reflection.midel(httpGet, Bridge.unbox(client))(null));

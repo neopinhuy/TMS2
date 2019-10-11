@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Bridge.Html5;
 using Newtonsoft.Json;
 
-namespace Common.Interfaces
+namespace Common.Clients
 {
     public class BaseClient<T> : IRestful<T> where T : class
     {

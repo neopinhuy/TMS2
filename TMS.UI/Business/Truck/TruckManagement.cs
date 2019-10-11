@@ -4,7 +4,7 @@ using TMS.API.Models;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
-using Common.Interfaces;
+using Common.Clients;
 
 namespace TMS.UI.Business.TruckManagement
 {
@@ -31,22 +31,13 @@ namespace TMS.UI.Business.TruckManagement
             {
                 new Header<Truck> { EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { 
-                    HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true,
-                    Reference = typeof(FreightState), RefDisplayField = nameof(FreightState.Name), RefValueField = nameof(FreightState.Id),
-                },
+                new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true, Reference = typeof(FreightState) },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
                 new Header<Truck> { HeaderText = "Version", FieldName = "Version", Sortable = true },
-                new Header<Truck> { 
-                    HeaderText = "Vendor", FieldName = "VendorId", Sortable = true,
-                    Reference = typeof(Vendor), RefDisplayField = nameof(Vendor.Name), RefValueField = nameof(Vendor.Id),
-                },
+                new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true, Reference = typeof(Vendor) },
                 new Header<Truck> { HeaderText = "Long", FieldName = "Long", TextAlign = TextAlign.right, Sortable = true },
                 new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", TextAlign = TextAlign.right, Sortable = true },
-                new Header<Truck> { 
-                    HeaderText = "Driver", FieldName = "DriverId", Sortable = true,
-                    Reference = typeof(User), RefDisplayField = nameof(User.FullName), RefValueField = nameof(User.Id),
-                },
+                new Header<Truck> { HeaderText = "Driver", FieldName = "DriverId", Sortable = true, Reference = typeof(User) },
                 new Header<Truck> { HeaderText = "Price", FieldName = "Price", Sortable = true },
                 new Header<Truck> { HeaderText = "Currency", FieldName = "Currency", Sortable = true },
                 new Header<Truck> { HeaderText = "Bought date", FieldName = "BoughtDate", Sortable = true },
@@ -58,7 +49,7 @@ namespace TMS.UI.Business.TruckManagement
                 new Header<Truck> { HeaderText = "Active", FieldName = "Active", Sortable = true },
                 new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Inserted date", FieldName = "InsertedDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Inserted by", FieldName = "InsertedBy", Sortable = true },
+                new Header<Truck> { HeaderText = "Inserted by", FieldName = "InsertedBy", Sortable = true, Reference = typeof(User) },
                 new Header<Truck> { HeaderText = "Updated date", FieldName = "UpdatedDate", Sortable = true },
                 new Header<Truck> { HeaderText = "Updated by", FieldName = "UpdatedBy", Sortable = true },
             };

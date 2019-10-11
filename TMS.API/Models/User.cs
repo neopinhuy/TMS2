@@ -102,7 +102,7 @@ namespace TMS.API.Models
         public string LastName { get; set; }
 
         [NotMapped]
-        public string FullName => FirstName + " " + LastName;
+        public string Name => FirstName + " " + LastName;
 
         [Column(TypeName = "datetime2")]
         public DateTime DoB { get; set; }

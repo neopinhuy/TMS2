@@ -1,6 +1,6 @@
 ﻿using Bridge.Html5;
 using Commmon.Extensions;
-using Common.Interfaces;
+using Common.Clients;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Components
             Html.Instance.Div.ClassName("table-wrapper")
                 .Table.ClassName("table striped");
             var table = Html.Context;
-            Rerender(table);
+            //Rerender(table);
             Html.Instance.End.End.Render();
             Headers.Subscribe(x =>
             {
@@ -40,7 +40,7 @@ namespace Components
                 {
                     // Update the row
                 }
-                // Rerender(table);
+                Rerender(table);
             });
         }
 

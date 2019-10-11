@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Common.Interfaces
+namespace Common.Clients
 {
     public interface IRestful<T>
     {

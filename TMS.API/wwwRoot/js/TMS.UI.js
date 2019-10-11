@@ -156,6 +156,90 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
     
         Bridge.define("TMS.UI.Business.MenuComponent", {
             inherits: [Components.Component],
+            statics: {
+                methods: {
+                    MenuItemClick: function (menu, e) {
+                        var $step = 0,
+                            $task1, 
+                            $jumpFromFinally, 
+                            $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
+                            $returnValue, 
+                            li, 
+                            activeLi, 
+                            $t, 
+                            active, 
+                            className, 
+                            instance, 
+                            $async_e, 
+                            $asyncBody = Bridge.fn.bind(this, function () {
+                                try {
+                                    for (;;) {
+                                        $step = System.Array.min([0,1,2,3], $step);
+                                        switch ($step) {
+                                            case 0: {
+                                                li = Bridge.as(e.target, HTMLElement);
+                                                activeLi = document.querySelectorAll(".sidebar-wrapper li.active");
+                                                $t = Bridge.getEnumerator(activeLi, "getEnumerator");
+                                                try {
+                                                    while ($t.moveNext()) {
+                                                        active = Bridge.cast($t.Current, HTMLElement);
+                                                        if (active.contains(li)) {
+                                                            continue;
+                                                        }
+    
+                                                        active.className = System.String.replaceAll(active.className, "active", "").trim();
+                                                    }
+                                                } finally {
+                                                    if (Bridge.is($t, System.IDisposable)) {
+                                                        $t.System$IDisposable$Dispose();
+                                                    }
+                                                }
+                                                className = (li.parentElement.className || "") + " active";
+                                                li.parentElement.className = className.trim();
+                                                if (menu.LinkedComponent != null) {
+                                                    $step = 1;
+                                                    continue;
+                                                } 
+                                                $step = 3;
+                                                continue;
+                                            }
+                                            case 1: {
+                                                instance = Bridge.as(Bridge.createInstance(menu.LinkedComponent), Components.Component);
+                                                $task1 = instance.RenderAsync();
+                                                $step = 2;
+                                                if ($task1.isCompleted()) {
+                                                    continue;
+                                                }
+                                                $task1.continue($asyncBody);
+                                                return;
+                                            }
+                                            case 2: {
+                                                $task1.getAwaitedResult();
+                                                instance.Focus();
+                                                $step = 3;
+                                                continue;
+                                            }
+                                            case 3: {
+                                                $tcs.setResult(null);
+                                                return;
+                                            }
+                                            default: {
+                                                $tcs.setResult(null);
+                                                return;
+                                            }
+                                        }
+                                    }
+                                } catch($async_e1) {
+                                    $async_e = System.Exception.create($async_e1);
+                                    $tcs.setException($async_e);
+                                }
+                            }, arguments);
+    
+                        $asyncBody();
+                        return $tcs.task;
+                    }
+                }
+            },
             fields: {
                 Title: null,
                 MenuItems: null
@@ -168,20 +252,13 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                             var $t;
                             _o4.add(($t = new TMS.UI.Business.MenuItem(), $t.IsGroup = true, $t.ItemText = "Main", $t));
                             _o4.add(($t = new TMS.UI.Business.MenuItem(), $t.ItemText = "Dashboard", $t.IconClass = "mif-home", $t.LinkedComponent = TMS.UI.Business.Dashboard.Dashboard, $t));
-                            _o4.add(($t = new TMS.UI.Business.MenuItem(), $t.ItemText = "Truck", $t.IconClass = "mif-truck", $t.LinkedComponent = TMS.UI.Business.TruckManagement.AllTruck, $t.MenuItems = function (_o1) {
+                            _o4.add(($t = new TMS.UI.Business.MenuItem(), $t.ItemText = "Asset", $t.IconClass = "mif-truck", $t.MenuItems = function (_o1) {
                                     var $t1;
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Accessory", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Thu ti\u1ec1n kh\u00e1ch h\u00e0ng h\u00e0ng lo\u1ea1t", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Phi\u1ebfu chi", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Truck", $t1.IconClass = "mif-truck", $t1.LinkedComponent = TMS.UI.Business.TruckManagement.AllTruck, $t1));
+                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Accessory", $t1.IconClass = "mif-steam2", $t1.LinkedComponent = TMS.UI.Business.TruckManagement.AllTruck, $t1));
+                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Maintenance", $t1.IconClass = "mif-calendar", $t1));
                                     _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.IsDevider = true, $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Tr\u1ea3 ti\u1ec1n NCC", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "N\u1ed9p thu\u1ebf", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Tr\u1ea3 l\u01b0\u01a1ng", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "K\u1ebft qu\u1ea3 ki\u1ec3m k\u00ea", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "S\u1ed5 chi ti\u1ec1n m\u1eb7t", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Ki\u1ec3m k\u00ea qu\u1ef9", $t1.IconClass = "fa fa-file-word", $t1));
-                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "D\u1ef1 b\u00e1o d\u00f2ng ti\u1ec1n", $t1.IconClass = "fa fa-file-word", $t1));
+                                    _o1.add(($t1 = new TMS.UI.Business.MenuItem(), $t1.ItemText = "Container", $t1.IconClass = "fa fa-cube", $t1));
                                     return _o1;
                                 }(new (System.Collections.Generic.List$1(TMS.UI.Business.MenuItem)).ctor()), $t));
                             _o4.add(($t = new TMS.UI.Business.MenuItem(), $t.ItemText = "Ng\u00e2n h\u00e0ng", $t.IconClass = "mif-library", $t.MenuItems = function (_o2) {
@@ -226,38 +303,12 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                                 var $step = 0,
                                     $task1, 
                                     $jumpFromFinally, 
-                                    li, 
-                                    activeLi, 
-                                    $t, 
-                                    active, 
-                                    className, 
-                                    instance, 
                                     $asyncBody = Bridge.fn.bind(this, function () {
                                         for (;;) {
                                             $step = System.Array.min([0,1], $step);
                                             switch ($step) {
                                                 case 0: {
-                                                    li = Bridge.as(e.target, HTMLElement);
-                                                    activeLi = document.querySelectorAll(".sidebar-wrapper li.active");
-                                                    $t = Bridge.getEnumerator(activeLi, "getEnumerator");
-                                                    try {
-                                                        while ($t.moveNext()) {
-                                                            active = Bridge.cast($t.Current, HTMLElement);
-                                                            if (active.contains(li)) {
-                                                                continue;
-                                                            }
-    
-                                                            active.className = System.String.replaceAll(active.className, "active", "").trim();
-                                                        }
-                                                    } finally {
-                                                        if (Bridge.is($t, System.IDisposable)) {
-                                                            $t.System$IDisposable$Dispose();
-                                                        }
-                                                    }
-                                                    className = (li.parentElement.className || "") + " active";
-                                                    li.parentElement.className = className.trim();
-                                                    instance = Bridge.as(Bridge.createInstance(menu.LinkedComponent), Components.Component);
-                                                    $task1 = instance.RenderAsync();
+                                                    $task1 = TMS.UI.Business.MenuComponent.MenuItemClick(menu, e);
                                                     $step = 1;
                                                     if ($task1.isCompleted()) {
                                                         continue;
@@ -267,7 +318,6 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                                                 }
                                                 case 1: {
                                                     $task1.getAwaitedResult();
-                                                    instance.Focus();
                                                     return;
                                                 }
                                                 default: {
@@ -337,7 +387,7 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                     var $t;
                     this.$initialize();
                     Components.Component.ctor.call(this);
-                    this.TruckHeader.Data$1 = System.Array.init([($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.EditEvent = Bridge.fn.cacheBind(this, this.EditTruck), $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Truck plate", $t.FieldName = "TruckPlate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Freight state", $t.FieldName = "FreightStateId", $t.Sortable = true, $t.Reference = TMS.API.Models.FreightState, $t.RefDisplayField = "Name", $t.RefValueField = "Id", $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Band name", $t.FieldName = "BrandName", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Version", $t.FieldName = "Version", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Vendor", $t.FieldName = "VendorId", $t.Sortable = true, $t.Reference = TMS.API.Models.Vendor, $t.RefDisplayField = "Name", $t.RefValueField = "Id", $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Long", $t.FieldName = "Long", $t.TextAlign = Components.TextAlign.right, $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Lat", $t.FieldName = "Lat", $t.TextAlign = Components.TextAlign.right, $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Driver", $t.FieldName = "DriverId", $t.Sortable = true, $t.Reference = TMS.API.Models.User, $t.RefDisplayField = "FullName", $t.RefValueField = "Id", $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Price", $t.FieldName = "Price", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Currency", $t.FieldName = "Currency", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Bought date", $t.FieldName = "BoughtDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Active date", $t.FieldName = "ActiveDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance start", $t.FieldName = "MaintenanceStart", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance end", $t.FieldName = "MaintenanceEnd", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Next maintenance date", $t.FieldName = "NextMaintenanceDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance period", $t.FieldName = "MaintenancePeriod", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Active", $t.FieldName = "Active", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Expiry date", $t.FieldName = "ExpiredDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Inserted date", $t.FieldName = "InsertedDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Inserted by", $t.FieldName = "InsertedBy", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Updated date", $t.FieldName = "UpdatedDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Updated by", $t.FieldName = "UpdatedBy", $t.Sortable = true, $t)], Components.Header$1(TMS.API.Models.Truck));
+                    this.TruckHeader.Data$1 = System.Array.init([($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.EditEvent = Bridge.fn.cacheBind(this, this.EditTruck), $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Truck plate", $t.FieldName = "TruckPlate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Freight state", $t.FieldName = "FreightStateId", $t.Sortable = true, $t.Reference = TMS.API.Models.FreightState, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Band name", $t.FieldName = "BrandName", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Version", $t.FieldName = "Version", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Vendor", $t.FieldName = "VendorId", $t.Sortable = true, $t.Reference = TMS.API.Models.Vendor, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Long", $t.FieldName = "Long", $t.TextAlign = Components.TextAlign.right, $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Lat", $t.FieldName = "Lat", $t.TextAlign = Components.TextAlign.right, $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Driver", $t.FieldName = "DriverId", $t.Sortable = true, $t.Reference = TMS.API.Models.User, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Price", $t.FieldName = "Price", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Currency", $t.FieldName = "Currency", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Bought date", $t.FieldName = "BoughtDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Active date", $t.FieldName = "ActiveDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance start", $t.FieldName = "MaintenanceStart", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance end", $t.FieldName = "MaintenanceEnd", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Next maintenance date", $t.FieldName = "NextMaintenanceDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Maintenance period", $t.FieldName = "MaintenancePeriod", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Active", $t.FieldName = "Active", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Expiry date", $t.FieldName = "ExpiredDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Inserted date", $t.FieldName = "InsertedDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Inserted by", $t.FieldName = "InsertedBy", $t.Sortable = true, $t.Reference = TMS.API.Models.User, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Updated date", $t.FieldName = "UpdatedDate", $t.Sortable = true, $t), ($t = new (Components.Header$1(TMS.API.Models.Truck))(), $t.HeaderText = "Updated by", $t.FieldName = "UpdatedBy", $t.Sortable = true, $t)], Components.Header$1(TMS.API.Models.Truck));
                 }
             },
             methods: {
@@ -366,7 +416,7 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                                             this.RenderMenuButton();
                                             this.RenderImageCorner();
                                             this.RenderTruckDetail();
-                                            client = new (Common.Interfaces.BaseClient$1(TMS.API.Models.Truck)).ctor();
+                                            client = new (Common.Clients.BaseClient$1(TMS.API.Models.Truck)).ctor();
                                             $task1 = client.GetList();
                                             $step = 1;
                                             if ($task1.isCompleted()) {
@@ -433,7 +483,7 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                                     switch ($step) {
                                         case 0: {
                                             truck = ($t = new TMS.API.Models.Truck(), $t.Id = this.TruckId, $t.TruckPlate = this.TruckPlate.Data$1, $t.FreightStateId = this.FreightStateId.Data$1, $t.BrandName = this.BrandName.Data$1, $t.Version = this.Version.Data$1, $t.VendorId = this.VendorId.Data$1, $t.Price = this.Price.Data$1, $t.Currency = this.Currency.Data$1, $t.Active = true, $t.ActiveDate = this.ActiveDate.Data$1, $t.ExpiredDate = this.ExpiredDate.Data$1, $t.InsertedBy = 1, $t.InsertedDate = System.DateTime.getNow(), $t.DriverId = 1, $t);
-                                            client = new (Common.Interfaces.BaseClient$1(TMS.API.Models.Truck)).ctor();
+                                            client = new (Common.Clients.BaseClient$1(TMS.API.Models.Truck)).ctor();
                                             if (this.TruckId === 0) {
                                                 $step = 1;
                                                 continue;
@@ -567,7 +617,7 @@ Bridge.assembly("TMS.UI", function ($asm, globals) {
                                     $step = System.Array.min([0,1], $step);
                                     switch ($step) {
                                         case 0: {
-                                            client = new (Common.Interfaces.BaseClient$1(TMS.API.Models.Truck)).ctor();
+                                            client = new (Common.Clients.BaseClient$1(TMS.API.Models.Truck)).ctor();
                                             $task1 = client.Delete(truck.Id);
                                             $step = 1;
                                             if ($task1.isCompleted()) {

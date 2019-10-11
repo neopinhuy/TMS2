@@ -1,6 +1,6 @@
 ﻿using TMS.API.Attributes;
 using TMS.API.Models;
-using Common.Interfaces;
+using Common.Clients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

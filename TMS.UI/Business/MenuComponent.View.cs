@@ -33,31 +33,39 @@ namespace TMS.UI.Business
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
                     .Event(EventType.Click, async (menu, e) =>
                     {
-                        var li = e.Target as HTMLElement;
-                        var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
-                        foreach (HTMLElement active in activeLi)
-                        {
-                            if (active.Contains(li))
-                            {
-                                continue;
-                            }
-
-                            active.ClassName = active.ClassName.Replace("active", "").Trim();
-                        }
-                        string className = li.ParentElement.ClassName + " active";
-                        li.ParentElement.ClassName = className.Trim();
-                        var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
-                        await instance.RenderAsync();
-                        instance.Focus();
+                        await MenuItemClick(menu, e);
                     }, item)
-                        .Span.ClassName("icon " + item.IconClass).End
-                        .Text(item.ItemText).EndOf(MVVM.ElementType.a).Render();
+                    .Span.ClassName("icon " + item.IconClass).End
+                    .Text(item.ItemText).EndOf(MVVM.ElementType.a).Render();
                     if (item.MenuItems != null && item.MenuItems.Count > 0)
                     {
                         RenderMenuItems(item.MenuItems);
                     }
                 }
             });
+        }
+
+        private static async Task MenuItemClick(MenuItem menu, Event e)
+        {
+            var li = e.Target as HTMLElement;
+            var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
+            foreach (HTMLElement active in activeLi)
+            {
+                if (active.Contains(li))
+                {
+                    continue;
+                }
+
+                active.ClassName = active.ClassName.Replace("active", "").Trim();
+            }
+            string className = li.ParentElement.ClassName + " active";
+            li.ParentElement.ClassName = className.Trim();
+            if (menu.LinkedComponent != null)
+            {
+                var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
+                await instance.RenderAsync();
+                instance.Focus();
+            }
         }
     }
 }

@@ -166,8 +166,8 @@
       <Link>Models\WeightRange.cs</Link>
     </Compile>
     <Compile Include="Extensions\Util.cs" />
-    <Compile Include="Interfaces\BaseClient.cs" />
-    <Compile Include="Interfaces\IRestful.cs" />
+    <Compile Include="Clients\BaseClient.cs" />
+    <Compile Include="Clients\IRestful.cs" />
     <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
