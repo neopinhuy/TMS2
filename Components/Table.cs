@@ -1,6 +1,5 @@
 ﻿using Bridge.Html5;
-using Commmon.Extensions;
-using Common.Clients;
+using Common.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,6 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
-        public IEnumerable<IEnumerable<object>> Sources { get; set; }
         private int? timeOut = null;
 
         public Table(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
@@ -54,25 +52,9 @@ namespace Components
             {
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
-                await GetMasterData();
+                await MasterData.GetAll();
                 RenderTableContent(table);
             });
-        }
-
-        private async Task GetMasterData()
-        {
-            var headerSources = Headers.Data.Where(x => x.Reference != null)
-                .DistinctBy(x => x.Reference).ToList();
-
-            var sourcesRequests = headerSources.Select(x =>
-            {
-                var sourceType = new Type[] { x.Reference };
-                var type = typeof(BaseClient<>).MakeGenericType(sourceType);
-                var httpGet = type.GetMethod("GetList");
-                var client = Activator.CreateInstance(type);
-                return httpGet.Invoke(client).As<Task<object>>();
-            });
-            Sources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>();
         }
 
         private void RenderTableHeader(Element table)
@@ -169,7 +151,7 @@ namespace Components
                     }
                     if (header.Reference != null)
                     {
-                        var source = Sources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
+                        var source = MasterData.AllSources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
                             ?.As<IEnumerable<object>>();
                         cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
                             ?[header.RefDisplayField]?.ToString();

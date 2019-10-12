@@ -1,12 +1,52 @@
-﻿using System;
+﻿using Common.Clients;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using TMS.API.Models;
 
 namespace Components
 {
-    class MasterData
+    public class MasterData
     {
+        public ICollection<User> User { get; set; }
+        public ICollection<Vendor> Vendor { get; set; }
+        public ICollection<FreightState> FreightState { get; set; }
+        public static IEnumerable<IEnumerable<object>> AllSources { get; set; }
+
+        private static MasterData _instance;
+        
+        private MasterData() { }
+        
+        public static async Task<MasterData> GetAll()
+        {
+            if (_instance == null) _instance = new MasterData();
+            await GetMasterData();
+            return _instance;
+        }
+
+        private static async Task GetMasterData()
+        {
+            var genericProp = _instance.GetType().GetProperties()
+                .Where(prop => prop.PropertyType.IsGenericType);
+            var sourcesRequests = genericProp
+                .Select(prop =>
+                {
+                    var refType = prop.PropertyType.GetGenericArguments()[0];
+                    if (refType == typeof(IEnumerable<object>)) return null;
+                    var clientType = typeof(BaseClient<>).MakeGenericType(new Type[] { refType });
+                    var httpGetList = clientType.GetMethod("GetList");
+                    var client = Activator.CreateInstance(clientType);
+                    return httpGetList.Invoke(client).As<Task<object>>();
+                }).Where(x => x != null);
+            AllSources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>();
+            genericProp.ForEach(prop =>
+            {
+                var refType = prop.PropertyType.GetGenericArguments()[0];
+                if (refType == typeof(IEnumerable<object>)) return;
+                var source = AllSources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0] == refType);
+                prop.SetValue(_instance, source);
+            });
+        }
     }
 }

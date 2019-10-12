@@ -149,7 +149,143 @@ Bridge.assembly("Components", function ($asm, globals) {
         }
     }; });
 
-    Bridge.define("Components.MasterData");
+    Bridge.define("Components.MasterData", {
+        statics: {
+            fields: {
+                AllSources: null,
+                _instance: null
+            },
+            methods: {
+                GetAll: function () {
+                    var $step = 0,
+                        $task1, 
+                        $jumpFromFinally, 
+                        $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
+                        $returnValue, 
+                        $async_e, 
+                        $asyncBody = Bridge.fn.bind(this, function () {
+                            try {
+                                for (;;) {
+                                    $step = System.Array.min([0,1], $step);
+                                    switch ($step) {
+                                        case 0: {
+                                            if (Components.MasterData._instance == null) {
+                                                Components.MasterData._instance = new Components.MasterData();
+                                            }
+                                            $task1 = Components.MasterData.GetMasterData();
+                                            $step = 1;
+                                            if ($task1.isCompleted()) {
+                                                continue;
+                                            }
+                                            $task1.continue($asyncBody);
+                                            return;
+                                        }
+                                        case 1: {
+                                            $task1.getAwaitedResult();
+                                            $tcs.setResult(Components.MasterData._instance);
+                                            return;
+                                        }
+                                        default: {
+                                            $tcs.setResult(null);
+                                            return;
+                                        }
+                                    }
+                                }
+                            } catch($async_e1) {
+                                $async_e = System.Exception.create($async_e1);
+                                $tcs.setException($async_e);
+                            }
+                        }, arguments);
+
+                    $asyncBody();
+                    return $tcs.task;
+                },
+                GetMasterData: function () {
+                    var $step = 0,
+                        $task1, 
+                        $taskResult1, 
+                        $jumpFromFinally, 
+                        $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
+                        $returnValue, 
+                        genericProp, 
+                        sourcesRequests, 
+                        $async_e, 
+                        $asyncBody = Bridge.fn.bind(this, function () {
+                            try {
+                                for (;;) {
+                                    $step = System.Array.min([0,1], $step);
+                                    switch ($step) {
+                                        case 0: {
+                                            genericProp = System.Linq.Enumerable.from(Bridge.Reflection.getMembers(Bridge.getType(Components.MasterData._instance), 16, 28), System.Reflection.PropertyInfo).where(function (prop) {
+                                                return Bridge.Reflection.isGenericType(prop.rt);
+                                            });
+                                            sourcesRequests = genericProp.select(function (prop) {
+                                                var $t;
+                                                var refType = ($t = Bridge.Reflection.getGenericArguments(prop.rt))[System.Array.index(0, $t)];
+                                                if (Bridge.referenceEquals(refType, System.Collections.Generic.IEnumerable$1(System.Object))) {
+                                                    return null;
+                                                }
+                                                var clientType = Common.Clients.BaseClient$1.apply(null, System.Array.init([refType], System.Type));
+                                                var httpGetList = Bridge.Reflection.getMembers(clientType, 8, 284, "GetList");
+                                                var client = Bridge.createInstance(clientType);
+                                                return Bridge.unbox(Bridge.Reflection.midel(httpGetList, Bridge.unbox(client))(null));
+                                            }).where(function (x) {
+                                                return x != null;
+                                            });
+                                            $task1 = System.Threading.Tasks.Task.whenAll(sourcesRequests);
+                                            $step = 1;
+                                            if ($task1.isCompleted()) {
+                                                continue;
+                                            }
+                                            $task1.continue($asyncBody);
+                                            return;
+                                        }
+                                        case 1: {
+                                            $taskResult1 = $task1.getAwaitedResult();
+                                            Components.MasterData.AllSources = Bridge.unbox(($taskResult1));
+                                            genericProp.forEach(function (prop) {
+                                                var $t;
+                                                var refType = ($t = Bridge.Reflection.getGenericArguments(prop.rt))[System.Array.index(0, $t)];
+                                                if (Bridge.referenceEquals(refType, System.Collections.Generic.IEnumerable$1(System.Object))) {
+                                                    return;
+                                                }
+                                                var source = System.Linq.Enumerable.from(Components.MasterData.AllSources, System.Collections.Generic.IEnumerable$1(System.Object)).firstOrDefault(function (x) {
+                                                    var $t1;
+                                                    return Bridge.referenceEquals(($t1 = Bridge.Reflection.getGenericArguments(Bridge.getType(x)))[System.Array.index(0, $t1)], refType);
+                                                }, null);
+                                                Bridge.Reflection.midel(prop.s, Components.MasterData._instance)(source);
+                                            });
+                                            $tcs.setResult(null);
+                                            return;
+                                        }
+                                        default: {
+                                            $tcs.setResult(null);
+                                            return;
+                                        }
+                                    }
+                                }
+                            } catch($async_e1) {
+                                $async_e = System.Exception.create($async_e1);
+                                $tcs.setException($async_e);
+                            }
+                        }, arguments);
+
+                    $asyncBody();
+                    return $tcs.task;
+                }
+            }
+        },
+        fields: {
+            User: null,
+            Vendor: null,
+            FreightState: null
+        },
+        ctors: {
+            ctor: function () {
+                this.$initialize();
+            }
+        }
+    });
 
     Bridge.define("Components.Renderer", {
         statics: {
@@ -381,7 +517,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                     if (textAlign != null || cellData == null) {
                         return textAlign;
                     }
-                    if (Commmon.Extensions.Util.IsNumber(cellData)) {
+                    if (Common.Extensions.Util.IsNumber(cellData)) {
                         return Components.TextAlign.right;
                     } else if (Bridge.is(cellData, System.String)) {
                         return Components.TextAlign.left;
@@ -393,7 +529,6 @@ Bridge.assembly("Components", function ($asm, globals) {
         fields: {
             Headers: null,
             RowData: null,
-            Sources: null,
             timeOut: null
         },
         ctors: {
@@ -422,6 +557,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                 this.timeOut = window.setTimeout(Bridge.fn.bind(this, function () {
                     var $step = 0,
                         $task1, 
+                        $taskResult1, 
                         $jumpFromFinally, 
                         $asyncBody = Bridge.fn.bind(this, function () {
                             for (;;) {
@@ -430,7 +566,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                                     case 0: {
                                         MVVM.Html.Take(table).Clear();
                                         this.RenderTableHeader(table);
-                                        $task1 = this.GetMasterData();
+                                        $task1 = Components.MasterData.GetAll();
                                         $step = 1;
                                         if ($task1.isCompleted()) {
                                             continue;
@@ -439,7 +575,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                                         return;
                                     }
                                     case 1: {
-                                        $task1.getAwaitedResult();
+                                        $taskResult1 = $task1.getAwaitedResult();
                                         this.RenderTableContent(table);
                                         return;
                                     }
@@ -452,65 +588,6 @@ Bridge.assembly("Components", function ($asm, globals) {
 
                     $asyncBody();
                 }));
-            },
-            GetMasterData: function () {
-                var $step = 0,
-                    $task1, 
-                    $taskResult1, 
-                    $jumpFromFinally, 
-                    $tcs = new System.Threading.Tasks.TaskCompletionSource(), 
-                    $returnValue, 
-                    headerSources, 
-                    $t, 
-                    sourcesRequests, 
-                    $async_e, 
-                    $asyncBody = Bridge.fn.bind(this, function () {
-                        try {
-                            for (;;) {
-                                $step = System.Array.min([0,1], $step);
-                                switch ($step) {
-                                    case 0: {
-                                        headerSources = ($t = Components.Header$1(Data), System.Linq.Enumerable.from(Commmon.Extensions.Util.DistinctBy(Components.Header$1(Data), System.Type, System.Linq.Enumerable.from(this.Headers.Data$1, Components.Header$1(Data)).where(function (x) {
-                                            return x.Reference != null;
-                                        }), function (x) {
-                                            return x.Reference;
-                                        }), $t).toList($t));
-
-                                        sourcesRequests = System.Linq.Enumerable.from(headerSources, Components.Header$1(Data)).select(function (x) {
-                                            var sourceType = System.Array.init([x.Reference], System.Type);
-                                            var type = Common.Clients.BaseClient$1.apply(null, sourceType);
-                                            var httpGet = Bridge.Reflection.getMembers(type, 8, 284, "GetList");
-                                            var client = Bridge.createInstance(type);
-                                            return Bridge.unbox(Bridge.Reflection.midel(httpGet, Bridge.unbox(client))(null));
-                                        });
-                                        $task1 = System.Threading.Tasks.Task.whenAll(sourcesRequests);
-                                        $step = 1;
-                                        if ($task1.isCompleted()) {
-                                            continue;
-                                        }
-                                        $task1.continue($asyncBody);
-                                        return;
-                                    }
-                                    case 1: {
-                                        $taskResult1 = $task1.getAwaitedResult();
-                                        this.Sources = Bridge.unbox(($taskResult1));
-                                        $tcs.setResult(null);
-                                        return;
-                                    }
-                                    default: {
-                                        $tcs.setResult(null);
-                                        return;
-                                    }
-                                }
-                            }
-                        } catch($async_e1) {
-                            $async_e = System.Exception.create($async_e1);
-                            $tcs.setException($async_e);
-                        }
-                    }, arguments);
-
-                $asyncBody();
-                return $tcs.task;
             },
             RenderTableHeader: function (table) {
                 var html = MVVM.Html.Take(table);
@@ -570,7 +647,7 @@ Bridge.assembly("Components", function ($asm, globals) {
             },
             RenderRowData: function (row, index) {
                 var html = MVVM.Html.Instance;
-                html.TRow.ForEach$1(Components.Header$1(Data), this.Headers.Data$1, Bridge.fn.bind(this, function (header, headerIndex) {
+                html.TRow.ForEach$1(Components.Header$1(Data), this.Headers.Data$1, function (header, headerIndex) {
                     var $t, $t1, $t2, $t3;
                     html.TData.Render();
                     if (!Bridge.staticEquals(header.EditEvent, null)) {
@@ -589,7 +666,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                             cellText = System.String.format("{0:dd/MM/yyyy}", [Bridge.box(Bridge.as(cellData, System.DateTime, true), System.DateTime, System.Nullable.toStringFn(System.DateTime.format), System.Nullable.getHashCode)]);
                         }
                         if (header.Reference != null) {
-                            var source = ($t1 = System.Linq.Enumerable.from(this.Sources, System.Collections.Generic.IEnumerable$1(System.Object)).firstOrDefault(function (x) {
+                            var source = ($t1 = System.Linq.Enumerable.from(Components.MasterData.AllSources, System.Collections.Generic.IEnumerable$1(System.Object)).firstOrDefault(function (x) {
                                         return Bridge.referenceEquals(Bridge.getType(System.Linq.Enumerable.from(x, System.Object).firstOrDefault(null, null)), header.Reference);
                                     }, null)) != null ? $t1 : null;
                             cellText = ($t2 = System.Linq.Enumerable.from(source, System.Object).firstOrDefault(function (x) {
@@ -600,7 +677,7 @@ Bridge.assembly("Components", function ($asm, globals) {
                         header.TextAlign = Components.Table$1(Data).CalcTextAlign(header.TextAlign, cellData);
                         Components.Renderer.TextAlign(html, header.TextAlign).Text$2(cellText).End.Render();
                     }
-                }));
+                });
             }
         }
     }; });

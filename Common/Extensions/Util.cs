@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Commmon.Extensions
+namespace Common.Extensions
 {
     public static class Util
     {

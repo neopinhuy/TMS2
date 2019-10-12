@@ -6,7 +6,11 @@
 Bridge.assembly("Common", function ($asm, globals) {
     "use strict";
 
-    Bridge.define("Commmon.Extensions.Util", {
+    Bridge.definei("Common.Clients.IRestful$1", function (T) { return {
+        $kind: "interface"
+    }; });
+
+    Bridge.define("Common.Extensions.Util", {
         statics: {
             methods: {
                 IsNumber: function (value) {
@@ -23,10 +27,6 @@ Bridge.assembly("Common", function ($asm, globals) {
             }
         }
     });
-
-    Bridge.definei("Common.Clients.IRestful$1", function (T) { return {
-        $kind: "interface"
-    }; });
 
     Bridge.define("Common.Models.SaleLeaderBoardDataPoint", {
         fields: {
