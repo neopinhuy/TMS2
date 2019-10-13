@@ -61,7 +61,7 @@ namespace TMS.UI.Business.TruckManagement
                 .TData.SmallInput(TruckPlate).EndOf(ElementType.td);
 
             Html.Instance.TData.Text("Freight state").End
-                .TData.SmallInput(FreightStateId).EndOf(ElementType.td)
+                .TData.SearchInput(FreightStateId, typeof(FreightState)).EndOf(ElementType.td)
                 .TData.Text("Band name").End
                 .TData.SmallInput(BrandName).EndOf(ElementType.tr)
                 .TRow.TData.Text("Version").End

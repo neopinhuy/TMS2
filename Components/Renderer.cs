@@ -235,6 +235,21 @@ namespace Components
             return html;
         }
 
+        /// <summary>
+        /// Render the search input, non auto closing element
+        /// </summary>
+        /// <param name="html">Html</param>
+        /// <param name="headerData">Header description</param>
+        /// <param name="rowData">Row data</param>
+        /// <typeparam name="Data">Generic type of the data row</typeparam>
+        /// <returns></returns>
+        public static Html SearchInput<Key>(this Html html, Observable<Key> value, Type type)
+        {
+            var search = new SearchInput<Key>(value, type);
+            search.Render();
+            return html;
+        }
+
         public static Html Tab(this Html html)
         {
             return html.Ul.Attr("data-role", "tabs").Attr("data-expand", "true");
