@@ -36,8 +36,8 @@ namespace MVVM
         {
             NotifyArrayChanged(new ObservableArrayArgs<T>
             {
-                Array = Data,
-                Item = default(T),
+                Array = NewValue.As<T[]>(),
+                Item = default,
                 Index = -1,
                 Action = ObservableAction.Render
             });

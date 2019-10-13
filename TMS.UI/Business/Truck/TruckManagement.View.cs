@@ -16,6 +16,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public override async Task RenderAsync() {
             if (IsExisted()) return;
+            _masterData = await MasterData.GetAll();
             RenderMenuButton();
             RenderImageCorner();
             RenderTruckDetail();
@@ -25,7 +26,7 @@ namespace TMS.UI.Business.TruckManagement
             TruckData.Data = trucks.ToArray();
         }
 
-        private void RenderMenuButton ()
+        private void RenderMenuButton()
         {
             Html.Instance.Table
                 .TRow.TData.Button("New", "button info small", "fa fa-plus").EndOf(ElementType.td)

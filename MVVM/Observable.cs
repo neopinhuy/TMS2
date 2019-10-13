@@ -11,8 +11,8 @@ namespace MVVM
         protected static readonly List<Observable> _computedStack = new List<Observable>();
         protected static readonly List<Observable> _exeStack = new List<Observable>();
         protected readonly Func<object> _computedFn;
-        protected object _oldValue { get; set; }
-        protected object _newValue { get; set; }
+        public object OldValue { get; set; }
+        public object NewValue { get; set; }
         protected readonly List<Action<object>> _subscribers = new List<Action<object>>();
         protected readonly List<Observable> _dependencies = new List<Observable>();
         private int? delayTime = null;
@@ -20,15 +20,15 @@ namespace MVVM
 
         public Observable(object data)
         {
-            _oldValue = data;
-            _newValue = data;
+            OldValue = data;
+            NewValue = data;
         }
 
         public Observable(Func<object> data)
         {
             _computedFn = data;
             _computedStack.Add(this);
-            _newValue = _oldValue = data();
+            NewValue = OldValue = data();
             _computedStack.RemoveAt(_computedStack.Count - 1);
         }
 
@@ -41,13 +41,13 @@ namespace MVVM
                 {
                     _computedStack.Add(this);
                     res = _computedFn();
-                    _oldValue = _newValue;
-                    _newValue = res;
+                    OldValue = NewValue;
+                    NewValue = res;
                     _computedStack.RemoveAt(_computedStack.Count - 1);
                 }
                 else
                 {
-                    res = _newValue;
+                    res = NewValue;
                 }
                 if (_computedStack.Count > 0)
                 {
@@ -57,12 +57,12 @@ namespace MVVM
             }
             set
             {
-                if (_newValue == value)
+                if (NewValue == value)
                 {
                     return;
                 }
-                _oldValue = _newValue;
-                _newValue = value;
+                OldValue = NewValue;
+                NewValue = value;
                 NotifyChange();
             }
         }
@@ -90,7 +90,7 @@ namespace MVVM
                 subscriber(new ObservableArgs
                 {
                     NewData = newData,
-                    OldData = _oldValue
+                    OldData = OldValue
                 });
             });
             _dependencies.ForEach((dpc) => {
@@ -164,7 +164,7 @@ namespace MVVM
                 subscriber(new ObservableArgs<T>
                 {
                     NewData = newData,
-                    OldData = (T)_oldValue
+                    OldData = (T)OldValue
                 });
             });
             _dependencies.ForEach((dpc) => {

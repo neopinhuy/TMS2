@@ -1,4 +1,5 @@
 ﻿using Common.Clients;
+using MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,14 @@ namespace Components
 
         private static MasterData _instance;
         
-        private MasterData() { }
+        private MasterData() 
+        {
+        }
         
         public static async Task<MasterData> GetAll()
         {
-            if (_instance == null) _instance = new MasterData();
+            if (_instance != null) return _instance;
+            _instance = new MasterData();
             await GetMasterData();
             return _instance;
         }
@@ -39,14 +43,14 @@ namespace Components
                     var client = Activator.CreateInstance(clientType);
                     return httpGetList.Invoke(client).As<Task<object>>();
                 }).Where(x => x != null);
-            AllSources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>();
-            genericProp.ForEach(prop =>
+            AllSources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>().ToList();
+            foreach (var prop in genericProp)
             {
                 var refType = prop.PropertyType.GetGenericArguments()[0];
-                if (refType == typeof(IEnumerable<object>)) return;
+                if (refType == typeof(IEnumerable<object>)) continue;
                 var source = AllSources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0] == refType);
-                prop.SetValue(_instance, source);
-            });
+                _instance[prop.Name] = source;
+            }
         }
     }
 }

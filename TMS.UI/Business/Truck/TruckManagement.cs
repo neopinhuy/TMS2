@@ -15,15 +15,17 @@ namespace TMS.UI.Business.TruckManagement
         public ObservableArray<Header<Truck>> TruckHeader = new ObservableArray<Header<Truck>>();
         public ObservableArray<Truck> TruckData = new ObservableArray<Truck>();
         public Observable<string> TruckPlate = new Observable<string>();
-        public Observable<int> FreightStateId = new Observable<int>();
+        public ObservableArray<FreightState> FreightState = new ObservableArray<FreightState>();
+        public Observable<int?> FreightStateId = new Observable<int?>();
         public Observable<string> BrandName = new Observable<string>();
         public Observable<string> Version = new Observable<string>();
-        public Observable<int> VendorId = new Observable<int>();
-        public Observable<decimal> Price = new Observable<decimal>();
+        public Observable<int?> VendorId = new Observable<int?>();
+        public Observable<decimal?> Price = new Observable<decimal?>();
         public Observable<string> Currency = new Observable<string>();
         public Observable<DateTime?> ActiveDate = new Observable<DateTime?>();
         public Observable<DateTime?> ExpiredDate = new Observable<DateTime?>();
-        public Observable<int> DriverId = new Observable<int>();
+        public Observable<int?> DriverId = new Observable<int?>();
+        public MasterData _masterData;
 
         public AllTruck()
         {
@@ -61,11 +63,11 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Id = TruckId,
                 TruckPlate = TruckPlate.Data,
-                FreightStateId = FreightStateId.Data,
+                FreightStateId = FreightStateId.Data ?? 0,
                 BrandName = BrandName.Data,
                 Version = Version.Data,
-                VendorId = VendorId.Data,
-                Price = Price.Data,
+                VendorId = VendorId.Data ?? 0,
+                Price = Price.Data ?? 0,
                 Currency = Currency.Data,
                 Active = true,
                 ActiveDate = ActiveDate.Data,
@@ -93,16 +95,16 @@ namespace TMS.UI.Business.TruckManagement
         {
             TruckId = 0;
             TruckPlate.Data = null;
-            FreightStateId.Data = 0;
-            FreightStateId.Data = 0;
+            FreightStateId.Data = null;
+            FreightStateId.Data = null;
             BrandName.Data = null;
             Version.Data = null;
-            VendorId.Data = 0;
-            Price.Data = 0;
+            VendorId.Data = null;
+            Price.Data = null;
             Currency.Data = null;
             ActiveDate.Data = null;
             ExpiredDate.Data = null;
-            DriverId.Data = 0;
+            DriverId.Data = null;
         }
 
         public async Task EditTruck(Truck truck)

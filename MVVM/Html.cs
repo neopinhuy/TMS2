@@ -408,6 +408,10 @@ namespace MVVM
             {
                 textArea.Value = val;
             }
+            else
+            {
+                this.Attr("value", val);
+            }
             return this;
         }
 
@@ -700,8 +704,8 @@ namespace MVVM
             }
             var select = Context as HTMLSelectElement;
             list.ForEach((T model) => {
-                var text = displayField == null ? model.ToString() : model[displayField] as string;
-                var value = valueField == null ? model.ToString() : model[valueField] as string;
+                var text = displayField == null ? model.ToString() : model[displayField]?.ToString();
+                var value = valueField == null ? model.ToString() : model[valueField]?.ToString();
                 Option.Text(text).Value(value).End.Render();
             });
             select.SelectedIndex = GetSelectedIndex(list, selectedItem, valueField);
@@ -717,8 +721,8 @@ namespace MVVM
             var select = Context as HTMLSelectElement;
 
             ForEach(list, (T model, int index) => {
-                var text = model[displayField] as string;
-                var value = model[valueField] as string;
+                var text = model[displayField]?.ToString();
+                var value = model[valueField]?.ToString();
                 Option.Text(text).Value(value).End.Render();
             });
 

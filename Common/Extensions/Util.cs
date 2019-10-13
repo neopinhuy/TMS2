@@ -28,6 +28,11 @@ namespace Common.Extensions
                     || value is TimeSpan;
         }
 
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
+
         public static IEnumerable<T> DistinctBy<T, Key> (this IEnumerable<T> source, Func<T, Key> keySelector)
         {
             return source.GroupBy(keySelector).Select(g => g.First());
