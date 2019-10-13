@@ -67,7 +67,7 @@ namespace TMS.UI.Business.TruckManagement
                 .TRow.TData.Text("Version").End
                 .TData.SmallInput(Version).EndOf(ElementType.td)
                 .TData.Text("Vendor").End
-                .TData.SmallInput(VendorId).EndOf(ElementType.td)
+                .TData.SearchInput(VendorId, typeof(Vendor)).EndOf(ElementType.td)
                 .TData.Text("Price").End
                 .TData.SmallInput(Price).EndOf(ElementType.tr)
                 .TRow.TData.Text("Currency").End
