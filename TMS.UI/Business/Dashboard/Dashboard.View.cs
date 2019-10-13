@@ -3,12 +3,13 @@ using Components;
 using Common.Models;
 using MVVM;
 using static Retyped.canvasjs.CanvasJS;
+using System.Threading.Tasks;
 
 namespace TMS.UI.Business.Dashboard
 {
-    public partial class Dashboard : Component
+    public partial class Dashboard : TabComponent
     {
-        public override void Render()
+        public override async Task RenderAsync()
         {
             if (IsExisted())
             {

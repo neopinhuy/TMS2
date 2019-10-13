@@ -84,7 +84,7 @@ namespace Components
         }
 
         /// <summary>
-        /// Render small input, not an auto enclosing component
+        /// Render small input, non auto-enclosing component
         /// </summary>
         /// <param name="html"></param>
         /// <param name="value"></param>
@@ -231,7 +231,7 @@ namespace Components
         public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> headerData, ObservableArray<Data> rowData)
         {
             var table = new Table<Data>(headerData, rowData);
-            table.Render();
+            table.RenderAsync();
             return html;
         }
 
@@ -243,10 +243,10 @@ namespace Components
         /// <param name="rowData">Row data</param>
         /// <typeparam name="Data">Generic type of the data row</typeparam>
         /// <returns></returns>
-        public static Html SearchInput<Key>(this Html html, Observable<Key> value, Type type)
+        public static Html SearchInput<Key, Ref>(this Html html, Observable<Key> value, List<Header<Ref>> header)
         {
-            var search = new SearchInput<Key>(value, type);
-            search.Render();
+            var search = new SearchInput<Key, Ref>(value, header);
+            search.RenderAsync();
             return html;
         }
 
@@ -277,9 +277,9 @@ namespace Components
             return html.Span.ClassName(iconClass);
         }
 
-        public static void RenderAndFocus(this Component component)
+        public static void RenderAndFocus(this TabComponent component)
         {
-            component.Render();
+            component.RenderAsync();
             component.Focus();
         }
     }

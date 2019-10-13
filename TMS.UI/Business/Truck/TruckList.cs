@@ -8,9 +8,9 @@ using Common.Clients;
 
 namespace TMS.UI.Business.TruckManagement
 {
-    public partial class AllTruck : Component
+    public partial class TruckList : TabComponent
     {
-        public override string Title { get; set; } = "Truck";
+        public override string Title { get; set; } = "Truck list";
         public int TruckId { get; set; }
         public ObservableArray<Header<Truck>> TruckHeader = new ObservableArray<Header<Truck>>();
         public ObservableArray<Truck> TruckData = new ObservableArray<Truck>();
@@ -27,7 +27,7 @@ namespace TMS.UI.Business.TruckManagement
         public Observable<int?> DriverId = new Observable<int?>();
         public MasterData _masterData;
 
-        public AllTruck()
+        public TruckList()
         {
             TruckHeader.Data = new Header<Truck>[]
             {

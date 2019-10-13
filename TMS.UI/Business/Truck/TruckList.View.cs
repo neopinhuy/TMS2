@@ -5,15 +5,12 @@ using Components;
 using TMS.API.Models;
 using Common.Clients;
 using MVVM;
+using System.Collections.Generic;
 
 namespace TMS.UI.Business.TruckManagement
 {
-    public partial class AllTruck : Component
+    public partial class TruckList : TabComponent
     {
-        public override void Render()
-        {
-        }
-
         public override async Task RenderAsync() {
             if (IsExisted()) return;
             _masterData = await MasterData.GetInstanceAsync();
@@ -61,13 +58,21 @@ namespace TMS.UI.Business.TruckManagement
                 .TData.SmallInput(TruckPlate).EndOf(ElementType.td);
 
             Html.Instance.TData.Text("Freight state").End
-                .TData.SearchInput(FreightStateId, typeof(FreightState)).EndOf(ElementType.td)
+                .TData.SearchInput(FreightStateId, new List<Header<FreightState>>
+                {
+                    new Header<FreightState> { FieldName = "Id", HeaderText = "Id" },
+                    new Header<FreightState> { FieldName = "Name", HeaderText = "Name" },
+                }).EndOf(ElementType.td)
                 .TData.Text("Band name").End
                 .TData.SmallInput(BrandName).EndOf(ElementType.tr)
                 .TRow.TData.Text("Version").End
                 .TData.SmallInput(Version).EndOf(ElementType.td)
                 .TData.Text("Vendor").End
-                .TData.SearchInput(VendorId, typeof(Vendor)).EndOf(ElementType.td)
+                .TData.SearchInput(VendorId, new List<Header<Vendor>>
+                {
+                    new Header<Vendor> { FieldName = "Id", HeaderText = "Id" },
+                    new Header<Vendor> { FieldName = "Name", HeaderText = "Name" },
+                }).EndOf(ElementType.td)
                 .TData.Text("Price").End
                 .TData.SmallInput(Price).EndOf(ElementType.tr)
                 .TRow.TData.Text("Currency").End

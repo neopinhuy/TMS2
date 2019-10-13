@@ -9,7 +9,7 @@ namespace TMS.UI.Business
 {
     public partial class MenuComponent : Component
     {
-        public override void Render()
+        public override async Task RenderAsync()
         {
             Html.Take(".sidebar-wrapper");
             RenderMenuItems(MenuItems);
@@ -62,7 +62,7 @@ namespace TMS.UI.Business
             li.ParentElement.ClassName = className.Trim();
             if (menu.LinkedComponent != null)
             {
-                var instance = Activator.CreateInstance(menu.LinkedComponent) as Component;
+                var instance = Activator.CreateInstance(menu.LinkedComponent) as TabComponent;
                 await instance.RenderAsync();
                 instance.Focus();
             }

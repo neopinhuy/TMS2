@@ -1,17 +1,16 @@
 ﻿using Bridge.Html5;
 using MVVM;
 using System;
+using System.Threading.Tasks;
 
 namespace Components
 {
     public class ColumnFilter : Component
     {
-        public override string Title { get; set; }
-
         public double Left { get; set; }
         public double Top { get; set; }
 
-        public override void Render()
+        public override async Task RenderAsync()
         {
             Html.Take("#columnFilter");
             if (Html.Context != null)

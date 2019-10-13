@@ -10,9 +10,9 @@ namespace TMS.UI
     {
         public async static Task Main()
         {
-            new Dashboard().Render();
-            new MenuComponent().Render();
-            var truck = new AllTruck();
+            new Dashboard().RenderAsync();
+            new MenuComponent().RenderAsync();
+            var truck = new TruckList();
             await truck.RenderAsync();
             truck.Focus();
         }

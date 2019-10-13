@@ -8,7 +8,7 @@ using ElementType = MVVM.ElementType;
 
 namespace Components
 {
-    public class Table<Data>
+    public class Table<Data> : Component
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
@@ -21,7 +21,7 @@ namespace Components
             RowData = rowData;
         }
 
-        public void Render()
+        public override async Task RenderAsync()
         {
             Html.Instance.Div.ClassName("table-wrapper")
                 .Table.ClassName("table striped");
@@ -87,12 +87,12 @@ namespace Components
                     html.Span.Text(header.HeaderText).End.Render();
                     if (header.Sortable)
                     {
-                        html.Span.ClassName("fa fa-filter").Event(EventType.Click, (e) =>
+                        html.Span.ClassName("fa fa-filter").Event(EventType.Click, async (e) =>
                         {
                             Html.Take(e.Target as HTMLElement).Closest(ElementType.th);
                             var boudingRect = Html.Context.GetBoundingClientRect();
                             var filter = new ColumnFilter();
-                            filter.Render();
+                            await filter.RenderAsync();
                             filter.Top = boudingRect.Bottom;
                             filter.Left = boudingRect.Left;
                             filter.Toggle();

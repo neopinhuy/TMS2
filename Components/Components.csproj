@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ColumnFilter.cs" />
+    <Compile Include="TabComponent.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="MasterData.cs" />

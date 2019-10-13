@@ -42,8 +42,8 @@
       <DependentUpon>MenuComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
-    <Compile Include="Business\Truck\TruckManagement.View.cs" />
-    <Compile Include="Business\Truck\TruckManagement.cs" />
+    <Compile Include="Business\Truck\TruckList.View.cs" />
+    <Compile Include="Business\Truck\TruckList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

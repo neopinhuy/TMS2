@@ -17,7 +17,6 @@ namespace TMS.UI.Business
 
     public partial class MenuComponent : Component
     {
-        public override string Title { get; set; }
         public List<MenuItem> MenuItems { get; set; }
 
         public MenuComponent()
@@ -27,8 +26,8 @@ namespace TMS.UI.Business
                 new MenuItem { ItemText = "Dashboard", IconClass = "mif-home", LinkedComponent = typeof(Dashboard.Dashboard) },
                 new MenuItem { ItemText = "Asset", IconClass = "mif-truck",
                     MenuItems = new List<MenuItem> {
-                        new MenuItem { ItemText = "Truck", IconClass = "mif-truck", LinkedComponent = typeof(AllTruck) },
-                        new MenuItem { ItemText = "Accessory", IconClass = "mif-steam2", LinkedComponent = typeof(AllTruck) },
+                        new MenuItem { ItemText = "Truck", IconClass = "mif-truck", LinkedComponent = typeof(TruckManagement.TruckList) },
+                        new MenuItem { ItemText = "Accessory", IconClass = "mif-steam2", LinkedComponent = typeof(TruckManagement.TruckList) },
                         new MenuItem { ItemText = "Maintenance", IconClass = "mif-calendar" },
                         new MenuItem { IsDevider = true },
                         new MenuItem { ItemText = "Container", IconClass = "fa fa-cube" },
