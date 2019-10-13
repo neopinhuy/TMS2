@@ -16,7 +16,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public override async Task RenderAsync() {
             if (IsExisted()) return;
-            _masterData = await MasterData.GetAll();
+            _masterData = await MasterData.GetInstanceAsync();
             RenderMenuButton();
             RenderImageCorner();
             RenderTruckDetail();

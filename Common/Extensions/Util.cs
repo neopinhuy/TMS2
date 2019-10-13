@@ -37,5 +37,10 @@ namespace Common.Extensions
         {
             return source.GroupBy(keySelector).Select(g => g.First());
         }
+
+        public static IEnumerable<object> GetSourceByType(this IEnumerable<IEnumerable<object>> sources, Type type)
+        {
+            return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0] == type);
+        }
     }
 }

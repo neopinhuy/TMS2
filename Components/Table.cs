@@ -2,7 +2,6 @@
 using Common.Extensions;
 using MVVM;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElementType = MVVM.ElementType;
@@ -13,6 +12,7 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
+        private MasterData _masterData;
         private int? timeOut = null;
 
         public Table(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
@@ -50,9 +50,9 @@ namespace Components
             }
             timeOut = Window.SetTimeout(async () =>
             {
+                _masterData = await MasterData.GetInstanceAsync();
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
-                await MasterData.GetAll();
                 RenderTableContent(table);
             });
         }
@@ -151,8 +151,7 @@ namespace Components
                     }
                     if (header.Reference != null)
                     {
-                        var source = MasterData.AllSources.FirstOrDefault(x => x.FirstOrDefault().GetType() == header.Reference)
-                            ?.As<IEnumerable<object>>();
+                        var source = _masterData.GetSourceByType(header.Reference);
                         cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
                             ?[header.RefDisplayField]?.ToString();
                         header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;

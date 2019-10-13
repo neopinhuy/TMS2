@@ -1,4 +1,6 @@
-﻿using Common.Clients;
+﻿using Bridge.Html5;
+using Common.Clients;
+using Common.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -13,24 +15,19 @@ namespace Components
         public ICollection<User> User { get; set; }
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
-        public static IEnumerable<IEnumerable<object>> AllSources { get; set; }
+        private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
 
         private static MasterData _instance;
         
         private MasterData() 
         {
         }
-        
-        public static async Task<MasterData> GetAll()
+
+        public static async Task<MasterData> GetInstanceAsync()
         {
             if (_instance != null) return _instance;
             _instance = new MasterData();
-            await GetMasterData();
-            return _instance;
-        }
-
-        private static async Task GetMasterData()
-        {
+            
             var genericProp = _instance.GetType().GetProperties()
                 .Where(prop => prop.PropertyType.IsGenericType);
             var sourcesRequests = genericProp
@@ -48,9 +45,16 @@ namespace Components
             {
                 var refType = prop.PropertyType.GetGenericArguments()[0];
                 if (refType == typeof(IEnumerable<object>)) continue;
-                var source = AllSources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0] == refType);
+                IEnumerable<object> source = AllSources.GetSourceByType(refType);
                 _instance[prop.Name] = source;
             }
+
+            return _instance;
+        }
+
+        public IEnumerable<object> GetSourceByType(Type type)
+        {
+            return AllSources.GetSourceByType(type);
         }
     }
 }

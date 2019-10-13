@@ -7,8 +7,10 @@ namespace Components
     public abstract class Component
     {
         public abstract string Title { get; set; }
-        public abstract void Render();
+        public virtual void Render() { }
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public virtual async Task RenderAsync()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             Render();
         }
