@@ -48,10 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />
-    <None Include="compilerconfig.json" />
-    <None Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </None>
     <Compile Include="Business\Dashboard\Dashboard.View.cs" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

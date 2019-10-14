@@ -14,6 +14,11 @@ namespace Components
         top, right, bottom, left
     }
 
+    public enum Position
+    {
+        absolute, @fixed, inherit, initial, relative, @static, sticky, unset
+    }
+
     public enum BorderType {
         dotted, dasheddashed, solid, @double, groove, ridge, inset, outset, none, hidden
     }
@@ -270,6 +275,16 @@ namespace Components
         public static Html TextAlign(this Html html, TextAlign? alignment = Components.TextAlign.unset)
         {
             return html.Style("text-align: " + alignment.ToString());
+        }
+
+        public static Html Position(this Html html, Direction direction, double value)
+        {
+            return html.Style($"{direction}: {value}px");
+        }
+        
+        public static Html Position(this Html html, Position position)
+        {
+            return html.Style($"position: {position}");
         }
 
         public static Html Icon(this Html html, string iconClass)

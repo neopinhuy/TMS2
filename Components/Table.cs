@@ -11,6 +11,8 @@ namespace Components
     public class Table<Data> : Component
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
+        public double? Top { get; set; }
+        public double? Left { get; set; }
         public ObservableArray<Data> RowData { get; set; }
         private MasterData _masterData;
         private int? timeOut = null;
@@ -23,8 +25,13 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            Html.Instance.Div.ClassName("table-wrapper")
-                .Table.ClassName("table striped");
+            Html.Instance.Div.ClassName("table-wrapper");
+            RootElement = Html.Context as HTMLElement;
+            if (Top != null && Left != null)
+            {
+                Html.Instance.ClassName("floating").Position(Position.@fixed).Position(Direction.top, Top.Value).Position(Direction.left, Left.Value);
+            }
+            Html.Instance.Table.ClassName("table striped");
             var table = Html.Context;
             //Rerender(table);
             Html.Instance.End.End.Render();
@@ -50,7 +57,7 @@ namespace Components
             }
             timeOut = Window.SetTimeout(async () =>
             {
-                _masterData = await MasterData.GetInstanceAsync();
+                _masterData = await MasterData.GetSingletonAsync();
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
                 RenderTableContent(table);
@@ -118,7 +125,7 @@ namespace Components
         private void RenderTableContent(Element table)
         {
             var html = Html.Take(table);
-            html.TBody.ForEach(RowData.Data, RenderRowData).EndOf(".table-wrapper").Render();
+            html.TBody.ForEach(RowData.Data, RenderRowData).EndOf(ElementType.table).Render();
         }
 
         private void RenderRowData(Data row, int index)

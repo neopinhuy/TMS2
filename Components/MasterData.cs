@@ -23,7 +23,7 @@ namespace Components
         {
         }
 
-        public static async Task<MasterData> GetInstanceAsync()
+        public static async Task<MasterData> GetSingletonAsync()
         {
             if (_instance != null) return _instance;
             _instance = new MasterData();

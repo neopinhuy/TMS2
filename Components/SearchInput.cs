@@ -13,7 +13,9 @@ namespace Components
         private readonly Observable<string> _text = new Observable<string>();
         private readonly ObservableArray<Ref> _searchFound = new ObservableArray<Ref>();
         private readonly List<Header<Ref>> _header;
+        private Table<Ref> _table;
         private MasterData _masterData;
+        private HTMLInputElement _input;
         public string DisplayField { get; set; } = "Name";
         public string ValueField { get; set; } = "Id";
 
@@ -25,7 +27,10 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            Html.Instance.SmallInput(_text).AsyncEvent(EventType.FocusIn, RenderSuggestion);
+            Html.Instance.SmallInput(_text)
+                .AsyncEvent(EventType.Focus, RenderSuggestion)
+                .Event(EventType.Blur, DestroySuggestion);
+            _input = Html.Context as HTMLInputElement;
             UpdateSearchText();
             _value.Subscribe(arg =>
             {
@@ -37,7 +42,7 @@ namespace Components
         {
             Window.SetTimeout(async () =>
             {
-                _masterData = await MasterData.GetInstanceAsync();
+                _masterData = await MasterData.GetSingletonAsync();
                 var source = _masterData.GetSourceByType(typeof(Ref));
                 var selected = source.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data?.ToString());
                 _text.Data = selected?[DisplayField]?.ToString();
@@ -46,10 +51,22 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
-            _masterData = await MasterData.GetInstanceAsync();
+            var position = _input.GetBoundingClientRect();
+            _masterData = await MasterData.GetSingletonAsync();
             _searchFound.Data = _masterData.GetSourceByType(typeof(Ref)).As<IEnumerable<Ref>>().ToArray();
-            var table = new Table<Ref>(new ObservableArray<Header<Ref>>(_header.ToArray()), _searchFound);
-            await table.RenderAsync();
+            var headers = new ObservableArray<Header<Ref>>(_header.ToArray());
+            _table = new Table<Ref>(headers, _searchFound)
+            {
+                Top = position.Bottom,
+                Left = position.Left
+            };
+            Html.Take(Document.Body);
+            await _table.RenderAsync();
+        }
+
+        public void DestroySuggestion()
+        {
+            _table.Destroy();
         }
     }
 }

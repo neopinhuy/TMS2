@@ -171,6 +171,10 @@ td {
   top: -2px;
   overflow: hidden;
 }
+.table-wrapper.floating {
+  position: fixed;
+  background-color: #fff;
+}
 .table-wrapper:hover {
   overflow: auto;
   overflow: overlay;
