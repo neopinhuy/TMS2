@@ -165,6 +165,7 @@
     <Compile Include="..\TMS.API\Models\WeightRange.cs">
       <Link>Models\WeightRange.cs</Link>
     </Compile>
+    <Compile Include="Extensions\HtmlElement.cs" />
     <Compile Include="Extensions\Util.cs" />
     <Compile Include="Clients\BaseClient.cs" />
     <Compile Include="Clients\IRestful.cs" />

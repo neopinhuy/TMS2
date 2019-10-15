@@ -12,6 +12,23 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
+
+        const string _selected = "selected-row";
+        private int? selectedRow;
+        public int? SelectedRow { 
+            get => selectedRow; 
+            set 
+            {
+                selectedRow = value;
+                RootElement
+                    .QuerySelectorAll("tbody tr").ToList()
+                    .ForEach(x => x.ReplaceClass(_selected, string.Empty));
+                if (selectedRow is null) return;
+                RootElement.QuerySelectorAll("tbody tr")
+                    .ElementAt(selectedRow.Value).AddClass(_selected);
+            } 
+        }
+
         private MasterData _masterData;
         private int? timeOut = null;
 
@@ -176,6 +193,18 @@ namespace Components
                 return TextAlign.left;
             }
             return TextAlign.center;
+        }
+
+        public void MoveUp()
+        {
+            if (SelectedRow is null || SelectedRow == 0) SelectedRow = RowData.Data.Length - 1;
+            else if (SelectedRow > 0) SelectedRow--;
+        }
+
+        public void MoveDown()
+        {
+            if (SelectedRow is null || SelectedRow == RowData.Data.Length - 1) SelectedRow = 0;
+            else if (SelectedRow < RowData.Data.Length - 1) SelectedRow++;
         }
     }
 }

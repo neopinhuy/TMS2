@@ -204,9 +204,15 @@ td {
     border: 1px solid @grayNormal;
     top: -2px;
     overflow: hidden;
+
     &.floating {
         position: fixed;
         background-color: @white;
+        margin: 0;
+
+        th {
+            line-height: 0.8;
+        }
     }
 
     &:hover {
@@ -251,8 +257,15 @@ td {
     }
 
     tbody {
-        tr:nth-child(odd) {
-            background-color: @light;
+        tr {
+            &:nth-child(odd) {
+                background-color: @light !important;
+            }
+
+            &:hover, &.selected-row {
+                background-color: @tableHover !important;
+                cursor: pointer;
+            }
         }
 
         td {

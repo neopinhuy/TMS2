@@ -29,7 +29,11 @@ namespace Components
         {
             Html.Instance.SmallInput(_text)
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
-                .Event(EventType.Blur, DestroySuggestion);
+                .Event(EventType.Blur, DestroySuggestion)
+                .Event(EventType.KeyDown, (Event e) => {
+                    if (e["keyCode"].ToString() == "38") _table.MoveUp();
+                    if (e["keyCode"].ToString() == "40") _table.MoveDown();
+                });
             _input = Html.Context as HTMLInputElement;
             UpdateSearchText();
             _value.Subscribe(arg =>
@@ -58,7 +62,7 @@ namespace Components
             _table = new FloatingTable<Ref>(headers, _searchFound)
             {
                 Top = position.Bottom,
-                Left = position.Left
+                Left = position.Left - 1
             };
             Html.Take(Document.Body);
             await _table.RenderAsync();
@@ -66,7 +70,7 @@ namespace Components
 
         public void DestroySuggestion()
         {
-            _table.Destroy();
+            _table.Dispose();
         }
     }
 }
