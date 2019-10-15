@@ -11,8 +11,6 @@ namespace Components
     public class Table<Data> : Component
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
-        public double? Top { get; set; }
-        public double? Left { get; set; }
         public ObservableArray<Data> RowData { get; set; }
         private MasterData _masterData;
         private int? timeOut = null;
@@ -27,13 +25,9 @@ namespace Components
         {
             Html.Instance.Div.ClassName("table-wrapper");
             RootElement = Html.Context as HTMLElement;
-            if (Top != null && Left != null)
-            {
-                Html.Instance.ClassName("floating").Position(Position.@fixed).Position(Direction.top, Top.Value).Position(Direction.left, Left.Value);
-            }
             Html.Instance.Table.ClassName("table striped");
             var table = Html.Context;
-            //Rerender(table);
+            Rerender(table);
             Html.Instance.End.End.Render();
             Headers.Subscribe(x =>
             {

@@ -13,7 +13,7 @@ namespace Components
         private readonly Observable<string> _text = new Observable<string>();
         private readonly ObservableArray<Ref> _searchFound = new ObservableArray<Ref>();
         private readonly List<Header<Ref>> _header;
-        private Table<Ref> _table;
+        private FloatingTable<Ref> _table;
         private MasterData _masterData;
         private HTMLInputElement _input;
         public string DisplayField { get; set; } = "Name";
@@ -55,7 +55,7 @@ namespace Components
             _masterData = await MasterData.GetSingletonAsync();
             _searchFound.Data = _masterData.GetSourceByType(typeof(Ref)).As<IEnumerable<Ref>>().ToArray();
             var headers = new ObservableArray<Header<Ref>>(_header.ToArray());
-            _table = new Table<Ref>(headers, _searchFound)
+            _table = new FloatingTable<Ref>(headers, _searchFound)
             {
                 Top = position.Bottom,
                 Left = position.Left
