@@ -346,10 +346,6 @@ namespace TMS.API.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Truck>()
-                .Property(e => e.ExpiredDate)
-                .IsFixedLength();
-
-            modelBuilder.Entity<Truck>()
                 .HasMany(e => e.Coordination)
                 .WithOne(e => e.Truck)
                 .IsRequired().OnDelete(DeleteBehavior.Cascade);
