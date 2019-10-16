@@ -63,10 +63,7 @@ namespace TMS.UI.Business
             if (menu.LinkedComponent != null)
             {
                 var instance = Activator.CreateInstance(menu.LinkedComponent) as TabComponent;
-                if (!instance.IsExisted())
-                {
-                    await instance.RenderAsync();
-                }
+                await instance.RenderAsync();
                 instance.Focus();
             }
         }
