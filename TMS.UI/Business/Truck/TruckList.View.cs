@@ -12,7 +12,6 @@ namespace TMS.UI.Business.TruckManagement
     public partial class TruckList : TabComponent
     {
         public override async Task RenderAsync() {
-            if (IsExisted()) return;
             _masterData = await MasterData.GetSingletonAsync();
             RenderMenuButton();
             RenderImageCorner();

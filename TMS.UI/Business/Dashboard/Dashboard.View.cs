@@ -11,10 +11,6 @@ namespace TMS.UI.Business.Dashboard
     {
         public override async Task RenderAsync()
         {
-            if (IsExisted())
-            {
-                return;
-            }
             HighLight();
             ChartPanels();
         }
