@@ -11,9 +11,9 @@ namespace TMS.API.Controllers
     [Route("api/[controller]")]
     public class UserController : BaseController, IRestful<User>
     {
-        readonly TMSDbContext db;
+        readonly TMSContext db;
 
-        public UserController(TMSDbContext context)
+        public UserController(TMSContext context)
         {
             db = context;
         }

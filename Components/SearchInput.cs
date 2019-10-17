@@ -27,7 +27,7 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            Html.Instance.SmallInput(_text)
+            Html.Instance.Input.ClassName("input-small search-input").Value(_text)
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)
                 .Event(EventType.KeyDown, (Event e) => {
@@ -59,18 +59,41 @@ namespace Components
             _masterData = await MasterData.GetSingletonAsync();
             _searchFound.Data = _masterData.GetSourceByType(typeof(Ref)).As<IEnumerable<Ref>>().ToArray();
             var headers = new ObservableArray<Header<Ref>>(_header.ToArray());
-            _table = new FloatingTable<Ref>(headers, _searchFound)
+            var tableParams = new TableParam<Ref>
+            {
+                Headers = headers, 
+                RowData = _searchFound,
+                RowClick = Select
+            };
+            _table = new FloatingTable<Ref>(tableParams)
             {
                 Top = position.Bottom,
                 Left = position.Left - 1
             };
+            // Render the table from document.body element
             Html.Take(Document.Body);
             await _table.RenderAsync();
         }
 
+        private void Select(Ref rowData)
+        {
+            _text.Data = rowData[DisplayField]?.ToString();
+            _value.Data = rowData[ValueField].As<Key>();
+            DisposeSearchTable();
+        }
+
+        private void DisposeSearchTable()
+        {
+            if (_table != null)
+            {
+                _table.Dispose();
+                _table = null;
+            }
+        }
+
         public void DestroySuggestion()
         {
-            _table.Dispose();
+            Window.SetTimeout(DisposeSearchTable, 100);
         }
     }
 }

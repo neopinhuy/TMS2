@@ -233,9 +233,9 @@ namespace Components
         /// <param name="rowData">Row data</param>
         /// <typeparam name="Data">Generic type of the data row</typeparam>
         /// <returns></returns>
-        public static Html Table<Data>(this Html html, ObservableArray<Header<Data>> headerData, ObservableArray<Data> rowData)
+        public static Html Table<Data>(this Html html, TableParam<Data> tableParam)
         {
-            var table = new Table<Data>(headerData, rowData);
+            Table<Data> table = new Table<Data>(tableParam);
             table.RenderAsync();
             return html;
         }

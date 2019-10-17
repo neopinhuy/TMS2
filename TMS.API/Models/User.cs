@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -112,97 +113,189 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
         public int? SupervisorId { get; set; }
 
+        [JsonIgnore]
         public virtual Contract Contract { get; set; }
+        [JsonIgnore]
         public virtual Department Department { get; set; }
+        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual Nationality Nationality { get; set; }
+        [JsonIgnore]
         public virtual Role Role { get; set; }
+        [JsonIgnore]
         public virtual User Supervisor { get; set; }
+        [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual Nationality NationalityIdNavigation { get; set; }
+        [JsonIgnore]
         public virtual Surcharge SurchargeIdNavigation { get; set; }
+        [JsonIgnore]
         public virtual Terminal TerminalIdNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Accessory> AccessoryInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Accessory> AccessoryUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<CommodityType> CommodityTypeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigAssignee { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Container> ContainerUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Contract> ContractInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Contract> ContractUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Contract> ContractUser { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Coordination> CoordinationDriver { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Coordination> CoordinationInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Customer> CustomerInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Customer> CustomerUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Department> DepartmentLeader { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Entity> EntityInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EntityPolicy> EntityPolicyInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<EntityPolicy> EntityPolicyUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Entity> EntityUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Feature> Feature { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Field> FieldInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Field> FieldUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightBalance> FreightBalanceInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightBalance> FreightBalanceUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightHistory> FreightHistoryInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightHistory> FreightHistoryUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightProof> FreightProofInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightProof> FreightProofUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightState> FreightStateInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GroupMember> GroupMemberInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GroupMember> GroupMemberUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GroupRole> GroupRoleInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GroupRole> GroupRoleUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<User> InverseInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<User> InverseSupervisor { get; set; }
+        [JsonIgnore]
         public virtual ICollection<User> InverseUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetailInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetailUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Order> OrderInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Order> OrderUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUser { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Quotation> QuotationInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Surcharge> SurchargeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Terminal> TerminalUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TicketState> TicketStateInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Timebox> TimeboxInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Timebox> TimeboxUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountableUser { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenance> TruckMaintenanceInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMaintenance> TruckMaintenanceUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUser { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserBalance> UserBalanceInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserBalance> UserBalanceUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserBalance> UserBalanceUser { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserInterface> UserInterfaceInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserInterface> UserInterfaceUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<VendorType> VendorTypeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<VendorType> VendorTypeUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<VolumeRange> VolumeRangeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<VolumeRange> VolumeRangeUpdatedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<WeightRange> WeightRangeInsertedByNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<WeightRange> WeightRangeUpdatedByNavigation { get; set; }
     }
 }

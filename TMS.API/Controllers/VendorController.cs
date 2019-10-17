@@ -11,9 +11,9 @@ namespace TMS.API.Controllers
     [Route("api/[controller]")]
     public class VendorController : BaseController, IRestful<Vendor>
     {
-        readonly TMSDbContext db;
+        readonly TMSContext db;
 
-        public VendorController(TMSDbContext context)
+        public VendorController(TMSContext context)
         {
             db = context;
         }

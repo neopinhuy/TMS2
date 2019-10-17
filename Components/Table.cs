@@ -8,11 +8,19 @@ using ElementType = MVVM.ElementType;
 
 namespace Components
 {
+    public class TableParam<Data>
+    {
+        public ObservableArray<Header<Data>> Headers { get; set; }
+        public ObservableArray<Data> RowData { get; set; }
+        public Action<Data> RowClick { get; set; }
+        public Task<Action<Data>> RowClickAsync { get; set; }
+    }
+
     public class Table<Data> : Component
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
-
+        private readonly TableParam<Data> _tableParam;
         const string _selected = "selected-row";
         private int? selectedRow;
         public int? SelectedRow { 
@@ -32,10 +40,11 @@ namespace Components
         private MasterData _masterData;
         private int? timeOut = null;
 
-        public Table(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
+        public Table(TableParam<Data> tableParam)
         {
-            Headers = metadata;
-            RowData = rowData;
+            Headers = tableParam.Headers;
+            RowData = tableParam.RowData;
+            _tableParam = tableParam;
         }
 
         public override async Task RenderAsync()
@@ -142,7 +151,9 @@ namespace Components
         private void RenderRowData(Data row, int index)
         {
             var html = Html.Instance;
-            html.TRow.ForEach(Headers.Data, (header, headerIndex) =>
+            html.TRow.Render();
+            if (_tableParam.RowClick != null) html.Event(EventType.Click, _tableParam.RowClick, row);
+            html.ForEach(Headers.Data, (header, headerIndex) =>
             {
                 html.TData.Render();
                 if (header.EditEvent != null)

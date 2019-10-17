@@ -12,9 +12,9 @@ namespace TMS.API.Controllers
     [Route("api/[controller]")]
     public class FreightStateController : BaseController, IRestful<FreightState>
     {
-        readonly TMSDbContext db;
+        readonly TMSContext db;
 
-        public FreightStateController(TMSDbContext context)
+        public FreightStateController(TMSContext context)
         {
             db = context;
         }

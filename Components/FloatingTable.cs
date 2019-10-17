@@ -8,11 +8,7 @@ namespace Components
         public double Top { get; set; }
         public double Left { get; set; }
 
-        public FloatingTable(ObservableArray<Header<Data>> metadata, ObservableArray<Data> rowData)
-            : base(metadata, rowData)
-        {
-
-        }
+        public FloatingTable(TableParam<Data> tableParam) : base(tableParam) { }
 
         public override async Task RenderAsync()
         {

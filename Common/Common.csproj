@@ -69,8 +69,17 @@
     <Compile Include="..\TMS.API\Models\Department.cs">
       <Link>Models\Department.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Entity.cs">
+      <Link>Models\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\EntityPolicy.cs">
+      <Link>Models\EntityPolicy.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Feature.cs">
       <Link>Models\Feature.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\Field.cs">
+      <Link>Models\Field.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\FreightBalance.cs">
       <Link>Models\FreightBalance.cs</Link>
@@ -83,6 +92,9 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\GroupMember.cs">
+      <Link>Models\GroupMember.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\GroupRole.cs">
       <Link>Models\GroupRole.cs</Link>
@@ -108,17 +120,11 @@
     <Compile Include="..\TMS.API\Models\PaymentApprovalConfig.cs">
       <Link>Models\PaymentApprovalConfig.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Policy.cs">
+      <Link>Models\Policy.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Quotation.cs">
       <Link>Models\Quotation.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\RightByGroup.cs">
-      <Link>Models\RightByGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\RightByRole.cs">
-      <Link>Models\RightByRole.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\RightByUser.cs">
-      <Link>Models\RightByUser.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Role.cs">
       <Link>Models\Role.cs</Link>
@@ -152,6 +158,9 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\UserBalance.cs">
       <Link>Models\UserBalance.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\UserInterface.cs">
+      <Link>Models\UserInterface.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Vendor.cs">
       <Link>Models\Vendor.cs</Link>
