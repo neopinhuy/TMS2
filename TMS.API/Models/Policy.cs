@@ -20,7 +20,6 @@ namespace TMS.API.Models
         public string ExcludedGroupRole { get; set; }
         public string ExcludedUserIds { get; set; }
         public bool? ExcludeAll { get; set; }
-        public int InsertedUserId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
