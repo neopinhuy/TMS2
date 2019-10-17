@@ -35,7 +35,7 @@ namespace TMS.API
                 });
                 options.DescribeAllEnumsAsStrings();
             });
-            services.AddDbContext<TMSDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TMS")));
+            services.AddDbContext<TMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TMS")));
             services.AddResponseCompression();
         }
 

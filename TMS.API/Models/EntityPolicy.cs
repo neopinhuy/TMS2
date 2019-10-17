@@ -3,26 +3,25 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class Timebox
+    public partial class EntityPolicy
     {
-        public Timebox()
-        {
-            OrderDetail = new HashSet<OrderDetail>();
-            Quotation = new HashSet<Quotation>();
-        }
-
         public int Id { get; set; }
-        public TimeSpan TimeboxStart { get; set; }
-        public TimeSpan TimeboxEnd { get; set; }
+        public string Name { get; set; }
+        public int EntityId { get; set; }
+        public int PolicyId { get; set; }
+        public bool CanSee { get; set; }
+        public bool CanAdd { get; set; }
+        public bool CanEdit { get; set; }
+        public bool CanDelete { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }
+        public virtual Policy Policy { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
     }
 }

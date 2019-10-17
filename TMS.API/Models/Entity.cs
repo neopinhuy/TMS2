@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class Timebox
+    public partial class Entity
     {
-        public Timebox()
+        public Entity()
         {
-            OrderDetail = new HashSet<OrderDetail>();
-            Quotation = new HashSet<Quotation>();
+            EntityPolicy = new HashSet<EntityPolicy>();
+            FieldEntity = new HashSet<Field>();
+            FieldReference = new HashSet<Field>();
         }
 
         public int Id { get; set; }
-        public TimeSpan TimeboxStart { get; set; }
-        public TimeSpan TimeboxEnd { get; set; }
+        public string Name { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -22,7 +22,8 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
+        public virtual ICollection<Field> FieldEntity { get; set; }
+        public virtual ICollection<Field> FieldReference { get; set; }
     }
 }

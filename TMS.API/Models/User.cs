@@ -1,412 +1,208 @@
+﻿using System;
+using System.Collections.Generic;
+
 namespace TMS.API.Models
 {
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    [Table("User")]
     public partial class User
     {
         public User()
         {
-            AccessoryInsertedBy = new HashSet<Accessory>();
-            AccessoryUpdatedBy = new HashSet<Accessory>();
-            CommodityTypeInsertedBy = new HashSet<CommodityType>();
-            CommodityTypeUpdatedBy = new HashSet<CommodityType>();
-            ContainerInsertedBy = new HashSet<Container>();
-            ContainerUpdatedBy = new HashSet<Container>();
-            ContainerMonitorConfigInsertedBy = new HashSet<ContainerMonitorConfig>();
-            ContainerMonitorConfigUpdatedBy = new HashSet<ContainerMonitorConfig>();
-            AssignedContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
-            ContainerTypeInsertedBy = new HashSet<ContainerType>();
-            ContainerTypeUpdatedBy = new HashSet<ContainerType>();
-            Contract = new HashSet<Contract>();
-            ContractInsertedBy = new HashSet<Contract>();
-            ContractUpdatedBy = new HashSet<Contract>();
-            Coordination = new HashSet<Coordination>();
-            CoordinationInsertedBy = new HashSet<Coordination>();
-            CoordinationUpdatedBy = new HashSet<Coordination>();
-            CustomerInsertedBy = new HashSet<Customer>();
-            CustomerUpdatedBy = new HashSet<Customer>();
+            AccessoryInsertedByNavigation = new HashSet<Accessory>();
+            AccessoryUpdatedByNavigation = new HashSet<Accessory>();
+            CommodityTypeInsertedByNavigation = new HashSet<CommodityType>();
+            CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
+            ContainerInsertedByNavigation = new HashSet<Container>();
+            ContainerMonitorConfigAssignee = new HashSet<ContainerMonitorConfig>();
+            ContainerMonitorConfigInsertedByNavigation = new HashSet<ContainerMonitorConfig>();
+            ContainerMonitorConfigUpdatedByNavigation = new HashSet<ContainerMonitorConfig>();
+            ContainerTypeInsertedByNavigation = new HashSet<ContainerType>();
+            ContainerTypeUpdatedByNavigation = new HashSet<ContainerType>();
+            ContainerUpdatedByNavigation = new HashSet<Container>();
+            ContractInsertedByNavigation = new HashSet<Contract>();
+            ContractUpdatedByNavigation = new HashSet<Contract>();
+            ContractUser = new HashSet<Contract>();
+            CoordinationDriver = new HashSet<Coordination>();
+            CoordinationInsertedByNavigation = new HashSet<Coordination>();
+            CoordinationUpdatedByNavigation = new HashSet<Coordination>();
+            CustomerInsertedByNavigation = new HashSet<Customer>();
+            CustomerUpdatedByNavigation = new HashSet<Customer>();
+            DepartmentInsertedByNavigation = new HashSet<Department>();
             DepartmentLeader = new HashSet<Department>();
-            DepartmentInsertedBy = new HashSet<Department>();
-            DepartmentUpdatedBy = new HashSet<Department>();
-            FeatureInsertedBy = new HashSet<Feature>();
-            FreightBalance = new HashSet<FreightBalance>();
-            FreightBalanceUpdatedBy = new HashSet<FreightBalance>();
-            FreightHistoryInsertedBy = new HashSet<FreightHistory>();
-            FreightHistoryUpdatedBy = new HashSet<FreightHistory>();
-            FreightProofInsertedBy = new HashSet<FreightProof>();
-            FreightProofUpdatedBy = new HashSet<FreightProof>();
-            FreightStateInsertedBy = new HashSet<FreightState>();
-            FreightStateUpdatedBy = new HashSet<FreightState>();
-            GroupRoleInsertedBy = new HashSet<GroupRole>();
-            GroupRoleUpdatedBy = new HashSet<GroupRole>();
+            DepartmentUpdatedByNavigation = new HashSet<Department>();
+            EntityInsertedByNavigation = new HashSet<Entity>();
+            EntityPolicyInsertedByNavigation = new HashSet<EntityPolicy>();
+            EntityPolicyUpdatedByNavigation = new HashSet<EntityPolicy>();
+            EntityUpdatedByNavigation = new HashSet<Entity>();
+            Feature = new HashSet<Feature>();
+            FieldInsertedByNavigation = new HashSet<Field>();
+            FieldUpdatedByNavigation = new HashSet<Field>();
+            FreightBalanceInsertedByNavigation = new HashSet<FreightBalance>();
+            FreightBalanceUpdatedByNavigation = new HashSet<FreightBalance>();
+            FreightHistoryInsertedByNavigation = new HashSet<FreightHistory>();
+            FreightHistoryUpdatedByNavigation = new HashSet<FreightHistory>();
+            FreightProofInsertedByNavigation = new HashSet<FreightProof>();
+            FreightProofUpdatedByNavigation = new HashSet<FreightProof>();
+            FreightStateInsertedByNavigation = new HashSet<FreightState>();
+            FreightStateUpdatedByNavigation = new HashSet<FreightState>();
+            GroupMemberInsertedByNavigation = new HashSet<GroupMember>();
+            GroupMemberUpdatedByNavigation = new HashSet<GroupMember>();
+            GroupRoleInsertedByNavigation = new HashSet<GroupRole>();
+            GroupRoleUpdatedByNavigation = new HashSet<GroupRole>();
+            InverseInsertedByNavigation = new HashSet<User>();
+            InverseSupervisor = new HashSet<User>();
+            InverseUpdatedByNavigation = new HashSet<User>();
             MaintenanceTicketAssignee = new HashSet<MaintenanceTicket>();
-            MaintenanceTicketInsertedBy = new HashSet<MaintenanceTicket>();
-            MaintenanceTicketUpdatedBy = new HashSet<MaintenanceTicket>();
-            NationalityInsertedBy = new HashSet<Nationality>();
-            Order = new HashSet<Order>();
-            OrderUpdatedBy = new HashSet<Order>();
-            OrderDetail = new HashSet<OrderDetail>();
-            OrderDetailUpdatedBy = new HashSet<OrderDetail>();
-            PaymentApprovalConfig = new HashSet<PaymentApprovalConfig>();
-            PaymentApprovalConfigInsertedBy = new HashSet<PaymentApprovalConfig>();
-            PaymentApprovalConfigUpdated = new HashSet<PaymentApprovalConfig>();
-            QuotationInsertdBy = new HashSet<Quotation>();
-            QuotationUpdatedBy = new HashSet<Quotation>();
-            RightByGroupInsertedBy = new HashSet<RightByGroup>();
-            RightByGroupUpdated = new HashSet<RightByGroup>();
-            RightByRoleInsertedBy = new HashSet<RightByRole>();
-            RightByRoleUpdatedBy = new HashSet<RightByRole>();
-            RightByUserUpdatedBy = new HashSet<RightByUser>();
-            UserRight = new HashSet<RightByUser>();
-            RightByUserInserted = new HashSet<RightByUser>();
-            SurchargeInsertedBy = new HashSet<Surcharge>();
-            TerminalUpdated = new HashSet<Terminal>();
-            TicketStateInsertedBy = new HashSet<TicketState>();
-            TicketStateUpdatedBy = new HashSet<TicketState>();
-            TimeboxInsertedBy = new HashSet<Timebox>();
-            TimeboxUpdatedBy = new HashSet<Timebox>();
-            TruckMaintenanceAccountable = new HashSet<TruckMaintenance>();
-            TruckMaintenanceInsertedBy = new HashSet<TruckMaintenance>();
-            TruckMaintenanceUpdatedBY = new HashSet<TruckMaintenance>();
-            TruckMaintenanceDetailInsertedBy = new HashSet<TruckMaintenanceDetail>();
-            TruckMaintenanceDetailUpdatedBy = new HashSet<TruckMaintenanceDetail>();
-            TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
-            TruckMonitorConfigInsertedBy = new HashSet<TruckMonitorConfig>();
-            TruckMonitorConfigUpdatedBy = new HashSet<TruckMonitorConfig>();
-            UserInsertedBy = new HashSet<User>();
-            UserUpdatedBy = new HashSet<User>();
-            UserBalance = new HashSet<UserBalance>();
-            UserBalanceInsertedBy = new HashSet<UserBalance>();
-            UserBalanceUpdatedBy = new HashSet<UserBalance>();
-            VendorTypeInsertedBy = new HashSet<VendorType>();
-            VendorTypeUpdatedBy = new HashSet<VendorType>();
-            VolumeRangeInsertedBy = new HashSet<VolumeRange>();
-            VolumeRangeUpdatedBy = new HashSet<VolumeRange>();
-            WeightRangeInsertedBy = new HashSet<WeightRange>();
-            WeightRangeUpdatedBy = new HashSet<WeightRange>();
+            MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
+            MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
+            NationalityUpdatedByNavigation = new HashSet<Nationality>();
+            OrderDetailInsertedByNavigation = new HashSet<OrderDetail>();
+            OrderDetailUpdatedByNavigation = new HashSet<OrderDetail>();
+            OrderInsertedByNavigation = new HashSet<Order>();
+            OrderUpdatedByNavigation = new HashSet<Order>();
+            PaymentApprovalConfigInsertedByNavigation = new HashSet<PaymentApprovalConfig>();
+            PaymentApprovalConfigUpdatedByNavigation = new HashSet<PaymentApprovalConfig>();
+            PaymentApprovalConfigUser = new HashSet<PaymentApprovalConfig>();
+            QuotationInsertedByNavigation = new HashSet<Quotation>();
+            QuotationUpdatedByNavigation = new HashSet<Quotation>();
+            SurchargeInsertedByNavigation = new HashSet<Surcharge>();
+            TerminalUpdatedByNavigation = new HashSet<Terminal>();
+            TicketStateInsertedByNavigation = new HashSet<TicketState>();
+            TicketStateUpdatedByNavigation = new HashSet<TicketState>();
+            TimeboxInsertedByNavigation = new HashSet<Timebox>();
+            TimeboxUpdatedByNavigation = new HashSet<Timebox>();
+            TruckMaintenanceAccountableUser = new HashSet<TruckMaintenance>();
+            TruckMaintenanceDetailInsertedByNavigation = new HashSet<TruckMaintenanceDetail>();
+            TruckMaintenanceDetailUpdatedByNavigation = new HashSet<TruckMaintenanceDetail>();
+            TruckMaintenanceInsertedByNavigation = new HashSet<TruckMaintenance>();
+            TruckMaintenanceUpdatedByNavigation = new HashSet<TruckMaintenance>();
+            TruckMonitorConfigInsertedByNavigation = new HashSet<TruckMonitorConfig>();
+            TruckMonitorConfigUpdatedByNavigation = new HashSet<TruckMonitorConfig>();
+            TruckMonitorConfigUser = new HashSet<TruckMonitorConfig>();
+            UserBalanceInsertedByNavigation = new HashSet<UserBalance>();
+            UserBalanceUpdatedByNavigation = new HashSet<UserBalance>();
+            UserBalanceUser = new HashSet<UserBalance>();
+            UserInterfaceInsertedByNavigation = new HashSet<UserInterface>();
+            UserInterfaceUpdatedByNavigation = new HashSet<UserInterface>();
+            VendorTypeInsertedByNavigation = new HashSet<VendorType>();
+            VendorTypeUpdatedByNavigation = new HashSet<VendorType>();
+            VolumeRangeInsertedByNavigation = new HashSet<VolumeRange>();
+            VolumeRangeUpdatedByNavigation = new HashSet<VolumeRange>();
+            WeightRangeInsertedByNavigation = new HashSet<WeightRange>();
+            WeightRangeUpdatedByNavigation = new HashSet<WeightRange>();
         }
 
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(50)]
         public string FirstName { get; set; }
-
-        [Required]
-        [StringLength(100)]
         public string LastName { get; set; }
-
-        [NotMapped]
-        public string Name => FirstName + " " + LastName;
-
-        [Column(TypeName = "datetime2")]
         public DateTime DoB { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string SSN { get; set; }
-
-        [StringLength(50)]
+        public string Ssn { get; set; }
         public string Passport { get; set; }
-
-        [Required]
-        [StringLength(200)]
         public string Address { get; set; }
-
-        [StringLength(200)]
         public string Address2 { get; set; }
-
-        [Required]
-        [StringLength(50)]
         public string PhoneNumber { get; set; }
-
-        [StringLength(50)]
         public string PhoneNumber2 { get; set; }
-
-        public int NationalityId { get; set; }
-
+        public int? NationalityId { get; set; }
+        public int? ContractId { get; set; }
+        public int? DepartmentId { get; set; }
+        public int? RoleId { get; set; }
+        public bool Active { get; set; }
+        public DateTime InsertedDate { get; set; }
+        public int? InsertedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public int? UpdatedBy { get; set; }
         public int? SupervisorId { get; set; }
 
-        public int? DepartmentId { get; set; }
-
-        public int? RoleId { get; set; }
-
-        public bool Active { get; set; }
-
-        [Column(TypeName = "datetime2")]
-        public DateTime InsertedDate { get; set; }
-
-        public int? InsertedBy { get; set; }
-
-        [Column(TypeName = "datetime2")]
-        public DateTime? UpdatedDate { get; set; }
-
-        public int? UpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Accessory> AccessoryInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Accessory> AccessoryUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<CommodityType> CommodityTypeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<CommodityType> CommodityTypeUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Container> ContainerInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Container> ContainerUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<ContainerMonitorConfig> AssignedContainerMonitorConfig { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<ContainerType> ContainerTypeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<ContainerType> ContainerTypeUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Contract> Contract { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Contract> ContractInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Contract> ContractUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Coordination> Coordination { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Coordination> CoordinationInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Coordination> CoordinationUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Customer> CustomerInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Customer> CustomerUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Department> DepartmentLeader { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Department> DepartmentInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Department> DepartmentUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual User Supervisor { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<User> Reporter { get; set; }
-
-        [JsonIgnore]
+        public virtual Contract Contract { get; set; }
         public virtual Department Department { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Feature> FeatureInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightBalance> FreightBalance { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightBalance> FreightBalanceUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightHistory> FreightHistoryInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightHistory> FreightHistoryUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightProof> FreightProofInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightProof> FreightProofUpdatedBy { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<FreightState> FreightStateInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<FreightState> FreightStateUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<GroupRole> GroupRoleInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<GroupRole> GroupRoleUpdatedBy { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Nationality> NationalityInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Nationality> NationalityUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Order> Order { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Order> OrderUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetailUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUpdated { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Quotation> QuotationInsertdBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Quotation> QuotationUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<RightByGroup> RightByGroupInsertedBy { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<RightByGroup> RightByGroupUpdated { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<RightByRole> RightByRoleInsertedBy { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<RightByRole> RightByRoleUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<RightByUser> RightByUserUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<RightByUser> UserRight { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<RightByUser> RightByUserInserted { get; set; }
-
-        [JsonIgnore]
+        public virtual User InsertedByNavigation { get; set; }
+        public virtual Nationality Nationality { get; set; }
         public virtual Role Role { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Surcharge> SurchargeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Surcharge> SurchargeUpdated { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Terminal> TerminalInserted { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Terminal> TerminalUpdated { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TicketState> TicketStateInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TicketState> TicketStateUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Timebox> TimeboxInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<Timebox> TimeboxUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountable { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMaintenance> TruckMaintenanceInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMaintenance> TruckMaintenanceUpdatedBY { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<User> UserInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual User UserInserted { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<User> UserUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual User UserUpdated { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<UserBalance> UserBalance { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<UserBalance> UserBalanceInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<UserBalance> UserBalanceUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<VendorType> VendorTypeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<VendorType> VendorTypeUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<VolumeRange> VolumeRangeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<VolumeRange> VolumeRangeUpdatedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<WeightRange> WeightRangeInsertedBy { get; set; }
-
-        [JsonIgnore]
-        public virtual ICollection<WeightRange> WeightRangeUpdatedBy { get; set; }
+        public virtual User Supervisor { get; set; }
+        public virtual User UpdatedByNavigation { get; set; }
+        public virtual Nationality NationalityIdNavigation { get; set; }
+        public virtual Surcharge SurchargeIdNavigation { get; set; }
+        public virtual Terminal TerminalIdNavigation { get; set; }
+        public virtual ICollection<Accessory> AccessoryInsertedByNavigation { get; set; }
+        public virtual ICollection<Accessory> AccessoryUpdatedByNavigation { get; set; }
+        public virtual ICollection<CommodityType> CommodityTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
+        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigAssignee { get; set; }
+        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigInsertedByNavigation { get; set; }
+        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfigUpdatedByNavigation { get; set; }
+        public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<Container> ContainerUpdatedByNavigation { get; set; }
+        public virtual ICollection<Contract> ContractInsertedByNavigation { get; set; }
+        public virtual ICollection<Contract> ContractUpdatedByNavigation { get; set; }
+        public virtual ICollection<Contract> ContractUser { get; set; }
+        public virtual ICollection<Coordination> CoordinationDriver { get; set; }
+        public virtual ICollection<Coordination> CoordinationInsertedByNavigation { get; set; }
+        public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
+        public virtual ICollection<Customer> CustomerInsertedByNavigation { get; set; }
+        public virtual ICollection<Customer> CustomerUpdatedByNavigation { get; set; }
+        public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
+        public virtual ICollection<Department> DepartmentLeader { get; set; }
+        public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }
+        public virtual ICollection<Entity> EntityInsertedByNavigation { get; set; }
+        public virtual ICollection<EntityPolicy> EntityPolicyInsertedByNavigation { get; set; }
+        public virtual ICollection<EntityPolicy> EntityPolicyUpdatedByNavigation { get; set; }
+        public virtual ICollection<Entity> EntityUpdatedByNavigation { get; set; }
+        public virtual ICollection<Feature> Feature { get; set; }
+        public virtual ICollection<Field> FieldInsertedByNavigation { get; set; }
+        public virtual ICollection<Field> FieldUpdatedByNavigation { get; set; }
+        public virtual ICollection<FreightBalance> FreightBalanceInsertedByNavigation { get; set; }
+        public virtual ICollection<FreightBalance> FreightBalanceUpdatedByNavigation { get; set; }
+        public virtual ICollection<FreightHistory> FreightHistoryInsertedByNavigation { get; set; }
+        public virtual ICollection<FreightHistory> FreightHistoryUpdatedByNavigation { get; set; }
+        public virtual ICollection<FreightProof> FreightProofInsertedByNavigation { get; set; }
+        public virtual ICollection<FreightProof> FreightProofUpdatedByNavigation { get; set; }
+        public virtual ICollection<FreightState> FreightStateInsertedByNavigation { get; set; }
+        public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
+        public virtual ICollection<GroupMember> GroupMemberInsertedByNavigation { get; set; }
+        public virtual ICollection<GroupMember> GroupMemberUpdatedByNavigation { get; set; }
+        public virtual ICollection<GroupRole> GroupRoleInsertedByNavigation { get; set; }
+        public virtual ICollection<GroupRole> GroupRoleUpdatedByNavigation { get; set; }
+        public virtual ICollection<User> InverseInsertedByNavigation { get; set; }
+        public virtual ICollection<User> InverseSupervisor { get; set; }
+        public virtual ICollection<User> InverseUpdatedByNavigation { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
+        public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
+        public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailInsertedByNavigation { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailUpdatedByNavigation { get; set; }
+        public virtual ICollection<Order> OrderInsertedByNavigation { get; set; }
+        public virtual ICollection<Order> OrderUpdatedByNavigation { get; set; }
+        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigInsertedByNavigation { get; set; }
+        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUpdatedByNavigation { get; set; }
+        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfigUser { get; set; }
+        public virtual ICollection<Quotation> QuotationInsertedByNavigation { get; set; }
+        public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
+        public virtual ICollection<Surcharge> SurchargeInsertedByNavigation { get; set; }
+        public virtual ICollection<Terminal> TerminalUpdatedByNavigation { get; set; }
+        public virtual ICollection<TicketState> TicketStateInsertedByNavigation { get; set; }
+        public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }
+        public virtual ICollection<Timebox> TimeboxInsertedByNavigation { get; set; }
+        public virtual ICollection<Timebox> TimeboxUpdatedByNavigation { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountableUser { get; set; }
+        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailInsertedByNavigation { get; set; }
+        public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailUpdatedByNavigation { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceInsertedByNavigation { get; set; }
+        public virtual ICollection<TruckMaintenance> TruckMaintenanceUpdatedByNavigation { get; set; }
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigInsertedByNavigation { get; set; }
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedByNavigation { get; set; }
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUser { get; set; }
+        public virtual ICollection<UserBalance> UserBalanceInsertedByNavigation { get; set; }
+        public virtual ICollection<UserBalance> UserBalanceUpdatedByNavigation { get; set; }
+        public virtual ICollection<UserBalance> UserBalanceUser { get; set; }
+        public virtual ICollection<UserInterface> UserInterfaceInsertedByNavigation { get; set; }
+        public virtual ICollection<UserInterface> UserInterfaceUpdatedByNavigation { get; set; }
+        public virtual ICollection<VendorType> VendorTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<VendorType> VendorTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<VolumeRange> VolumeRangeInsertedByNavigation { get; set; }
+        public virtual ICollection<VolumeRange> VolumeRangeUpdatedByNavigation { get; set; }
+        public virtual ICollection<WeightRange> WeightRangeInsertedByNavigation { get; set; }
+        public virtual ICollection<WeightRange> WeightRangeUpdatedByNavigation { get; set; }
     }
 }
