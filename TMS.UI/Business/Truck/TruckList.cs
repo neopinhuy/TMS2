@@ -15,11 +15,10 @@ namespace TMS.UI.Business.TruckManagement
         public ObservableArray<Header<Truck>> TruckHeader = new ObservableArray<Header<Truck>>();
         public ObservableArray<Truck> TruckData = new ObservableArray<Truck>();
         public Observable<string> TruckPlate = new Observable<string>();
-        public ObservableArray<FreightState> FreightState = new ObservableArray<FreightState>();
-        public Observable<int?> FreightStateId = new Observable<int?>();
         public Observable<string> BrandName = new Observable<string>();
         public Observable<string> Version = new Observable<string>();
         public Observable<int?> VendorId = new Observable<int?>();
+        public Observable<int?> TruckTypeId = new Observable<int?>();
         public Observable<decimal?> Price = new Observable<decimal?>();
         public Observable<string> Currency = new Observable<string>();
         public Observable<DateTime?> ActiveDate = new Observable<DateTime?>();
@@ -33,9 +32,8 @@ namespace TMS.UI.Business.TruckManagement
             {
                 new Header<Truck> { EditEvent = EditTruck },
                 new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { HeaderText = "Freight state", FieldName = "FreightStateId", Sortable = true, Reference = typeof(FreightState) },
                 new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
-                new Header<Truck> { HeaderText = "Version", FieldName = "Version", Sortable = true },
+                new Header<Truck> { HeaderText = "Model", FieldName = "Model", Sortable = true },
                 new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true, Reference = typeof(Vendor) },
                 new Header<Truck> { HeaderText = "Long", FieldName = "Long", TextAlign = TextAlign.right, Sortable = true },
                 new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", TextAlign = TextAlign.right, Sortable = true },
@@ -63,9 +61,8 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Id = TruckId,
                 TruckPlate = TruckPlate.Data,
-                FreightStateId = FreightStateId.Data ?? 0,
                 BrandName = BrandName.Data,
-                Version = Version.Data,
+                Model = Version.Data,
                 VendorId = VendorId.Data ?? 0,
                 Price = Price.Data ?? 0,
                 Currency = Currency.Data,
@@ -95,8 +92,6 @@ namespace TMS.UI.Business.TruckManagement
         {
             TruckId = 0;
             TruckPlate.Data = null;
-            FreightStateId.Data = null;
-            FreightStateId.Data = null;
             BrandName.Data = null;
             Version.Data = null;
             VendorId.Data = null;
@@ -111,9 +106,8 @@ namespace TMS.UI.Business.TruckManagement
         {
             TruckId = truck.Id;
             TruckPlate.Data = truck.TruckPlate;
-            FreightStateId.Data = truck.FreightStateId;
             BrandName.Data = truck.BrandName;
-            Version.Data = truck.Version;
+            Version.Data = truck.Model;
             VendorId.Data = truck.VendorId;
             Price.Data = truck.Price;
             Currency.Data = truck.Currency;

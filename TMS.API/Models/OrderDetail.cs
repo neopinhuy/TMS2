@@ -7,14 +7,13 @@ namespace TMS.API.Models
     {
         public OrderDetail()
         {
-            Coordination = new HashSet<Coordination>();
+            OrderComposition = new HashSet<OrderComposition>();
             Surcharge = new HashSet<Surcharge>();
         }
 
         public int Id { get; set; }
         public int OrderId { get; set; }
         public bool IsContainer { get; set; }
-        public int? TotalContainer { get; set; }
         public int? ContainerTypeId { get; set; }
         public int? VendorId { get; set; }
         public int CommodityTypeId { get; set; }
@@ -33,10 +32,11 @@ namespace TMS.API.Models
         public virtual CommodityType CommodityType { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }
+        public virtual Quotation Quotation { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual ICollection<Coordination> Coordination { get; set; }
+        public virtual ICollection<OrderComposition> OrderComposition { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
     }
 }

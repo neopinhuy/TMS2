@@ -14,6 +14,7 @@ namespace TMS.API.Models
         public int EntityId { get; set; }
         public string FieldName { get; set; }
         public string ColumnType { get; set; }
+        public bool AllowNull { get; set; }
         public int? ReferenceId { get; set; }
         public string RefValueField { get; set; }
         public string RefDisplayFields { get; set; }

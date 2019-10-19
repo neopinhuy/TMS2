@@ -7,7 +7,8 @@ namespace TMS.API.Models
     {
         public int Id { get; set; }
         public int ApproverId { get; set; }
-        public int AdvancePaymentId { get; set; }
+        public int LedgerId { get; set; }
+        public bool Approved { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

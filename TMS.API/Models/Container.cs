@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Container()
         {
-            ContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
             Coordination = new HashSet<Coordination>();
             MaintenanceTicket = new HashSet<MaintenanceTicket>();
         }
@@ -19,11 +18,11 @@ namespace TMS.API.Models
         public string Status { get; set; }
         public string Description { get; set; }
         public int FreightStateId { get; set; }
-        public DateTime UsedDate { get; set; }
-        public DateTime ExpiredDate { get; set; }
-        public TimeSpan MaintenancePeriod { get; set; }
-        public DateTime NextMaintenanceDate { get; set; }
-        public bool IsMaintaining { get; set; }
+        public DateTime RentDate { get; set; }
+        public DateTime EndRentDate { get; set; }
+        public double Price { get; set; }
+        public string Currency { get; set; }
+        public bool InUse { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -34,7 +33,6 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfig { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
     }

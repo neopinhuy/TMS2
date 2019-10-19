@@ -5,6 +5,11 @@ namespace TMS.API.Models
 {
     public partial class Quotation
     {
+        public Quotation()
+        {
+            OrderDetail = new HashSet<OrderDetail>();
+        }
+
         public int Id { get; set; }
         public int? CustomerId { get; set; }
         public int? CustomerGroupId { get; set; }
@@ -40,5 +45,6 @@ namespace TMS.API.Models
         public virtual Vendor Vendor { get; set; }
         public virtual VolumeRange VolumeRange { get; set; }
         public virtual WeightRange WeightRange { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
