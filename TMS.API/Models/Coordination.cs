@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -7,13 +8,11 @@ namespace TMS.API.Models
     {
         public Coordination()
         {
-            FreightBalance = new HashSet<FreightBalance>();
             FreightHistory = new HashSet<FreightHistory>();
-            UserBalance = new HashSet<UserBalance>();
+            OrderComposition = new HashSet<OrderComposition>();
         }
 
         public int Id { get; set; }
-        public int OrderDetailId { get; set; }
         public int TruckId { get; set; }
         public int DriverId { get; set; }
         public int FromId { get; set; }
@@ -27,17 +26,34 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        [JsonIgnore]
         public virtual Container Container { get; set; }
+        
+        [JsonIgnore]
         public virtual User Driver { get; set; }
+        
+        [JsonIgnore]
         public virtual FreightState FreightState { get; set; }
+        
+        [JsonIgnore]
         public virtual Terminal From { get; set; }
+        
+        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
-        public virtual OrderDetail OrderDetail { get; set; }
+        
+        [JsonIgnore]
         public virtual Terminal To { get; set; }
+        
+        [JsonIgnore]
         public virtual Truck Truck { get; set; }
+        
+        [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<FreightBalance> FreightBalance { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
-        public virtual ICollection<UserBalance> UserBalance { get; set; }
+        
+        [JsonIgnore]
+        public virtual ICollection<OrderComposition> OrderComposition { get; set; }
     }
 }

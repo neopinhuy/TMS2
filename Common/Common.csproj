@@ -39,14 +39,20 @@
     <Compile Include="..\TMS.API\Models\Accessory.cs">
       <Link>Models\Accessory.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Action.cs">
+      <Link>Models\Action.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\ActionPolicy.cs">
+      <Link>Models\ActionPolicy.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\ComponentDesc.cs">
+      <Link>Models\ComponentDesc.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Container.cs">
       <Link>Models\Container.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\ContainerMaintenance.cs">
-      <Link>Models\ContainerMaintenance.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\ContainerMonitorConfig.cs">
       <Link>Models\ContainerMonitorConfig.cs</Link>
@@ -78,6 +84,9 @@
     <Compile Include="..\TMS.API\Models\Feature.cs">
       <Link>Models\Feature.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\FeaturePolicy.cs">
+      <Link>Models\FeaturePolicy.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Field.cs">
       <Link>Models\Field.cs</Link>
     </Compile>
@@ -93,11 +102,17 @@
     <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\FuelType.cs">
+      <Link>Models\FuelType.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\GroupMember.cs">
       <Link>Models\GroupMember.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\GroupRole.cs">
       <Link>Models\GroupRole.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\Ledger.cs">
+      <Link>Models\Ledger.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\MaintenanceTicket.cs">
       <Link>Models\MaintenanceTicket.cs</Link>
@@ -108,17 +123,23 @@
     <Compile Include="..\TMS.API\Models\Objective.cs">
       <Link>Models\Objective.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\OperationType.cs">
+      <Link>Models\OperationType.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Order.cs">
       <Link>Models\Order.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\OrderComposition.cs">
+      <Link>Models\OrderComposition.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\OrderDetail.cs">
       <Link>Models\OrderDetail.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\PaymentApproval.cs">
-      <Link>Models\PaymentApproval.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\PaymentApprovalConfig.cs">
       <Link>Models\PaymentApprovalConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\PaymentPolicy.cs">
+      <Link>Models\PaymentPolicy.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Policy.cs">
       <Link>Models\Policy.cs</Link>
@@ -128,6 +149,9 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\Role.cs">
       <Link>Models\Role.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\StatePolicy.cs">
+      <Link>Models\StatePolicy.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Surcharge.cs">
       <Link>Models\Surcharge.cs</Link>
@@ -141,6 +165,12 @@
     <Compile Include="..\TMS.API\Models\Timebox.cs">
       <Link>Models\Timebox.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Transition.cs">
+      <Link>Models\Transition.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\TransitionAction.cs">
+      <Link>Models\TransitionAction.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Truck.cs">
       <Link>Models\Truck.cs</Link>
     </Compile>
@@ -152,6 +182,9 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\TruckMonitorConfig.cs">
       <Link>Models\TruckMonitorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\TruckType.cs">
+      <Link>Models\TruckType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\User.cs">
       <Link>Models\User.cs</Link>
@@ -174,12 +207,15 @@
     <Compile Include="..\TMS.API\Models\WeightRange.cs">
       <Link>Models\WeightRange.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Workflow.cs">
+      <Link>Models\Workflow.cs</Link>
+    </Compile>
     <Compile Include="Extensions\HtmlElement.cs" />
     <Compile Include="Extensions\Util.cs" />
     <Compile Include="Clients\BaseClient.cs" />
     <Compile Include="Clients\IRestful.cs" />
-    <Compile Include="Models\SaleLeaderBoardDataPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaleLeaderBoardDataPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bridge.json" />

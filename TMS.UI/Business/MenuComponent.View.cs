@@ -3,28 +3,55 @@ using Components;
 using MVVM;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using TMS.API.Models;
 
 namespace TMS.UI.Business
 {
     public partial class MenuComponent : Component
     {
+        private void BuildFeatureTree()
+        {
+            var dic = _feature.ToDictionary(x => x.Id);
+            var root = _feature.First(x => x.ParentId == null);
+            foreach (var item in _feature)
+            {
+                if (item.ParentId != null)
+                {
+                    var parent = dic[item.ParentId.Value];
+                    if (parent.Children is null)
+                    {
+                        parent.Children = new List<Feature>();
+                    }
+                    else
+                    {
+                        parent.Children.Add(item);
+                    }
+                }
+            }
+            _feature = _feature.Where(x => x.ParentId == null).ToList();
+        }
+
         public override async Task RenderAsync()
         {
+            _masterData = await MasterData.GetSingletonAsync();
+            _feature = _masterData.Feature.ToList();
+            BuildFeatureTree();
             Html.Take(".sidebar-wrapper");
-            RenderMenuItems(MenuItems);
+            RenderMenuItems(_feature);
             Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
         }
 
-        private void RenderMenuItems(List<MenuItem> menuItems)
+        private void RenderMenuItems(List<Feature> menuItems)
         {
             Html.Instance.Ul.ForEach(menuItems, (item, index) =>
             {
-                if (item.IsGroup)
+                if (item.IsGroup.HasValue && item.IsGroup.Value)
                 {
-                    Html.Instance.Li.ClassName("group-title").Text(item.ItemText).End.Render();
+                    Html.Instance.Li.ClassName("group-title").Text(item.Name).End.Render();
                 }
-                else if (item.IsDevider)
+                else if (item.IsDevider.HasValue && item.IsDevider.Value)
                 {
                     Html.Instance.Li.ClassName("divider").End.Render();
                 }
@@ -35,17 +62,17 @@ namespace TMS.UI.Business
                     {
                         await MenuItemClick(menu, e);
                     }, item)
-                    .Span.ClassName("icon " + item.IconClass).End
-                    .Text(item.ItemText).EndOf(MVVM.ElementType.a).Render();
-                    if (item.MenuItems != null && item.MenuItems.Count > 0)
+                    .Span.ClassName("icon " + item.Icon).End
+                    .Text(item.Name).EndOf(MVVM.ElementType.a).Render();
+                    if (item.Children != null && item.Children.Count > 0)
                     {
-                        RenderMenuItems(item.MenuItems);
+                        RenderMenuItems(item.Children.ToList());
                     }
                 }
             });
         }
 
-        private static async Task MenuItemClick(MenuItem menu, Event e)
+        private static async Task MenuItemClick(Feature menu, Event e)
         {
             var li = e.Target as HTMLElement;
             var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
@@ -60,9 +87,10 @@ namespace TMS.UI.Business
             }
             string className = li.ParentElement.ClassName + " active";
             li.ParentElement.ClassName = className.Trim();
-            if (menu.LinkedComponent != null)
+            if (menu.ViewClass != null)
             {
-                var instance = Activator.CreateInstance(menu.LinkedComponent) as TabComponent;
+                var type = Type.GetType(menu.ViewClass);
+                var instance = Activator.CreateInstance(type) as TabComponent;
                 await instance.RenderAsync();
                 instance.Focus();
             }

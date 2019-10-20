@@ -4,17 +4,11 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class CustomerGroup
+    public partial class PaymentPolicy
     {
-        public CustomerGroup()
-        {
-            Customer = new HashSet<Customer>();
-            Quotation = new HashSet<Quotation>();
-        }
-
         public int Id { get; set; }
-        public string GroupName { get; set; }
-        public string Description { get; set; }
+        public int? PolicyId { get; set; }
+        public double MaxApproval { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -22,9 +16,12 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Customer> Customer { get; set; }
+        public virtual User InsertedByNavigation { get; set; }
         
         [JsonIgnore]
-        public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual Policy Policy { get; set; }
+        
+        [JsonIgnore]
+        public virtual User UpdatedByNavigation { get; set; }
     }
 }

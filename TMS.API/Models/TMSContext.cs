@@ -16,10 +16,11 @@ namespace TMS.API.Models
         }
 
         public virtual DbSet<Accessory> Accessory { get; set; }
+        public virtual DbSet<Action> Action { get; set; }
+        public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
         public virtual DbSet<CommodityType> CommodityType { get; set; }
+        public virtual DbSet<ComponentDesc> ComponentDesc { get; set; }
         public virtual DbSet<Container> Container { get; set; }
-        public virtual DbSet<ContainerMaintenance> ContainerMaintenance { get; set; }
-        public virtual DbSet<ContainerMonitorConfig> ContainerMonitorConfig { get; set; }
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
@@ -31,44 +32,50 @@ namespace TMS.API.Models
         public virtual DbSet<Feature> Feature { get; set; }
         public virtual DbSet<FeaturePolicy> FeaturePolicy { get; set; }
         public virtual DbSet<Field> Field { get; set; }
-        public virtual DbSet<FreightBalance> FreightBalance { get; set; }
         public virtual DbSet<FreightHistory> FreightHistory { get; set; }
         public virtual DbSet<FreightProof> FreightProof { get; set; }
         public virtual DbSet<FreightState> FreightState { get; set; }
+        public virtual DbSet<FuelType> FuelType { get; set; }
         public virtual DbSet<GroupMember> GroupMember { get; set; }
         public virtual DbSet<GroupRole> GroupRole { get; set; }
+        public virtual DbSet<Ledger> Ledger { get; set; }
         public virtual DbSet<MaintenanceTicket> MaintenanceTicket { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Objective> Objective { get; set; }
+        public virtual DbSet<OperationType> OperationType { get; set; }
         public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderComposition> OrderComposition { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
-        public virtual DbSet<PaymentApproval> PaymentApproval { get; set; }
-        public virtual DbSet<PaymentApprovalConfig> PaymentApprovalConfig { get; set; }
+        public virtual DbSet<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual DbSet<Policy> Policy { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<StatePolicy> StatePolicy { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
         public virtual DbSet<TicketState> TicketState { get; set; }
         public virtual DbSet<Timebox> Timebox { get; set; }
+        public virtual DbSet<Transition> Transition { get; set; }
+        public virtual DbSet<TransitionAction> TransitionAction { get; set; }
         public virtual DbSet<Truck> Truck { get; set; }
         public virtual DbSet<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual DbSet<TruckMaintenanceDetail> TruckMaintenanceDetail { get; set; }
         public virtual DbSet<TruckMonitorConfig> TruckMonitorConfig { get; set; }
+        public virtual DbSet<TruckType> TruckType { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserBalance> UserBalance { get; set; }
         public virtual DbSet<UserInterface> UserInterface { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<VendorType> VendorType { get; set; }
         public virtual DbSet<VolumeRange> VolumeRange { get; set; }
         public virtual DbSet<WeightRange> WeightRange { get; set; }
+        public virtual DbSet<Workflow> Workflow { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=TMS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=TMS;Trusted_Connection=True;");
             }
         }
 
@@ -116,6 +123,50 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Accessary_Vendor");
             });
 
+            modelBuilder.Entity<Action>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ActionInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Action_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ActionUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Action_UserUpdated");
+            });
+
+            modelBuilder.Entity<ActionPolicy>(entity =>
+            {
+                entity.HasOne(d => d.Action)
+                    .WithMany(p => p.ActionPolicy)
+                    .HasForeignKey(d => d.ActionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActionPolicy_Action");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ActionPolicyInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActionPolicy_UserInserted");
+
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.ActionPolicy)
+                    .HasForeignKey(d => d.PolicyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ActionPolicy_Policy");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ActionPolicyUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_ActionPolicy_User");
+            });
+
             modelBuilder.Entity<CommodityType>(entity =>
             {
                 entity.Property(e => e.Description)
@@ -138,11 +189,26 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_CommodityType_UserUpdated");
             });
 
+            modelBuilder.Entity<ComponentDesc>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Container>(entity =>
             {
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Currency)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description)
@@ -175,53 +241,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.VendorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Container_Vendor");
-            });
-
-            modelBuilder.Entity<ContainerMaintenance>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.AdvancedPaid).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<ContainerMonitorConfig>(entity =>
-            {
-                entity.HasOne(d => d.Assignee)
-                    .WithMany(p => p.ContainerMonitorConfigAssignee)
-                    .HasForeignKey(d => d.AssigneeId)
-                    .HasConstraintName("FK_ContainerMonitor_Assignee");
-
-                entity.HasOne(d => d.Container)
-                    .WithMany(p => p.ContainerMonitorConfig)
-                    .HasForeignKey(d => d.ContainerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContainerMonitor_Container");
-
-                entity.HasOne(d => d.GroupRole)
-                    .WithMany(p => p.ContainerMonitorConfig)
-                    .HasForeignKey(d => d.GroupRoleId)
-                    .HasConstraintName("FK_ContainerMonitor_GroupRole");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.ContainerMonitorConfigInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContainerMonitor_UserInserted");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.ContainerMonitorConfig)
-                    .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_ContainerMonitor_Role");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.ContainerMonitorConfigUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_ContainerMonitor_UserUpdated");
             });
 
             modelBuilder.Entity<ContainerType>(entity =>
@@ -302,12 +321,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_UserInserted");
-
-                entity.HasOne(d => d.OrderDetail)
-                    .WithMany(p => p.Coordination)
-                    .HasForeignKey(d => d.OrderDetailId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Coordination_OrderDetail");
 
                 entity.HasOne(d => d.To)
                     .WithMany(p => p.CoordinationTo)
@@ -475,15 +488,28 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Description).HasMaxLength(500);
 
-                entity.Property(e => e.FeatureName)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.ViewClass)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.Feature)
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Feature_UserInserted");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.Children)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_Feature_Parent");
             });
 
             modelBuilder.Entity<Field>(entity =>
@@ -527,42 +553,24 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Field_UserUpdated");
             });
 
-            modelBuilder.Entity<FreightBalance>(entity =>
-            {
-                entity.Property(e => e.Curency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Entity)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Coordination)
-                    .WithMany(p => p.FreightBalance)
-                    .HasForeignKey(d => d.CoordinationId)
-                    .HasConstraintName("FK_FreightBalance_Coordination");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FreightBalanceInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightBalance_UserInserted");
-
-                entity.HasOne(d => d.Objective)
-                    .WithMany(p => p.FreightBalance)
-                    .HasForeignKey(d => d.ObjectiveId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightBalance_Objective");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FreightBalanceUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_FreightBalance_UserUpdated");
-            });
-
             modelBuilder.Entity<FreightHistory>(entity =>
             {
+                entity.Property(e => e.Comment)
+                    .IsRequired()
+                    .HasMaxLength(1500);
+
+                entity.HasOne(d => d.Action)
+                    .WithMany(p => p.FreightHistory)
+                    .HasForeignKey(d => d.ActionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FreightHistory_Action");
+
+                entity.HasOne(d => d.Actor)
+                    .WithMany(p => p.FreightHistoryActor)
+                    .HasForeignKey(d => d.ActorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FreightHistory_UserActor");
+
                 entity.HasOne(d => d.Coordinator)
                     .WithMany(p => p.FreightHistory)
                     .HasForeignKey(d => d.CoordinatorId)
@@ -633,18 +641,33 @@ namespace TMS.API.Models
                     .WithMany(p => p.FreightStateUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_FreightState_UserUpdated");
+
+                entity.HasOne(d => d.Workflow)
+                    .WithMany(p => p.FreightState)
+                    .HasForeignKey(d => d.WorkflowId)
+                    .HasConstraintName("FK_FreightState_Workflow");
+            });
+
+            modelBuilder.Entity<FuelType>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.FuelTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FuelType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.FuelTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_FuelType_UserUpdated");
             });
 
             modelBuilder.Entity<GroupMember>(entity =>
             {
-                entity.HasIndex(e => e.GroupRoleId);
-
-                entity.HasIndex(e => e.InsertedBy);
-
-                entity.HasIndex(e => e.RoleId);
-
-                entity.HasIndex(e => e.UpdatedBy);
-
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.HasOne(d => d.GroupRole)
@@ -682,6 +705,49 @@ namespace TMS.API.Models
                     .WithMany(p => p.GroupRoleUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_GroupRole_UserUpdated");
+            });
+
+            modelBuilder.Entity<Ledger>(entity =>
+            {
+                entity.Property(e => e.Curency)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.InvoiceImage).HasMaxLength(1500);
+
+                entity.HasOne(d => d.Approver)
+                    .WithMany(p => p.LedgerApprover)
+                    .HasForeignKey(d => d.ApproverId)
+                    .HasConstraintName("FK_Ledger_UserApprover");
+
+                entity.HasOne(d => d.Entity)
+                    .WithMany(p => p.Ledger)
+                    .HasForeignKey(d => d.EntityId)
+                    .HasConstraintName("FK_Ledger_Entity");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.LedgerInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ledger_UserInserted");
+
+                entity.HasOne(d => d.Objective)
+                    .WithMany(p => p.Ledger)
+                    .HasForeignKey(d => d.ObjectiveId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ledger_Objective");
+
+                entity.HasOne(d => d.OperationType)
+                    .WithMany(p => p.Ledger)
+                    .HasForeignKey(d => d.OperationTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ledger_OperationType");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.LedgerUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Ledger_UserUpdated");
             });
 
             modelBuilder.Entity<MaintenanceTicket>(entity =>
@@ -763,6 +829,13 @@ namespace TMS.API.Models
                     .HasMaxLength(200);
             });
 
+            modelBuilder.Entity<OperationType>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -827,6 +900,24 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Order_UserUpdated");
             });
 
+            modelBuilder.Entity<OrderComposition>(entity =>
+            {
+                entity.HasKey(e => new { e.CoordinationId, e.OrderDetailId })
+                    .HasName("PK_OrderComposition_1");
+
+                entity.HasOne(d => d.Coordination)
+                    .WithMany(p => p.OrderComposition)
+                    .HasForeignKey(d => d.CoordinationId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderComposition_Coordination");
+
+                entity.HasOne(d => d.OrderDetail)
+                    .WithMany(p => p.OrderComposition)
+                    .HasForeignKey(d => d.OrderDetailId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderComposition_OrderDetail");
+            });
+
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.Property(e => e.Currency)
@@ -835,8 +926,6 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.TotalContainer).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Volume).HasDefaultValueSql("((0))");
 
@@ -860,6 +949,11 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Order");
 
+                entity.HasOne(d => d.Quotation)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.QuotationId)
+                    .HasConstraintName("FK_OrderDetail_Quotation");
+
                 entity.HasOne(d => d.Timebox)
                     .WithMany(p => p.OrderDetail)
                     .HasForeignKey(d => d.TimeboxId)
@@ -876,33 +970,23 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_OrderDetail_Vendor");
             });
 
-            modelBuilder.Entity<PaymentApprovalConfig>(entity =>
+            modelBuilder.Entity<PaymentPolicy>(entity =>
             {
-                entity.HasOne(d => d.GroupRole)
-                    .WithMany(p => p.PaymentApprovalConfig)
-                    .HasForeignKey(d => d.GroupRoleId)
-                    .HasConstraintName("FK_ApprovalConfig_GroupRole");
-
                 entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.PaymentApprovalConfigInsertedByNavigation)
+                    .WithMany(p => p.PaymentPolicyInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApprovalConfig_UserInserted");
 
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.PaymentApprovalConfig)
-                    .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_ApprovalConfig_Role");
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.PaymentPolicy)
+                    .HasForeignKey(d => d.PolicyId)
+                    .HasConstraintName("FK_PaymentPolicy_Policy");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.PaymentApprovalConfigUpdatedByNavigation)
+                    .WithMany(p => p.PaymentPolicyUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_ApprovalConfig_UserUpdated");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.PaymentApprovalConfigUser)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_ApprovalConfig_UserApprover");
             });
 
             modelBuilder.Entity<Policy>(entity =>
@@ -1003,6 +1087,32 @@ namespace TMS.API.Models
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<StatePolicy>(entity =>
+            {
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.StatePolicyInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StatePolicy_UserInserted");
+
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.StatePolicy)
+                    .HasForeignKey(d => d.PolicyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StatePolicy_Policy");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.StatePolicy)
+                    .HasForeignKey(d => d.StateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StatePolicy_State");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.StatePolicyUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_StatePolicy_UserUpdated");
             });
 
             modelBuilder.Entity<Surcharge>(entity =>
@@ -1118,14 +1228,79 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Timebox_UserUpdated");
             });
 
+            modelBuilder.Entity<Transition>(entity =>
+            {
+                entity.HasOne(d => d.CurrentState)
+                    .WithMany(p => p.TransitionCurrentState)
+                    .HasForeignKey(d => d.CurrentStateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transition_FreightStateCurrent");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.TransitionInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transition_UserInserted");
+
+                entity.HasOne(d => d.NextState)
+                    .WithMany(p => p.TransitionNextState)
+                    .HasForeignKey(d => d.NextStateId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transition_FreightStateNext");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.TransitionUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Transition_UserUpdated");
+
+                entity.HasOne(d => d.Workflow)
+                    .WithMany(p => p.Transition)
+                    .HasForeignKey(d => d.WorkflowId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Transition_Workflow");
+            });
+
+            modelBuilder.Entity<TransitionAction>(entity =>
+            {
+                entity.HasKey(e => new { e.TransitionId, e.ActionId });
+
+                entity.HasOne(d => d.Action)
+                    .WithMany(p => p.TransitionAction)
+                    .HasForeignKey(d => d.ActionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TransitionAction_Action");
+
+                entity.HasOne(d => d.Transition)
+                    .WithMany(p => p.TransitionAction)
+                    .HasForeignKey(d => d.TransitionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TransitionAction_Transition");
+            });
+
             modelBuilder.Entity<Truck>(entity =>
             {
                 entity.Property(e => e.BrandName)
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.Property(e => e.Color).HasMaxLength(50);
+
                 entity.Property(e => e.Currency)
                     .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Image)
+                    .HasMaxLength(1500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MaxCbm).HasColumnName("MaxCBM");
+
+                entity.Property(e => e.Model).HasMaxLength(50);
+
+                entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.Property(e => e.PlateRenewal)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1136,15 +1311,23 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Version)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.Vin)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.FreightState)
+                entity.Property(e => e.Year)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.FuelType)
                     .WithMany(p => p.Truck)
-                    .HasForeignKey(d => d.FreightStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Truck_FreightState");
+                    .HasForeignKey(d => d.FuelTypeId)
+                    .HasConstraintName("FK_Truck_FuelType");
+
+                entity.HasOne(d => d.TruckType)
+                    .WithMany(p => p.Truck)
+                    .HasForeignKey(d => d.TruckTypeId)
+                    .HasConstraintName("FK_Truck_TruckType");
             });
 
             modelBuilder.Entity<TruckMaintenance>(entity =>
@@ -1229,15 +1412,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<TruckMonitorConfig>(entity =>
             {
-                entity.HasOne(d => d.Accessary)
+                entity.HasOne(d => d.Accessory)
                     .WithMany(p => p.TruckMonitorConfig)
-                    .HasForeignKey(d => d.AccessaryId)
+                    .HasForeignKey(d => d.AccessoryId)
                     .HasConstraintName("FK_TruckMonitor_Accessory");
-
-                entity.HasOne(d => d.GroupRole)
-                    .WithMany(p => p.TruckMonitorConfig)
-                    .HasForeignKey(d => d.GroupRoleId)
-                    .HasConstraintName("FK_TruckMonitor_GroupRole");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.TruckMonitorConfigInsertedByNavigation)
@@ -1245,10 +1423,10 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TruckMonitor_UserInserted");
 
-                entity.HasOne(d => d.Role)
+                entity.HasOne(d => d.Policy)
                     .WithMany(p => p.TruckMonitorConfig)
-                    .HasForeignKey(d => d.RoleId)
-                    .HasConstraintName("FK_TruckMonitor_Role");
+                    .HasForeignKey(d => d.PolicyId)
+                    .HasConstraintName("FK_TruckMonitorConfig_Policy");
 
                 entity.HasOne(d => d.Truck)
                     .WithMany(p => p.TruckMonitorConfig)
@@ -1260,11 +1438,20 @@ namespace TMS.API.Models
                     .WithMany(p => p.TruckMonitorConfigUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_TruckMonitor_UserUpdated");
+            });
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TruckMonitorConfigUser)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_TruckMonitor_User");
+            modelBuilder.Entity<TruckType>(entity =>
+            {
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.TruckTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TruckType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.TruckTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_TruckType_UserUpdated");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -1337,50 +1524,6 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_User_UserUpdated");
             });
 
-            modelBuilder.Entity<UserBalance>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Credit).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Debit).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.InvoiceImage).HasMaxLength(1000);
-
-                entity.HasOne(d => d.Coordinator)
-                    .WithMany(p => p.UserBalance)
-                    .HasForeignKey(d => d.CoordinatorId)
-                    .HasConstraintName("FK_UserBalance_Coordination");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.UserBalanceInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserBalance_UserInserted");
-
-                entity.HasOne(d => d.PaymentObjective)
-                    .WithMany(p => p.UserBalance)
-                    .HasForeignKey(d => d.PaymentObjectiveId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserBalance_Objective");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.UserBalanceUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_UserBalance_UserUpdated");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserBalanceUser)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserBalance_User");
-            });
-
             modelBuilder.Entity<UserInterface>(entity =>
             {
                 entity.Property(e => e.Events).IsUnicode(false);
@@ -1392,6 +1535,12 @@ namespace TMS.API.Models
                 entity.Property(e => e.Renderer)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.ComponentDesc)
+                    .WithMany(p => p.UserInterface)
+                    .HasForeignKey(d => d.ComponentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserInterface_Component");
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.UserInterface)
@@ -1511,6 +1660,29 @@ namespace TMS.API.Models
                     .WithMany(p => p.WeightRangeUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_WeightRange_UserUpdated");
+            });
+
+            modelBuilder.Entity<Workflow>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Description).HasMaxLength(1000);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.HasOne(d => d.IdNavigation)
+                    .WithOne(p => p.WorkflowIdNavigation)
+                    .HasForeignKey<Workflow>(d => d.Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workflow_UserUpdated");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.WorkflowInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Workflow_UserInserted");
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -10,6 +11,7 @@ namespace TMS.API.Models
             EntityPolicy = new HashSet<EntityPolicy>();
             FieldEntity = new HashSet<Field>();
             FieldReference = new HashSet<Field>();
+            Ledger = new HashSet<Ledger>();
         }
 
         public int Id { get; set; }
@@ -20,10 +22,22 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
+        
+        [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<Field> FieldEntity { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<Field> FieldReference { get; set; }
+        
+        [JsonIgnore]
+        public virtual ICollection<Ledger> Ledger { get; set; }
     }
 }

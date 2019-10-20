@@ -4,16 +4,15 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class CustomerGroup
+    public partial class ComponentDesc
     {
-        public CustomerGroup()
+        public ComponentDesc()
         {
-            Customer = new HashSet<Customer>();
-            Quotation = new HashSet<Quotation>();
+            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
-        public string GroupName { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -22,9 +21,6 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Customer> Customer { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

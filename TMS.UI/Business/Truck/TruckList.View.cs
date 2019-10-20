@@ -59,10 +59,10 @@ namespace TMS.UI.Business.TruckManagement
                 .TData.SmallInput(TruckPlate).EndOf(ElementType.td);
 
             Html.Instance.TData.Text("Freight state").End
-                .TData.SearchInput(FreightStateId, new List<Header<FreightState>>
+                .TData.SearchInput(TruckTypeId, new List<Header<TruckType>>
                 {
-                    new Header<FreightState> { FieldName = "Id", HeaderText = "Id" },
-                    new Header<FreightState> { FieldName = "Name", HeaderText = "Name" },
+                    new Header<TruckType> { FieldName = "Id", HeaderText = "Id" },
+                    new Header<TruckType> { FieldName = "Name", HeaderText = "Name" },
                 }).EndOf(ElementType.td)
                 .TData.Text("Band name").End
                 .TData.SmallInput(BrandName).EndOf(ElementType.tr)

@@ -4,16 +4,19 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class ContainerType
+    public partial class Workflow
     {
-        public ContainerType()
+        public Workflow()
         {
-            Quotation = new HashSet<Quotation>();
+            FreightState = new HashSet<FreightState>();
+            Transition = new HashSet<Transition>();
         }
 
         public int Id { get; set; }
-        public string TypeName { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
+        public DateTime? EffectiveDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -21,12 +24,15 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         [JsonIgnore]
+        public virtual User IdNavigation { get; set; }
+        
+        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
         
         [JsonIgnore]
-        public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<FreightState> FreightState { get; set; }
         
         [JsonIgnore]
-        public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<Transition> Transition { get; set; }
     }
 }

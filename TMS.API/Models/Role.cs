@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -7,11 +8,8 @@ namespace TMS.API.Models
     {
         public Role()
         {
-            ContainerMonitorConfig = new HashSet<ContainerMonitorConfig>();
             GroupMember = new HashSet<GroupMember>();
             MaintenanceTicket = new HashSet<MaintenanceTicket>();
-            PaymentApprovalConfig = new HashSet<PaymentApprovalConfig>();
-            TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
             User = new HashSet<User>();
         }
 
@@ -24,11 +22,13 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual ICollection<ContainerMonitorConfig> ContainerMonitorConfig { get; set; }
+        [JsonIgnore]
         public virtual ICollection<GroupMember> GroupMember { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
-        public virtual ICollection<PaymentApprovalConfig> PaymentApprovalConfig { get; set; }
-        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<User> User { get; set; }
     }
 }

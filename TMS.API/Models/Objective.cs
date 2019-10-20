@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -7,8 +8,7 @@ namespace TMS.API.Models
     {
         public Objective()
         {
-            FreightBalance = new HashSet<FreightBalance>();
-            UserBalance = new HashSet<UserBalance>();
+            Ledger = new HashSet<Ledger>();
         }
 
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual ICollection<FreightBalance> FreightBalance { get; set; }
-        public virtual ICollection<UserBalance> UserBalance { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Ledger> Ledger { get; set; }
     }
 }

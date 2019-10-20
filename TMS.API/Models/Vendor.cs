@@ -31,14 +31,19 @@ namespace TMS.API.Models
 
         [JsonIgnore]
         public virtual VendorType VendorType { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<Accessory> Accessory { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<Container> Container { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<Quotation> Quotation { get; set; }
+        
         [JsonIgnore]
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
     }

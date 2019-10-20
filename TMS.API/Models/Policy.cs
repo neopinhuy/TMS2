@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -7,14 +8,17 @@ namespace TMS.API.Models
     {
         public Policy()
         {
+            ActionPolicy = new HashSet<ActionPolicy>();
             EntityPolicy = new HashSet<EntityPolicy>();
+            PaymentPolicy = new HashSet<PaymentPolicy>();
+            StatePolicy = new HashSet<StatePolicy>();
+            TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
             UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public bool? IncludeAll { get; set; }
-        public bool? IncludedOwner { get; set; }
         public string IncludedGroupRole { get; set; }
         public string IncludedUser { get; set; }
         public string ExcludedGroupRole { get; set; }
@@ -26,7 +30,22 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<ActionPolicy> ActionPolicy { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
+        
+        [JsonIgnore]
+        public virtual ICollection<PaymentPolicy> PaymentPolicy { get; set; }
+        
+        [JsonIgnore]
+        public virtual ICollection<StatePolicy> StatePolicy { get; set; }
+        
+        [JsonIgnore]
+        public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }
