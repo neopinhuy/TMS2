@@ -29,7 +29,7 @@ namespace TMS.API.Models
 
         [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
-
+        
         [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
         

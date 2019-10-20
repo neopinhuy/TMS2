@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class PaymentPolicy
+    public partial class ComponentDesc
     {
+        public ComponentDesc()
+        {
+            UserInterface = new HashSet<UserInterface>();
+        }
+
         public int Id { get; set; }
-        public int? PolicyId { get; set; }
-        public double MaxApproval { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -16,12 +21,6 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         [JsonIgnore]
-        public virtual User InsertedByNavigation { get; set; }
-        
-        [JsonIgnore]
-        public virtual Policy Policy { get; set; }
-        
-        [JsonIgnore]
-        public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

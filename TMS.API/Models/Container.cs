@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -29,11 +30,22 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        [JsonIgnore]
         public virtual FreightState FreightState { get; set; }
+        
+        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
+        
+        [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
+        
+        [JsonIgnore]
         public virtual Vendor Vendor { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<Coordination> Coordination { get; set; }
+        
+        [JsonIgnore]
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
     }
 }

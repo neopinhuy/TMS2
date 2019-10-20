@@ -48,11 +48,11 @@
     <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\ComponentDesc.cs">
+      <Link>Models\ComponentDesc.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Container.cs">
       <Link>Models\Container.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\ContainerMaintenance.cs">
-      <Link>Models\ContainerMaintenance.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\ContainerMonitorConfig.cs">
       <Link>Models\ContainerMonitorConfig.cs</Link>
@@ -134,9 +134,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\OrderDetail.cs">
       <Link>Models\OrderDetail.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\PaymentApproval.cs">
-      <Link>Models\PaymentApproval.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\PaymentApprovalConfig.cs">
       <Link>Models\PaymentApprovalConfig.cs</Link>

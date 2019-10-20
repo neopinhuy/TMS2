@@ -421,4 +421,3 @@ namespace TMS.API.Models
         public virtual ICollection<Workflow> WorkflowInsertedByNavigation { get; set; }
     }
 }
-

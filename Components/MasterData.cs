@@ -13,6 +13,7 @@ namespace Components
     public class MasterData
     {
         public ICollection<User> User { get; set; }
+        public ICollection<Feature> Feature { get; set; }
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }

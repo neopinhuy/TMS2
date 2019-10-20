@@ -19,6 +19,7 @@ namespace TMS.API.Models
         public virtual DbSet<Action> Action { get; set; }
         public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
         public virtual DbSet<CommodityType> CommodityType { get; set; }
+        public virtual DbSet<ComponentDesc> ComponentDesc { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
@@ -45,7 +46,6 @@ namespace TMS.API.Models
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderComposition> OrderComposition { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
-        public virtual DbSet<PaymentApproval> PaymentApproval { get; set; }
         public virtual DbSet<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual DbSet<Policy> Policy { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
@@ -75,7 +75,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=TMS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=TMS;Trusted_Connection=True;");
             }
         }
 
@@ -187,6 +187,16 @@ namespace TMS.API.Models
                     .WithMany(p => p.CommodityTypeUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_CommodityType_UserUpdated");
+            });
+
+            modelBuilder.Entity<ComponentDesc>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Container>(entity =>
@@ -478,15 +488,28 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Description).HasMaxLength(500);
 
-                entity.Property(e => e.FeatureName)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
+
+                entity.Property(e => e.ShortName).HasMaxLength(100);
+
+                entity.Property(e => e.ViewClass)
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.Feature)
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Feature_UserInserted");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.Children)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_Feature_Parent");
             });
 
             modelBuilder.Entity<Field>(entity =>
@@ -1512,6 +1535,12 @@ namespace TMS.API.Models
                 entity.Property(e => e.Renderer)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.ComponentDesc)
+                    .WithMany(p => p.UserInterface)
+                    .HasForeignKey(d => d.ComponentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserInterface_Component");
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.UserInterface)
