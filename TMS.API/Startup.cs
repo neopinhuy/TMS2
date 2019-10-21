@@ -27,7 +27,7 @@ namespace TMS.API
             .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new IgnoreComplexTypeResolver();
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

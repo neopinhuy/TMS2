@@ -20,6 +20,9 @@ namespace TMS.API.Extensions
             return type.IsPrimitive
               || type.IsEnum
               || type.Equals(typeof(string))
+              || type.Equals(typeof(DateTime))
+              || type.Equals(typeof(DateTimeOffset))
+              || type.Equals(typeof(TimeSpan))
               || type.Equals(typeof(decimal));
         }
     }
