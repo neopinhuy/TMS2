@@ -18,6 +18,7 @@ namespace Components
         public ICollection<Feature> Feature { get; set; }
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
+        public ICollection<TruckType> TruckType { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
         private static MasterData _instance;
         
@@ -57,6 +58,11 @@ namespace Components
         public IEnumerable<object> GetSourceByType(Type type)
         {
             return AllSources.GetSourceByType(type);
+        }
+
+        public IEnumerable<object> GetSourceByTypeName(string typeName)
+        {
+            return AllSources.GetSourceByTypeName(typeName);
         }
     }
 }

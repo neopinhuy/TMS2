@@ -75,7 +75,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=TMS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=TMS;Trusted_Connection=True;");
             }
         }
 
@@ -556,6 +556,8 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Description).HasMaxLength(100);
+
                 entity.Property(e => e.FieldName)
                     .IsRequired()
                     .HasMaxLength(100)
@@ -567,8 +569,10 @@ namespace TMS.API.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ShortDesc).HasMaxLength(50);
+
                 entity.HasOne(d => d.Entity)
-                    .WithMany(p => p.Field)
+                    .WithMany(p => p.FieldEntity)
                     .HasForeignKey(d => d.EntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Field_Entity");
@@ -580,7 +584,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Field_UserInserted");
 
                 entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.InverseReference)
+                    .WithMany(p => p.FieldReference)
                     .HasForeignKey(d => d.ReferenceId)
                     .HasConstraintName("FK_Field_EntityReference");
 

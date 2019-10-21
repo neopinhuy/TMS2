@@ -6,6 +6,7 @@ using TMS.API.Models;
 using Common.Clients;
 using MVVM;
 using System.Collections.Generic;
+using Components.Extensions;
 
 namespace TMS.UI.Business.TruckManagement
 {
@@ -18,16 +19,7 @@ namespace TMS.UI.Business.TruckManagement
             {
                 EditEvent = EditTruck
             });
-            var headers = 
-                from entity in _masterData.Entity
-                join field in _masterData.Field on entity.Id equals field.EntityId
-                where entity.Name == "Truck"
-                select new Header<Truck>
-                {
-                    HeaderText = field.Description,
-                    FieldName = field.FieldName,
-                    Sortable = true
-                };
+            var headers = _masterData.GetHeaders<Truck>();
             TruckHeader.AddRange(headers.ToArray());
             RenderMenuButton();
             RenderImageCorner();

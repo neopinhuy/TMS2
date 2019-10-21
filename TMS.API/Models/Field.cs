@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Field()
         {
-            InverseReference = new HashSet<Field>();
             UserInterface = new HashSet<UserInterface>();
         }
 
@@ -29,9 +28,8 @@ namespace TMS.API.Models
 
         public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual Field Reference { get; set; }
+        public virtual Entity Reference { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Field> InverseReference { get; set; }
         public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

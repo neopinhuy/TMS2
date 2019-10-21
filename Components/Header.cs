@@ -7,7 +7,7 @@ namespace Components
     {
         public string HeaderText { get; set; }
         public string FieldName { get; set; }
-        public Type Reference { get; set; }
+        public string Reference { get; set; }
         public string RefValueField { get; set; } = "Id";
         public string RefDisplayField { get; set; } = "Name";
         public string GroupName { get; set; }

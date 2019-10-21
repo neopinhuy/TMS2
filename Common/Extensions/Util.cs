@@ -42,5 +42,10 @@ namespace Common.Extensions
         {
             return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0] == type);
         }
+
+        public static IEnumerable<object> GetSourceByTypeName(this IEnumerable<IEnumerable<object>> sources, string typeName)
+        {
+            return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0].Name == typeName);
+        }
     }
 }

@@ -8,7 +8,8 @@ namespace TMS.API.Models
         public Entity()
         {
             EntityPolicy = new HashSet<EntityPolicy>();
-            Field = new HashSet<Field>();
+            FieldEntity = new HashSet<Field>();
+            FieldReference = new HashSet<Field>();
             Ledger = new HashSet<Ledger>();
         }
 
@@ -23,7 +24,8 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
-        public virtual ICollection<Field> Field { get; set; }
+        public virtual ICollection<Field> FieldEntity { get; set; }
+        public virtual ICollection<Field> FieldReference { get; set; }
         public virtual ICollection<Ledger> Ledger { get; set; }
     }
 }

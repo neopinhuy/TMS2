@@ -180,7 +180,7 @@ namespace Components
                     }
                     if (header.Reference != null)
                     {
-                        var source = _masterData.GetSourceByType(header.Reference);
+                        var source = _masterData.GetSourceByTypeName(header.Reference);
                         cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
                             ?[header.RefDisplayField]?.ToString();
                         header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
