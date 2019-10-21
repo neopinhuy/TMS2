@@ -75,7 +75,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=TMS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=.;Database=TMS;Trusted_Connection=True;");
             }
         }
 
@@ -197,6 +197,17 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ComponentDescInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ComponentDesc_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ComponentDescUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_ComponentDesc_UserUpdated");
             });
 
             modelBuilder.Entity<Container>(entity =>
@@ -507,9 +518,35 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Feature_UserInserted");
 
                 entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.Children)
+                    .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_Feature_Parent");
+            });
+
+            modelBuilder.Entity<FeaturePolicy>(entity =>
+            {
+                entity.HasOne(d => d.Feature)
+                    .WithMany(p => p.FeaturePolicy)
+                    .HasForeignKey(d => d.FeatureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FeaturePolicy_Feature");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.FeaturePolicyInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FeaturePolicy_UserInserted");
+
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.FeaturePolicy)
+                    .HasForeignKey(d => d.PolicyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_FeaturePolicy_Policy");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.FeaturePolicyUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_FeaturePolicy_UserUpdated");
             });
 
             modelBuilder.Entity<Field>(entity =>
@@ -531,7 +568,7 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Entity)
-                    .WithMany(p => p.FieldEntity)
+                    .WithMany(p => p.Field)
                     .HasForeignKey(d => d.EntityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Field_Entity");
@@ -543,7 +580,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Field_UserInserted");
 
                 entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.FieldReference)
+                    .WithMany(p => p.InverseReference)
                     .HasForeignKey(d => d.ReferenceId)
                     .HasConstraintName("FK_Field_EntityReference");
 
@@ -1536,11 +1573,11 @@ namespace TMS.API.Models
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.ComponentDesc)
+                entity.HasOne(d => d.Component)
                     .WithMany(p => p.UserInterface)
                     .HasForeignKey(d => d.ComponentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserInterface_Component");
+                    .HasConstraintName("FK_UserInterface_ComponentDesc");
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.UserInterface)

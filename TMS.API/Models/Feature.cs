@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -8,7 +7,8 @@ namespace TMS.API.Models
     {
         public Feature()
         {
-            Children = new HashSet<Feature>();
+            FeaturePolicy = new HashSet<FeaturePolicy>();
+            InverseParent = new HashSet<Feature>();
             UserInterface = new HashSet<UserInterface>();
         }
 
@@ -27,16 +27,10 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
-        
-        [JsonIgnore]
         public virtual Feature Parent { get; set; }
-        
-        [JsonIgnore]
-        public virtual ICollection<Feature> Children { get; set; }
-        
-        [JsonIgnore]
+        public virtual ICollection<FeaturePolicy> FeaturePolicy { get; set; }
+        public virtual ICollection<Feature> InverseParent { get; set; }
         public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

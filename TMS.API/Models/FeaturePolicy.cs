@@ -17,5 +17,10 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+
+        public virtual Feature Feature { get; set; }
+        public virtual User InsertedByNavigation { get; set; }
+        public virtual Policy Policy { get; set; }
+        public virtual User UpdatedByNavigation { get; set; }
     }
 }

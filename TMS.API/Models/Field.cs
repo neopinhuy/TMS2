@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -8,6 +7,7 @@ namespace TMS.API.Models
     {
         public Field()
         {
+            InverseReference = new HashSet<Field>();
             UserInterface = new HashSet<UserInterface>();
         }
 
@@ -25,19 +25,11 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        [JsonIgnore]
         public virtual Entity Entity { get; set; }
-        
-        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
-        
-        [JsonIgnore]
-        public virtual Entity Reference { get; set; }
-        
-        [JsonIgnore]
+        public virtual Field Reference { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        
-        [JsonIgnore]
+        public virtual ICollection<Field> InverseReference { get; set; }
         public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

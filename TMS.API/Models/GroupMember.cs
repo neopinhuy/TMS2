@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TMS.API.Models
@@ -16,16 +15,9 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        [JsonIgnore]
         public virtual GroupRole GroupRole { get; set; }
-        
-        [JsonIgnore]
         public virtual User InsertedByNavigation { get; set; }
-        
-        [JsonIgnore]
         public virtual Role Role { get; set; }
-        
-        [JsonIgnore]
         public virtual User UpdatedByNavigation { get; set; }
     }
 }
