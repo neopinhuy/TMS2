@@ -1,35 +1,11 @@
-/* Drop all Primary Key constraints */
-DECLARE @name VARCHAR(128)
-DECLARE @constraint VARCHAR(254)
-DECLARE @SQL VARCHAR(254)
+USE [master];
 
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' ORDER BY TABLE_NAME)
+DECLARE @kill varchar(8000) = '';  
+SELECT @kill = @kill + 'kill ' + CONVERT(varchar(5), session_id) + ';'  
+FROM sys.dm_exec_sessions
+WHERE database_id  = db_id('TMS')
 
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    WHILE @constraint is not null
-    BEGIN
-        SELECT @SQL = 'ALTER TABLE [dbo].[' + RTRIM(@name) +'] DROP CONSTRAINT [' + RTRIM(@constraint)+']'
-        EXEC (@SQL)
-        PRINT 'Dropped PK Constraint: ' + @constraint + ' on ' + @name
-        SELECT @constraint = (SELECT TOP 1 CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' AND CONSTRAINT_NAME <> @constraint AND TABLE_NAME = @name ORDER BY CONSTRAINT_NAME)
-    END
-SELECT @name = (SELECT TOP 1 TABLE_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE constraint_catalog=DB_NAME() AND CONSTRAINT_TYPE = 'PRIMARY KEY' ORDER BY TABLE_NAME)
-END
-GO
+EXEC(@kill);
 
-/* Drop all tables */
-DECLARE @name VARCHAR(128)
-DECLARE @SQL VARCHAR(254)
-
-SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'U' AND category = 0 ORDER BY [name])
-
-WHILE @name IS NOT NULL
-BEGIN
-    SELECT @SQL = 'DROP TABLE [dbo].[' + RTRIM(@name) +']'
-    EXEC (@SQL)
-    PRINT 'Dropped Table: ' + @name
-    SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'U' AND category = 0 AND [name] > @name ORDER BY [name])
-END
-GO
+Create database TMS
+Go
