@@ -14,6 +14,21 @@ namespace TMS.UI.Business.TruckManagement
         public override async Task RenderAsync() {
             if (IsExisted()) return;
             _masterData = await MasterData.GetSingletonAsync();
+            TruckHeader.Add(new Header<Truck>
+            {
+                EditEvent = EditTruck
+            });
+            var headers = 
+                from entity in _masterData.Entity
+                join field in _masterData.Field on entity.Id equals field.EntityId
+                where entity.Name == "Truck"
+                select new Header<Truck>
+                {
+                    HeaderText = field.Description,
+                    FieldName = field.FieldName,
+                    Sortable = true
+                };
+            TruckHeader.AddRange(headers.ToArray());
             RenderMenuButton();
             RenderImageCorner();
             RenderTruckDetail();

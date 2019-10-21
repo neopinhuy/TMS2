@@ -26,8 +26,8 @@ namespace TMS.API
             services.AddMvc()
             .AddJsonOptions(options =>
             {
-                options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                options.SerializerSettings.ContractResolver = new IgnoreComplexTypeResolver();
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

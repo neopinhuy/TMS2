@@ -13,11 +13,12 @@ namespace Components
     public class MasterData
     {
         public ICollection<User> User { get; set; }
+        public ICollection<Entity> Entity { get; set; }
+        public ICollection<Field> Field { get; set; }
         public ICollection<Feature> Feature { get; set; }
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
-
         private static MasterData _instance;
         
         private MasterData() 

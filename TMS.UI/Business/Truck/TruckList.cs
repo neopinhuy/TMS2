@@ -28,31 +28,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public TruckList()
         {
-            TruckHeader.Data = new Header<Truck>[]
-            {
-                new Header<Truck> { EditEvent = EditTruck },
-                new Header<Truck> { HeaderText = "Truck plate", FieldName = "TruckPlate", Sortable = true },
-                new Header<Truck> { HeaderText = "Band name", FieldName = "BrandName", Sortable = true },
-                new Header<Truck> { HeaderText = "Model", FieldName = "Model", Sortable = true },
-                new Header<Truck> { HeaderText = "Vendor", FieldName = "VendorId", Sortable = true, Reference = typeof(Vendor) },
-                new Header<Truck> { HeaderText = "Long", FieldName = "Long", TextAlign = TextAlign.right, Sortable = true },
-                new Header<Truck> { HeaderText = "Lat", FieldName = "Lat", TextAlign = TextAlign.right, Sortable = true },
-                new Header<Truck> { HeaderText = "Driver", FieldName = "DriverId", Sortable = true, Reference = typeof(User) },
-                new Header<Truck> { HeaderText = "Price", FieldName = "Price", Sortable = true },
-                new Header<Truck> { HeaderText = "Currency", FieldName = "Currency", Sortable = true },
-                new Header<Truck> { HeaderText = "Bought date", FieldName = "BoughtDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Active date", FieldName = "ActiveDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Maintenance start", FieldName = "MaintenanceStart", Sortable = true },
-                new Header<Truck> { HeaderText = "Maintenance end", FieldName = "MaintenanceEnd", Sortable = true },
-                new Header<Truck> { HeaderText = "Next maintenance date", FieldName = "NextMaintenanceDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Maintenance period", FieldName = "MaintenancePeriod", Sortable = true },
-                new Header<Truck> { HeaderText = "Active", FieldName = "Active", Sortable = true },
-                new Header<Truck> { HeaderText = "Expiry date", FieldName = "ExpiredDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Inserted date", FieldName = "InsertedDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Inserted by", FieldName = "InsertedBy", Sortable = true, Reference = typeof(User) },
-                new Header<Truck> { HeaderText = "Updated date", FieldName = "UpdatedDate", Sortable = true },
-                new Header<Truck> { HeaderText = "Updated by", FieldName = "UpdatedBy", Sortable = true },
-            };
+            
         }
 
         public async Task CreateNewTruckAsync()

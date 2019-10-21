@@ -20,13 +20,13 @@ namespace TMS.UI.Business
                 if (item.ParentId != null)
                 {
                     var parent = dic[item.ParentId.Value];
-                    if (parent.Children is null)
+                    if (parent.InverseParent is null)
                     {
-                        parent.Children = new List<Feature>();
+                        parent.InverseParent = new List<Feature>();
                     }
                     else
                     {
-                        parent.Children.Add(item);
+                        parent.InverseParent.Add(item);
                     }
                 }
             }
@@ -64,9 +64,9 @@ namespace TMS.UI.Business
                     }, item)
                     .Span.ClassName("icon " + item.Icon).End
                     .Text(item.Name).EndOf(MVVM.ElementType.a).Render();
-                    if (item.Children != null && item.Children.Count > 0)
+                    if (item.InverseParent != null && item.InverseParent.Count > 0)
                     {
-                        RenderMenuItems(item.Children.ToList());
+                        RenderMenuItems(item.InverseParent.ToList());
                     }
                 }
             });
