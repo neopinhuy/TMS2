@@ -9,6 +9,8 @@ using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 using Newtonsoft.Json;
 using TMS.API.Extensions;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Builder;
 
 namespace TMS.API
 {
@@ -24,12 +26,12 @@ namespace TMS.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-            .AddJsonOptions(options =>
-            {
-                options.SerializerSettings.ContractResolver = new IgnoreComplexTypeResolver();
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new IgnoreComplexTypeResolver();
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(options =>
             {
@@ -44,6 +46,8 @@ namespace TMS.API
             });
             services.AddDbContext<TMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TMS")));
             services.AddResponseCompression();
+            services.AddApiVersioning();
+            services.AddOData();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -60,7 +64,11 @@ namespace TMS.API
 
             app.UseHttpsRedirection();
             app.UseResponseCompression();
-            app.UseMvc();
+            app.UseMvc(builder =>
+            {
+                builder.EnableDependencyInjection();
+                builder.Select().Expand().Filter().OrderBy().MaxTop(null).Count();
+            });
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSwagger();

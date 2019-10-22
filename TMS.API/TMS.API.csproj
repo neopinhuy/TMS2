@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Contracts\**" />
+    <Compile Remove="Interfaces\**" />
     <Content Remove="Contracts\**" />
+    <Content Remove="Interfaces\**" />
     <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
     <None Remove="Contracts\**" />
+    <None Remove="Interfaces\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,11 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Common\Clients\IRestful.cs" Link="Interfaces\IRestful.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.OData.Versioning" Version="3.2.4" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
@@ -48,10 +51,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

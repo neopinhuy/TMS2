@@ -1,16 +1,15 @@
-﻿using TMS.API.Attributes;
-using TMS.API.Models;
-using Common.Clients;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
     [Route("api/[controller]")]
-    public class FeatureController : BaseController, IRestful<Feature>
+    public class FeatureController : BaseController
     {
         readonly TMSContext db;
 
@@ -20,9 +19,10 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Feature>> GetList()
+        [EnableQuery]
+        public IQueryable<Feature> Get()
         {
-            return await db.Feature.ToListAsync();
+            return db.Feature.AsQueryable();
         }
 
         [HttpGet("{id}")]
@@ -39,7 +39,6 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost]
-        [ValidateModel]
         public async Task<Feature> PostAsync([FromBody]Feature feature)
         {
             if (feature == null || !ModelState.IsValid)
@@ -54,7 +53,6 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut]
-        [ValidateModel]
         public async Task<Feature> PutAsync([FromBody]Feature feature)
         {
             if (feature == null || !ModelState.IsValid)

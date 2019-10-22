@@ -6,6 +6,6 @@ FROM sys.dm_exec_sessions
 WHERE database_id  = db_id('TMS')
 
 EXEC(@kill);
-
+Drop database TMS
 Create database TMS
 Go

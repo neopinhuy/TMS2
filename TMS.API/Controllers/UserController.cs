@@ -1,15 +1,15 @@
-﻿using TMS.API.Models;
-using Common.Clients;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : BaseController, IRestful<User>
+    public class UserController : BaseController
     {
         readonly TMSContext db;
 
@@ -19,9 +19,10 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetList()
+        [EnableQuery]
+        public IQueryable<User> Get()
         {
-            return await db.User.ToListAsync();
+            return db.User.AsQueryable();
         }
 
         [HttpGet("{id}")]
