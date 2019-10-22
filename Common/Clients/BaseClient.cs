@@ -23,7 +23,7 @@ namespace Common.Clients
             var type = typeof(T);
             var tcs = new TaskCompletionSource<IEnumerable<T>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?$filter=Active eq true", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
