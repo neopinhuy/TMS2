@@ -15,11 +15,13 @@ namespace Components
         public ICollection<User> User { get; set; }
         public ICollection<Entity> Entity { get; set; }
         public ICollection<Field> Field { get; set; }
+        public ICollection<FuelType> FuelType { get; set; }
         public ICollection<Feature> Feature { get; set; }
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
         public ICollection<TruckType> TruckType { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
+
         private static MasterData _instance;
         
         private MasterData() 

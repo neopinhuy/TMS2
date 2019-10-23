@@ -13,7 +13,7 @@ namespace Components.Extensions
             var entityDic = masterData.Entity.ToDictionary(x => x.Id);
             return from entity in masterData.Entity
                    join field in masterData.Field on entity.Id equals field.EntityId
-                   where entity.Name == typeof(T).Name
+                   where entity.Name == typeof(T).Name && !field.Hidden
                    select new Header<T>
                    {
                        HeaderText = field.Description,

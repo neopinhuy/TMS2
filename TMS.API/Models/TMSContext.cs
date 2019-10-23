@@ -1483,6 +1483,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<TruckType>(entity =>
             {
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.TruckTypeInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
@@ -1568,6 +1572,8 @@ namespace TMS.API.Models
             modelBuilder.Entity<UserInterface>(entity =>
             {
                 entity.Property(e => e.Events).IsUnicode(false);
+
+                entity.Property(e => e.GroupName).HasMaxLength(50);
 
                 entity.Property(e => e.ParamName)
                     .HasMaxLength(100)

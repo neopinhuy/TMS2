@@ -168,26 +168,23 @@ namespace Components
                         .EventAsync(EventType.Click, header.DeleteEvent, row)
                         .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
                 }
-                if (!string.IsNullOrEmpty(header.FieldName))
+                if (string.IsNullOrEmpty(header.FieldName)) return;
+                if (!row.HasOwnProperty(header.FieldName)) return;
+                object cellData = row[header.FieldName];
+                string cellText = cellData?.ToString() ?? string.Empty;
+                if (cellData != null && cellData is DateTime)
                 {
-                    if (!row.HasOwnProperty(header.FieldName))
-                        throw new InvalidOperationException("Cannot find property " + header.FieldName);
-                    object cellData = row[header.FieldName];
-                    string cellText = cellData?.ToString() ?? string.Empty;
-                    if (cellData != null && cellData is DateTime)
-                    {
-                        cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
-                    }
-                    if (header.Reference != null)
-                    {
-                        var source = _masterData.GetSourceByTypeName(header.Reference);
-                        cellText = source.FirstOrDefault(x => x[header.RefValueField] == cellData)
-                            ?[header.RefDisplayField]?.ToString();
-                        header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-                    }
-                    header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
-                    html.TextAlign(header.TextAlign).Text(cellText).End.Render();
+                    cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
                 }
+                if (header.Reference != null)
+                {
+                    var source = _masterData.GetSourceByTypeName(header.Reference);
+                    var found = source.FirstOrDefault(x => x[header.RefValueField] == cellData);
+                    cellText = found?[header.RefDisplayField.Trim()]?.ToString();
+                    header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
+                }
+                header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+                html.TextAlign(header.TextAlign).Text(cellText).End.Render();
             });
         }
 

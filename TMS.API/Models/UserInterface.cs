@@ -12,6 +12,7 @@ namespace TMS.API.Models
 
         public int Id { get; set; }
         public int FeatureId { get; set; }
+        public int? FieldId { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
         public bool CanSee { get; set; }
@@ -19,7 +20,9 @@ namespace TMS.API.Models
         public bool Disabled { get; set; }
         public bool? Visibility { get; set; }
         public int ComponentId { get; set; }
-        public int? FieldId { get; set; }
+        public string GroupName { get; set; }
+        public double? Width { get; set; }
+        public double? Height { get; set; }
         public int? ParentId { get; set; }
         public string ParamName { get; set; }
         public string Renderer { get; set; }

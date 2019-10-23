@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Common.Clients
 {
-    public class BaseClient<T> : IRestful<T> where T : class
+    public class BaseClient<T>
     {
         public string BaseUrl { get; set; }
         public BaseClient()
@@ -18,12 +18,13 @@ namespace Common.Clients
             BaseUrl = url;
         }
 
-        public async Task<IEnumerable<T>> GetList()
+        public async Task<IEnumerable<T>> GetList(string filter = null)
         {
+            filter = filter ?? "$filter=Active eq true";
             var type = typeof(T);
             var tcs = new TaskCompletionSource<IEnumerable<T>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?$filter=Active eq true", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?filter", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)

@@ -20,6 +20,8 @@ namespace TMS.API.Models
         public int? ReferenceId { get; set; }
         public string RefValueField { get; set; }
         public string RefDisplayFields { get; set; }
+        public int? Order { get; set; }
+        public bool Hidden { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
