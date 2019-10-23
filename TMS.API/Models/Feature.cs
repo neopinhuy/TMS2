@@ -17,8 +17,9 @@ namespace TMS.API.Models
         public string ShortName { get; set; }
         public int? ParentId { get; set; }
         public string Icon { get; set; }
-        public bool? IsDevider { get; set; }
-        public bool? IsGroup { get; set; }
+        public bool IsDevider { get; set; }
+        public bool IsGroup { get; set; }
+        public bool IsMenu { get; set; }
         public string ViewClass { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }

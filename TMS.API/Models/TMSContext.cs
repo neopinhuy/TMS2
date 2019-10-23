@@ -20,6 +20,7 @@ namespace TMS.API.Models
         public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
         public virtual DbSet<CommodityType> CommodityType { get; set; }
         public virtual DbSet<ComponentDesc> ComponentDesc { get; set; }
+        public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
@@ -208,6 +209,26 @@ namespace TMS.API.Models
                     .WithMany(p => p.ComponentDescUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_ComponentDesc_UserUpdated");
+            });
+
+            modelBuilder.Entity<ComponentGroup>(entity =>
+            {
+                entity.Property(e => e.Border)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ComponentGroupInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ComponentGroup_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ComponentGroupUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_ComponentGroup_UserUpdated");
             });
 
             modelBuilder.Entity<Container>(entity =>
@@ -1573,21 +1594,20 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Events).IsUnicode(false);
 
-                entity.Property(e => e.GroupName).HasMaxLength(50);
-
-                entity.Property(e => e.ParamName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Renderer)
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Component)
+                entity.HasOne(d => d.ComponentDesc)
                     .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.ComponentId)
+                    .HasForeignKey(d => d.ComponentDescId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserInterface_ComponentDesc");
+
+                entity.HasOne(d => d.ComponentGroup)
+                    .WithMany(p => p.UserInterface)
+                    .HasForeignKey(d => d.ComponentGroupId)
+                    .HasConstraintName("FK_UserInterface_ComponentGroup");
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.UserInterface)
@@ -1605,11 +1625,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserInterface_UserInserted");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK_UserInterface_UserInterface");
 
                 entity.HasOne(d => d.Policy)
                     .WithMany(p => p.UserInterface)

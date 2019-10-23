@@ -5,11 +5,6 @@ namespace TMS.API.Models
 {
     public partial class UserInterface
     {
-        public UserInterface()
-        {
-            InverseParent = new HashSet<UserInterface>();
-        }
-
         public int Id { get; set; }
         public int FeatureId { get; set; }
         public int? FieldId { get; set; }
@@ -19,12 +14,11 @@ namespace TMS.API.Models
         public bool CanEdit { get; set; }
         public bool Disabled { get; set; }
         public bool? Visibility { get; set; }
-        public int ComponentId { get; set; }
-        public string GroupName { get; set; }
-        public double? Width { get; set; }
-        public double? Height { get; set; }
-        public int? ParentId { get; set; }
-        public string ParamName { get; set; }
+        public int ComponentDescId { get; set; }
+        public int? ComponentGroupId { get; set; }
+        public int? Column { get; set; }
+        public int? Row { get; set; }
+        public int? Order { get; set; }
         public string Renderer { get; set; }
         public string Events { get; set; }
         public bool Active { get; set; }
@@ -33,14 +27,13 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual ComponentDesc Component { get; set; }
+        public virtual ComponentDesc ComponentDesc { get; set; }
+        public virtual ComponentGroup ComponentGroup { get; set; }
         public virtual Feature Feature { get; set; }
         public virtual Field Field { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual UserInterface Parent { get; set; }
         public virtual Policy Policy { get; set; }
         public virtual FreightState State { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<UserInterface> InverseParent { get; set; }
     }
 }

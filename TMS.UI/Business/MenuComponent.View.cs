@@ -13,7 +13,7 @@ namespace TMS.UI.Business
     {
         private void BuildFeatureTree()
         {
-            var dic = _feature.ToDictionary(x => x.Id);
+            var dic = _feature.Where(x => x.IsMenu).ToDictionary(x => x.Id);
             var root = _feature.First(x => x.ParentId == null);
             foreach (var item in _feature)
             {
@@ -47,11 +47,11 @@ namespace TMS.UI.Business
         {
             Html.Instance.Ul.ForEach(menuItems, (item, index) =>
             {
-                if (item.IsGroup.HasValue && item.IsGroup.Value)
+                if (item.IsGroup)
                 {
                     Html.Instance.Li.ClassName("group-title").Text(item.Name).End.Render();
                 }
-                else if (item.IsDevider.HasValue && item.IsDevider.Value)
+                else if (item.IsDevider)
                 {
                     Html.Instance.Li.ClassName("divider").End.Render();
                 }
