@@ -24,7 +24,6 @@ namespace TMS.UI.Business.TruckManagement
         public Observable<DateTime?> ActiveDate = new Observable<DateTime?>();
         public Observable<DateTime?> ExpiredDate = new Observable<DateTime?>();
         public Observable<int?> DriverId = new Observable<int?>();
-        public MasterData _masterData;
 
         public TruckList()
         {
@@ -78,18 +77,13 @@ namespace TMS.UI.Business.TruckManagement
             DriverId.Data = null;
         }
 
-        public async Task EditTruck(Truck truck)
+        public static async Task EditTruck(Truck truck)
         {
-            TruckId = truck.Id;
-            TruckPlate.Data = truck.TruckPlate;
-            BrandName.Data = truck.BrandName;
-            Version.Data = truck.Model;
-            VendorId.Data = truck.VendorId;
-            Price.Data = truck.Price;
-            Currency.Data = truck.Currency;
-            ActiveDate.Data = truck.ActiveDate;
-            ExpiredDate.Data = truck.ExpiredDate;
-            DriverId.Data = truck.DriverId;
+            TruckDetail truckDetail = new TruckDetail
+            {
+                Truck = truck
+            };
+            await truckDetail.RenderAsync();
         }
 
         public async Task DeleteTruckAsync(Truck truck)

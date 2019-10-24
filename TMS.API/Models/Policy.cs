@@ -8,6 +8,7 @@ namespace TMS.API.Models
         public Policy()
         {
             ActionPolicy = new HashSet<ActionPolicy>();
+            ComponentGroup = new HashSet<ComponentGroup>();
             EntityPolicy = new HashSet<EntityPolicy>();
             FeaturePolicy = new HashSet<FeaturePolicy>();
             PaymentPolicy = new HashSet<PaymentPolicy>();
@@ -31,6 +32,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual ICollection<ActionPolicy> ActionPolicy { get; set; }
+        public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicy { get; set; }
         public virtual ICollection<PaymentPolicy> PaymentPolicy { get; set; }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class ComponentDesc
+    public partial class ComponentType
     {
-        public ComponentDesc()
+        public ComponentType()
         {
             UserInterface = new HashSet<UserInterface>();
         }

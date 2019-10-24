@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public FreightState()
         {
+            ComponentGroup = new HashSet<ComponentGroup>();
             Container = new HashSet<Container>();
             Coordination = new HashSet<Coordination>();
             FreightHistory = new HashSet<FreightHistory>();
@@ -29,6 +30,7 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Workflow Workflow { get; set; }
+        public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }

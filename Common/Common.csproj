@@ -48,11 +48,11 @@
     <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\ComponentDesc.cs">
-      <Link>Models\ComponentDesc.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\ComponentGroup.cs">
       <Link>Models\ComponentGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\ComponentType.cs">
+      <Link>Models\ComponentType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Container.cs">
       <Link>Models\Container.cs</Link>

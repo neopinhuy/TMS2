@@ -14,7 +14,7 @@ namespace TMS.API.Models
         public bool CanEdit { get; set; }
         public bool Disabled { get; set; }
         public bool? Visibility { get; set; }
-        public int ComponentDescId { get; set; }
+        public int ComponentTypeId { get; set; }
         public int? ComponentGroupId { get; set; }
         public int? Column { get; set; }
         public int? Row { get; set; }
@@ -27,7 +27,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual ComponentDesc ComponentDesc { get; set; }
+        public virtual ComponentType ComponentType { get; set; }
         public virtual ComponentGroup ComponentGroup { get; set; }
         public virtual Feature Feature { get; set; }
         public virtual Field Field { get; set; }

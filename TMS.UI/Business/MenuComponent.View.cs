@@ -13,24 +13,23 @@ namespace TMS.UI.Business
     {
         private void BuildFeatureTree()
         {
-            var dic = _feature.Where(x => x.IsMenu).ToDictionary(x => x.Id);
-            var root = _feature.First(x => x.ParentId == null);
-            foreach (var item in _feature)
+            var dic = _feature.Where(f => f.IsMenu).ToDictionary(f => f.Id);
+            foreach (var menu in dic.Values)
             {
-                if (item.ParentId != null)
+                if (menu.ParentId != null)
                 {
-                    var parent = dic[item.ParentId.Value];
+                    var parent = dic[menu.ParentId.Value];
                     if (parent.InverseParent is null)
                     {
                         parent.InverseParent = new List<Feature>();
                     }
                     else
                     {
-                        parent.InverseParent.Add(item);
+                        parent.InverseParent.Add(menu);
                     }
                 }
             }
-            _feature = _feature.Where(x => x.ParentId == null).ToList();
+            _feature = _feature.Where(f => f.ParentId == null && f.IsMenu).ToList();
         }
 
         public override async Task RenderAsync()

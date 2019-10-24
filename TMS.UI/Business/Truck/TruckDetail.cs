@@ -2,7 +2,7 @@
 
 namespace TMS.UI.Business.TruckManagement
 {
-    public partial class TruckDetail : TabComponent
+    public partial class TruckDetail : PopupComponent
     {
         
     }

@@ -18,13 +18,13 @@ namespace Common.Clients
             BaseUrl = url;
         }
 
-        public async Task<IEnumerable<T>> GetList(string filter = null)
+        public async Task<List<T>> GetList(string filter = null)
         {
             filter = filter ?? "$filter=Active eq true";
             var type = typeof(T);
-            var tcs = new TaskCompletionSource<IEnumerable<T>>();
+            var tcs = new TaskCompletionSource<List<T>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?filter", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?{filter}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)

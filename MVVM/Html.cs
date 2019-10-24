@@ -423,7 +423,8 @@ namespace MVVM
                 input.Value = val.Data?.ToString();
                 input.OnInput += (e) =>
                 {
-                    val.Data = string.IsNullOrEmpty(input.Value) ? default(T) : (T)Convert.ChangeType(input.Value, typeof(T));
+                    val.Data = string.IsNullOrEmpty(input.Value) 
+                        ? default : (T)Convert.ChangeType(input.Value, typeof(T));
                 };
                 val.Subscribe(arg =>
                 {
@@ -435,7 +436,8 @@ namespace MVVM
                 textArea.Value = val.Data?.ToString();
                 textArea.OnInput += (e) =>
                 {
-                    val.Data = string.IsNullOrEmpty(textArea.Value) ? default(T) : (T)Convert.ChangeType(textArea.Value, typeof(T));
+                    val.Data = string.IsNullOrEmpty(textArea.Value) 
+                        ? default : (T)Convert.ChangeType(textArea.Value, typeof(T));
                 };
                 val.Subscribe(arg =>
                 {
@@ -762,6 +764,13 @@ namespace MVVM
             return index;
         }
 
+        public Html Visible(bool visible)
+        {
+            var ele = Context as HTMLElement;
+            ele.Style.Display = visible ? "" : Display.None.ToString();
+            return this;
+        }
+
         public Html Visible(Observable<bool> visible)
         {
             var ele = Context as HTMLElement;
@@ -770,6 +779,13 @@ namespace MVVM
             {
                 ele.Style.Display = arg.NewData ? "" : Display.None.ToString();
             });
+            return this;
+        }
+
+        public Html Hidden(bool hidden)
+        {
+            var ele = Context as HTMLElement;
+            ele.Style.Display = hidden ? Display.None.ToString() : string.Empty;
             return this;
         }
 

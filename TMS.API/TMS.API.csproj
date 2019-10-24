@@ -56,6 +56,7 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="wwwRoot\css\color.less" />
+    <None Include="wwwroot\css\fonts\LineIcons.svg" />
     <None Include="wwwRoot\css\main.less">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

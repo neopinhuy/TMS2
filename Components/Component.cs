@@ -8,6 +8,7 @@ namespace Components
     {
         public virtual HTMLElement RootElement { get; set; }
         public abstract Task RenderAsync();
+        protected MasterData _masterData;
 
         public virtual void Dispose()
         {

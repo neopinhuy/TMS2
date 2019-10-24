@@ -15,10 +15,10 @@ namespace TMS.API.Models
             ActionUpdatedByNavigation = new HashSet<Action>();
             CommodityTypeInsertedByNavigation = new HashSet<CommodityType>();
             CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
-            ComponentDescInsertedByNavigation = new HashSet<ComponentDesc>();
-            ComponentDescUpdatedByNavigation = new HashSet<ComponentDesc>();
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
             ComponentGroupUpdatedByNavigation = new HashSet<ComponentGroup>();
+            ComponentTypeInsertedByNavigation = new HashSet<ComponentType>();
+            ComponentTypeUpdatedByNavigation = new HashSet<ComponentType>();
             ContainerInsertedByNavigation = new HashSet<Container>();
             ContainerTypeInsertedByNavigation = new HashSet<ContainerType>();
             ContainerTypeUpdatedByNavigation = new HashSet<ContainerType>();
@@ -144,10 +144,10 @@ namespace TMS.API.Models
         public virtual ICollection<Action> ActionUpdatedByNavigation { get; set; }
         public virtual ICollection<CommodityType> CommodityTypeInsertedByNavigation { get; set; }
         public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
-        public virtual ICollection<ComponentDesc> ComponentDescInsertedByNavigation { get; set; }
-        public virtual ICollection<ComponentDesc> ComponentDescUpdatedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupUpdatedByNavigation { get; set; }
+        public virtual ICollection<ComponentType> ComponentTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<ComponentType> ComponentTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }

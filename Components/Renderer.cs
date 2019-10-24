@@ -1,4 +1,5 @@
-﻿using MVVM;
+﻿using Bridge.Html5;
+using MVVM;
 using System;
 using System.Collections.Generic;
 
@@ -290,6 +291,22 @@ namespace Components
         public static Html Icon(this Html html, string iconClass)
         {
             return html.Span.ClassName(iconClass);
+        }
+
+        public static Html Table(this Html html, int row, int column)
+        {
+            html.Table.Render();
+            var table = Html.Context as HTMLElement;
+            html.TBody.Render();
+            for (int i = 0; i < row; i++)
+            {
+                html.TRow.Render();
+                for (int j = 0; j < column; j++)
+                {
+                    html.TData.End.Render();
+                }
+            }
+            return Html.Take(table);
         }
 
         public static void RenderAndFocus(this TabComponent component)
