@@ -31,13 +31,13 @@ namespace TMS.API.Models
         public string Image { get; set; }
         public bool? InUse { get; set; }
         public double? MaxCbm { get; set; }
-        public int VendorId { get; set; }
+        public int? VendorId { get; set; }
         public double? Long { get; set; }
         public double? Lat { get; set; }
-        public int DriverId { get; set; }
-        public decimal Price { get; set; }
-        public string Currency { get; set; }
-        public DateTime BoughtDate { get; set; }
+        public int? DriverId { get; set; }
+        public decimal? Price { get; set; }
+        public int? CurrencyId { get; set; }
+        public DateTime? BoughtDate { get; set; }
         public DateTime? ActiveDate { get; set; }
         public DateTime? ExpiredDate { get; set; }
         public DateTime? MaintenanceStart { get; set; }
@@ -50,6 +50,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual Currency Currency { get; set; }
         public virtual FuelType FuelType { get; set; }
         public virtual TruckType TruckType { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }

@@ -25,6 +25,7 @@ namespace TMS.API.Models
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
+        public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
         public virtual DbSet<Department> Department { get; set; }
@@ -393,6 +394,33 @@ namespace TMS.API.Models
                     .WithMany(p => p.CoordinationUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Coordination_UserUpdated");
+            });
+
+            modelBuilder.Entity<Currency>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(100);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Symbol)
+                    .IsRequired()
+                    .HasMaxLength(4);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.CurrencyInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Currency_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.CurrencyUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Currency_UserUpdated");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -794,17 +822,17 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Ledger>(entity =>
             {
-                entity.Property(e => e.Curency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.InvoiceImage).HasMaxLength(1500);
 
                 entity.HasOne(d => d.Approver)
                     .WithMany(p => p.LedgerApprover)
                     .HasForeignKey(d => d.ApproverId)
                     .HasConstraintName("FK_Ledger_UserApprover");
+
+                entity.HasOne(d => d.Curency)
+                    .WithMany(p => p.Ledger)
+                    .HasForeignKey(d => d.CurencyId)
+                    .HasConstraintName("FK_Ledger_Currency");
 
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.Ledger)
@@ -814,19 +842,16 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.LedgerInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ledger_UserInserted");
 
                 entity.HasOne(d => d.Objective)
                     .WithMany(p => p.Ledger)
                     .HasForeignKey(d => d.ObjectiveId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ledger_Objective");
 
                 entity.HasOne(d => d.OperationType)
                     .WithMany(p => p.Ledger)
                     .HasForeignKey(d => d.OperationTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ledger_OperationType");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
@@ -1364,16 +1389,9 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Truck>(entity =>
             {
-                entity.Property(e => e.BrandName)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.BrandName).HasMaxLength(100);
 
                 entity.Property(e => e.Color).HasMaxLength(50);
-
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.Image)
                     .HasMaxLength(1500)
@@ -1392,7 +1410,6 @@ namespace TMS.API.Models
                 entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.TruckPlate)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1403,6 +1420,11 @@ namespace TMS.API.Models
                 entity.Property(e => e.Year)
                     .HasMaxLength(4)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.Truck)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .HasConstraintName("FK_Truck_Currency");
 
                 entity.HasOne(d => d.FuelType)
                     .WithMany(p => p.Truck)
@@ -1419,16 +1441,15 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.AdvancedPaid).HasColumnType("decimal(20, 5)");
 
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.HasOne(d => d.AccountableUser)
                     .WithMany(p => p.TruckMaintenanceAccountableUser)
                     .HasForeignKey(d => d.AccountableUserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TruckMaintenance_UserAccountable");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.TruckMaintenance)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .HasConstraintName("FK_TruckMaintenance_Currency");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.TruckMaintenanceInsertedByNavigation)
@@ -1439,7 +1460,6 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.Ticket)
                     .WithMany(p => p.TruckMaintenance)
                     .HasForeignKey(d => d.TicketId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TruckMaintenance_MaintenanceTicket");
 
                 entity.HasOne(d => d.Truck)
@@ -1455,20 +1475,12 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.Vendor)
                     .WithMany(p => p.TruckMaintenance)
                     .HasForeignKey(d => d.VendorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TruckMaintenance_Vendor");
             });
 
             modelBuilder.Entity<TruckMaintenanceDetail>(entity =>
             {
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Detail)
-                    .IsRequired()
-                    .HasMaxLength(200);
+                entity.Property(e => e.Detail).HasMaxLength(200);
 
                 entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
 
@@ -1486,7 +1498,6 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.Maintenance)
                     .WithMany(p => p.TruckMaintenanceDetail)
                     .HasForeignKey(d => d.MaintenanceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MaintenanceDetail_Maintenance");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
@@ -1554,6 +1565,11 @@ namespace TMS.API.Models
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.FullName)
+                    .IsRequired()
+                    .HasMaxLength(151)
+                    .HasComputedColumnSql("(([FirstName]+' ')+[LastName])");
 
                 entity.Property(e => e.LastName)
                     .IsRequired()

@@ -64,11 +64,12 @@ namespace TMS.UI.Business.TruckManagement
                     }
                     if (ui.ComponentType.Name == "Dropdown")
                     {
-                        _observableTruck[ui.Field.FieldName] = new Observable<int>((int)Truck[ui.Field.FieldName]);
+                        _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Truck[ui.Field.FieldName]);
                         Html.Instance
                             .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
                             .TData.Render();
-                        var searchEntry = new SearchEntry((Observable<int>)_observableTruck[ui.Field.FieldName], ui.Field.Reference.Name);
+                        var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], 
+                            ui.Field.Reference.Name, ui.DataSourceFilter);
                         await searchEntry.RenderAsync();
                         Html.Instance.EndOf(ElementType.td);
                     }

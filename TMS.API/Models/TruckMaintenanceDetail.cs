@@ -6,11 +6,11 @@ namespace TMS.API.Models
     public partial class TruckMaintenanceDetail
     {
         public int Id { get; set; }
-        public int MaintenanceId { get; set; }
+        public int? MaintenanceId { get; set; }
         public int? AccessaryId { get; set; }
         public string Detail { get; set; }
-        public decimal Price { get; set; }
-        public string Currency { get; set; }
+        public decimal? Price { get; set; }
+        public int? CurrencyId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

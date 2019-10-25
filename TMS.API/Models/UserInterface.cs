@@ -14,6 +14,7 @@ namespace TMS.API.Models
         public bool Visibility { get; set; }
         public int ComponentTypeId { get; set; }
         public int? ComponentGroupId { get; set; }
+        public string DataSourceFilter { get; set; }
         public int? Column { get; set; }
         public int? Row { get; set; }
         public int? Order { get; set; }

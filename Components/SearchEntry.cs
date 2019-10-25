@@ -1,5 +1,8 @@
 ﻿using Bridge.Html5;
+using Common.Clients;
+using Common.Extensions;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,22 +12,33 @@ namespace Components
 {
     public class SearchEntry : Component
     {
-        private readonly Observable<int> _value;
+        private readonly Observable<int?> _value;
         private readonly Observable<string> _text;
         private readonly ObservableArray<object> _source;
         private FloatingTable<object> _table;
         private readonly string _refEntity;
+        private readonly string _dataSource;
+        private readonly Type _entityType;
         private HTMLInputElement _input;
         private readonly string _refValueField = "Id";
         private string _refDisplayField;
         private IEnumerable<Field> RefField;
 
-        public SearchEntry(Observable<int> value, string refEntity)
+        public SearchEntry(Observable<int?> value, string refEntity, string dataSource = null)
         {
             _value = value;
             _refEntity = refEntity;
+            _dataSource = dataSource;
+            _entityType = Type.GetType("TMS.API.Models." + _refEntity);
             _text = new Observable<string>();
             _source = new ObservableArray<object>();
+            _text.Subscribe((arg) =>
+            {
+                if (arg.NewData.IsNullOrEmpty())
+                {
+                    _value.Data = null;
+                }
+            });
         }
 
         public override async Task RenderAsync()
@@ -49,6 +63,14 @@ namespace Components
 
         private async Task SearchRefField()
         {
+            if (!_dataSource.IsNullOrEmpty())
+            {
+                var type = typeof(BaseClient<>).MakeGenericType(new Type[] { _entityType });
+                var httpGetList = type.GetMethod("GetList");
+                var client = Activator.CreateInstance(type);
+                var source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                _source.Data = source.ToArray();
+            }
             _masterData = await MasterData.GetSingletonAsync();
             var entity = _masterData.Entity.First(x => x.Name == _refEntity);
             RefField = _masterData.Field
@@ -64,7 +86,9 @@ namespace Components
                     FieldName = x.FieldName,
                     HeaderText = x.ShortDesc
                 }).ToArray();
-            _source.Data = _masterData.GetSourceByTypeName(_refEntity).ToArray();
+            _source.Data = _dataSource.IsNullOrEmpty() 
+                ? _masterData.GetSourceByTypeName(_refEntity).ToArray() 
+                : _source.Data;
             var tableParam = new TableParam<object>
             {
                 RowClick = Select,

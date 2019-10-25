@@ -69,6 +69,9 @@
     <Compile Include="..\TMS.API\Models\Coordination.cs">
       <Link>Models\Coordination.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Currency.cs">
+      <Link>Models\Currency.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Customer.cs">
       <Link>Models\Customer.cs</Link>
     </Compile>

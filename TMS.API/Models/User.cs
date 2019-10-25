@@ -29,6 +29,8 @@ namespace TMS.API.Models
             CoordinationDriver = new HashSet<Coordination>();
             CoordinationInsertedByNavigation = new HashSet<Coordination>();
             CoordinationUpdatedByNavigation = new HashSet<Coordination>();
+            CurrencyInsertedByNavigation = new HashSet<Currency>();
+            CurrencyUpdatedByNavigation = new HashSet<Currency>();
             CustomerInsertedByNavigation = new HashSet<Customer>();
             CustomerUpdatedByNavigation = new HashSet<Customer>();
             DepartmentInsertedByNavigation = new HashSet<Department>();
@@ -107,6 +109,7 @@ namespace TMS.API.Models
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get; set; }
         public DateTime DoB { get; set; }
         public string Ssn { get; set; }
         public string Passport { get; set; }
@@ -158,6 +161,8 @@ namespace TMS.API.Models
         public virtual ICollection<Coordination> CoordinationDriver { get; set; }
         public virtual ICollection<Coordination> CoordinationInsertedByNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
+        public virtual ICollection<Currency> CurrencyInsertedByNavigation { get; set; }
+        public virtual ICollection<Currency> CurrencyUpdatedByNavigation { get; set; }
         public virtual ICollection<Customer> CustomerInsertedByNavigation { get; set; }
         public virtual ICollection<Customer> CustomerUpdatedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
