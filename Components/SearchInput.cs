@@ -14,7 +14,6 @@ namespace Components
         private readonly ObservableArray<Ref> _searchFound = new ObservableArray<Ref>();
         private readonly List<Header<Ref>> _header;
         private FloatingTable<Ref> _table;
-        private MasterData _masterData;
         private HTMLInputElement _input;
         public string DisplayField { get; set; } = "Name";
         public string ValueField { get; set; } = "Id";

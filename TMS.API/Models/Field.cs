@@ -22,6 +22,8 @@ namespace TMS.API.Models
         public string RefDisplayFields { get; set; }
         public int? Order { get; set; }
         public bool Hidden { get; set; }
+        public bool IsRefValueField { get; set; }
+        public bool IsRefDisplayField { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

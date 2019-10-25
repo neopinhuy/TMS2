@@ -25,8 +25,8 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual ComponentType ComponentType { get; set; }
         public virtual ComponentGroup ComponentGroup { get; set; }
+        public virtual ComponentType ComponentType { get; set; }
         public virtual Feature Feature { get; set; }
         public virtual Field Field { get; set; }
         public virtual User InsertedByNavigation { get; set; }

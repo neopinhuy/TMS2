@@ -1621,16 +1621,16 @@ namespace TMS.API.Models
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
+                entity.HasOne(d => d.ComponentGroup)
+                    .WithMany(p => p.UserInterface)
+                    .HasForeignKey(d => d.ComponentGroupId)
+                    .HasConstraintName("FK_UserInterface_ComponentGroup");
+
                 entity.HasOne(d => d.ComponentType)
                     .WithMany(p => p.UserInterface)
                     .HasForeignKey(d => d.ComponentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserInterface_ComponentDesc");
-
-                entity.HasOne(d => d.ComponentGroup)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.ComponentGroupId)
-                    .HasConstraintName("FK_UserInterface_ComponentGroup");
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.UserInterface)

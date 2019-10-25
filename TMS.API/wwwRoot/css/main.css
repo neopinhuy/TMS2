@@ -184,6 +184,7 @@ td {
   position: fixed;
   background-color: #fff;
   margin: 0;
+  z-index: 999;
 }
 .table-wrapper.floating th {
   line-height: 0.8;
@@ -371,6 +372,12 @@ td {
   float: right;
   height: 100%;
   background-color: transparent;
+}
+.popup-content .icon-box .fa-times {
+  top: 0.53rem;
+  position: absolute;
+  right: 0.45rem;
+  font-size: 1.3rem;
 }
 ::-webkit-scrollbar {
   height: 0.65rem;

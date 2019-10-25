@@ -2,6 +2,8 @@
 using Common.Extensions;
 using Components;
 using MVVM;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -24,33 +26,58 @@ namespace TMS.UI.Business.TruckManagement
             await base.RenderAsync();
             // Load UserInterface here
             var uiClient = new BaseClient<UserInterface>();
-            var controls = await uiClient.GetList("$expand=ComponentType,ComponentGroup,Field&$filter=Field/Entity/Name eq 'Truck'");
-            var groups = controls.DistinctBy(x => x.ComponentGroupId)
+            var uiControls = await uiClient.GetList("$expand=ComponentGroup,Field&$filter=Field/Entity/Name eq 'Truck'");
+            var groups = uiControls.DistinctBy(x => x.ComponentGroupId)
                 .Select(x => x.ComponentGroup).ToDictionary(x => x.Id);
-            controls.ForEach(control =>
+            var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
+            var field = _masterData.Field.ToDictionary(x => x.Id);
+            var entity = _masterData.Entity.ToDictionary(x => x.Id);
+            uiControls.ForEach(ui =>
             {
-                if (control.ComponentGroupId is null) return;
-                groups[control.ComponentGroupId.Value].UserInterface.Add(control);
+                if (ui.ComponentGroupId.HasValue)
+                {
+                    groups[ui.ComponentGroupId.Value].UserInterface.Add(ui);
+                }
+                ui.ComponentType = componentType[ui.ComponentTypeId];
+                if (ui.FieldId.HasValue)
+                {
+                    ui.Field = field[ui.FieldId.Value];
+                    ui.Field.Reference = ui.Field.ReferenceId.HasValue ? entity[ui.Field.ReferenceId.Value] : null;
+                }
             });
 
              // Render group
-            groups.Values.ToList().ForEach(group =>
+            groups.Values.ToList().ForEach(async group =>
             {
                 var column = 0;
-                Html.Instance.Div.Hidden(group.Hidden).ClassName(group.ClassName).Table.TBody.TRow.Render();
-                foreach(var control in group.UserInterface)
+                Html.Instance.Div.Hidden(group.Hidden).ClassName(group.ClassName).Table.ClassName("entity-detail").TBody.TRow.Render();
+                foreach(var ui in group.UserInterface)
                 {
-                    if (column == group.Column) Html.Instance.EndOf(ElementType.tr).TRow.Render();
-                    if (control.ComponentType.Name == "Input")
+                    if (!ui.Visibility) continue;
+                    if (ui.ComponentType.Name == "Input")
                     {
-                        _observableTruck[control.Field.FieldName] = new Observable<string>(Truck[control.Field.FieldName]?.ToString());
-                        if (!control.Visibility) continue;
+                        _observableTruck[ui.Field.FieldName] = new Observable<string>(Truck[ui.Field.FieldName]?.ToString());
                         Html.Instance
-                            .TData.Label.Text(control.Field.ShortDesc).EndOf(ElementType.td)
-                            .TData.Input.Value((Observable<string>)_observableTruck[control.Field.FieldName])
+                            .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
+                            .TData.Input.Value((Observable<string>)_observableTruck[ui.Field.FieldName])
                             .EndOf(ElementType.td);
                     }
-                    column += 2;
+                    if (ui.ComponentType.Name == "Dropdown")
+                    {
+                        _observableTruck[ui.Field.FieldName] = new Observable<int>((int)Truck[ui.Field.FieldName]);
+                        Html.Instance
+                            .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
+                            .TData.Render();
+                        var searchEntry = new SearchEntry((Observable<int>)_observableTruck[ui.Field.FieldName], ui.Field.Reference.Name);
+                        await searchEntry.RenderAsync();
+                        Html.Instance.EndOf(ElementType.td);
+                    }
+                    column += ui.Column ?? 0;
+                    if (column == group.Column)
+                    {
+                        column = 0;
+                        Html.Instance.EndOf(ElementType.tr).TRow.Render();
+                    }
                 }
             });
         }
