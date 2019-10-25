@@ -77,7 +77,7 @@ namespace TMS.UI.Business.TruckManagement
             DriverId.Data = null;
         }
 
-        public static async Task EditTruck(Truck truck)
+        public async Task EditTruck(Truck truck)
         {
             TruckDetail truckDetail = new TruckDetail
             {

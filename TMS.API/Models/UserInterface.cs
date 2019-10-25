@@ -10,10 +10,8 @@ namespace TMS.API.Models
         public int? FieldId { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
-        public bool CanSee { get; set; }
-        public bool CanEdit { get; set; }
         public bool Disabled { get; set; }
-        public bool? Visibility { get; set; }
+        public bool Visibility { get; set; }
         public int ComponentTypeId { get; set; }
         public int? ComponentGroupId { get; set; }
         public int? Column { get; set; }

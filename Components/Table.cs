@@ -37,7 +37,6 @@ namespace Components
             } 
         }
 
-        private MasterData _masterData;
         private int? timeOut = null;
 
         public Table(TableParam<Data> tableParam)
@@ -159,7 +158,9 @@ namespace Components
                 if (header.EditEvent != null)
                 {
                     html.Button.ClassName("button small warning")
-                        .EventAsync(EventType.Click, header.EditEvent, row)
+                        .Event(EventType.Click, async(data) => {
+                            await header.EditEvent(data);
+                        }, row)
                         .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
                 }
                 if (header.DeleteEvent != null)

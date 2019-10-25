@@ -18,7 +18,7 @@ namespace Common.Clients
             BaseUrl = url;
         }
 
-        public async Task<List<T>> GetList(string filter = null)
+        public Task<List<T>> GetList(string filter = null)
         {
             filter = filter ?? "$filter=Active eq true";
             var type = typeof(T);
@@ -43,10 +43,10 @@ namespace Common.Clients
                 }
             };
             xhr.Send();
-            return await tcs.Task;
+            return tcs.Task;
         }
 
-        public async Task<T> Get(int id)
+        public Task<T> Get(int id)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
@@ -70,10 +70,10 @@ namespace Common.Clients
                 }
             };
             xhr.Send();
-            return await tcs.Task;
+            return tcs.Task;
         }
 
-        public async Task<T> PostAsync(T value)
+        public Task<T> PostAsync(T value)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
@@ -98,10 +98,10 @@ namespace Common.Clients
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
-            return await tcs.Task;
+            return tcs.Task;
         }
 
-        public async Task<T> PutAsync(T value)
+        public Task<T> PutAsync(T value)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
@@ -126,10 +126,10 @@ namespace Common.Clients
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
-            return await tcs.Task;
+            return tcs.Task;
         }
 
-        public async Task<bool> Delete(int id)
+        public Task<bool> Delete(int id)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<bool>();
@@ -153,7 +153,7 @@ namespace Common.Clients
                 }
             };
             xhr.Send();
-            return await tcs.Task;
+            return tcs.Task;
         }
     }
 }

@@ -361,8 +361,11 @@ td {
   background-color: #1891cb;
   color: #fff;
   line-height: 2.5rem;
-  padding-left: 20px;
+  padding-left: 1rem;
   font-size: 1.1rem;
+}
+.popup-content .popup-body {
+  padding: 1rem;
 }
 .popup-content .icon-box {
   float: right;
