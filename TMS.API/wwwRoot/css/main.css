@@ -379,6 +379,10 @@ td {
   right: 0.45rem;
   font-size: 1.3rem;
 }
+.entity-detail td {
+  text-align: right;
+  padding-right: 1rem;
+}
 ::-webkit-scrollbar {
   height: 0.65rem;
   width: 0.65rem;

@@ -1,22 +1,19 @@
 ﻿using Common.Clients;
 using Common.Extensions;
-using Components;
 using MVVM;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
-namespace TMS.UI.Business.TruckManagement
+namespace Components.Forms
 {
-    public partial class TruckDetail : PopupComponent
+    public partial class EditForm<T> : PopupComponent
     {
-        public override string Title { get; set; } = "Truck Detail";
-        public Truck Truck { get; set; }
+        public override string Title { get; set; } = $"{typeof(T).Name} Detail";
+        public T Data { get; set; }
         private readonly object _observableTruck;
 
-        public TruckDetail()
+        public EditForm()
         {
             _observableTruck = new object();
         }
@@ -26,7 +23,7 @@ namespace TMS.UI.Business.TruckManagement
             await base.RenderAsync();
             // Load UserInterface here
             var uiClient = new BaseClient<UserInterface>();
-            var uiControls = await uiClient.GetList("$expand=ComponentGroup,Field&$filter=Field/Entity/Name eq 'Truck'");
+            var uiControls = await uiClient.GetList($"$expand=ComponentGroup,Field&$filter=Feature/Name eq '{Title}'");
             var groups = uiControls.DistinctBy(x => x.ComponentGroupId)
                 .Select(x => x.ComponentGroup).ToDictionary(x => x.Id);
             var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
@@ -56,7 +53,7 @@ namespace TMS.UI.Business.TruckManagement
                     if (!ui.Visibility) continue;
                     if (ui.ComponentType.Name == "Input")
                     {
-                        _observableTruck[ui.Field.FieldName] = new Observable<string>(Truck[ui.Field.FieldName]?.ToString());
+                        _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
                         Html.Instance
                             .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
                             .TData.Input.Value((Observable<string>)_observableTruck[ui.Field.FieldName])
@@ -64,7 +61,7 @@ namespace TMS.UI.Business.TruckManagement
                     }
                     if (ui.ComponentType.Name == "Dropdown")
                     {
-                        _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Truck[ui.Field.FieldName]);
+                        _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
                         Html.Instance
                             .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
                             .TData.Render();

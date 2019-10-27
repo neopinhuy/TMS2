@@ -19,7 +19,7 @@ namespace TMS.UI.Business.TruckManagement
         {
             TruckDetail truckDetail = new TruckDetail
             {
-                Truck = truck
+                Data = truck
             };
             await truckDetail.RenderAsync();
         }
