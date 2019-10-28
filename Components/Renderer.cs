@@ -2,6 +2,7 @@
 using MVVM;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace Components
 {
@@ -45,8 +46,17 @@ namespace Components
 
         public static Html SmallDatePicker(this Html html, Observable<DateTime?> value)
         {
-            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker")
-                .Attr("data-format", "%d/%m/%Y").Value(value);
+            html.Input.ClassName("input-small")
+                .Attr("data-role", "calendarpicker")
+                .Attr("data-format", "%d/%m/%Y").Value(value)
+                .Event(EventType.Change, (e) =>
+                {
+                    var input = e.Target as HTMLInputElement;
+                    var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy", 
+                        CultureInfo.InvariantCulture, out DateTime dateTime);
+                    if (!parsed) return;
+                    value.Data = (DateTime?)(object)dateTime;
+                });
             return html;
         }
 

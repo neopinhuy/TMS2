@@ -1,6 +1,7 @@
 using Bridge.Html5;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace MVVM
     public class Html
     {
         private static Html _instance;
+        public Element FocusEle { get; private set; }
         public static Element Context { get; set; }
 
         public Html(string selector)
@@ -397,24 +399,6 @@ namespace MVVM
             return this;
         }
 
-        public Html Value(string val)
-        {
-            var (input, textArea) = GetInputOrTextArea();
-            if (input != null)
-            {
-                input.Value = val;
-            }
-            else if (textArea != null)
-            {
-                textArea.Value = val;
-            }
-            else
-            {
-                this.Attr("value", val);
-            }
-            return this;
-        }
-
         public Html Checkbox(Observable<bool?> value)
         {
             Add(ElementType.input);
@@ -431,41 +415,52 @@ namespace MVVM
             });
             value.Subscribe(arg =>
             {
+                if (checkbox == FocusEle) return;
                 checkbox.Checked = arg.NewData ?? false;
             });
             return this;
         }
 
-        public Html Value<T>(Observable<T> val)
+        public Html Value(string val)
         {
             var (input, textArea) = GetInputOrTextArea();
             if (input != null)
             {
-                input.Value = val.Data?.ToString();
-                Event(EventType.Input, (e) =>
-                {
-                    val.Data = string.IsNullOrEmpty(input.Value)
-                        ? default(T) : (T)Convert.ChangeType(input.Value, typeof(T));
-                });
-                val.Subscribe(arg =>
-                {
-                    input.Value = arg.NewData != null ? arg.NewData.ToString() : string.Empty;
-                });
+                input.Value = val;
             }
             else if (textArea != null)
             {
-                textArea.Value = val.Data?.ToString();
+                textArea.Value = val;
+            }
+            else
+            {
+                Attr("value", val);
+            }
+            return this;
+        }
+
+        public Html Value<T>(Observable<T> val)
+        {
+            var input = Context;
+            if (input != null)
+            {
+                input["value"] = val.Data?.ToString();
                 Event(EventType.Input, (e) =>
                 {
-                    val.Data = string.IsNullOrEmpty(textArea.Value)
-                        ? default(T) : (T)Convert.ChangeType(textArea.Value, typeof(T));
+                    SetObservableValue(val, input["value"]?.ToString());
                 });
                 val.Subscribe(arg =>
                 {
-                    textArea.Value = arg.NewData != null ? arg.NewData.ToString() : string.Empty;
+                    if (input == FocusEle) return;
+                    input["value"] = arg.NewData != null ? arg.NewData.ToString() : string.Empty;
                 });
             }
             return this;
+        }
+
+        private static void SetObservableValue<T>(Observable<T> val, string value)
+        {
+            val.Data = string.IsNullOrEmpty(value) ? default(T) : (T)Convert.ChangeType(value, typeof(T));
         }
 
         private (HTMLInputElement, HTMLTextAreaElement) GetInputOrTextArea()
@@ -532,6 +527,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, (e) =>
             {
+                FocusEle = e.Target as Element;
                 action();
             });
             return this;
@@ -541,6 +537,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, (e) =>
             {
+                FocusEle = e.Target as Element;
                 action(e);
             });
             return this;
@@ -550,6 +547,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, (e) =>
             {
+                FocusEle = e.Target as Element;
                 action(e, model);
             });
             return this;
@@ -559,6 +557,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, async (Event e) =>
             {
+                FocusEle = e.Target as Element;
                 await action();
             });
             return this;
@@ -568,6 +567,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, (e) =>
             {
+                FocusEle = e.Target as Element;
                 action(model);
             });
             return this;
@@ -577,6 +577,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, async (e) =>
             {
+                FocusEle = e.Target as Element;
                 await action(model);
             });
             return this;
@@ -586,6 +587,7 @@ namespace MVVM
         {
             Context.AddEventListener(type, (e) =>
             {
+                FocusEle = e.Target as Element;
                 action(model, e);
             });
             return this;

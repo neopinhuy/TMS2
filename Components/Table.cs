@@ -193,7 +193,7 @@ namespace Components
         {
             if (textAlign != null || cellData is null)
                 return textAlign;
-            if (Util.IsNumber(cellData))
+            if (cellData.GetType().IsNumber())
             {
                 return TextAlign.right;
             }

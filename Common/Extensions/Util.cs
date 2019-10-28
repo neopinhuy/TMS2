@@ -6,26 +6,34 @@ namespace Common.Extensions
 {
     public static class Util
     {
-        public static bool IsNumber(object value)
+        public static bool IsNumber(this Type type)
         {
-            return value is sbyte
-                    || value is byte
-                    || value is short
-                    || value is ushort
-                    || value is int
-                    || value is uint
-                    || value is long
-                    || value is ulong
-                    || value is float
-                    || value is double
-                    || value is decimal;
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return IsNumber(type.GetGenericArguments()[0]);
+            }
+            return type == typeof(sbyte)
+                    || type == typeof(byte)
+                    || type == typeof(short)
+                    || type == typeof(ushort)
+                    || type == typeof(int)
+                    || type == typeof(uint)
+                    || type == typeof(long)
+                    || type == typeof(ulong)
+                    || type == typeof(float)
+                    || type == typeof(double)
+                    || type == typeof(decimal);
         }
 
-        public static bool IsTime(object value)
+        public static bool IsTime(this Type type)
         {
-            return value is DateTime
-                    || value is DateTimeOffset
-                    || value is TimeSpan;
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return IsTime(type.GetGenericArguments()[0]);
+            }
+            return type == typeof(DateTime)
+                    || type == typeof(DateTimeOffset)
+                    || type == typeof(TimeSpan);
         }
 
         public static bool IsBoolean(object value)
