@@ -207,6 +207,11 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.HasOne(d => d.Feature)
+                    .WithMany(p => p.ComponentGroup)
+                    .HasForeignKey(d => d.FeatureId)
+                    .HasConstraintName("FK_ComponentGroup_Feature");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.ComponentGroupInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
@@ -1631,6 +1636,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<UserInterface>(entity =>
             {
+                entity.Property(e => e.DataSourceFilter)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Events).IsUnicode(false);
 
                 entity.Property(e => e.Renderer)
@@ -1647,12 +1656,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.ComponentTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserInterface_ComponentDesc");
-
-                entity.HasOne(d => d.Feature)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.FeatureId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserInterface_Feature");
 
                 entity.HasOne(d => d.Field)
                     .WithMany(p => p.UserInterface)

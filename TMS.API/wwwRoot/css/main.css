@@ -379,9 +379,14 @@ td {
   right: 0.45rem;
   font-size: 1.3rem;
 }
-.entity-detail td {
-  text-align: right;
+.entity-detail tr td {
   padding-right: 1rem;
+}
+.entity-detail tr td:nth-child(odd) {
+  text-align: right;
+}
+.entity-detail tr td:nth-child(even) {
+  text-align: left;
 }
 ::-webkit-scrollbar {
   height: 0.65rem;

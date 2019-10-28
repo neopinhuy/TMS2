@@ -43,19 +43,10 @@ namespace Components
             return html;
         }
 
-        public static Html SmallDatePicker(this Html html, string value = null)
+        public static Html SmallDatePicker(this Html html, Observable<DateTime?> value)
         {
-            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y");
-            if (!string.IsNullOrEmpty(value))
-            {
-                html.Value(value);
-            }
-            return html;
-        }
-
-        public static Html SmallDatePicker<T>(this Html html, Observable<T> value)
-        {
-            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker").Attr("data-format", "%d/%m/%Y").Value(value);
+            html.Input.ClassName("input-small").Attr("data-role", "calendarpicker")
+                .Attr("data-format", "%d/%m/%Y").Value(value);
             return html;
         }
 
@@ -135,16 +126,16 @@ namespace Components
                 .Attr("data-caption", text);
         }
 
-        public static Html SmallCheckbox(this Html html, string text, bool check = false)
+        public static Html SmallCheckbox(this Html html, string text, Observable<bool?> @checked = null)
         {
             html.Input.ClassName("input-small").Type("checkbox")
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
                 .Attr("data-cls-check", "myCheckbox")
                 .Attr("data-caption", text);
-            if (check)
+            if (@checked.Data.HasValue)
             {
-                html.Attr("checked", check.ToString());
+                html.Value(@checked);
             }
             return html;
         }
@@ -238,21 +229,6 @@ namespace Components
         {
             Table<Data> table = new Table<Data>(tableParam);
             table.RenderAsync();
-            return html;
-        }
-
-        /// <summary>
-        /// Render the search input, non auto closing element
-        /// </summary>
-        /// <param name="html">Html</param>
-        /// <param name="headerData">Header description</param>
-        /// <param name="rowData">Row data</param>
-        /// <typeparam name="Data">Generic type of the data row</typeparam>
-        /// <returns></returns>
-        public static Html SearchInput<Key, Ref>(this Html html, Observable<Key> value, List<Header<Ref>> header)
-        {
-            var search = new SearchInput<Key, Ref>(value, header);
-            search.RenderAsync();
             return html;
         }
 

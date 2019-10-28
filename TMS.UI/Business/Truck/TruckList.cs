@@ -26,7 +26,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public async Task DeleteTruckAsync(Truck truck)
         {
-            var client = new BaseClient<Truck>();
+            var client = new Client<Truck>();
             await client.Delete(truck.Id);
             TruckData.Remove(truck);
         }

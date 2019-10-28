@@ -1,6 +1,7 @@
 ﻿using Common.Clients;
 using Common.Extensions;
 using MVVM;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -22,19 +23,12 @@ namespace Components.Forms
         {
             await base.RenderAsync();
             // Load UserInterface here
-            var uiClient = new BaseClient<UserInterface>();
-            var uiControls = await uiClient.GetList($"$expand=ComponentGroup,Field&$filter=Feature/Name eq '{Title}'");
-            var groups = uiControls.DistinctBy(x => x.ComponentGroupId)
-                .Select(x => x.ComponentGroup).ToDictionary(x => x.Id);
+            var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface&$filter=Feature/Name eq '{Title}'");
             var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
             var field = _masterData.Field.ToDictionary(x => x.Id);
             var entity = _masterData.Entity.ToDictionary(x => x.Id);
-            uiControls.ForEach(ui =>
+            componentGroup.SelectMany(x => x.UserInterface).ForEach(ui =>
             {
-                if (ui.ComponentGroupId.HasValue)
-                {
-                    groups[ui.ComponentGroupId.Value].UserInterface.Add(ui);
-                }
                 ui.ComponentType = componentType[ui.ComponentTypeId];
                 if (ui.FieldId.HasValue)
                 {
@@ -43,33 +37,42 @@ namespace Components.Forms
                 }
             });
 
-             // Render group
-            groups.Values.ToList().ForEach(async group =>
+            // Render group
+            componentGroup.ForEach(async group =>
             {
                 var column = 0;
                 Html.Instance.Div.Hidden(group.Hidden).ClassName(group.ClassName).Table.ClassName("entity-detail").TBody.TRow.Render();
                 foreach(var ui in group.UserInterface)
                 {
                     if (!ui.Visibility) continue;
+                    Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
+                        .EndOf(ElementType.td).TData.Render();
                     if (ui.ComponentType.Name == "Input")
                     {
                         _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
-                        Html.Instance
-                            .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
-                            .TData.Input.Value((Observable<string>)_observableTruck[ui.Field.FieldName])
-                            .EndOf(ElementType.td);
+                        Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
+                            .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
                     }
                     if (ui.ComponentType.Name == "Dropdown")
                     {
                         _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
-                        Html.Instance
-                            .TData.Label.Text(ui.Field.ShortDesc).EndOf(ElementType.td)
-                            .TData.Render();
                         var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], 
                             ui.Field.Reference.Name, ui.DataSourceFilter);
                         await searchEntry.RenderAsync();
-                        Html.Instance.EndOf(ElementType.td);
                     }
+                    if (ui.ComponentType.Name == "Datepicker")
+                    {
+                        var dateTime = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
+                        _observableTruck[ui.Field.FieldName] = dateTime;
+                        Html.Instance.SmallDatePicker(dateTime);
+                    }
+                    if (ui.ComponentType.Name == "Checkbox")
+                    {
+                        var @checked = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
+                        _observableTruck[ui.Field.FieldName] = @checked;
+                        Html.Instance.SmallCheckbox(string.Empty, @checked);
+                    }
+                    Html.Instance.EndOf(ElementType.td);
                     column += ui.Column ?? 0;
                     if (column == group.Column)
                     {

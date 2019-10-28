@@ -21,7 +21,7 @@ namespace TMS.UI.Business.TruckManagement
             TruckHeader.AddRange(headers.ToArray());
             RenderMenuButton();
             // Load truck data
-            var client = new BaseClient<Truck>();
+            var client = new Client<Truck>();
             var trucks = await client.GetList();
             TruckData.Data = trucks.ToArray();
             var tableParams = new TableParam<Truck> { Headers = TruckHeader, RowData = TruckData };

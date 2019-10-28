@@ -7,9 +7,9 @@ namespace TMS.API.Models
     {
         public Feature()
         {
+            ComponentGroup = new HashSet<ComponentGroup>();
             FeaturePolicy = new HashSet<FeaturePolicy>();
             InverseParent = new HashSet<Feature>();
-            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -30,8 +30,8 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual Feature Parent { get; set; }
+        public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicy { get; set; }
         public virtual ICollection<Feature> InverseParent { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

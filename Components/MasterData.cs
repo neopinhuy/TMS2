@@ -42,7 +42,7 @@ namespace Components
                 {
                     var refType = prop.PropertyType.GetGenericArguments()[0];
                     if (refType == typeof(IEnumerable<object>)) return null;
-                    var clientType = typeof(BaseClient<>).MakeGenericType(new Type[] { refType });
+                    var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
                     var httpGetList = clientType.GetMethod("GetList");
                     var client = Activator.CreateInstance(clientType);
                     return httpGetList.Invoke(client).As<Task<object>>();

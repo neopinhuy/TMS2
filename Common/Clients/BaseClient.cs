@@ -6,17 +6,19 @@ using Newtonsoft.Json;
 
 namespace Common.Clients
 {
-    public class BaseClient<T>
+    public class Client<T>
     {
         public string BaseUrl { get; set; }
-        public BaseClient()
+        public Client()
         {
         }
 
-        public BaseClient(string url)
+        public Client(string url)
         {
             BaseUrl = url;
         }
+
+        public static Client<T> Instance => new Client<T>();
 
         public Task<List<T>> GetList(string filter = null)
         {

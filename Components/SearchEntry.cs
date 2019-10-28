@@ -46,6 +46,7 @@ namespace Components
             await SearchRefField();
 
             Html.Instance.Input.Value(_text)
+                .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)
                 .Event(EventType.KeyDown, (Event e) =>
@@ -65,7 +66,7 @@ namespace Components
         {
             if (!_dataSource.IsNullOrEmpty())
             {
-                var type = typeof(BaseClient<>).MakeGenericType(new Type[] { _entityType });
+                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
                 var httpGetList = type.GetMethod("GetList");
                 var client = Activator.CreateInstance(type);
                 var source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
