@@ -193,23 +193,29 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<ComponentGroup>(entity =>
             {
-                entity.Property(e => e.Border)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.ClassName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
+                entity.Property(e => e.Style)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TabGroup)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Width)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.Feature)
                     .WithMany(p => p.ComponentGroup)
                     .HasForeignKey(d => d.FeatureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ComponentGroup_Feature");
 
                 entity.HasOne(d => d.InsertedByNavigation)

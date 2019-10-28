@@ -185,12 +185,17 @@ namespace Components
             return html.Style($"padding-{direction} : {margin}rem");
         }
 
-        public static Html Width(this Html html, int width)
+        public static Html WidthPx(this Html html, int width)
         {
             return html.Style($"width: {width}px");
         }
 
-        public static Html WidthPercentage(this Html html, int width)
+        public static Html Width(this Html html, string width)
+        {
+            return html.Style($"width: {width}");
+        }
+
+        public static Html WidthPercentage(this Html html, double width)
         {
             return html.Style($"width: {width}%");
         }

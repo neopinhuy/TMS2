@@ -105,14 +105,6 @@
     <Content Update="wwwroot\css\font-awesome.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\css\main.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>main.less</DependentUpon>
-    </Content>
-    <Content Update="wwwroot\css\main.min.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>main.css</DependentUpon>
-    </Content>
     <Content Update="wwwroot\css\metro-all.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

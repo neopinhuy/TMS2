@@ -64,14 +64,12 @@ namespace Components
 
         private async Task SearchRefField()
         {
-            if (!_dataSource.IsNullOrEmpty())
-            {
-                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
-                var httpGetList = type.GetMethod("GetList");
-                var client = Activator.CreateInstance(type);
-                var source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
-                _source.Data = source.ToArray();
-            }
+            IEnumerable<object> source = null;
+            var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
+            var httpGetList = type.GetMethod("GetList");
+            var client = Activator.CreateInstance(type);
+            source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+            _source.Data = source.ToArray();
             _masterData = await MasterData.GetSingletonAsync();
             var entity = _masterData.Entity.First(x => x.Name == _refEntity);
             RefField = _masterData.Field
@@ -117,8 +115,7 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _masterData = await MasterData.GetSingletonAsync();
-                var source = _masterData.GetSourceByTypeName(_refEntity);
-                var selected = source.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data.ToString());
+                var selected = _source.Data.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data.ToString());
                 _text.Data = selected?[_refDisplayField]?.ToString();
             });
         }

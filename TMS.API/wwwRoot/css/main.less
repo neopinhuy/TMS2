@@ -188,9 +188,6 @@ ul#tabs {
         padding: 0 5px;
         background-color: @white;
         .header(0.9rem, 700);
-        & + * {
-            margin-top: 0.5rem;
-        }
     }
 }
 
@@ -297,7 +294,7 @@ td {
 }
 
 .tabs-content {
-    > div > .panel, > .panel {
+    > .panel {
         border-top: 0;
         margin-top: -1px;
     }
@@ -434,12 +431,15 @@ td {
         position: relative;
         background-color: @infoDark;
         color: @white;
-        line-height: 2.5rem;
+        line-height: 2.4rem;
         padding-left: 1rem;
         font-size: 1.1rem;
     }
     .popup-body {
         padding: 1rem;
+        .tabs-wrapper {
+            margin-top: -44px;
+        }
     }
     .icon-box {
         float: right;
@@ -465,6 +465,14 @@ td {
         td:nth-child(even) {
             text-align: left;
         }
+    }
+}
+
+.group {
+    flex-wrap: wrap;
+    flex-direction: row;
+    &:not(.tab) {
+        padding: 0.6rem 1rem;
     }
 }
 

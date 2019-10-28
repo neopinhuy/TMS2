@@ -12,15 +12,15 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public int? FeatureId { get; set; }
+        public int FeatureId { get; set; }
         public string Name { get; set; }
         public string ClassName { get; set; }
         public bool IsTab { get; set; }
         public string TabGroup { get; set; }
-        public double Width { get; set; }
+        public string Width { get; set; }
+        public string Style { get; set; }
         public int Column { get; set; }
         public int Row { get; set; }
-        public string Border { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
         public bool Hidden { get; set; }
