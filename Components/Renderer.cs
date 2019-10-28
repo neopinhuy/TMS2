@@ -126,17 +126,13 @@ namespace Components
                 .Attr("data-caption", text);
         }
 
-        public static Html SmallCheckbox(this Html html, string text, Observable<bool?> @checked = null)
+        public static Html SmallCheckbox(this Html html, string text, Observable<bool?> value = null)
         {
-            html.Input.ClassName("input-small").Type("checkbox")
+            html.Checkbox(value).ClassName("input-small").Type("checkbox")
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
                 .Attr("data-cls-check", "myCheckbox")
                 .Attr("data-caption", text);
-            if (@checked.Data.HasValue)
-            {
-                html.Value(@checked);
-            }
             return html;
         }
 

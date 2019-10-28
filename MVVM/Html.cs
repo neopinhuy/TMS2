@@ -18,7 +18,7 @@ namespace MVVM
 
         public Html()
         {
-            
+
         }
 
         public Html(Element ele)
@@ -415,33 +415,54 @@ namespace MVVM
             return this;
         }
 
+        public Html Checkbox(Observable<bool?> value)
+        {
+            Add(ElementType.input);
+            var checkbox = Context as HTMLInputElement;
+            checkbox.SetAttribute("type", "checkbox");
+            checkbox.Checked = value.Data ?? false;
+            Event(EventType.Change, (e) =>
+            {
+                value.Data = (e.Target as HTMLInputElement).Checked;
+            });
+            Event(EventType.Click, (e) =>
+            {
+                value.Data = (e.Target as HTMLInputElement).Checked;
+            });
+            value.Subscribe(arg =>
+            {
+                checkbox.Checked = arg.NewData ?? false;
+            });
+            return this;
+        }
+
         public Html Value<T>(Observable<T> val)
         {
             var (input, textArea) = GetInputOrTextArea();
             if (input != null)
             {
                 input.Value = val.Data?.ToString();
-                input.OnInput += (e) =>
+                Event(EventType.Input, (e) =>
                 {
-                    val.Data = string.IsNullOrEmpty(input.Value) 
-                        ? default : (T)Convert.ChangeType(input.Value, typeof(T));
-                };
+                    val.Data = string.IsNullOrEmpty(input.Value)
+                        ? default(T) : (T)Convert.ChangeType(input.Value, typeof(T));
+                });
                 val.Subscribe(arg =>
                 {
-                    input.Value = arg.NewData?.ToString();
+                    input.Value = arg.NewData != null ? arg.NewData.ToString() : string.Empty;
                 });
             }
             else if (textArea != null)
             {
                 textArea.Value = val.Data?.ToString();
-                textArea.OnInput += (e) =>
+                Event(EventType.Input, (e) =>
                 {
-                    val.Data = string.IsNullOrEmpty(textArea.Value) 
-                        ? default : (T)Convert.ChangeType(textArea.Value, typeof(T));
-                };
+                    val.Data = string.IsNullOrEmpty(textArea.Value)
+                        ? default(T) : (T)Convert.ChangeType(textArea.Value, typeof(T));
+                });
                 val.Subscribe(arg =>
                 {
-                    textArea.Value = arg.NewData?.ToString();
+                    textArea.Value = arg.NewData != null ? arg.NewData.ToString() : string.Empty;
                 });
             }
             return this;
@@ -557,7 +578,7 @@ namespace MVVM
             Context.AddEventListener(type, async (e) =>
             {
                 await action(model);
-            }); 
+            });
             return this;
         }
 
@@ -705,7 +726,8 @@ namespace MVVM
                 Select.Render();
             }
             var select = Context as HTMLSelectElement;
-            list.ForEach((T model) => {
+            list.ForEach((T model) =>
+            {
                 var text = displayField == null ? model.ToString() : model[displayField]?.ToString();
                 var value = valueField == null ? model.ToString() : model[valueField]?.ToString();
                 Option.Text(text).Value(value).End.Render();
@@ -722,26 +744,30 @@ namespace MVVM
             }
             var select = Context as HTMLSelectElement;
 
-            ForEach(list, (T model, int index) => {
+            ForEach(list, (T model, int index) =>
+            {
                 var text = model[displayField]?.ToString();
                 var value = model[valueField]?.ToString();
                 Option.Text(text).Value(value).End.Render();
             });
 
             select.SelectedIndex = GetSelectedIndex(list.Data.ToList(), selectedItem.Data, valueField);
-            list.Subscribe(realList => {
+            list.Subscribe(realList =>
+            {
                 select.SelectedIndex = GetSelectedIndex(realList.Array.ToList(), selectedItem.Data, valueField);
             });
 
             selectedItem.BindingNodes.Add(select);
 
-            Event(EventType.Change, () => {
+            Event(EventType.Change, () =>
+            {
                 var selectedObj = list.Data[select.SelectedIndex];
                 selectedItem.Data = selectedObj;
             });
 
             // Subscribe change from selectedItem, to update selected index
-            selectedItem.Subscribe(val => {
+            selectedItem.Subscribe(val =>
+            {
                 select.SelectedIndex = GetSelectedIndex(list.Data.ToList(), val.NewData, valueField);
             });
 
@@ -756,7 +782,8 @@ namespace MVVM
             var index = Array.IndexOf(arr, item);
             if (valueField != "")
             {
-                var selectedItem = Array.Find(arr, x => {
+                var selectedItem = Array.Find(arr, x =>
+                {
                     return x[valueField] == item[valueField];
                 });
                 index = Array.IndexOf(arr, selectedItem);
@@ -792,7 +819,7 @@ namespace MVVM
         public Html Hidden(Observable<bool> hidden)
         {
             var ele = Context as HTMLElement;
-            ele.Style.Display = hidden.Data ? Display.None.ToString(): string.Empty;
+            ele.Style.Display = hidden.Data ? Display.None.ToString() : string.Empty;
             hidden.Subscribe(arg =>
             {
                 ele.Style.Display = arg.NewData ? Display.None.ToString() : string.Empty;

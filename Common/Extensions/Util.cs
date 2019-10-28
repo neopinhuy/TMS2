@@ -28,6 +28,11 @@ namespace Common.Extensions
                     || value is TimeSpan;
         }
 
+        public static bool IsBoolean(object value)
+        {
+            return value is bool || value is bool?;
+        }
+
         public static bool IsNullOrEmpty(this string value)
         {
             return string.IsNullOrEmpty(value);
