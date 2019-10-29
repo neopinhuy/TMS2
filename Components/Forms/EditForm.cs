@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
+using static Retyped.jquery_maskmoney.jQueryMaskMoney;
 
 namespace Components.Forms
 {
@@ -113,13 +114,25 @@ namespace Components.Forms
                     _observableTruck[ui.Field.FieldName] = value;
                     Html.Instance.SmallCheckbox(string.Empty, value);
                 }
-                else if (ui.ComponentType.Name == "Currency")
+                else if (ui.ComponentType.Name == "Number")
                 {
-                    var value = new Observable<decimal?>((decimal?)Data[ui.Field.FieldName]);
+                    var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal");
+                    var parsed = decimal.TryParse(Data[ui.Field.FieldName]?.ToString(), out decimal parsedVal);
+                    if (!parsed)
+                    {
+                        Html.Instance.EndOf(ElementType.td);
+                        return;
+                    }
+                    var value = new Observable<decimal?>(parsedVal);
                     _observableTruck[ui.Field.FieldName] = value;
-                    Html.Instance.MaskMoney(value);
+                    Html.Instance.MaskMoney(value, new Options
+                    {
+                        thousands = isNumber ? "." : string.Empty, 
+                        @decimal = ",", 
+                        precision = isNumber ? ui.Precision : 0
+                    });
                 }
-                Html.Instance.EndOf(ElementType.td);
+                Html.Instance.Attr("data-field", ui.FieldId?.ToString()).EndOf(ElementType.td);
                 column += ui.Column ?? 0;
                 if (column == group.Column)
                 {

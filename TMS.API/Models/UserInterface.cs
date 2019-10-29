@@ -16,9 +16,10 @@ namespace TMS.API.Models
         public string DataSourceFilter { get; set; }
         public int? Column { get; set; }
         public int? Row { get; set; }
-        public int? Order { get; set; }
+        public int? Precision { get; set; }
         public string Renderer { get; set; }
         public string Events { get; set; }
+        public int? Order { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
