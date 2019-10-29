@@ -22,6 +22,7 @@ namespace Components
         public ICollection<TruckType> TruckType { get; set; }
         public ICollection<ComponentType> ComponentType { get; set; }
         public ICollection<Department> Department { get; set; }
+        public ICollection<Currency> Currency { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
 
         private static MasterData _instance;

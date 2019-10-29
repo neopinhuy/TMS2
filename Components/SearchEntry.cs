@@ -30,6 +30,10 @@ namespace Components
             _refEntity = refEntity;
             _dataSource = dataSource;
             _entityType = Type.GetType("TMS.API.Models." + _refEntity);
+            if (_entityType == null)
+            {
+                throw new InvalidOperationException($"{_refEntity} is invalid entity");
+            }
             _text = new Observable<string>();
             _source = new ObservableArray<object>();
             _text.Subscribe((arg) =>
@@ -43,8 +47,7 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            await SearchRefField();
-
+            _masterData = await MasterData.GetSingletonAsync();
             Html.Instance.Input.Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
@@ -55,26 +58,29 @@ namespace Components
                     if (e["keyCode"].ToString() == "40") _table.MoveDown();
                 });
             _input = Html.Context as HTMLInputElement;
-            UpdateSearchText();
+            SearchRefField();
             _value.Subscribe(arg =>
             {
                 UpdateSearchText();
             });
         }
 
-        private async Task SearchRefField()
+        private void SearchRefField()
         {
-            IEnumerable<object> source = null;
-            var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
-            var httpGetList = type.GetMethod("GetList");
-            var client = Activator.CreateInstance(type);
-            source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
-            _source.Data = source.ToArray();
-            _masterData = await MasterData.GetSingletonAsync();
-            var entity = _masterData.Entity.First(x => x.Name == _refEntity);
-            RefField = _masterData.Field
-                .Where(x => x.EntityId == entity.Id && (x.IsRefDisplayField || x.IsRefValueField));
-            _refDisplayField = RefField.First(X => X.IsRefDisplayField).FieldName;
+            Window.SetTimeout(async () =>
+            {
+                IEnumerable<object> source = null;
+                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
+                var httpGetList = type.GetMethod("GetList");
+                var client = Activator.CreateInstance(type);
+                source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                _source.Data = source.ToArray();
+                var entity = _masterData.Entity.First(x => x.Name == _refEntity);
+                RefField = _masterData.Field
+                    .Where(x => x.EntityId == entity.Id && (x.IsRefDisplayField || x.IsRefValueField));
+                _refDisplayField = RefField.First(X => X.IsRefDisplayField).FieldName;
+                UpdateSearchText();
+            });
         }
 
         public async Task RenderSuggestion()
