@@ -1,4 +1,5 @@
 ﻿using Common.Clients;
+using Components.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -93,24 +94,30 @@ namespace Components.Forms
                     Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
                         .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
                 }
-                if (ui.ComponentType.Name == "Dropdown")
+                else if (ui.ComponentType.Name == "Dropdown")
                 {
                     _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
                     var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName],
                         ui.Field.Reference.Name, ui.DataSourceFilter);
                     await searchEntry.RenderAsync();
                 }
-                if (ui.ComponentType.Name == "Datepicker")
+                else if (ui.ComponentType.Name == "Datepicker")
                 {
                     var dateTime = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
                     _observableTruck[ui.Field.FieldName] = dateTime;
                     Html.Instance.SmallDatePicker(dateTime);
                 }
-                if (ui.ComponentType.Name == "Checkbox")
+                else if (ui.ComponentType.Name == "Checkbox")
                 {
                     var value = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
                     _observableTruck[ui.Field.FieldName] = value;
                     Html.Instance.SmallCheckbox(string.Empty, value);
+                }
+                else if (ui.ComponentType.Name == "Currency")
+                {
+                    var value = new Observable<decimal?>((decimal?)Data[ui.Field.FieldName]);
+                    _observableTruck[ui.Field.FieldName] = value;
+                    Html.Instance.MaskMoney(value);
                 }
                 Html.Instance.EndOf(ElementType.td);
                 column += ui.Column ?? 0;

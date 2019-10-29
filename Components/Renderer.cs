@@ -1,7 +1,6 @@
 ﻿using Bridge.Html5;
 using MVVM;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace Components
@@ -119,13 +118,6 @@ namespace Components
             return html.Attr("placeholder", value);
         }
 
-        public static Html SmallDropDown<T>(this Html html, List<T> list, T selectedItem, string displayField = null, string valueField = null)
-        {
-            return html.Dropdown(list, selectedItem, displayField, valueField)
-                .ClassName("input-small").Attr("data-role", "select")
-                .Attr("style", "mind-width: 120px");
-        }
-
         public static Html SmallRadio(this Html html, string name, string text)
         {
             return html.Input.ClassName("input-small").Type("radio")
@@ -191,14 +183,14 @@ namespace Components
             return html.Style($"padding-{direction} : {margin}rem");
         }
 
-        public static Html WidthPx(this Html html, int width)
-        {
-            return html.Style($"width: {width}px");
-        }
-
         public static Html Width(this Html html, string width)
         {
             return html.Style($"width: {width}");
+        }
+
+        public static Html WidthPx(this Html html, int width)
+        {
+            return html.Style($"width: {width}px");
         }
 
         public static Html WidthPercentage(this Html html, double width)
@@ -278,28 +270,6 @@ namespace Components
         public static Html Icon(this Html html, string iconClass)
         {
             return html.Span.ClassName(iconClass);
-        }
-
-        public static Html Table(this Html html, int row, int column)
-        {
-            html.Table.Render();
-            var table = Html.Context as HTMLElement;
-            html.TBody.Render();
-            for (int i = 0; i < row; i++)
-            {
-                html.TRow.Render();
-                for (int j = 0; j < column; j++)
-                {
-                    html.TData.End.Render();
-                }
-            }
-            return Html.Take(table);
-        }
-
-        public static void RenderAndFocus(this TabComponent component)
-        {
-            component.RenderAsync();
-            component.Focus();
         }
     }
 }
