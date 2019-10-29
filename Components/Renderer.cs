@@ -46,13 +46,13 @@ namespace Components
 
         public static Html SmallDatePicker(this Html html, Observable<DateTime?> value)
         {
-            html.Input.ClassName("input-small")
+            html.Input.ClassName("input-small").Value(value)
                 .Attr("data-role", "calendarpicker")
-                .Attr("data-format", "%d/%m/%Y").Value(value)
+                .Attr("data-format", "%d/%m/%Y")
                 .Event(EventType.Change, (e) =>
                 {
                     var input = e.Target as HTMLInputElement;
-                    var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy", 
+                    var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy",
                         CultureInfo.InvariantCulture, out DateTime dateTime);
                     if (!parsed) return;
                     value.Data = (DateTime?)(object)dateTime;

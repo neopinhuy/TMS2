@@ -438,7 +438,7 @@ td {
     .popup-body {
         padding: 1rem;
         .tabs-wrapper {
-            width: 80%;
+            width: calc(100% - 20px);
             margin-top: -44px;
         }
     }
@@ -446,11 +446,14 @@ td {
         float: right;
         height: 100%;
         background-color: transparent;
-        .fa-times {
-            top: 0.53rem;
-            position: absolute;
-            right: 0.45rem;
-            font-size: 1.3rem;
+    }
+    .fa-times {
+        top: 0.53rem;
+        position: absolute;
+        right: 0.45rem;
+        font-size: 1.3rem;
+        &:hover {
+            cursor: pointer;
         }
     }
 }
