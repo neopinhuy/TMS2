@@ -70,10 +70,17 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 IEnumerable<object> source = null;
-                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
-                var httpGetList = type.GetMethod("GetList");
-                var client = Activator.CreateInstance(type);
-                source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                if (!_dataSource.IsNullOrEmpty())
+                {
+                    var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
+                    var httpGetList = type.GetMethod("GetList");
+                    var client = Activator.CreateInstance(type);
+                    source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                }
+                else
+                {
+                    source = _masterData.GetSourceByTypeName(_refEntity);
+                }
                 _source.Data = source.ToArray();
                 var entity = _masterData.Entity.First(x => x.Name == _refEntity);
                 RefField = _masterData.Field
