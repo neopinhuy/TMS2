@@ -89,7 +89,7 @@ namespace Components.Forms
                 if (!ui.Visibility) continue;
                 if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
                     .EndOf(ElementType.td).TData.Render();
-                else Html.Instance.TData.Render();
+                else Html.Instance.TData.ClassName("text-left").Style("padding-left: 0;").Render();
                 if (ui.ComponentType.Name == "Input")
                 {
                     _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());

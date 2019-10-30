@@ -1,4 +1,4 @@
-﻿@import "color";
+﻿@import "mixin";
 
 html {
     font-size: 13px;
@@ -207,6 +207,7 @@ td {
         background-color: @white;
         margin: 0;
         z-index: 999;
+
         th {
             line-height: 0.8;
         }
@@ -481,25 +482,25 @@ td {
 }
 
 .uploader {
+    text-align: left !important;
     position: relative;
-    div {
-        position: absolute;
-        top: 0;
-        left: 2px;
-        bottom: 0;
-    }
     input {
         visibility: hidden;
     }
+    img.icon {
+        position: absolute;
+        right: 11px;
+        top: 0;
+    }
     label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
         cursor: pointer;
-        img:first-child {
+        img.thumb {
             height: 100%;
             width: auto;
-        }
-        img:last-child {
-            position: absolute;
-            right: 0.5rem;
         }
     }
 }

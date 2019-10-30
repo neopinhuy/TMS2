@@ -19,8 +19,8 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
-    <Content Remove="wwwRoot\css\color.less" />
     <Content Remove="wwwRoot\css\main.less" />
+    <Content Remove="wwwRoot\css\mixin.less" />
     <Content Remove="wwwRoot\css\webfonts\fa-brands-400.eot" />
     <Content Remove="wwwRoot\css\webfonts\fa-brands-400.ttf" />
     <Content Remove="wwwRoot\css\webfonts\fa-brands-400.woff" />
@@ -55,7 +55,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
-    <None Include="wwwRoot\css\color.less" />
+    <None Include="wwwRoot\css\mixin.less" />
     <None Include="wwwroot\css\fonts\LineIcons.svg" />
     <None Include="wwwRoot\css\main.less">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
