@@ -1,23 +1,56 @@
-﻿using System.Threading.Tasks;
-using Bridge.Html5;
+﻿using Bridge.Html5;
+using Components.Extensions;
 using MVVM;
+using System.Threading.Tasks;
+using static Retyped.jquery;
 
 namespace Components
 {
     public abstract class PopupComponent : Component
     {
         public virtual string Title { get; set; }
-        public string Top { get; set; } = "68px";
-        public string Left { get; set; } = "306px";
-        public string Width { get; set; } = "74%";
-        public string Height { get; set; } = "82%";
+        private string top = "68px";
+        private string left = "306px";
+        private string width = "74%";
+        public string Top
+        {
+            get => top;
+            set
+            {
+                top = value;
+                Html.Take(_content).Style(new { top });
+            }
+        }
+        public string Left
+        {
+            get => left;
+            set
+            {
+                left = value;
+                Html.Take(_content).Style(new { left });
+            }
+        }
+        public string Width
+        {
+            get => width;
+            set
+            {
+                width = value;
+                Html.Take(_content).Style(new { width });
+            }
+        }
+        protected HTMLDivElement _content;
+
         public override async Task RenderAsync()
         {
             _masterData = await MasterData.GetSingletonAsync();
             Html.Take(Document.Body).Div.ClassName("backdrop");
             RootElement = Html.Context as HTMLElement;
-            Html.Instance.Div.ClassName("popup-content")
-                .Style($"top: {Top}; left: {Left}; width: {Width}; Height: {Height};")
+            Html.Instance.Div.ClassName("popup-content");
+            _content = Html.Context as HTMLDivElement;
+            jQuery.select(_content).HotKey("esc", Dispose);
+
+            Html.Instance.Style($"top: {Top}; left: {Left}; width: {Width};")
                 .Div.ClassName("popup-title").Text(Title)
                 .Div.ClassName("icon-box").Span.ClassName("fa fa-times")
                     .Event(EventType.Click, Dispose)

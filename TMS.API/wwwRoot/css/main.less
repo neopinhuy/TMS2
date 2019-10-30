@@ -120,6 +120,8 @@ li {
 ul.tabs-list {
     > li {
         border-bottom: 1px solid @infoDark !important;
+        .radiusTopLeft(@radius);
+        .radiusTopRight(@radius);
         &.active {
             border-bottom: 0 !important;
         }
@@ -425,9 +427,13 @@ td {
 }
 
 .popup-content {
+    .radius(@radius);
     position: fixed;
     background-color: #fff;
     box-shadow: 0px 0px 15px 16px rgba(0, 0, 0, 0.22);
+    .tabs-list {
+        border: 0;
+    }
     .popup-title {
         position: relative;
         background-color: @infoDark;
@@ -435,6 +441,8 @@ td {
         line-height: 2.4rem;
         padding-left: 1rem;
         font-size: 1.1rem;
+        .radiusTopLeft(@radius);
+        .radiusTopRight(@radius);
     }
     .popup-body {
         padding: 1rem;
@@ -474,10 +482,10 @@ td {
 }
 
 .group {
-    flex-wrap: wrap;
-    flex-direction: row;
+    flex-flow: row wrap;
     &:not(.tab) {
         padding: 0.6rem 1rem;
+        .radius(@radius);
     }
 }
 

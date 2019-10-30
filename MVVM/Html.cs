@@ -393,6 +393,15 @@ namespace MVVM
             return this;
         }
 
+        public Html Style(object style)
+        {
+            foreach (var key in GetOwnPropertyNames(style))
+            {
+                Context["style"][key] = style[key];
+            }
+            return this;
+        }
+
         public Html Clear()
         {
             Context.InnerHTML = string.Empty;

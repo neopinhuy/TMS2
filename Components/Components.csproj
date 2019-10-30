@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ColumnFilter.cs" />
+    <Compile Include="Extensions\HotKeys.cs" />
     <Compile Include="Extensions\MaskMoney.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Forms\EditForm.cs" />

@@ -13,6 +13,7 @@
 @grayNormal: #cecece;
 @light: #f9f9f9;
 @tableHover: #d5d5d5;
+@radius: 3px;
 
 .hide {
     display: none;
@@ -53,4 +54,16 @@
 
 .text-center {
     text-align: center !important;
+}
+
+.radius(@value) {
+    border-radius: @value;
+}
+
+.radiusTopLeft(@value) {
+    border-top-left-radius: @value;
+}
+
+.radiusTopRight(@value) {
+    border-top-right-radius: @value;
 }
