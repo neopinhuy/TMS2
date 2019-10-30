@@ -118,7 +118,7 @@ namespace Components.Forms
                 {
                     var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
                     _observableTruck[ui.Field.FieldName] = value;
-                    var uploader = new Uploader(value, ui);
+                    var uploader = new ImageUploader(value, ui);
                     await uploader.RenderAsync();
                 }
                 else if (ui.ComponentType.Name == "Number")
