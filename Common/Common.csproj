@@ -216,7 +216,8 @@
     <Compile Include="..\TMS.API\Models\Workflow.cs">
       <Link>Models\Workflow.cs</Link>
     </Compile>
-    <Compile Include="Extensions\HtmlElement.cs" />
+    <Compile Include="Extensions\HtmlElementExtension.cs" />
+    <Compile Include="Extensions\OtherExtensions.cs" />
     <Compile Include="Extensions\Util.cs" />
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,6 @@
-﻿using Common.Clients;
+﻿using Bridge.Html5;
+using Common.Clients;
+using Common.Extensions;
 using Components.Extensions;
 using MVVM;
 using System;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using static Retyped.jquery_maskmoney.jQueryMaskMoney;
+using ElementType = MVVM.ElementType;
 
 namespace Components.Forms
 {
@@ -14,7 +17,7 @@ namespace Components.Forms
     {
         public override string Title { get; set; } = $"{typeof(T).Name} Detail";
         public T Data { get; set; }
-        private readonly object _observableTruck;
+        protected readonly object _observableTruck;
 
         public EditForm()
         {
@@ -38,7 +41,6 @@ namespace Components.Forms
         public override async Task RenderAsync()
         {
             await base.RenderAsync();
-            // Load UserInterface here
             var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface&$filter=Feature/Name eq '{Title}'");
             var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
             var field = _masterData.Field.ToDictionary(x => x.Id);
@@ -63,10 +65,10 @@ namespace Components.Forms
                 if (group.IsTab)
                 {
                     Html.Instance.Tab().Id("feature_" + group.FeatureId)
-                        .TabItem(group.Name, "section_" + group.Id, true).EndOf(ElementType.ul)
+                        .TabItem(group.Name, "group_" + group.Id, true).EndOf(ElementType.ul)
                         .TabContent();
                 }
-                Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("section_" + group.Id)
+                Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("group_" + group.Id)
                     .ClassName("group").ClassName(group.ClassName)
                     .ClassName(group.IsTab ? "tab" : string.Empty).Hidden(group.Hidden)
                     .Width(group.Width).Style(group.Style ?? string.Empty);
@@ -92,52 +94,31 @@ namespace Components.Forms
                 else Html.Instance.TData.ClassName("text-left").Style("padding-left: 0;").Render();
                 if (ui.ComponentType.Name == "Input")
                 {
-                    _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
-                    Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
-                        .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
+                    RenderInput(ui);
                 }
                 else if (ui.ComponentType.Name == "Dropdown")
                 {
-                    _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
-                    var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], ui);
-                    await searchEntry.RenderAsync();
+                    await RenderDropdown(ui);
                 }
                 else if (ui.ComponentType.Name == "Datepicker")
                 {
-                    var dateTime = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
-                    _observableTruck[ui.Field.FieldName] = dateTime;
-                    Html.Instance.SmallDatePicker(dateTime);
+                    RenderDatepicker(ui);
                 }
                 else if (ui.ComponentType.Name == "Checkbox")
                 {
-                    var value = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
-                    _observableTruck[ui.Field.FieldName] = value;
-                    Html.Instance.SmallCheckbox(string.Empty, value);
+                    RenderCheckbox(ui);
                 }
                 else if (ui.ComponentType.Name == "Image")
                 {
-                    var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
-                    _observableTruck[ui.Field.FieldName] = value;
-                    var uploader = new ImageUploader(value, ui);
-                    await uploader.RenderAsync();
+                    await RenderImage(ui);
+                }
+                else if (ui.ComponentType.Name == "Button")
+                {
+                    RenderButton(ui);
                 }
                 else if (ui.ComponentType.Name == "Number")
                 {
-                    var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal"); 
-                    var parsed = decimal.TryParse(Data[ui.Field.FieldName]?.ToString(), out decimal parsedVal);
-                    if (!parsed)
-                    {
-                        Html.Instance.EndOf(ElementType.td);
-                        return;
-                    }
-                    var value = new Observable<decimal?>(parsedVal);
-                    _observableTruck[ui.Field.FieldName] = value;
-                    Html.Instance.MaskMoney(value, new Options
-                    {
-                        thousands = isNumber ? "." : string.Empty, 
-                        @decimal = ",", 
-                        precision = isNumber ? ui.Precision : 0
-                    });
+                    RenderNumberInput(ui);
                 }
                 Html.Instance.Attr("data-field", ui.FieldId?.ToString()).EndOf(ElementType.td);
                 column += ui.Column ?? 0;
@@ -147,6 +128,80 @@ namespace Components.Forms
                     Html.Instance.EndOf(ElementType.tr).TRow.Render();
                 }
             }
+        }
+
+        private void RenderNumberInput(UserInterface ui)
+        {
+            var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal");
+            var parsed = decimal.TryParse(Data[ui.Field.FieldName]?.ToString(), out decimal parsedVal);
+            if (!parsed)
+            {
+                Html.Instance.EndOf(ElementType.td);
+                return;
+            }
+            var value = new Observable<decimal?>(parsedVal);
+            _observableTruck[ui.Field.FieldName] = value;
+            Html.Instance.MaskMoney(value, new Options
+            {
+                thousands = isNumber ? "." : string.Empty,
+                @decimal = ",",
+                precision = isNumber ? ui.Precision : 0
+            });
+        }
+
+        private void RenderButton(UserInterface ui)
+        {
+            Html.Instance.Button(ui.Label, ui.ClassName, ui.Icon)
+                .Attr("data-id", ui.Id.ToString())
+                .AsyncEvent(EventType.Click, async () =>
+                {
+                    try
+                    {
+                        if (this[ui.Events] is Func<Task> asyncF) await asyncF.Bind(this).Invoke();
+                        if (this[ui.Events] is System.Action syncF) syncF.Invoke();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message != "Cannot read property 'isCompleted' of undefined")
+                            throw;
+                    }
+                });
+        }
+
+        private async Task RenderImage(UserInterface ui)
+        {
+            var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
+            _observableTruck[ui.Field.FieldName] = value;
+            var uploader = new ImageUploader(value, ui);
+            await uploader.RenderAsync();
+        }
+
+        private void RenderCheckbox(UserInterface ui)
+        {
+            var value = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
+            _observableTruck[ui.Field.FieldName] = value;
+            Html.Instance.SmallCheckbox(string.Empty, value);
+        }
+
+        private void RenderDatepicker(UserInterface ui)
+        {
+            var dateTime = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
+            _observableTruck[ui.Field.FieldName] = dateTime;
+            Html.Instance.SmallDatePicker(dateTime);
+        }
+
+        private async Task RenderDropdown(UserInterface ui)
+        {
+            _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
+            var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], ui);
+            await searchEntry.RenderAsync();
+        }
+
+        private void RenderInput(UserInterface ui)
+        {
+            _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
+            Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
+                .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
         }
     }
 }

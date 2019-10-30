@@ -446,6 +446,15 @@ td {
         font-size: 1.1rem;
         .radiusTopLeft(@radius);
         .radiusTopRight(@radius);
+        .fa-times {
+            top: 0.53rem;
+            position: absolute;
+            right: 0.45rem;
+            font-size: 1.3rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
     .popup-body {
         padding: 1rem;
@@ -458,15 +467,6 @@ td {
         float: right;
         height: 100%;
         background-color: transparent;
-    }
-    .fa-times {
-        top: 0.53rem;
-        position: absolute;
-        right: 0.45rem;
-        font-size: 1.3rem;
-        &:hover {
-            cursor: pointer;
-        }
     }
 }
 

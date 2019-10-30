@@ -17,7 +17,12 @@ namespace TMS.API.Models
         public int? Column { get; set; }
         public int? Row { get; set; }
         public int? Precision { get; set; }
+        public string Label { get; set; }
         public bool ShowLabel { get; set; }
+        public string Icon { get; set; }
+        public string ClassName { get; set; }
+        public string Style { get; set; }
+        public string HotKey { get; set; }
         public string Renderer { get; set; }
         public string Events { get; set; }
         public int? Order { get; set; }

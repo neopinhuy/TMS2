@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Common.Extensions
 {
-    public static class HtmlElement
+    public static class HtmlElementExtension
     {
         public static void ReplaceClass(this Node node, string oldClass, string newClass)
         {

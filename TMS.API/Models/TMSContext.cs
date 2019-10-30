@@ -1642,13 +1642,33 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<UserInterface>(entity =>
             {
+                entity.Property(e => e.ClassName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DataSourceFilter)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Events).IsUnicode(false);
+                entity.Property(e => e.Events)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HotKey)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Label).HasMaxLength(50);
 
                 entity.Property(e => e.Renderer)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Style)
                     .HasMaxLength(200)
                     .IsUnicode(false);
 

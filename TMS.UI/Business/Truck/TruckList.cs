@@ -17,7 +17,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public async Task EditTruck(Truck truck)
         {
-            TruckDetail truckDetail = new TruckDetail
+            var truckDetail = new TruckDetail
             {
                 Data = truck
             };
