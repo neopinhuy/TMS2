@@ -23,12 +23,14 @@ namespace Components
         private readonly string _refValueField = "Id";
         private string _refDisplayField;
         private IEnumerable<Field> RefField;
+        private readonly UserInterface _ui;
 
-        public SearchEntry(Observable<int?> value, string refEntity, string dataSource = null)
+        public SearchEntry(Observable<int?> value, UserInterface ui)
         {
             _value = value;
-            _refEntity = refEntity;
-            _dataSource = dataSource;
+            _ui = ui;
+            _refEntity = ui.Field.Reference.Name;
+            _dataSource = ui.DataSourceFilter;
             _entityType = Type.GetType("TMS.API.Models." + _refEntity);
             if (_entityType == null)
             {
@@ -48,7 +50,7 @@ namespace Components
         public override async Task RenderAsync()
         {
             _masterData = await MasterData.GetSingletonAsync();
-            Html.Instance.Input.Value(_text)
+            Html.Instance.Input.PlaceHolder(_ui.Field.ShortDesc).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)

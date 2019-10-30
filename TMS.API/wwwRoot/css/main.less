@@ -480,6 +480,30 @@ td {
     }
 }
 
+.uploader {
+    position: relative;
+    div {
+        position: absolute;
+        top: 0;
+        left: 2px;
+        bottom: 0;
+    }
+    input {
+        visibility: hidden;
+    }
+    label {
+        cursor: pointer;
+        img:first-child {
+            height: 100%;
+            width: auto;
+        }
+        img:last-child {
+            position: absolute;
+            right: 0.5rem;
+        }
+    }
+}
+
 ::-webkit-scrollbar {
     height: 0.65rem;
     width: 0.65rem;

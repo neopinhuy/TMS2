@@ -40,6 +40,7 @@
     <Compile Include="Extensions\MaskMoney.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Forms\EditForm.cs" />
+    <Compile Include="Uploader.cs" />
     <Compile Include="PopupComponent.cs" />
     <Compile Include="SearchEntry.cs" />
     <Compile Include="TabComponent.cs" />

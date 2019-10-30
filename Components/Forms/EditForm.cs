@@ -87,8 +87,9 @@ namespace Components.Forms
             foreach (var ui in group.UserInterface)
             {
                 if (!ui.Visibility) continue;
-                Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
+                if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
                     .EndOf(ElementType.td).TData.Render();
+                else Html.Instance.TData.Render();
                 if (ui.ComponentType.Name == "Input")
                 {
                     _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
@@ -98,8 +99,7 @@ namespace Components.Forms
                 else if (ui.ComponentType.Name == "Dropdown")
                 {
                     _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
-                    var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName],
-                        ui.Field.Reference.Name, ui.DataSourceFilter);
+                    var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], ui);
                     await searchEntry.RenderAsync();
                 }
                 else if (ui.ComponentType.Name == "Datepicker")
@@ -114,9 +114,16 @@ namespace Components.Forms
                     _observableTruck[ui.Field.FieldName] = value;
                     Html.Instance.SmallCheckbox(string.Empty, value);
                 }
+                else if (ui.ComponentType.Name == "Image")
+                {
+                    var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
+                    _observableTruck[ui.Field.FieldName] = value;
+                    var uploader = new Uploader(value, ui);
+                    await uploader.RenderAsync();
+                }
                 else if (ui.ComponentType.Name == "Number")
                 {
-                    var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal");
+                    var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal"); 
                     var parsed = decimal.TryParse(Data[ui.Field.FieldName]?.ToString(), out decimal parsedVal);
                     if (!parsed)
                     {

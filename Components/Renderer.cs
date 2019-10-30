@@ -188,9 +188,9 @@ namespace Components
             return html.Style($"width: {width}");
         }
 
-        public static Html WidthPx(this Html html, int width)
+        public static Html WidthRem(this Html html, int width)
         {
-            return html.Style($"width: {width}px");
+            return html.Style($"width: {width}rem");
         }
 
         public static Html WidthPercentage(this Html html, double width)
@@ -198,9 +198,14 @@ namespace Components
             return html.Style($"width: {width}%");
         }
 
-        public static Html Height(this Html html, int height)
+        public static Html Height(this Html html, string height)
         {
-            return html.Style($"height: {height}px");
+            return html.Style($"height: {height}");
+        }
+
+        public static Html HeightRem(this Html html, double height)
+        {
+            return html.Style($"height: {height}rem");
         }
 
         public static Html HeightPercentage(this Html html, int height)
