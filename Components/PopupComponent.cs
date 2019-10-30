@@ -11,7 +11,6 @@ namespace Components
         public virtual string Title { get; set; }
         private string top = "68px";
         private string left = "306px";
-        private string width = "74%";
         public string Top
         {
             get => top;
@@ -30,15 +29,6 @@ namespace Components
                 Html.Take(_content).Style(new { left });
             }
         }
-        public string Width
-        {
-            get => width;
-            set
-            {
-                width = value;
-                Html.Take(_content).Style(new { width });
-            }
-        }
         protected HTMLDivElement _content;
 
         public override async Task RenderAsync()
@@ -50,7 +40,7 @@ namespace Components
             _content = Html.Context as HTMLDivElement;
             jQuery.select(_content).HotKey("esc", Dispose);
 
-            Html.Instance.Style($"top: {Top}; left: {Left}; width: {Width};")
+            Html.Instance.Style($"top: {Top}; left: {Left};")
                 .Div.ClassName("popup-title").Text(Title)
                 .Div.ClassName("icon-box").Span.ClassName("fa fa-times")
                     .Event(EventType.Click, Dispose)
