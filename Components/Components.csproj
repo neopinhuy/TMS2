@@ -42,6 +42,7 @@
     <Compile Include="Extensions\Toast.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Forms\EditForm.cs" />
+    <Compile Include="GridView.cs" />
     <Compile Include="ImageUploader.cs" />
     <Compile Include="PopupComponent.cs" />
     <Compile Include="SearchEntry.cs" />

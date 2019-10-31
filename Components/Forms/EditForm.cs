@@ -145,6 +145,10 @@ namespace Components.Forms
                 {
                     RenderNumberInput(ui);
                 }
+                else if (ui.ComponentType.Name == "GridView")
+                {
+                    RenderGridView(ui);
+                }
                 Html.Instance.Attr("data-field", ui.FieldId?.ToString()).EndOf(ElementType.td);
                 column += ui.Column ?? 0;
                 if (column == group.Column)
@@ -153,6 +157,11 @@ namespace Components.Forms
                     Html.Instance.EndOf(ElementType.tr).TRow.Render();
                 }
             }
+        }
+
+        private void RenderGridView(UserInterface ui)
+        {
+            throw new NotImplementedException();
         }
 
         private void RenderNumberInput(UserInterface ui)
