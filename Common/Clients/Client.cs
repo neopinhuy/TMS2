@@ -109,6 +109,33 @@ namespace Common.Clients
         }
 
         /// <summary>
+        /// Upload files
+        /// </summary>
+        /// <param name="value">Path of uploaded image</param>
+        /// <returns></returns>
+        public Task<List<string>> PostFilesAsync(FormData value, Action progressHandler = null)
+        {
+            var tcs = new TaskCompletionSource<List<string>>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("POST", $"{BaseUrl}/api/File", true);
+            xhr.AddEventListener(EventType.ReadyStateChange, () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var parsed = JsonConvert.DeserializeObject<List<string>>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+            });
+            xhr.AddEventListener(EventType.Progress, progressHandler);
+            xhr.Send(value);
+            return tcs.Task;
+        }
+
+        /// <summary>
         /// Update entity
         /// </summary>
         /// <param name="value"></param>

@@ -173,19 +173,28 @@ namespace Components.Forms
         {
             Html.Instance.Button(ui.Label, ui.ClassName, ui.Icon)
                 .Attr("data-id", ui.Id.ToString())
-                .AsyncEvent(EventType.Click, async () =>
+                .Event(EventType.Click, () =>
                 {
-                    try
-                    {
-                        if (this[ui.Events] is Func<Task> asyncF) await asyncF.Bind(this).Invoke();
-                        if (this[ui.Events] is System.Action syncF) syncF.Invoke();
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message != "Cannot read property 'isCompleted' of undefined")
-                            throw;
-                    }
+                    ProcessEvents(ui);
                 });
+            //HotKeysExtension.HotKey(ui.HotKey, () =>
+            //{
+            //    ProcessEvents(ui);
+            //});
+        }
+
+        private void ProcessEvents(UserInterface ui)
+        {
+            try
+            {
+                if (this[ui.Events] is Func<Task> asyncF) asyncF.Bind(this).Invoke();
+                if (this[ui.Events] is System.Action syncF) syncF.Invoke();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message != "Cannot read property 'isCompleted' of undefined")
+                    throw;
+            }
         }
 
         private void RenderImage(UserInterface ui)

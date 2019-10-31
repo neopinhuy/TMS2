@@ -166,7 +166,7 @@ namespace Components
                 if (header.DeleteEvent != null)
                 {
                     html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
-                        .EventAsync(EventType.Click, header.DeleteEvent, row)
+                        .AsyncEvent(EventType.Click, header.DeleteEvent, row)
                         .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
                 }
                 if (string.IsNullOrEmpty(header.FieldName)) return;

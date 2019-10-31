@@ -26,54 +26,50 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ComponentGroup> Get(int id)
+        public async Task<ActionResult<ComponentGroup>> Get(int id)
         {
             var componentGroup = await db.ComponentGroup.FindAsync(id);
             if (componentGroup == null)
             {
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return null;
+                return BadRequest();
             }
-            HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return componentGroup;
+            return Ok(componentGroup);
         }
 
         [HttpPost]
-        public async Task<ComponentGroup> PostAsync([FromBody]ComponentGroup componentGroup)
+        public async Task<ActionResult<ComponentGroup>> PostAsync([FromBody]ComponentGroup componentGroup)
         {
             if (componentGroup == null || !ModelState.IsValid)
             {
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return null;
+                return BadRequest();
             }
 
             db.ComponentGroup.Add(componentGroup);
             await db.SaveChangesAsync();
-            return componentGroup;
+            return Ok(componentGroup);
         }
 
         [HttpPut]
-        public async Task<ComponentGroup> PutAsync([FromBody]ComponentGroup componentGroup)
+        public async Task<ActionResult<ComponentGroup>> PutAsync([FromBody]ComponentGroup componentGroup)
         {
             if (componentGroup == null || !ModelState.IsValid)
             {
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return null;
+                return BadRequest();
             }
 
             db.ComponentGroup.Attach(componentGroup);
             db.Entry(componentGroup).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            return componentGroup;
+            return Ok(componentGroup);
         }
 
         [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             var ComponentGroup = db.ComponentGroup.Find(id);
             ComponentGroup.Active = false;
             await db.SaveChangesAsync();
-            return true;
+            return Ok(true);
         }
     }
 }

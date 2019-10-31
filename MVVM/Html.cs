@@ -572,6 +572,16 @@ namespace MVVM
             return this;
         }
 
+        public Html AsyncEvent(EventType type, Func<Event, Task> action)
+        {
+            Context.AddEventListener(type, async (Event e) =>
+            {
+                FocusEle = e.Target as Element;
+                await action(e);
+            });
+            return this;
+        }
+
         public Html Event<T>(EventType type, Action<T> action, T model)
         {
             Context.AddEventListener(type, (e) =>
@@ -582,7 +592,7 @@ namespace MVVM
             return this;
         }
 
-        public Html EventAsync<T>(EventType type, Func<T, Task> action, T model)
+        public Html AsyncEvent<T>(EventType type, Func<T, Task> action, T model)
         {
             Context.AddEventListener(type, async (e) =>
             {
