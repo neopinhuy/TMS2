@@ -24,22 +24,31 @@ namespace Components.Extensions
 
         public static Html MaskMoney(this Html html, Observable<decimal?> observable, Options options)
         {
-            html.Input.ClassName("input-small right").Attr("data-role", "input");
+            var isFocusing = false;
+            html.Input.ClassName("input-small right").Attr("data-role", "input")
+                .Value(observable.Data?.ToString());
             var input = Html.Context as HTMLInputElement;
-            input.Value = observable.Data?.ToString();
-            jQuery.select(input).MaskMoney(options);
-            jQuery.select(input).MaskMoney("mask");
-            html.Event(EventType.Input, () =>
+            input.AddEventListener(EventType.KeyUp, (e) =>
             {
-                var parsed = decimal.TryParse(input.Value.Replace(".", "").Replace(",", "."), out decimal value);
-                if (!parsed || input.Value.IsNullOrEmpty()) observable.Data = null;
+                isFocusing = true;
+                var ele = e.Target as HTMLInputElement;
+                var parsed = decimal.TryParse(ele.Value, System.Globalization.CultureInfo.CurrentCulture, out decimal value);
+                if (!parsed || ele.Value.IsNullOrEmpty()) observable.Data = null;
                 observable.Data = value;
             });
+
             observable.Subscribe(arg =>
             {
+                if (isFocusing)
+                {
+                    isFocusing = false;
+                    return;
+                }
                 input.Value = arg.NewData?.ToString();
                 jQuery.select(input).MaskMoney("mask");
             });
+            jQuery.select(input).MaskMoney(options);
+            jQuery.select(input).MaskMoney("mask");
             return html;
         }
     }

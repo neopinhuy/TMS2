@@ -5,6 +5,7 @@ using Components.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -24,7 +25,7 @@ namespace Components.Forms
             _observableTruck = new object();
         }
 
-        public async Task Save()
+        public virtual async Task Save()
         {
             var client = new Client<T>();
             var data = await client.PutAsync(Data);
@@ -32,7 +33,10 @@ namespace Components.Forms
             {
                 Toast.Create(new ToastOptions
                 {
-                    clsToast = "success", timeout = 2000, Message = $"Update {typeof(T).Name} succeeded", showTop = true
+                    clsToast = "success", 
+                    timeout = 2000, 
+                    Message = $"Update {typeof(T).Name} succeeded", 
+                    showTop = true
                 });
             }
         }
@@ -152,13 +156,15 @@ namespace Components.Forms
                 Html.Instance.EndOf(ElementType.td);
                 return;
             }
+            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
             _observableTruck[ui.Field.FieldName] = value;
             value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             Html.Instance.MaskMoney(value, new Options
             {
-                thousands = isNumber ? "." : string.Empty,
-                @decimal = ",",
+                thousands = isNumber ? groupSeparator : string.Empty,
+                @decimal = separator,
                 precision = isNumber ? ui.Precision : 0
             });
         }

@@ -18,7 +18,7 @@ namespace TMS.API.Models
         public string TruckPlate { get; set; }
         public string BrandName { get; set; }
         public string Model { get; set; }
-        public string Year { get; set; }
+        public decimal? Year { get; set; }
         public string Color { get; set; }
         public string Vin { get; set; }
         public int? TruckTypeId { get; set; }

@@ -75,6 +75,11 @@ namespace Common.Clients
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Create entity
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public Task<T> PostAsync(T value)
         {
             var type = typeof(T);
@@ -103,6 +108,11 @@ namespace Common.Clients
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Update entity
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public Task<T> PutAsync(T value)
         {
             var type = typeof(T);
