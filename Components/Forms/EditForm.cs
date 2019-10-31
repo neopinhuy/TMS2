@@ -81,9 +81,18 @@ namespace Components.Forms
             {
                 if (group.IsTab)
                 {
-                    Html.Instance.Tab().Id("feature_" + group.FeatureId)
-                        .TabItem(group.Name, "group_" + group.Id, true).EndOf(ElementType.ul)
-                        .TabContent();
+                    var tab = Document.GetElementById("feature_" + group.FeatureId);
+                    if (tab is null)
+                    {
+                        Html.Instance.Tab().Id("feature_" + group.FeatureId)
+                            .TabItem(group.Name, "group_" + group.Id, true).EndOf(ElementType.ul)
+                            .TabContent().Id("feature_content_" + group.FeatureId);
+                    }
+                    else
+                    {
+                        Html.Take(tab).TabItem(group.Name, "group_" + group.Id).EndOf(ElementType.ul);
+                        Html.Take("#feature_content_" + group.FeatureId);
+                    }
                 }
                 Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("group_" + group.Id)
                     .ClassName("group").ClassName(group.ClassName)
@@ -93,7 +102,6 @@ namespace Components.Forms
                 {
                     RenderGroup(group.InverseParent.ToList());
                 }
-                if (!group.UserInterface.Any()) return;
                 Html.Instance.Table.ClassName("entity-detail").TBody.TRow.Render();
                 RenderComponent(group);
                 Html.Instance.EndOf(".group");

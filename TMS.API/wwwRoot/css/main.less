@@ -425,13 +425,13 @@ td {
     height: 100%;
     z-index: 10;
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
 .popup-content {
     .radius(@radius);
     position: fixed;
+    top: 2.5rem;
     background-color: #fff;
     box-shadow: 0px 0px 15px 16px rgba(0, 0, 0, 0.22);
     .tabs-list {
@@ -460,13 +460,27 @@ td {
         padding: 1rem;
         .tabs-wrapper {
             width: calc(100% - 20px);
-            margin-top: -44px;
+            margin-top: -3.38rem;
         }
     }
     .icon-box {
         float: right;
         height: 100%;
         background-color: transparent;
+    }
+    ul.tabs-list {
+        border: 0 !important;
+        li {
+            border-bottom-width: 0px;
+            background-color: @infoDark;
+            color: white;
+            margin-bottom: 0;
+            height: 2.4rem;
+            &:hover:not(.active) {
+                background-color: #91c9e4;
+                color: #1c1717;
+            }
+        }
     }
 }
 
