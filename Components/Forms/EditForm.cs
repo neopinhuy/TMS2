@@ -24,6 +24,19 @@ namespace Components.Forms
             _observableTruck = new object();
         }
 
+        public async Task Save()
+        {
+            var client = new Client<T>();
+            var data = await client.PutAsync(Data);
+            if (data != null)
+            {
+                Toast.Create(new ToastOptions
+                {
+                    clsToast = "success", timeout = 2000, Message = $"Update {typeof(T).Name} succeeded", showTop = true
+                });
+            }
+        }
+
         private List<ComponentGroup> BuildTree(IEnumerable<ComponentGroup> componentGroup)
         {
             var dic = componentGroup.ToDictionary(x => x.Id);
@@ -141,6 +154,7 @@ namespace Components.Forms
             }
             var value = new Observable<decimal?>(parsedVal);
             _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             Html.Instance.MaskMoney(value, new Options
             {
                 thousands = isNumber ? "." : string.Empty,
@@ -172,6 +186,7 @@ namespace Components.Forms
         {
             var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
             _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             var uploader = new ImageUploader(value, ui);
             await uploader.RenderAsync();
         }
@@ -180,26 +195,32 @@ namespace Components.Forms
         {
             var value = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
             _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             Html.Instance.SmallCheckbox(string.Empty, value);
         }
 
         private void RenderDatepicker(UserInterface ui)
         {
-            var dateTime = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
-            _observableTruck[ui.Field.FieldName] = dateTime;
-            Html.Instance.SmallDatePicker(dateTime);
+            var value = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
+            _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            Html.Instance.SmallDatePicker(value);
         }
 
         private async Task RenderDropdown(UserInterface ui)
         {
-            _observableTruck[ui.Field.FieldName] = new Observable<int?>((int?)Data[ui.Field.FieldName]);
-            var searchEntry = new SearchEntry((Observable<int?>)_observableTruck[ui.Field.FieldName], ui);
+            var value = new Observable<int?>((int?)Data[ui.Field.FieldName]);
+            _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var searchEntry = new SearchEntry(value, ui);
             await searchEntry.RenderAsync();
         }
 
         private void RenderInput(UserInterface ui)
         {
-            _observableTruck[ui.Field.FieldName] = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
+            var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
+            _observableTruck[ui.Field.FieldName] = value;
+            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
                 .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
         }

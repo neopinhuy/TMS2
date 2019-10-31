@@ -9,9 +9,5 @@ namespace TMS.UI.Business.TruckManagement
 {
     public partial class TruckDetail : EditForm<Truck>
     {
-        public async Task Save()
-        {
-            Console.WriteLine(JsonConvert.SerializeObject(Data));
-        }
     }
 }
