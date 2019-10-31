@@ -71,25 +71,29 @@ namespace Components
         {
             Window.SetTimeout(async () =>
             {
-                IEnumerable<object> source = null;
-                if (!_dataSource.IsNullOrEmpty())
-                {
-                    var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
-                    var httpGetList = type.GetMethod("GetList");
-                    var client = Activator.CreateInstance(type);
-                    source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
-                }
-                else
-                {
-                    source = _masterData.GetSourceByTypeName(_refEntity);
-                }
-                _source.Data = source.ToArray();
+                _source.Data = await GetDataSource();
                 var entity = _masterData.Entity.First(x => x.Name == _refEntity);
                 RefField = _masterData.Field
                     .Where(x => x.EntityId == entity.Id && (x.IsRefDisplayField || x.IsRefValueField));
                 _refDisplayField = RefField.First(X => X.IsRefDisplayField).FieldName;
                 UpdateSearchText();
             });
+        }
+
+        private async Task<object[]> GetDataSource()
+        {
+            if (!_dataSource.IsNullOrEmpty())
+            {
+                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
+                var httpGetList = type.GetMethod("GetList");
+                var client = Activator.CreateInstance(type);
+                var source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                return source.ToArray();
+            }
+            else
+            {
+                return _masterData.GetSourceByTypeName(_refEntity).ToArray();
+            }
         }
 
         public async Task RenderSuggestion()
@@ -100,9 +104,8 @@ namespace Components
                     FieldName = x.FieldName,
                     HeaderText = x.ShortDesc
                 }).ToArray();
-            _source.Data = _dataSource.IsNullOrEmpty() 
-                ? _masterData.GetSourceByTypeName(_refEntity).ToArray() 
-                : _source.Data;
+            if (_source.Data.Length == 0)
+                _source.Data = await GetDataSource();
             var tableParam = new TableParam<object>
             {
                 RowClick = Select,
@@ -127,12 +130,8 @@ namespace Components
 
         private void UpdateSearchText()
         {
-            Window.SetTimeout(async () =>
-            {
-                _masterData = await MasterData.GetSingletonAsync();
-                var selected = _source.Data.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data.ToString());
-                _text.Data = selected?[_refDisplayField]?.ToString();
-            });
+            var selected = _source.Data.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data.ToString());
+            _text.Data = selected?[_refDisplayField]?.ToString();
         }
 
         private void DisposeSearchTable()

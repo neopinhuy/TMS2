@@ -53,7 +53,7 @@ namespace Components.Forms
 
         public override async Task RenderAsync()
         {
-            await base.RenderAsync();
+            base.RenderAsync();
             var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface&$filter=Feature/Name eq '{Title}'");
             var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
             var field = _masterData.Field.ToDictionary(x => x.Id);
@@ -68,10 +68,10 @@ namespace Components.Forms
                 }
             });
             componentGroup = BuildTree(componentGroup);
-            await RenderGroup(componentGroup);
+            RenderGroup(componentGroup);
         }
 
-        private async Task RenderGroup(List<ComponentGroup> componentGroup)
+        private void RenderGroup(List<ComponentGroup> componentGroup)
         {
             foreach (var group in componentGroup)
             {
@@ -87,16 +87,16 @@ namespace Components.Forms
                     .Width(group.Width).Style(group.Style ?? string.Empty);
                 if (group.InverseParent != null && group.InverseParent.Any())
                 {
-                    await RenderGroup(group.InverseParent.ToList());
+                    RenderGroup(group.InverseParent.ToList());
                 }
                 if (!group.UserInterface.Any()) return;
                 Html.Instance.Table.ClassName("entity-detail").TBody.TRow.Render();
-                await RenderComponent(group);
+                RenderComponent(group);
                 Html.Instance.EndOf(".group");
             }
         }
 
-        private async Task RenderComponent(ComponentGroup group)
+        private void RenderComponent(ComponentGroup group)
         {
             var column = 0;
             foreach (var ui in group.UserInterface)
@@ -111,7 +111,7 @@ namespace Components.Forms
                 }
                 else if (ui.ComponentType.Name == "Dropdown")
                 {
-                    await RenderDropdown(ui);
+                    RenderDropdown(ui);
                 }
                 else if (ui.ComponentType.Name == "Datepicker")
                 {
@@ -123,7 +123,7 @@ namespace Components.Forms
                 }
                 else if (ui.ComponentType.Name == "Image")
                 {
-                    await RenderImage(ui);
+                    RenderImage(ui);
                 }
                 else if (ui.ComponentType.Name == "Button")
                 {
@@ -182,13 +182,13 @@ namespace Components.Forms
                 });
         }
 
-        private async Task RenderImage(UserInterface ui)
+        private void RenderImage(UserInterface ui)
         {
             var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
             _observableTruck[ui.Field.FieldName] = value;
             value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             var uploader = new ImageUploader(value, ui);
-            await uploader.RenderAsync();
+            uploader.RenderAsync();
         }
 
         private void RenderCheckbox(UserInterface ui)
@@ -207,13 +207,13 @@ namespace Components.Forms
             Html.Instance.SmallDatePicker(value);
         }
 
-        private async Task RenderDropdown(UserInterface ui)
+        private void RenderDropdown(UserInterface ui)
         {
             var value = new Observable<int?>((int?)Data[ui.Field.FieldName]);
             _observableTruck[ui.Field.FieldName] = value;
             value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
             var searchEntry = new SearchEntry(value, ui);
-            await searchEntry.RenderAsync();
+            searchEntry.RenderAsync();
         }
 
         private void RenderInput(UserInterface ui)

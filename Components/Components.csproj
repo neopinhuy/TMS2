@@ -55,6 +55,7 @@
     <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="bridge.json" />
     <None Include="packages.config" />
   </ItemGroup>
