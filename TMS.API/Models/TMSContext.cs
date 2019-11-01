@@ -38,6 +38,7 @@ namespace TMS.API.Models
         public virtual DbSet<FreightProof> FreightProof { get; set; }
         public virtual DbSet<FreightState> FreightState { get; set; }
         public virtual DbSet<FuelType> FuelType { get; set; }
+        public virtual DbSet<GridPolicy> GridPolicy { get; set; }
         public virtual DbSet<GroupMember> GroupMember { get; set; }
         public virtual DbSet<GroupRole> GroupRole { get; set; }
         public virtual DbSet<Ledger> Ledger { get; set; }
@@ -790,6 +791,84 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_FuelType_UserUpdated");
             });
 
+            modelBuilder.Entity<GridPolicy>(entity =>
+            {
+                entity.Property(e => e.DataSource)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DeleteEvent)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description).HasMaxLength(150);
+
+                entity.Property(e => e.EditEvent)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Format)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupName).HasMaxLength(50);
+
+                entity.Property(e => e.RefDisplayField)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ShortDesc)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Entity)
+                    .WithMany(p => p.GridPolicyEntity)
+                    .HasForeignKey(d => d.EntityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GridPolicy_Entity");
+
+                entity.HasOne(d => d.Feature)
+                    .WithMany(p => p.GridPolicy)
+                    .HasForeignKey(d => d.FeatureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GridPolicy_Feature");
+
+                entity.HasOne(d => d.Field)
+                    .WithMany(p => p.GridPolicy)
+                    .HasForeignKey(d => d.FieldId)
+                    .HasConstraintName("FK_GridPolicy_Field");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.GridPolicyInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GridPolicy_UserInserted");
+
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.GridPolicy)
+                    .HasForeignKey(d => d.PolicyId)
+                    .HasConstraintName("FK_GridPolicy_Policy");
+
+                entity.HasOne(d => d.Reference)
+                    .WithMany(p => p.GridPolicyReference)
+                    .HasForeignKey(d => d.ReferenceId)
+                    .HasConstraintName("FK_GridPolicy_RefEntity");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.GridPolicy)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_GridPolicy_FreightState");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.GridPolicyUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_GridPolicy_UserUpdated");
+            });
+
             modelBuilder.Entity<GroupMember>(entity =>
             {
                 entity.Property(e => e.Description).HasMaxLength(200);
@@ -1428,9 +1507,7 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Year)
-                    .HasMaxLength(4)
-                    .IsUnicode(false);
+                entity.Property(e => e.Year).HasColumnType("decimal(4, 0)");
 
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Truck)

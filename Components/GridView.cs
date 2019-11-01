@@ -3,22 +3,41 @@ using Components.Extensions;
 using MVVM;
 using System.Linq;
 using System.Threading.Tasks;
+using TMS.API.Models;
 
 namespace Components
 {
-    public class GridView<T> : Component
+    public class GridView : Component
     {
-        private string _refEntity;
+        private readonly UserInterface _grid;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
 
-        public GridView(string refEntity)
+        public GridView(UserInterface grid)
         {
-            _refEntity = refEntity;
+            _grid = grid;
         }
         public override async Task RenderAsync()
         {
-            var headers = _masterData.GetHeaders<T>();
+            var entityName = _grid.Field.Reference.Name;
+            var gridPolicy = await Client<GridPolicy>.Instance.GetList($"$filter=Active eq true&Entity/Name={entityName}");
+            var headers = gridPolicy.Select(x => new Header<object>
+            {
+                FieldName = x.Field?.FieldName ?? x.FieldName,
+                Format = x.Format,
+                GroupName = x.GroupName,
+                HeaderText = x.ShortDesc,
+                Description = x.Description,
+                Reference = x.Reference?.Name,
+                RefValueField = "Id",
+                RefDisplayField = x.RefDisplayField,
+                HasFilter = x.HasFilter,
+                TextAlign = (TextAlign)x.TextAlign,
+                EditEvent = async (obj) =>
+                {
+                    this.ExecuteEvent(x.EditEvent);
+                },
+            });
             //Header.AddRange(headers.ToArray());
             //var client = new Client<T>();
             //var rows = await client.GetList();

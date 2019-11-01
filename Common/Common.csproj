@@ -111,6 +111,9 @@
     <Compile Include="..\TMS.API\Models\FuelType.cs">
       <Link>Models\FuelType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\GridPolicy.cs">
+      <Link>Models\GridPolicy.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\GroupMember.cs">
       <Link>Models\GroupMember.cs</Link>
     </Compile>
@@ -217,7 +220,6 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Extensions\HtmlElementExtension.cs" />
-    <Compile Include="Extensions\OtherExtensions.cs" />
     <Compile Include="Extensions\Util.cs" />
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

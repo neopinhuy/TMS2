@@ -54,6 +54,8 @@ namespace TMS.API.Models
             FreightStateUpdatedByNavigation = new HashSet<FreightState>();
             FuelTypeInsertedByNavigation = new HashSet<FuelType>();
             FuelTypeUpdatedByNavigation = new HashSet<FuelType>();
+            GridPolicyInsertedByNavigation = new HashSet<GridPolicy>();
+            GridPolicyUpdatedByNavigation = new HashSet<GridPolicy>();
             GroupMemberInsertedByNavigation = new HashSet<GroupMember>();
             GroupMemberUpdatedByNavigation = new HashSet<GroupMember>();
             GroupRoleInsertedByNavigation = new HashSet<GroupRole>();
@@ -186,6 +188,8 @@ namespace TMS.API.Models
         public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
         public virtual ICollection<FuelType> FuelTypeInsertedByNavigation { get; set; }
         public virtual ICollection<FuelType> FuelTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<GridPolicy> GridPolicyInsertedByNavigation { get; set; }
+        public virtual ICollection<GridPolicy> GridPolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<GroupMember> GroupMemberInsertedByNavigation { get; set; }
         public virtual ICollection<GroupMember> GroupMemberUpdatedByNavigation { get; set; }
         public virtual ICollection<GroupRole> GroupRoleInsertedByNavigation { get; set; }

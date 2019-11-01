@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,24 @@ namespace Components.Extensions
                    {
                        HeaderText = field.Description,
                        FieldName = field.FieldName,
-                       Sortable = true,
+                       HasFilter = true,
                        Reference = field.ReferenceId != null ? entityDic[field.ReferenceId.Value].Name : null,
                        RefDisplayField = field.RefDisplayFields ?? "Name"
                    };
+        }
+
+        public static void ExecuteEvent<T>(this T obj, string eventName, params object[] p)
+        {
+            try
+            {
+                if (obj[eventName] is Func<Task> asyncF) asyncF.Invoke(obj, p);
+                if (obj[eventName] is Action syncF) syncF.Invoke(obj, p);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message != "Cannot read property 'isCompleted' of undefined")
+                    throw;
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Bridge;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Common.Extensions
 {
@@ -59,6 +61,26 @@ namespace Common.Extensions
         public static IEnumerable<object> GetSourceByTypeName(this IEnumerable<IEnumerable<object>> sources, string typeName)
         {
             return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0].Name == typeName);
+        }
+
+        [Template("{task}.bind({context})")]
+        public static Func<Task> Bind(this Func<Task> task, object context)
+        {
+            return null;
+        }
+
+        [ExpandParams]
+        [Template("{task}.call({context}, {parameters})")]
+        public static Func<Task> Invoke(this Func<Task> task, object context, params object[] parameters)
+        {
+            return null;
+        }
+
+        [ExpandParams]
+        [Template("{task}.call({context}, {parameters})")]
+        public static Action Invoke(this Action task, object context, params object[] parameters)
+        {
+            return null;
         }
     }
 }

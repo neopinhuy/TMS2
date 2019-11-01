@@ -111,7 +111,7 @@ namespace Components
                 else
                 {
                     html.Span.Text(header.HeaderText).End.Render();
-                    if (header.Sortable)
+                    if (header.HasFilter)
                     {
                         html.Span.ClassName("fa fa-filter").Event(EventType.Click, async (e) =>
                         {

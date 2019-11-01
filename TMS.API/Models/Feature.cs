@@ -9,6 +9,7 @@ namespace TMS.API.Models
         {
             ComponentGroup = new HashSet<ComponentGroup>();
             FeaturePolicy = new HashSet<FeaturePolicy>();
+            GridPolicy = new HashSet<GridPolicy>();
             InverseParent = new HashSet<Feature>();
         }
 
@@ -32,6 +33,7 @@ namespace TMS.API.Models
         public virtual Feature Parent { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicy { get; set; }
+        public virtual ICollection<GridPolicy> GridPolicy { get; set; }
         public virtual ICollection<Feature> InverseParent { get; set; }
     }
 }
