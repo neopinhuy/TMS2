@@ -193,6 +193,7 @@ namespace Components
                     cellText = found?[header.RefDisplayField.Trim()]?.ToString();
                     header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
                 }
+                if (header.Format.HasAnyChar()) cellText = string.Format("{0:" + header.Format + "}", cellData);
                 header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
                 html.TextAlign(header.TextAlign).Text(cellText).End.Render();
             });

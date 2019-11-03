@@ -24,6 +24,7 @@ namespace TMS.API.Models
         public bool Hidden { get; set; }
         public string EditEvent { get; set; }
         public string DeleteEvent { get; set; }
+        public int? Order { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

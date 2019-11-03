@@ -77,7 +77,7 @@ namespace Components.Forms
 
         private void RenderGroup(List<ComponentGroup> componentGroup)
         {
-            foreach (var group in componentGroup)
+            foreach (var group in componentGroup.OrderBy(x => x.Order))
             {
                 if (group.IsTab)
                 {
@@ -111,7 +111,7 @@ namespace Components.Forms
         private void RenderComponent(ComponentGroup group)
         {
             var column = 0;
-            foreach (var ui in group.UserInterface)
+            foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
                 if (!ui.Visibility) continue;
                 if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
@@ -236,11 +236,15 @@ namespace Components.Forms
 
         private void RenderInput(UserInterface ui)
         {
-            var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var value = new Observable<string>(Data[ui.Field?.FieldName]?.ToString());
+            if (ui.Field != null && ui.Field.FieldName.HasAnyChar())
+            {
+                _observableTruck[ui.Field.FieldName] = value;
+                value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            }
             Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
-                .Value((Observable<string>)_observableTruck[ui.Field.FieldName]);
+                .Value(value);
+            if (!ui.ShowLabel) Html.Instance.PlaceHolder(ui.Label);
         }
     }
 }

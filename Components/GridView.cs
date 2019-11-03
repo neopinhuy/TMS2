@@ -25,7 +25,7 @@ namespace Components
             var entityName = _ui.Field.Reference.Name;
             var gridPolicy = await Client<GridPolicy>.Instance
                 .GetList("$expand=Reference($select=Name)" +
-                    $"&$filter=Active eq true&Entity/Name={entityName}");
+                    $"&$filter=Active eq true&Entity/Name='{entityName}");
             foreach (var column in gridPolicy)
             {
                 var header = new Header<object>();
