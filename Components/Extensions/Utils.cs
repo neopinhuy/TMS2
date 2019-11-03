@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Components.Extensions
 {
-    public static class Utils
+    public static partial class Utils
     {
         public static IEnumerable<Header<T>> GetHeaders<T>(this MasterData masterData)
         {
@@ -23,6 +25,32 @@ namespace Components.Extensions
                        Reference = field.ReferenceId != null ? entityDic[field.ReferenceId.Value].Name : null,
                        RefDisplayField = field.RefDisplayFields ?? "Name"
                    };
+        }
+
+        public static string FormatWith(this string format, object source)
+        {
+            return FormatWith(format, null, source);
+        }
+
+        public static string FormatWith(this string format, IFormatProvider provider, object source)
+        {
+            if (format == null)
+                throw new ArgumentNullException(nameof(format));
+
+            var r = new Regex(@"(?<start>\{)+(?<property>[\w\.\[\]]+)(?<format>:[^}]+)?(?<end>\})+");
+            var values = new List<object>();
+            string rewrittenFormat = r.Replace(format, delegate (Match m)
+            {
+                var startGroup = m.Groups["start"];
+                var propertyGroup = m.Groups["property"];
+                var formatGroup = m.Groups["format"];
+                var endGroup = m.Groups["end"];
+                values.Add(propertyGroup.Value == "0" ? source : source[propertyGroup.Value]);
+                return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value
+                  + new string('}', endGroup.Captures.Count);
+            });
+
+            return string.Format(provider, rewrittenFormat, values.ToArray());
         }
 
         public static void ExecuteEvent<T>(this T obj, string eventName, params object[] p)

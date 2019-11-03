@@ -23,16 +23,17 @@ namespace Components
         private HTMLInputElement _input;
         private readonly string _refValueField = "Id";
         private string _refDisplayField;
-        private IEnumerable<Field> RefField;
+        private IEnumerable<GridPolicy> RefField;
         private readonly UserInterface _ui;
 
         public SearchEntry(Observable<int?> value, UserInterface ui)
         {
             _value = value;
             _ui = ui;
-            _refEntity = ui.Field.Reference.Name;
+            _refEntity = ui.Reference.Name;
             _dataSource = ui.DataSourceFilter;
             _entityType = Type.GetType("TMS.API.Models." + _refEntity);
+            _refDisplayField = ui.Format;
             if (_entityType == null)
             {
                 throw new InvalidOperationException($"{_refEntity} is invalid entity");
@@ -51,7 +52,7 @@ namespace Components
         public override async Task RenderAsync()
         {
             _masterData = await MasterData.GetSingletonAsync();
-            Html.Instance.Input.PlaceHolder(_ui.Field.ShortDesc).Value(_text)
+            Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)
@@ -73,10 +74,7 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _source.Data = await GetDataSource();
-                var entity = _masterData.Entity.First(x => x.Name == _refEntity);
-                RefField = _masterData.Field
-                    .Where(x => x.EntityId == entity.Id && (x.IsRefDisplayField || x.IsRefValueField));
-                _refDisplayField = RefField.First(X => X.IsRefDisplayField).FieldName;
+                RefField = await Client<GridPolicy>.Instance.GetList($"$filter=EntityId eq {_ui.ReferenceId}");
                 UpdateSearchText();
             });
         }
@@ -121,15 +119,20 @@ namespace Components
 
         private void Select(object rowData)
         {
-            _text.Data = rowData[_refDisplayField]?.ToString();
+            SetTextData(rowData);
             _value.Data = (int)rowData[_refValueField];
             DisposeSearchTable();
         }
 
+        private void SetTextData(object rowData)
+        {
+            _text.Data = Utils.FormatWith(_ui.Format, rowData);
+        }
+
         private void UpdateSearchText()
         {
-            var selected = _source.Data.FirstOrDefault(x => x["Id"]?.ToString() == _value.Data.ToString());
-            _text.Data = selected?[_refDisplayField]?.ToString();
+            var selected = _source.Data.FirstOrDefault(x => x[_refValueField]?.ToString() == _value.Data.ToString());
+            SetTextData(selected);
         }
 
         private void DisposeSearchTable()

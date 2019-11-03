@@ -17,8 +17,6 @@ namespace TMS.API.Models
             CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
             ComponentGroupUpdatedByNavigation = new HashSet<ComponentGroup>();
-            ComponentTypeInsertedByNavigation = new HashSet<ComponentType>();
-            ComponentTypeUpdatedByNavigation = new HashSet<ComponentType>();
             ContainerInsertedByNavigation = new HashSet<Container>();
             ContainerTypeInsertedByNavigation = new HashSet<ContainerType>();
             ContainerTypeUpdatedByNavigation = new HashSet<ContainerType>();
@@ -151,8 +149,6 @@ namespace TMS.API.Models
         public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupUpdatedByNavigation { get; set; }
-        public virtual ICollection<ComponentType> ComponentTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<ComponentType> ComponentTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }

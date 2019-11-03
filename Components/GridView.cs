@@ -22,7 +22,7 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            var entityName = _ui.Field.Reference.Name;
+            var entityName = _ui.Reference.Name;
             var gridPolicy = await Client<GridPolicy>.Instance
                 .GetList("$expand=Reference($select=Name)" +
                     $"&$filter=Active eq true&Entity/Name='{entityName}");

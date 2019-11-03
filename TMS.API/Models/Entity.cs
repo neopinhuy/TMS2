@@ -13,6 +13,7 @@ namespace TMS.API.Models
             GridPolicyEntity = new HashSet<GridPolicy>();
             GridPolicyReference = new HashSet<GridPolicy>();
             Ledger = new HashSet<Ledger>();
+            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -31,5 +32,6 @@ namespace TMS.API.Models
         public virtual ICollection<GridPolicy> GridPolicyEntity { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyReference { get; set; }
         public virtual ICollection<Ledger> Ledger { get; set; }
+        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

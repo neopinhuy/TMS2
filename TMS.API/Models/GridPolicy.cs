@@ -6,9 +6,8 @@ namespace TMS.API.Models
     public partial class GridPolicy
     {
         public int Id { get; set; }
-        public int FeatureId { get; set; }
+        public int? FeatureId { get; set; }
         public int EntityId { get; set; }
-        public int? FieldId { get; set; }
         public string FieldName { get; set; }
         public string ShortDesc { get; set; }
         public string Description { get; set; }
@@ -33,7 +32,6 @@ namespace TMS.API.Models
 
         public virtual Entity Entity { get; set; }
         public virtual Feature Feature { get; set; }
-        public virtual Field Field { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Policy Policy { get; set; }
         public virtual Entity Reference { get; set; }

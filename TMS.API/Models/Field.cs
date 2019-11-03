@@ -5,12 +5,6 @@ namespace TMS.API.Models
 {
     public partial class Field
     {
-        public Field()
-        {
-            GridPolicy = new HashSet<GridPolicy>();
-            UserInterface = new HashSet<UserInterface>();
-        }
-
         public int Id { get; set; }
         public int EntityId { get; set; }
         public string FieldName { get; set; }
@@ -35,7 +29,5 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual Entity Reference { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<GridPolicy> GridPolicy { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

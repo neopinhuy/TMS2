@@ -58,19 +58,9 @@ namespace Components.Forms
         public override async Task RenderAsync()
         {
             base.RenderAsync();
-            var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface&$filter=Feature/Name eq '{Title}'");
-            var componentType = _masterData.ComponentType.ToDictionary(x => x.Id);
+            var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
             var field = _masterData.Field.ToDictionary(x => x.Id);
             var entity = _masterData.Entity.ToDictionary(x => x.Id);
-            componentGroup.SelectMany(x => x.UserInterface).ForEach(ui =>
-            {
-                ui.ComponentType = componentType[ui.ComponentTypeId];
-                if (ui.FieldId.HasValue)
-                {
-                    ui.Field = field[ui.FieldId.Value];
-                    ui.Field.Reference = ui.Field.ReferenceId.HasValue ? entity[ui.Field.ReferenceId.Value] : null;
-                }
-            });
             componentGroup = BuildTree(componentGroup);
             RenderGroup(componentGroup);
         }
@@ -114,11 +104,11 @@ namespace Components.Forms
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
                 if (!ui.Visibility) continue;
-                if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
+                if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Label)
                     .EndOf(ElementType.td).TData.Render();
                 else Html.Instance.TData.ClassName("text-left").Style("padding-left: 0;").Render();
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
-                switch (ui.ComponentType.Name)
+                switch (ui.ComponentType.Trim())
                 {
                     case "Input":
                         RenderInput(ui);
@@ -141,11 +131,14 @@ namespace Components.Forms
                     case "Number":
                         RenderNumberInput(ui);
                         break;
+                    case "Currency":
+                        RenderNumberInput(ui);
+                        break;
                     case "GridView":
                         RenderGridView(ui);
                         break;
                 }
-                Html.Instance.Attr("data-field", ui.FieldId?.ToString()).EndOf(ElementType.td);
+                Html.Instance.EndOf(ElementType.td);
                 column += ui.Column ?? 0;
                 if (column == group.Column)
                 {
@@ -166,8 +159,8 @@ namespace Components.Forms
 
         private void RenderNumberInput(UserInterface ui)
         {
-            var isNumber = ui.Field.ColumnType == "float" || ui.Field.ColumnType.Contains("decimal");
-            var parsed = decimal.TryParse(Data[ui.Field.FieldName]?.ToString(), out decimal parsedVal);
+            var isDecimal = ui.Precision != null && ui.Precision != 0;
+            var parsed = decimal.TryParse(Data[ui.FieldName]?.ToString(), out decimal parsedVal);
             if (!parsed)
             {
                 Html.Instance.EndOf(ElementType.td);
@@ -176,13 +169,13 @@ namespace Components.Forms
             var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            _observableTruck[ui.FieldName] = value;
+            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             Html.Instance.MaskMoney(value, new Options
             {
-                thousands = isNumber ? groupSeparator : string.Empty,
+                thousands = isDecimal ? groupSeparator : string.Empty,
                 @decimal = separator,
-                precision = isNumber ? ui.Precision : 0
+                precision = isDecimal ? ui.Precision : 0
             });
         }
 
@@ -202,45 +195,45 @@ namespace Components.Forms
 
         private void RenderImage(UserInterface ui)
         {
-            var value = new Observable<string>(Data[ui.Field.FieldName]?.ToString());
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var value = new Observable<string>(Data[ui.FieldName]?.ToString());
+            _observableTruck[ui.FieldName] = value;
+            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             var uploader = new ImageUploader(value, ui);
             uploader.RenderAsync();
         }
 
         private void RenderCheckbox(UserInterface ui)
         {
-            var value = new Observable<bool?>((bool?)Data[ui.Field.FieldName]);
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var value = new Observable<bool?>((bool?)Data[ui.FieldName]);
+            _observableTruck[ui.FieldName] = value;
+            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             Html.Instance.SmallCheckbox(string.Empty, value);
         }
 
         private void RenderDatepicker(UserInterface ui)
         {
-            var value = new Observable<DateTime?>((DateTime?)Data[ui.Field.FieldName]);
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var value = new Observable<DateTime?>((DateTime?)Data[ui.FieldName]);
+            _observableTruck[ui.FieldName] = value;
+            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             Html.Instance.SmallDatePicker(value);
         }
 
         private void RenderDropdown(UserInterface ui)
         {
-            var value = new Observable<int?>((int?)Data[ui.Field.FieldName]);
-            _observableTruck[ui.Field.FieldName] = value;
-            value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+            var value = new Observable<int?>((int?)Data[ui.FieldName]);
+            _observableTruck[ui.FieldName] = value;
+            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             var searchEntry = new SearchEntry(value, ui);
             searchEntry.RenderAsync();
         }
 
         private void RenderInput(UserInterface ui)
         {
-            var value = new Observable<string>(Data[ui.Field?.FieldName]?.ToString());
-            if (ui.Field != null && ui.Field.FieldName.HasAnyChar())
+            var value = new Observable<string>(Data[ui.FieldName]?.ToString());
+            if (ui.FieldName.HasAnyChar())
             {
-                _observableTruck[ui.Field.FieldName] = value;
-                value.Subscribe(arg => Data[ui.Field.FieldName] = arg.NewData);
+                _observableTruck[ui.FieldName] = value;
+                value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
             }
             Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
                 .Value(value);

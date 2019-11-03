@@ -20,7 +20,6 @@ namespace Components
         public ICollection<Vendor> Vendor { get; set; }
         public ICollection<FreightState> FreightState { get; set; }
         public ICollection<TruckType> TruckType { get; set; }
-        public ICollection<ComponentType> ComponentType { get; set; }
         public ICollection<Department> Department { get; set; }
         public ICollection<Currency> Currency { get; set; }
         private static IEnumerable<IEnumerable<object>> AllSources { get; set; }
