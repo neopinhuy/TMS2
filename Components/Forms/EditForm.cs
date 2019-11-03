@@ -117,37 +117,33 @@ namespace Components.Forms
                 if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Field.ShortDesc)
                     .EndOf(ElementType.td).TData.Render();
                 else Html.Instance.TData.ClassName("text-left").Style("padding-left: 0;").Render();
-                if (ui.ComponentType.Name == "Input")
+                if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
+                switch (ui.ComponentType.Name)
                 {
-                    RenderInput(ui);
-                }
-                else if (ui.ComponentType.Name == "Dropdown")
-                {
-                    RenderDropdown(ui);
-                }
-                else if (ui.ComponentType.Name == "Datepicker")
-                {
-                    RenderDatepicker(ui);
-                }
-                else if (ui.ComponentType.Name == "Checkbox")
-                {
-                    RenderCheckbox(ui);
-                }
-                else if (ui.ComponentType.Name == "Image")
-                {
-                    RenderImage(ui);
-                }
-                else if (ui.ComponentType.Name == "Button")
-                {
-                    RenderButton(ui);
-                }
-                else if (ui.ComponentType.Name == "Number")
-                {
-                    RenderNumberInput(ui);
-                }
-                else if (ui.ComponentType.Name == "GridView")
-                {
-                    RenderGridView(ui);
+                    case "Input":
+                        RenderInput(ui);
+                        break;
+                    case "Dropdown":
+                        RenderDropdown(ui);
+                        break;
+                    case "Datepicker":
+                        RenderDatepicker(ui);
+                        break;
+                    case "Checkbox":
+                        RenderCheckbox(ui);
+                        break;
+                    case "Image":
+                        RenderImage(ui);
+                        break;
+                    case "Button":
+                        RenderButton(ui);
+                        break;
+                    case "Number":
+                        RenderNumberInput(ui);
+                        break;
+                    case "GridView":
+                        RenderGridView(ui);
+                        break;
                 }
                 Html.Instance.Attr("data-field", ui.FieldId?.ToString()).EndOf(ElementType.td);
                 column += ui.Column ?? 0;
@@ -161,7 +157,11 @@ namespace Components.Forms
 
         private void RenderGridView(UserInterface ui)
         {
-            throw new NotImplementedException();
+            var grid = new GridView(ui)
+            {
+                RootElement = Html.Context
+            };
+            Window.SetTimeout(async() => await grid.RenderAsync());
         }
 
         private void RenderNumberInput(UserInterface ui)

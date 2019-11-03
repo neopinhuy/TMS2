@@ -48,6 +48,15 @@ namespace Common.Clients
             return tcs.Task;
         }
 
+        public Task<List<object>> GetListEntity(string entity, string filter = null)
+        {
+            var refType = Type.GetType("TMS.API.Models." + entity);
+            var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
+            var httpGetList = clientType.GetMethod("GetList");
+            var client = Activator.CreateInstance(clientType);
+            return httpGetList.Invoke(client, filter).As<Task<List<object>>>();
+        }
+
         public Task<T> Get(int id)
         {
             var type = typeof(T);

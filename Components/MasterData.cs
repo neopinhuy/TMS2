@@ -43,10 +43,7 @@ namespace Components
                 {
                     var refType = prop.PropertyType.GetGenericArguments()[0];
                     if (refType == typeof(IEnumerable<object>)) return null;
-                    var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
-                    var httpGetList = clientType.GetMethod("GetList");
-                    var client = Activator.CreateInstance(clientType);
-                    return httpGetList.Invoke(client).As<Task<object>>();
+                    return GetListByType(refType);
                 }).Where(x => x != null);
             AllSources = (await Task.WhenAll(sourcesRequests)).As<IEnumerable<IEnumerable<object>>>().ToList();
             foreach (var prop in genericProp)
@@ -58,6 +55,14 @@ namespace Components
             }
 
             return _instance;
+        }
+
+        private static Task<object> GetListByType(Type refType)
+        {
+            var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
+            var httpGetList = clientType.GetMethod("GetList");
+            var client = Activator.CreateInstance(clientType);
+            return httpGetList.Invoke(client).As<Task<object>>();
         }
 
         public IEnumerable<object> GetSourceByType(Type type)

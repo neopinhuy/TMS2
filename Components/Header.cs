@@ -9,6 +9,7 @@ namespace Components
         public string Description { get; set; }
         public string FieldName { get; set; }
         public string Reference { get; set; }
+        public string DataSource { get; set; }
         public string RefValueField { get; set; } = "Id";
         public string RefDisplayField { get; set; } = "Name";
         public string GroupName { get; set; }

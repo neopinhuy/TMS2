@@ -88,11 +88,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Accessory>(entity =>
             {
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
@@ -824,6 +819,10 @@ namespace TMS.API.Models
                 entity.Property(e => e.ShortDesc)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.Property(e => e.TextAlign)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.GridPolicyEntity)

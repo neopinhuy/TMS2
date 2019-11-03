@@ -20,7 +20,7 @@ namespace TMS.API.Models
         public int? StateId { get; set; }
         public string GroupName { get; set; }
         public string Format { get; set; }
-        public short? TextAlign { get; set; }
+        public string TextAlign { get; set; }
         public bool Hidden { get; set; }
         public string EditEvent { get; set; }
         public string DeleteEvent { get; set; }

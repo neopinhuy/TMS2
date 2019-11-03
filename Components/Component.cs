@@ -6,7 +6,7 @@ namespace Components
 {
     public abstract class Component : IDisposable
     {
-        public virtual HTMLElement RootElement { get; set; }
+        public virtual Element RootElement { get; set; }
         public abstract Task RenderAsync();
         protected MasterData _masterData;
 

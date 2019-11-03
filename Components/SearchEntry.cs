@@ -1,6 +1,7 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
 using Common.Extensions;
+using Components.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -82,12 +83,9 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            if (!_dataSource.IsNullOrEmpty())
+            if (_dataSource.HasAnyChar())
             {
-                var type = typeof(Client<>).MakeGenericType(new Type[] { _entityType });
-                var httpGetList = type.GetMethod("GetList");
-                var client = Activator.CreateInstance(type);
-                var source = await httpGetList.Invoke(client, _dataSource).As<Task<IEnumerable<object>>>();
+                var source = await Client<object>.Instance.GetListEntity(_refEntity, _dataSource);
                 return source.ToArray();
             }
             else

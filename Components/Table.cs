@@ -1,7 +1,10 @@
 ﻿using Bridge.Html5;
+using Common.Clients;
 using Common.Extensions;
+using Components.Extensions;
 using MVVM;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElementType = MVVM.ElementType;
@@ -20,7 +23,10 @@ namespace Components
     {
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
+        
         private readonly TableParam<Data> _tableParam;
+        private IEnumerable<IEnumerable<object>> _refData;
+
         const string _selected = "selected-row";
         private int? selectedRow;
         public int? SelectedRow { 
@@ -76,9 +82,12 @@ namespace Components
             }
             timeOut = Window.SetTimeout(async () =>
             {
-                _masterData = await MasterData.GetSingletonAsync();
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
+                // Load all master data
+                var refEntities = Headers.Data.Where(x => x.Reference.HasAnyChar())
+                    .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
+                _refData = await Task.WhenAll(refEntities);
                 RenderTableContent(table);
             });
         }
@@ -179,7 +188,7 @@ namespace Components
                 }
                 if (header.Reference != null)
                 {
-                    var source = _masterData.GetSourceByTypeName(header.Reference);
+                    var source = _refData.GetSourceByTypeName(header.Reference);
                     var found = source.FirstOrDefault(x => x[header.RefValueField] == cellData);
                     cellText = found?[header.RefDisplayField.Trim()]?.ToString();
                     header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;

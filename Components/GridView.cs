@@ -1,7 +1,7 @@
 ﻿using Common.Clients;
+using Common.Extensions;
 using Components.Extensions;
 using MVVM;
-using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
@@ -9,41 +9,54 @@ namespace Components
 {
     public class GridView : Component
     {
-        private readonly UserInterface _grid;
+        private readonly UserInterface _ui;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
 
-        public GridView(UserInterface grid)
+        public GridView(UserInterface ui)
         {
-            _grid = grid;
+            _ui = ui;
+            Header = new ObservableArray<Header<object>>();
+            RowData = new ObservableArray<object>();
         }
+
         public override async Task RenderAsync()
         {
-            var entityName = _grid.Field.Reference.Name;
-            var gridPolicy = await Client<GridPolicy>.Instance.GetList($"$filter=Active eq true&Entity/Name={entityName}");
-            var headers = gridPolicy.Select(x => new Header<object>
+            var entityName = _ui.Field.Reference.Name;
+            var gridPolicy = await Client<GridPolicy>.Instance
+                .GetList("$expand=Reference($select=Name)" +
+                    $"&$filter=Active eq true&Entity/Name={entityName}");
+            foreach (var column in gridPolicy)
             {
-                FieldName = x.Field?.FieldName ?? x.FieldName,
-                Format = x.Format,
-                GroupName = x.GroupName,
-                HeaderText = x.ShortDesc,
-                Description = x.Description,
-                Reference = x.Reference?.Name,
-                RefValueField = "Id",
-                RefDisplayField = x.RefDisplayField,
-                HasFilter = x.HasFilter,
-                TextAlign = (TextAlign)x.TextAlign,
-                EditEvent = async (obj) =>
+                var header = new Header<object>();
+                header.FieldName = column.FieldName;
+                header.Format = column.Format;
+                header.GroupName = column.GroupName;
+                header.HeaderText = column.ShortDesc;
+                header.Description = column.Description;
+                header.Reference = column.Reference?.Name;
+                header.DataSource = column.DataSource;
+                header.RefValueField = "Id";
+                header.RefDisplayField = column.RefDisplayField;
+                header.HasFilter = column.HasFilter;
+                var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
+                if (parsed) header.TextAlign = textAlign;
+                if (column.EditEvent.HasAnyChar())
                 {
-                    this.ExecuteEvent(x.EditEvent);
-                },
-            });
-            //Header.AddRange(headers.ToArray());
-            //var client = new Client<T>();
-            //var rows = await client.GetList();
-            //RowData.Data = rows.ToArray();
-            //var tableParams = new TableParam<T> { Headers = Header, RowData = RowData };
-            //Html.Instance.Table(tableParams);
+                    header.EditEvent = async (obj) => { this.ExecuteEvent(column.EditEvent, obj); };
+                }
+                if (column.DeleteEvent.HasAnyChar())
+                {
+                    header.DeleteEvent = async (obj) => { this.ExecuteEvent(column.DeleteEvent, obj); };
+                }
+                Header.Add(header);
+            }
+            var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
+            var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
+            RowData.Data = rows.ToArray();
+            var table = new Table<object>(tableParams);
+            Html.Take(RootElement);
+            table.RenderAsync();
         }
     }
 }

@@ -48,6 +48,11 @@ namespace Common.Extensions
             return string.IsNullOrEmpty(value);
         }
 
+        public static bool HasAnyChar(this string value)
+        {
+            return !string.IsNullOrEmpty(value);
+        }
+
         public static IEnumerable<T> DistinctBy<T, Key> (this IEnumerable<T> source, Func<T, Key> keySelector)
         {
             return source.GroupBy(keySelector).Select(g => g.First());
