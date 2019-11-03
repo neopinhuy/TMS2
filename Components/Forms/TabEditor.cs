@@ -10,7 +10,10 @@ namespace Components.Forms
 
         public TabEditor()
         {
-            _editor = new EditForm<T>();
+            _editor = new EditForm<T>
+            {
+                Parent = this
+            };
         }
 
         public override async Task RenderAsync()

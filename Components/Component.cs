@@ -6,6 +6,17 @@ namespace Components
 {
     public abstract class Component : IDisposable
     {
+        public virtual Component Parent { get; set; }
+        public virtual Component RootParent { 
+            get
+            {
+                var result = this;
+                while (result.Parent != null)
+                    result = result.Parent;
+                return result;
+            }
+        }
+
         public virtual Element RootElement { get; set; }
         public abstract Task RenderAsync();
         protected MasterData _masterData;

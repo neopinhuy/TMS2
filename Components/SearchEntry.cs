@@ -112,20 +112,25 @@ namespace Components
 
         private void Select(object rowData)
         {
-            SetTextData(rowData);
+            if (rowData != null) SetTextData(rowData);
             _value.Data = (int)rowData[_refValueField];
             DisposeSearchTable();
         }
 
         private void SetTextData(object rowData)
         {
+            if (rowData is null)
+            {
+                throw new ArgumentNullException(nameof(rowData));
+            }
+
             _text.Data = Utils.FormatWith(_ui.Format, rowData);
         }
 
         private void UpdateSearchText()
         {
             var selected = _source.Data.FirstOrDefault(x => x[_refValueField]?.ToString() == _value.Data.ToString());
-            SetTextData(selected);
+            if (selected != null) SetTextData(selected);
         }
 
         private void DisposeSearchTable()

@@ -16,7 +16,7 @@ namespace Components
         public ObservableArray<Header<Data>> Headers { get; set; }
         public ObservableArray<Data> RowData { get; set; }
         public Action<Data> RowClick { get; set; }
-        public Task<Action<Data>> RowClickAsync { get; set; }
+        public Action<Data> RowDblClick { get; set; }
     }
 
     public class Table<Data> : Component
@@ -85,7 +85,9 @@ namespace Components
                 Html.Take(table).Clear();
                 RenderTableHeader(table);
                 // Load all master data
-                var refEntities = Headers.Data.Where(x => x.Reference.HasAnyChar())
+                var refEntities = Headers.Data
+                    .Where(x => x.Reference.HasAnyChar())
+                    .DistinctBy(x => x.Reference + x.DataSource)
                     .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
                 _refData = await Task.WhenAll(refEntities);
                 RenderTableContent(table);
@@ -161,6 +163,7 @@ namespace Components
             var html = Html.Instance;
             html.TRow.Render();
             if (_tableParam.RowClick != null) html.Event(EventType.Click, _tableParam.RowClick, row);
+            if (_tableParam.RowDblClick != null) html.Event(EventType.DblClick, _tableParam.RowDblClick, row);
             html.ForEach(Headers.Data, (header, headerIndex) =>
             {
                 html.TData.Render();

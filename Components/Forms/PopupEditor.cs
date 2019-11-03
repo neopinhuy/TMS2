@@ -13,7 +13,10 @@ namespace Components.Forms
 
         public PopupEditor()
         {
-            _editor = new EditForm<T>();
+            _editor = new EditForm<T>
+            {
+                Parent = this
+            };
         }
 
         public override async Task RenderAsync()

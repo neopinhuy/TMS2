@@ -10,5 +10,13 @@ namespace TMS.UI.Business.TruckManagement
 {
     public class AllTruck : TabEditor<Truck>
     {
+        public async Task EditTruck(Truck truck)
+        {
+            var truckDetail = new PopupEditor<Truck>
+            {
+                Data = truck
+            };
+            await truckDetail.RenderAsync();
+        }
     }
 }

@@ -29,6 +29,11 @@ namespace Components.Extensions
 
         public static string FormatWith(this string format, object source)
         {
+            if (source is null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
             return FormatWith(format, null, source);
         }
 
@@ -53,12 +58,12 @@ namespace Components.Extensions
             return string.Format(provider, rewrittenFormat, values.ToArray());
         }
 
-        public static void ExecuteEvent<T>(this T obj, string eventName, params object[] p)
+        public static void ExecuteEvent<T>(this T obj, string eventName, params object[] arguements)
         {
             try
             {
-                if (obj[eventName] is Func<Task> asyncF) asyncF.Invoke(obj, p);
-                if (obj[eventName] is Action syncF) syncF.Invoke(obj, p);
+                if (obj[eventName] is Func<Task> asyncF) asyncF.Invoke(obj, arguements);
+                else if (obj[eventName] is Action syncF) syncF.Invoke(obj, arguements);
             }
             catch (Exception ex)
             {

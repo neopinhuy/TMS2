@@ -52,6 +52,14 @@ namespace Components.Forms
                 if (parent.InverseParent == null) parent.InverseParent = new List<ComponentGroup>();
                 parent.InverseParent.Add(item);
             }
+            foreach (var item in componentGroup)
+            {
+                if (item.UserInterface == null || !item.UserInterface.Any()) continue;
+                foreach (var ui in item.UserInterface)
+                {
+                    ui.ComponentGroup = item;
+                }
+            }
             return componentGroup.Where(x => x.ParentId == null).ToList();
         }
 
@@ -149,7 +157,8 @@ namespace Components.Forms
         {
             var grid = new GridView(ui)
             {
-                RootElement = Html.Context
+                RootElement = Html.Context,
+                Parent = this
             };
             Window.SetTimeout(async() => await grid.RenderAsync());
         }
