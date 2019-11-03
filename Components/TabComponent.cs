@@ -17,9 +17,15 @@ namespace Components
             if (tab != null) return true;
             Html.Take("#tabs")
                 .Li.Anchor.Href($"#{FullClassName}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
-                .Span.ClassName("icon fa fa-times").Event(EventType.Click, Close).End.Render();
+                .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id(FullClassName).Render();
             return false;
+        }
+
+        public virtual void Focus()
+        {
+            var html = Html.Take($"a[href='#{FullClassName}'");
+            html.Trigger(EventType.Click);
         }
 
         private void CloseTheTab(Event e)
@@ -29,11 +35,11 @@ namespace Components
             if (which == 2 || button == 1)
             {
                 e.PreventDefault();
-                Close();
+                Dispose();
             }
         }
-
-        private void Close()
+        
+        public override void Dispose()
         {
             Html.Take($"#tabs a[href='#{FullClassName}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");
@@ -49,12 +55,6 @@ namespace Components
                 if (nextTab != null)
                     nextTab.FirstElementChild.Click();
             }
-        }
-
-        public virtual void Focus()
-        {
-            var html = Html.Take($"a[href='#{FullClassName}'");
-            html.Trigger(EventType.Click);
         }
     }
 }

@@ -42,10 +42,11 @@
     <Compile Include="Extensions\ReflectionFormatProvider.cs" />
     <Compile Include="Extensions\Toast.cs" />
     <Compile Include="Extensions\Utils.cs" />
+    <Compile Include="Forms\TabEditor.cs" />
+    <Compile Include="Forms\PopupEditor.cs" />
     <Compile Include="Forms\EditForm.cs" />
     <Compile Include="GridView.cs" />
     <Compile Include="ImageUploader.cs" />
-    <Compile Include="PopupComponent.cs" />
     <Compile Include="SearchEntry.cs" />
     <Compile Include="TabComponent.cs" />
     <Compile Include="Component.cs" />

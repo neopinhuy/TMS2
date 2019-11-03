@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using Common.Clients;
+using Components.Forms;
 
 namespace TMS.UI.Business.TruckManagement
 {
@@ -17,7 +18,7 @@ namespace TMS.UI.Business.TruckManagement
 
         public async Task EditTruck(Truck truck)
         {
-            var truckDetail = new TruckDetail
+            var truckDetail = new PopupEditor<Truck>
             {
                 Data = truck
             };

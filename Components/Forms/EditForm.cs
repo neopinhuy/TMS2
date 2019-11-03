@@ -14,9 +14,9 @@ using ElementType = MVVM.ElementType;
 
 namespace Components.Forms
 {
-    public partial class EditForm<T> : PopupComponent
+    public partial class EditForm<T> : Component
     {
-        public override string Title { get; set; } = $"{typeof(T).Name} Detail";
+        public string Title { get; set; } = $"{typeof(T).Name} Detail";
         public T Data { get; set; }
         protected readonly object _observableTruck;
 
@@ -57,10 +57,7 @@ namespace Components.Forms
 
         public override async Task RenderAsync()
         {
-            base.RenderAsync();
             var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
-            var field = _masterData.Field.ToDictionary(x => x.Id);
-            var entity = _masterData.Entity.ToDictionary(x => x.Id);
             componentGroup = BuildTree(componentGroup);
             RenderGroup(componentGroup);
         }
@@ -229,11 +226,13 @@ namespace Components.Forms
 
         private void RenderInput(UserInterface ui)
         {
-            var value = new Observable<string>(Data[ui.FieldName]?.ToString());
+            var value = new Observable<string>(Data?[ui.FieldName]?.ToString());
             if (ui.FieldName.HasAnyChar())
             {
                 _observableTruck[ui.FieldName] = value;
-                value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+                value.Subscribe(arg => {
+                    if (Data != null) Data[ui.FieldName] = arg.NewData;
+                });
             }
             Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
                 .Value(value);

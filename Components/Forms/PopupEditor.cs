@@ -2,27 +2,33 @@
 using Components.Extensions;
 using MVVM;
 using System.Threading.Tasks;
-using TMS.API.Models;
 using static Retyped.jquery;
 
-namespace Components
+namespace Components.Forms
 {
-    public abstract class PopupComponent : Component
+    public partial class PopupEditor<T> : Component
     {
-        public virtual string Title { get; set; }
+        private readonly EditForm<T> _editor;
+        public T Data { get; set; }
+
+        public PopupEditor()
+        {
+            _editor = new EditForm<T>();
+        }
 
         public override async Task RenderAsync()
         {
-            _masterData = await MasterData.GetSingletonAsync();
             Html.Take(Document.Body).Div.ClassName("backdrop");
             RootElement = Html.Context as HTMLElement;
             jQuery.select(RootElement).HotKey("esc", Dispose);
             Html.Instance.Div.ClassName("popup-content")
-                .Div.ClassName("popup-title").Text(Title)
+                .Div.ClassName("popup-title").Text(_editor.Title)
                 .Div.ClassName("icon-box").Span.ClassName("fa fa-times")
                     .Event(EventType.Click, Dispose)
                 .EndOf(".popup-title")
                 .Div.ClassName("popup-body");
+            _editor.Data = Data;
+            await _editor.RenderAsync();
         }
     }
 }

@@ -81,15 +81,8 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            if (_dataSource.HasAnyChar())
-            {
-                var source = await Client<object>.Instance.GetListEntity(_refEntity, _dataSource);
-                return source.ToArray();
-            }
-            else
-            {
-                return _masterData.GetSourceByTypeName(_refEntity).ToArray();
-            }
+            var source = await Client<object>.Instance.GetListEntity(_refEntity, _dataSource);
+            return source.ToArray();
         }
 
         public async Task RenderSuggestion()
