@@ -32,7 +32,6 @@ namespace TMS.API.Models
         public virtual DbSet<EntityPolicy> EntityPolicy { get; set; }
         public virtual DbSet<Feature> Feature { get; set; }
         public virtual DbSet<FeaturePolicy> FeaturePolicy { get; set; }
-        public virtual DbSet<Field> Field { get; set; }
         public virtual DbSet<FreightHistory> FreightHistory { get; set; }
         public virtual DbSet<FreightProof> FreightProof { get; set; }
         public virtual DbSet<FreightState> FreightState { get; set; }
@@ -604,51 +603,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.FeaturePolicyUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_FeaturePolicy_UserUpdated");
-            });
-
-            modelBuilder.Entity<Field>(entity =>
-            {
-                entity.Property(e => e.ColumnType)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Description).HasMaxLength(100);
-
-                entity.Property(e => e.FieldName)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.RefDisplayFields).HasMaxLength(10);
-
-                entity.Property(e => e.RefValueField)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ShortDesc).HasMaxLength(50);
-
-                entity.HasOne(d => d.Entity)
-                    .WithMany(p => p.FieldEntity)
-                    .HasForeignKey(d => d.EntityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Field_Entity");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FieldInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Field_UserInserted");
-
-                entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.FieldReference)
-                    .HasForeignKey(d => d.ReferenceId)
-                    .HasConstraintName("FK_Field_EntityReference");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FieldUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_Field_UserUpdated");
             });
 
             modelBuilder.Entity<FreightHistory>(entity =>

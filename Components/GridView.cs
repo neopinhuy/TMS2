@@ -32,17 +32,20 @@ namespace Components
                     $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
             foreach (var column in gridPolicy)
             {
-                var header = new Header<object>();
-                header.FieldName = column.FieldName;
-                header.Format = column.Format;
-                header.GroupName = column.GroupName;
-                header.HeaderText = column.ShortDesc;
-                header.Description = column.Description;
-                header.Reference = column.Reference?.Name;
-                header.DataSource = column.DataSource;
-                header.RefValueField = "Id";
-                header.RefDisplayField = column.RefDisplayField;
-                header.HasFilter = column.HasFilter;
+                var header = new Header<object>
+                {
+                    FieldName = column.FieldName,
+                    Format = column.Format,
+                    Order = column.Order,
+                    GroupName = column.GroupName,
+                    HeaderText = column.ShortDesc,
+                    Description = column.Description,
+                    Reference = column.Reference?.Name,
+                    DataSource = column.DataSource,
+                    RefValueField = "Id",
+                    RefDisplayField = column.RefDisplayField,
+                    HasFilter = column.HasFilter
+                };
                 var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
                 if (parsed) header.TextAlign = textAlign;
                 Header.Add(header);

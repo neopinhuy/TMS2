@@ -93,9 +93,6 @@
     <Compile Include="..\TMS.API\Models\FeaturePolicy.cs">
       <Link>Models\FeaturePolicy.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\Field.cs">
-      <Link>Models\Field.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\FreightBalance.cs">
       <Link>Models\FreightBalance.cs</Link>
     </Compile>

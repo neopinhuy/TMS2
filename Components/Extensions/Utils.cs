@@ -10,23 +10,6 @@ namespace Components.Extensions
 {
     public static partial class Utils
     {
-        public static IEnumerable<Header<T>> GetHeaders<T>(this MasterData masterData)
-        {
-            var entityDic = masterData.Entity.ToDictionary(x => x.Id);
-            return from entity in masterData.Entity
-                   join field in masterData.Field on entity.Id equals field.EntityId
-                   where entity.Name == typeof(T).Name && !field.Hidden
-                   orderby field.Order
-                   select new Header<T>
-                   {
-                       HeaderText = field.Description,
-                       FieldName = field.FieldName,
-                       HasFilter = true,
-                       Reference = field.ReferenceId != null ? entityDic[field.ReferenceId.Value].Name : null,
-                       RefDisplayField = field.RefDisplayFields ?? "Name"
-                   };
-        }
-
         public static string FormatWith(string format, object source)
         {
             if (source is null)

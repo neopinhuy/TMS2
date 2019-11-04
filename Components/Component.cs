@@ -19,7 +19,6 @@ namespace Components
 
         public virtual Element RootElement { get; set; }
         public abstract Task RenderAsync();
-        protected MasterData _masterData;
 
         public virtual void Dispose()
         {

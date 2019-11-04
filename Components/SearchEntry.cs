@@ -51,7 +51,6 @@ namespace Components
 
         public override async Task RenderAsync()
         {
-            _masterData = await MasterData.GetSingletonAsync();
             Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
@@ -74,7 +73,9 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _source.Data = await GetDataSource();
-                RefField = await Client<GridPolicy>.Instance.GetList($"$filter=EntityId eq {_ui.ReferenceId}");
+                RefField = await Client<GridPolicy>.Instance.GetList(
+                    $"$filter=Active eq true and EntityId eq {_ui.ReferenceId}");
+                RefField = RefField.OrderBy(x => x.Order);
                 UpdateSearchText();
             });
         }

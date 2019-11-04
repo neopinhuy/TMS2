@@ -51,7 +51,6 @@
     <Compile Include="TabComponent.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Header.cs" />
-    <Compile Include="MasterData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="FloatingTable.cs" />

@@ -41,8 +41,6 @@ namespace TMS.API.Models
             Feature = new HashSet<Feature>();
             FeaturePolicyInsertedByNavigation = new HashSet<FeaturePolicy>();
             FeaturePolicyUpdatedByNavigation = new HashSet<FeaturePolicy>();
-            FieldInsertedByNavigation = new HashSet<Field>();
-            FieldUpdatedByNavigation = new HashSet<Field>();
             FreightHistoryActor = new HashSet<FreightHistory>();
             FreightHistoryInsertedByNavigation = new HashSet<FreightHistory>();
             FreightHistoryUpdatedByNavigation = new HashSet<FreightHistory>();
@@ -173,8 +171,6 @@ namespace TMS.API.Models
         public virtual ICollection<Feature> Feature { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyUpdatedByNavigation { get; set; }
-        public virtual ICollection<Field> FieldInsertedByNavigation { get; set; }
-        public virtual ICollection<Field> FieldUpdatedByNavigation { get; set; }
         public virtual ICollection<FreightHistory> FreightHistoryActor { get; set; }
         public virtual ICollection<FreightHistory> FreightHistoryInsertedByNavigation { get; set; }
         public virtual ICollection<FreightHistory> FreightHistoryUpdatedByNavigation { get; set; }

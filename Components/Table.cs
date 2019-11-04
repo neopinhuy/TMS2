@@ -85,7 +85,7 @@ namespace Components
                 Html.Take(table).Clear();
                 var headers = from header in Headers.Data
                     group header by header.GroupName into headerGroup
-                    select headerGroup.ToList();
+                    select headerGroup.OrderBy(x => x.Order);
                 Headers.NewValue = headers.SelectMany(x => x).ToArray();
                 RenderTableHeader(table);
                 // Load all master data
