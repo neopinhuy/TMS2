@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Components
 {
-    public abstract class Component : IDisposable
+    public abstract class Component
     {
         public virtual Component Parent { get; set; }
         public virtual Component RootParent { 
@@ -26,6 +26,6 @@ namespace Components
             RootElement.Remove();
         }
 
-        protected string FullClassName => GetType().FullName.Replace(".", "_");
+        protected string ClassId => "feature_" + GetType().Name;
     }
 }

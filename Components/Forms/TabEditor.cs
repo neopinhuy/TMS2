@@ -22,5 +22,14 @@ namespace Components.Forms
             _editor.Title = Title;
             await _editor.RenderAsync();
         }
+
+        public async Task Edit(T entity)
+        {
+            var editor = new PopupEditor<T>
+            {
+                Data = entity
+            };
+            await editor.RenderAsync();
+        }
     }
 }

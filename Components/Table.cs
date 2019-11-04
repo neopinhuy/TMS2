@@ -174,7 +174,8 @@ namespace Components
                 if (header.EditEvent != null)
                 {
                     html.Button.ClassName("button small warning")
-                        .Event(EventType.Click, async(data) => {
+                        .Event(EventType.Click, async (data) =>
+                        {
                             await header.EditEvent(data);
                         }, row)
                         .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
@@ -188,22 +189,33 @@ namespace Components
                 if (string.IsNullOrEmpty(header.FieldName)) return;
                 if (!row.HasOwnProperty(header.FieldName)) return;
                 object cellData = row[header.FieldName];
-                string cellText = cellData?.ToString() ?? string.Empty;
-                if (cellData != null && cellData is DateTime)
-                {
-                    cellText = string.Format("{0:dd/MM/yyyy}", cellData as DateTime?);
-                }
-                if (header.Reference != null)
-                {
-                    var source = _refData.GetSourceByTypeName(header.Reference);
-                    var found = source.FirstOrDefault(x => x[header.RefValueField] == cellData);
-                    cellText = found?[header.RefDisplayField.Trim()]?.ToString();
-                    header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-                }
-                if (header.Format.HasAnyChar()) cellText = string.Format("{0:" + header.Format + "}", cellData);
+                var cellText = GetCellText(header, cellData);
+                header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
                 header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
                 html.TextAlign(header.TextAlign).Text(cellText).End.Render();
             });
+        }
+
+        private string GetCellText(Header<T> header, object cellData)
+        {
+            if (cellData == null) return string.Empty;
+            if (cellData is DateTime)
+            {
+                return string.Format(header.Format ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
+            }
+            else if (header.Reference != null)
+            {
+                var source = _refData.GetSourceByTypeName(header.Reference);
+                var found = source.FirstOrDefault(x => x[header.RefValueField] == cellData);
+                if (found == null) return string.Empty;
+                if (header.Format.HasAnyChar())
+                {
+                    return Utils.FormatWith(header.Format, found);
+                }
+                else throw new InvalidOperationException($"Format of {header.FieldName} is null");
+            }
+            else if (header.Format.HasAnyChar()) return string.Format(header.Format, cellData.ToString());
+            else return cellData.ToString();
         }
 
         private static TextAlign? CalcTextAlign(TextAlign? textAlign, object cellData)

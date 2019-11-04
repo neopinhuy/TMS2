@@ -13,18 +13,18 @@ namespace Components
         /// <returns>True if it has been mounted, and vice versa</returns>
         public bool IsExisted()
         {
-            var tab = Document.QuerySelector($"#tab-content #{FullClassName}");
+            var tab = Document.QuerySelector($"#tab-content #{ClassId}");
             if (tab != null) return true;
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#{FullClassName}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
+                .Li.Anchor.Href($"#{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
-            Html.Take("#tab-content").Div.Id(FullClassName).Render();
+            Html.Take("#tab-content").Div.Id(ClassId).Render();
             return false;
         }
 
         public virtual void Focus()
         {
-            var html = Html.Take($"a[href='#{FullClassName}'");
+            var html = Html.Take($"a[href='#{ClassId}'");
             html.Trigger(EventType.Click);
         }
 
@@ -41,12 +41,12 @@ namespace Components
         
         public override void Dispose()
         {
-            Html.Take($"#tabs a[href='#{FullClassName}']");
+            Html.Take($"#tabs a[href='#{ClassId}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");
             var previousTab = Html.Context.ParentElement.PreviousElementSibling;
             var nextTab = Html.Context.ParentElement.NextElementSibling;
             Html.Context.ParentElement.Remove();
-            Html.Take("#" + FullClassName);
+            Html.Take("#" + ClassId);
             Html.Context.Remove();
             if (isActive)
             {

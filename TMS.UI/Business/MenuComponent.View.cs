@@ -1,4 +1,5 @@
 ﻿using Bridge.Html5;
+using Common.Clients;
 using Components;
 using MVVM;
 using System;
@@ -34,8 +35,7 @@ namespace TMS.UI.Business
 
         public override async Task RenderAsync()
         {
-            _masterData = await MasterData.GetSingletonAsync();
-            _feature = _masterData.Feature.ToList();
+            _feature = await Client<Feature>.Instance.GetList();
             BuildFeatureTree();
             Html.Take(".sidebar-wrapper");
             RenderMenuItems(_feature);

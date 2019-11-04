@@ -27,7 +27,7 @@ namespace Components.Extensions
                    };
         }
 
-        public static string FormatWith(this string format, object source)
+        public static string FormatWith(string format, object source)
         {
             if (source is null)
             {
@@ -37,7 +37,7 @@ namespace Components.Extensions
             return FormatWith(format, null, source);
         }
 
-        public static string FormatWith(this string format, IFormatProvider provider, object source)
+        public static string FormatWith(string format, IFormatProvider provider, object source)
         {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));

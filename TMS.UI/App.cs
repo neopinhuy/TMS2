@@ -1,7 +1,10 @@
-﻿using TMS.UI.Business;
+﻿using Components.Forms;
+using System;
+using System.Threading.Tasks;
+using TMS.API.Models;
+using TMS.UI.Business;
 using TMS.UI.Business.Dashboard;
 using TMS.UI.Business.TruckManagement;
-using System.Threading.Tasks;
 
 namespace TMS.UI
 {
@@ -9,11 +12,12 @@ namespace TMS.UI
     {
         public static async Task Main()
         {
-            Dashboard dashboard = new Dashboard();
+            var dashboard = new Dashboard();
             await dashboard.RenderAsync();
-            MenuComponent menuComponent = new MenuComponent();
+            var menuComponent = new MenuComponent();
             await menuComponent.RenderAsync();
-            var truck = new TruckList();
+
+            var truck = new AllTruck();
             await truck.RenderAsync();
             truck.Focus();
         }
