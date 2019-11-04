@@ -27,7 +27,9 @@ namespace Components
             var entityName = _ui.Reference.Name;
             var gridPolicy = await Client<GridPolicy>.Instance
                 .GetList("$expand=Reference($select=Name)" +
-                    $"&$filter=Active eq true and Entity/Name eq '{entityName}' and FeatureId eq {_ui.ComponentGroup.FeatureId}");
+                    "&orderby=Order" +
+                    $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
+                    $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
             foreach (var column in gridPolicy)
             {
                 var header = new Header<object>();

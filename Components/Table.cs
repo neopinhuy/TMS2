@@ -19,12 +19,12 @@ namespace Components
         public Action<Data> RowDblClick { get; set; }
     }
 
-    public class Table<Data> : Component
+    public class Table<T> : Component
     {
-        public ObservableArray<Header<Data>> Headers { get; set; }
-        public ObservableArray<Data> RowData { get; set; }
+        public ObservableArray<Header<T>> Headers { get; set; }
+        public ObservableArray<T> RowData { get; set; }
         
-        private readonly TableParam<Data> _tableParam;
+        private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
 
         const string _selected = "selected-row";
@@ -45,7 +45,7 @@ namespace Components
 
         private int? timeOut = null;
 
-        public Table(TableParam<Data> tableParam)
+        public Table(TableParam<T> tableParam)
         {
             Headers = tableParam.Headers;
             RowData = tableParam.RowData;
@@ -83,6 +83,10 @@ namespace Components
             timeOut = Window.SetTimeout(async () =>
             {
                 Html.Take(table).Clear();
+                var headers = from header in Headers.Data
+                    group header by header.GroupName into headerGroup
+                    select headerGroup.ToList();
+                Headers.NewValue = headers.SelectMany(x => x).ToArray();
                 RenderTableHeader(table);
                 // Load all master data
                 var refEntities = Headers.Data
@@ -158,7 +162,7 @@ namespace Components
             html.TBody.ForEach(RowData.Data, RenderRowData).EndOf(ElementType.table).Render();
         }
 
-        private void RenderRowData(Data row, int index)
+        private void RenderRowData(T row, int index)
         {
             var html = Html.Instance;
             html.TRow.Render();

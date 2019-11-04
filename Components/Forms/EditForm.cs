@@ -97,7 +97,7 @@ namespace Components.Forms
                 {
                     RenderGroup(group.InverseParent.ToList());
                 }
-                Html.Instance.Table.ClassName("entity-detail").TBody.TRow.Render();
+                Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
                 RenderComponent(group);
                 Html.Instance.EndOf(".group");
             }
