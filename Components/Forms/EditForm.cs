@@ -202,6 +202,8 @@ namespace Components.Forms
 
         private void RenderGridView(UserInterface ui)
         {
+            if (Entity != null && Entity["Id"].As<int>() != 0)
+                ui.DataSourceFilter += Entity["Id"];
             var grid = new GridView(ui)
             {
                 RootHtmlElement = Html.Context,
