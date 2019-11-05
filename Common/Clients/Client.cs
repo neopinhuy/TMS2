@@ -89,7 +89,7 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<T> PostAsync(T value)
+        public Task<T> CreateAsync(T value)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
@@ -149,7 +149,7 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<T> PutAsync(T value)
+        public Task<T> UpdateAsync(T value)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();

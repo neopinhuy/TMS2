@@ -27,18 +27,19 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Truck> Get(int id)
+        public async Task<ActionResult<Truck>> Get(int id)
         {
-            return await db.Truck.FindAsync(id);
+            var truck = await db.Truck.FindAsync(id);
+            if (truck == null) return NotFound();
+            return Ok(truck);
         }
 
         [HttpPost]
-        public async Task<Truck> PostAsync([FromBody]Truck truck)
+        public async Task<ActionResult<Truck>> PostAsync([FromBody]Truck truck)
         {
             if (truck == null || !ModelState.IsValid)
             {
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return null;
+                return BadRequest(ModelState);
             }
             db.Truck.Add(truck);
             await db.SaveChangesAsync();

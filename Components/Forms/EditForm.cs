@@ -44,10 +44,10 @@ namespace Components.Forms
         public virtual async Task Save()
         {
             var client = new Client<T>();
-            if (Entity == null && Entity["Id"].As<int>() == 0)
+            if (Entity != null && Entity["Id"].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
-                var data = await client.PostAsync(Entity);
+                var data = await client.CreateAsync(Entity);
                 if (data != null)
                 {
                     Toast.Create(new ToastOptions
@@ -63,7 +63,7 @@ namespace Components.Forms
             }
             else
             {
-                var data = await client.PutAsync(Entity);
+                var data = await client.UpdateAsync(Entity);
                 if (data != null)
                 {
                     Toast.Create(new ToastOptions

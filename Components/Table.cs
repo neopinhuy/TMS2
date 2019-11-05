@@ -83,19 +83,29 @@ namespace Components
             timeOut = Window.SetTimeout(async () =>
             {
                 Html.Take(table).Clear();
-                var headers = from header in Headers.Data
-                    group header by header.GroupName into headerGroup
-                    select headerGroup.OrderBy(x => x.Order);
-                Headers.NewValue = headers.SelectMany(x => x).ToArray();
+                SortHeaderByGroupName();
                 RenderTableHeader(table);
-                // Load all master data
-                var refEntities = Headers.Data
-                    .Where(x => x.Reference.HasAnyChar())
-                    .DistinctBy(x => x.Reference + x.DataSource)
-                    .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
-                _refData = await Task.WhenAll(refEntities);
+                await LoadMasterData();
                 RenderTableContent(table);
             });
+        }
+
+        private void SortHeaderByGroupName()
+        {
+            var headers = from header in Headers.Data
+                          group header by header.GroupName into headerGroup
+                          select headerGroup.OrderBy(x => x.Order);
+            Headers.NewValue = headers.SelectMany(x => x).ToArray();
+        }
+
+        private async Task LoadMasterData()
+        {
+            if (_refData != null && _refData.Any()) return;
+            var refEntities = Headers.Data
+                .Where(x => x.Reference.HasAnyChar())
+                .DistinctBy(x => x.Reference + x.DataSource)
+                .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
+            _refData = await Task.WhenAll(refEntities);
         }
 
         private void RenderTableHeader(Element table)
