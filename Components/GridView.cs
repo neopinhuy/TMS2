@@ -57,7 +57,7 @@ namespace Components
                 var dblClick = events[EventType.DblClick.ToString()]?.ToString();
                 tableParams.RowDblClick = row =>
                 {
-                    RootComponent.ExecuteEvent(dblClick, row, RowData);
+                    RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
                 };
             }
             var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);

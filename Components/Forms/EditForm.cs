@@ -18,25 +18,32 @@ namespace Components.Forms
     {
         public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
         public T Entity { get; set; }
-        public ObservableArray<T> EntityList { get; set; }
+        public ObservableArray<T> ParentEntity { get; set; }
+        public List<ObservableArray<object>> CurrentEntities { get; set; }
 
-        public async Task Create()
+        public EditForm()
         {
-            var defaultT = (T)typeof(T).GetConstructors().First(x => x.GetParameters().Length == 0).Invoke();
+            CurrentEntities = new List<ObservableArray<object>>();
+        }
+
+        public async Task Create(T entity)
+        {
+            var entities = CurrentEntities.First(x => x.GetType().GetGenericArguments().First() == typeof(T));
             var editor = new PopupEditor<T>
             {
-                Entity = defaultT,
-                EntityList = EntityList,
+                Entity = entity,
+                ParentEntity = entities.As<ObservableArray<T>>(),
             };
             await editor.RenderAsync();
         }
 
+        // GridView shall call this method
         public async Task Edit(T entity, ObservableArray<T> entityList)
         {
             var editor = new PopupEditor<T>
             {
                 Entity = entity,
-                EntityList = entityList,
+                ParentEntity = entityList,
             };
             await editor.RenderAsync();
         }
@@ -59,7 +66,7 @@ namespace Components.Forms
                     });
                 }
                 Entity = data;
-                EntityList.Add(Entity);
+                ParentEntity.Add(Entity);
             }
             else
             {
@@ -74,8 +81,8 @@ namespace Components.Forms
                         showTop = true
                     });
                     // Update data back to observable
-                    var index = Array.IndexOf(EntityList.Data, Entity);
-                    EntityList.Update(Entity, index);
+                    var index = Array.IndexOf(ParentEntity.Data, Entity);
+                    ParentEntity.Update(Entity, index);
                 }
             }
         }
@@ -197,6 +204,7 @@ namespace Components.Forms
                 RootHtmlElement = Html.Context,
                 ParentComponent = this
             };
+            CurrentEntities.Add(grid.RowData);
             _ = Window.SetTimeout(async () => await grid.RenderAsync());
         }
 
@@ -229,7 +237,7 @@ namespace Components.Forms
                 .Attr("data-id", ui.Id.ToString())
                 .Event(EventType.Click, () =>
                 {
-                    this.ExecuteEvent(ui.Events);
+                    RootComponent.ExecuteEvent(ui.Events, Entity, ParentEntity, CurrentEntities);
                 });
 
             //HotKeysExtension.HotKey(ui.HotKey, () =>
