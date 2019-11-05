@@ -26,26 +26,29 @@ namespace Components.Forms
             CurrentEntities = new List<ObservableArray<object>>();
         }
 
-        public async Task Create(T entity)
+        public virtual void Create()
         {
-            var entities = CurrentEntities.First(x => x.GetType().GetGenericArguments().First() == typeof(T));
+            var defaultT = (T)Activator.CreateInstance(typeof(T));
+            var entities = CurrentEntities.FirstOrDefault((ObservableArray<object> x) => {
+                var type = x.Data.FirstOrDefault().GetType();
+                return type.FullName == typeof(T).FullName;
+            });
             var editor = new PopupEditor<T>
             {
-                Entity = entity,
+                Entity = defaultT,
                 ParentEntity = entities.As<ObservableArray<T>>(),
             };
-            await editor.RenderAsync();
+            editor.RenderAsync();
         }
 
-        // GridView shall call this method
-        public async Task Edit(T entity, ObservableArray<T> entityList)
+        public virtual void Edit(T entity, ObservableArray<T> entityList)
         {
             var editor = new PopupEditor<T>
             {
                 Entity = entity,
                 ParentEntity = entityList,
             };
-            await editor.RenderAsync();
+            editor.RenderAsync();
         }
 
         public virtual async Task Save()
