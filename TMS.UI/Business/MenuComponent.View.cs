@@ -1,6 +1,8 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
+using Common.Extensions;
 using Components;
+using Components.Forms;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -57,10 +59,7 @@ namespace TMS.UI.Business
                 else
                 {
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
-                    .Event(EventType.Click, async (menu, e) =>
-                    {
-                        await MenuItemClick(menu, e);
-                    }, item)
+                    .Event(EventType.Click, async(menuItem, e) => await MenuItemClick(menuItem, e), item)
                     .Span.ClassName("icon " + item.Icon).End
                     .Text(item.Name).EndOf(MVVM.ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
@@ -71,7 +70,7 @@ namespace TMS.UI.Business
             });
         }
 
-        private static async Task MenuItemClick(Feature menu, Event e)
+        private async Task MenuItemClick(Feature menu, Event e)
         {
             var li = e.Target as HTMLElement;
             var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
@@ -89,9 +88,9 @@ namespace TMS.UI.Business
             if (menu.ViewClass != null)
             {
                 var type = Type.GetType(menu.ViewClass);
-                var instance = Activator.CreateInstance(type) as TabComponent;
+                var instance = Activator.CreateInstance(type) as Component;
                 await instance.RenderAsync();
-                instance.Focus();
+                instance["Focus"].As<System.Action>().Invoke(instance);
             }
         }
     }

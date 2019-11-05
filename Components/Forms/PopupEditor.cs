@@ -6,7 +6,7 @@ using static Retyped.jquery;
 
 namespace Components.Forms
 {
-    public partial class PopupEditor<T> : EditForm<T>
+    public class PopupEditor<T> : EditForm<T>
     {
         public override async Task RenderAsync()
         {

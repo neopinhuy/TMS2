@@ -29,7 +29,7 @@ namespace TMS.API.Models
         public int? DepartmentId { get; set; }
         public string Note { get; set; }
         public string Image { get; set; }
-        public bool? InUse { get; set; }
+        public bool InUse { get; set; }
         public double? MaxCbm { get; set; }
         public int? VendorId { get; set; }
         public double? Long { get; set; }

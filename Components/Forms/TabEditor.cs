@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Components.Forms
 {
-    public partial class TabEditor<T> : EditForm<T>
+    public class TabEditor<T> : EditForm<T>
     {
         public override string Title { get; set; } = $"{typeof(T).Name} List";
 

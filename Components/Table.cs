@@ -57,7 +57,7 @@ namespace Components
             Html.Instance.Div.ClassName("table-wrapper");
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table striped");
-            var table = Html.Context;
+            var table = Html.Context as HTMLTableElement;
             Rerender(table);
             Html.Instance.End.End.Render();
             Headers.Subscribe(x =>
@@ -68,9 +68,19 @@ namespace Components
             {
                 if (args.Action == ObservableAction.Update)
                 {
+                    var tbodies = table.TBodies;
+                    // Remove the row at index
+                    if (tbodies != null && tbodies.Any())
+                    {
+                        var tbody = tbodies[0];
+                        tbody.Rows[args.Index].Remove();
+                        Html.Take(tbody);
+                        RenderRowData(args.Item, args.Index);
+                        tbody.InsertBefore(Html.Context, tbody.Rows[args.Index]);
+                    }
                     // Update the row
                 }
-                Rerender(table);
+                else Rerender(table);
             });
         }
 
@@ -92,10 +102,10 @@ namespace Components
 
         private void SortHeaderByGroupName()
         {
-            var headers = from header in Headers.Data
-                          group header by header.GroupName into headerGroup
-                          select headerGroup.OrderBy(x => x.Order);
-            Headers.NewValue = headers.SelectMany(x => x).ToArray();
+            Headers.NewValue = Headers.Data.OrderBy(x => x.Order)
+                .GroupBy(x => x.GroupName)
+                .Select(x => x.OrderBy(header => header.Order))
+                .SelectMany(x => x).ToArray();
         }
 
         private async Task LoadMasterData()
@@ -216,7 +226,7 @@ namespace Components
             else if (header.Reference != null)
             {
                 var source = _refData.GetSourceByTypeName(header.Reference);
-                var found = source.FirstOrDefault(x => x[header.RefValueField] == cellData);
+                var found = source.FirstOrDefault(x => (int)x["Id"] == (int)cellData);
                 if (found == null) return string.Empty;
                 if (header.Format.HasAnyChar())
                 {
