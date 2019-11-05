@@ -13,7 +13,7 @@ namespace Components
         public override async Task RenderAsync()
         {
             await base.RenderAsync();
-            Html.Take(RootElement).ClassName("floating")
+            Html.Take(RootHtmlElement).ClassName("floating")
                 .Position(Position.@fixed)
                 .Position(Direction.top, Top)
                 .Position(Direction.left, Left);

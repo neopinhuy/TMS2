@@ -16,35 +16,35 @@ namespace Components.Forms
 {
     public partial class EditForm<T> : Component
     {
-        public string Title { get; set; } = $"{typeof(T).Name} Detail";
+        public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
         public T Entity { get; set; }
         public ObservableArray<T> EntityList { get; set; }
-        protected readonly object _observableTruck;
 
-        public EditForm()
+        public async Task Create()
         {
-            _observableTruck = new object();
+            var defaultT = (T)typeof(T).GetConstructors().First(x => x.GetParameters().Length == 0).Invoke();
+            var editor = new PopupEditor<T>
+            {
+                Entity = defaultT,
+                EntityList = EntityList,
+            };
+            await editor.RenderAsync();
+        }
+
+        public async Task Edit(T entity, ObservableArray<T> entityList)
+        {
+            var editor = new PopupEditor<T>
+            {
+                Entity = entity,
+                EntityList = entityList,
+            };
+            await editor.RenderAsync();
         }
 
         public virtual async Task Save()
         {
             var client = new Client<T>();
-            if (Entity != null && Entity["Id"].As<int>() != 0)
-            {
-                var data = await client.PutAsync(Entity);
-                if (data != null)
-                {
-                    Toast.Create(new ToastOptions
-                    {
-                        clsToast = "success",
-                        timeout = 2000,
-                        Message = $"Update {typeof(T).Name} succeeded",
-                        showTop = true
-                    });
-                    // Update data back to observable
-                }
-            }
-            else
+            if (Entity == null && Entity["Id"].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 var data = await client.PostAsync(Entity);
@@ -57,6 +57,25 @@ namespace Components.Forms
                         Message = $"Create {typeof(T).Name} succeeded",
                         showTop = true
                     });
+                }
+                Entity = data;
+                EntityList.Add(Entity);
+            }
+            else
+            {
+                var data = await client.PutAsync(Entity);
+                if (data != null)
+                {
+                    Toast.Create(new ToastOptions
+                    {
+                        clsToast = "success",
+                        timeout = 2000,
+                        Message = $"Update {typeof(T).Name} succeeded",
+                        showTop = true
+                    });
+                    // Update data back to observable
+                    var index = Array.IndexOf(EntityList.Data, Entity);
+                    EntityList.Update(Entity, index);
                 }
             }
         }
@@ -175,10 +194,10 @@ namespace Components.Forms
         {
             var grid = new GridView(ui)
             {
-                RootElement = Html.Context,
-                Parent = this
+                RootHtmlElement = Html.Context,
+                ParentComponent = this
             };
-            Window.SetTimeout(async() => await grid.RenderAsync());
+            _ = Window.SetTimeout(async () => await grid.RenderAsync());
         }
 
         private void RenderNumberInput(UserInterface ui)
@@ -193,8 +212,9 @@ namespace Components.Forms
             var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
-            _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
+            value.Subscribe(arg => { 
+                if (Entity != null) Entity[ui.FieldName] = arg.NewData;
+            });
             Html.Instance.MaskMoney(value, new Options
             {
                 thousands = isDecimal ? groupSeparator : string.Empty,
@@ -209,8 +229,9 @@ namespace Components.Forms
                 .Attr("data-id", ui.Id.ToString())
                 .Event(EventType.Click, () =>
                 {
-                    RootParent.ExecuteEvent(ui.Events);
+                    this.ExecuteEvent(ui.Events);
                 });
+
             //HotKeysExtension.HotKey(ui.HotKey, () =>
             //{
             //    ProcessEvents(ui);
@@ -220,7 +241,6 @@ namespace Components.Forms
         private void RenderImage(UserInterface ui)
         {
             var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
-            _observableTruck[ui.FieldName] = value;
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var uploader = new ImageUploader(value, ui);
             uploader.RenderAsync();
@@ -229,7 +249,6 @@ namespace Components.Forms
         private void RenderCheckbox(UserInterface ui)
         {
             var value = new Observable<bool?>((bool?)Entity?[ui.FieldName]);
-            _observableTruck[ui.FieldName] = value;
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             Html.Instance.SmallCheckbox(string.Empty, value);
         }
@@ -237,7 +256,6 @@ namespace Components.Forms
         private void RenderDatepicker(UserInterface ui)
         {
             var value = new Observable<DateTime?>((DateTime?)Entity?[ui.FieldName]);
-            _observableTruck[ui.FieldName] = value;
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             Html.Instance.SmallDatePicker(value);
         }
@@ -245,7 +263,6 @@ namespace Components.Forms
         private void RenderDropdown(UserInterface ui)
         {
             var value = new Observable<int?>((int?)Entity?[ui.FieldName]);
-            _observableTruck[ui.FieldName] = value;
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var searchEntry = new SearchEntry(value, ui);
             searchEntry.RenderAsync();
@@ -256,7 +273,6 @@ namespace Components.Forms
             var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
             if (ui.FieldName.HasAnyChar())
             {
-                _observableTruck[ui.FieldName] = value;
                 value.Subscribe(arg => {
                     if (Entity != null) Entity[ui.FieldName] = arg.NewData;
                 });

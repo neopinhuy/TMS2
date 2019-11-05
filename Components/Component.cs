@@ -6,23 +6,23 @@ namespace Components
 {
     public abstract class Component
     {
-        public virtual Component Parent { get; set; }
-        public virtual Component RootParent { 
+        public virtual Component ParentComponent { get; set; }
+        public virtual Component RootComponent { 
             get
             {
                 var result = this;
-                while (result.Parent != null)
-                    result = result.Parent;
+                while (result.ParentComponent != null)
+                    result = result.ParentComponent;
                 return result;
             }
         }
 
-        public virtual Element RootElement { get; set; }
+        public virtual Element RootHtmlElement { get; set; }
         public abstract Task RenderAsync();
 
         public virtual void Dispose()
         {
-            RootElement.Remove();
+            RootHtmlElement.Remove();
         }
 
         protected string ClassId => "feature_" + GetType().Name;

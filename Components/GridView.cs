@@ -57,13 +57,13 @@ namespace Components
                 var dblClick = events[EventType.DblClick.ToString()]?.ToString();
                 tableParams.RowDblClick = row =>
                 {
-                    RootParent.ExecuteEvent(dblClick, row);
+                    RootComponent.ExecuteEvent(dblClick, row, RowData);
                 };
             }
             var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
             RowData.Data = rows.ToArray();
             var table = new Table<object>(tableParams);
-            Html.Take(RootElement);
+            Html.Take(RootHtmlElement);
             table.RenderAsync();
         }
     }

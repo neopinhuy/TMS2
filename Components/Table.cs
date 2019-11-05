@@ -34,11 +34,11 @@ namespace Components
             set 
             {
                 selectedRow = value;
-                RootElement
+                RootHtmlElement
                     .QuerySelectorAll("tbody tr").ToList()
                     .ForEach(x => x.ReplaceClass(_selected, string.Empty));
                 if (selectedRow is null) return;
-                RootElement.QuerySelectorAll("tbody tr")
+                RootHtmlElement.QuerySelectorAll("tbody tr")
                     .ElementAt(selectedRow.Value).AddClass(_selected);
             } 
         }
@@ -55,7 +55,7 @@ namespace Components
         public override async Task RenderAsync()
         {
             Html.Instance.Div.ClassName("table-wrapper");
-            RootElement = Html.Context as HTMLElement;
+            RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table striped");
             var table = Html.Context;
             Rerender(table);
