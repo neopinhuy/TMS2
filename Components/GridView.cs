@@ -20,6 +20,12 @@ namespace Components
             _ui = ui;
             Header = new ObservableArray<Header<object>>();
             RowData = new ObservableArray<object>();
+            Header.Add(new Header<object>
+            {
+                StatusBar = true,
+                HeaderText = "",
+                Frozen = true
+            });
         }
 
         public override async Task RenderAsync()
@@ -44,7 +50,8 @@ namespace Components
                     DataSource = column.DataSource,
                     RefValueField = "Id",
                     RefDisplayField = column.RefDisplayField,
-                    HasFilter = column.HasFilter
+                    HasFilter = column.HasFilter,
+                    Frozen = column.Frozen
                 };
                 var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
                 if (parsed) header.TextAlign = textAlign;

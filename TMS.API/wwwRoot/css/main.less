@@ -204,6 +204,22 @@ td {
     top: -2px;
     overflow: hidden;
 
+    .status-cell {
+        background-color: #eee;
+        max-width: 20px;
+        border-color: @grayDark;
+        color: @edit-icon;
+        font-size: 0.8rem;
+
+        .mif-pencil {
+            visibility: hidden;
+        }
+    }
+
+    th.status-cell span {
+        margin-left: -2px;
+    }
+
     &.floating {
         position: fixed;
         background-color: @white;
@@ -215,9 +231,20 @@ td {
         }
     }
 
-    &:hover {
-        overflow: auto;
-        overflow: overlay;
+    .frozen {
+        width: auto;
+        float: left;
+        overflow: hidden;
+        border-right: 1px solid @grayNormal;
+    }
+
+    .non-frozen {
+        overflow: hidden;
+
+        &:hover {
+            overflow: auto;
+            overflow: overlay;
+        }
     }
 
     table {
@@ -235,6 +262,11 @@ td {
             border: 1px solid @grayNormal;
             color: @white;
             position: relative;
+            vertical-align: middle;
+
+            &.header-group {
+                height: 64px;
+            }
 
             span:first-child {
                 margin-right: 2.5rem;
@@ -258,13 +290,23 @@ td {
 
     tbody {
         tr {
+            height: 20px;
+
             &:nth-child(odd) {
                 background-color: @light !important;
             }
 
-            &:hover, &.selected-row {
-                background-color: @tableHover !important;
+            &.selected-row, &.hovering {
+                background-color: @tableSelected !important;
                 cursor: pointer;
+
+                .mif-pencil {
+                    visibility: visible;
+                }
+            }
+
+            &.hovering {
+                background-color: @tableHover !important;
             }
         }
 
@@ -285,10 +327,6 @@ td {
 
     &:last-child td {
         border-bottom: 0;
-    }
-
-    [rowspan] {
-        vertical-align: middle;
     }
 
     [colspan] {

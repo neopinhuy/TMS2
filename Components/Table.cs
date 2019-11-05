@@ -23,11 +23,13 @@ namespace Components
     {
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
-        
         private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
+        private HTMLTableElement _frozenTable;
+        private HTMLTableElement _mainTable;
 
         const string _selected = "selected-row";
+        const string _hovering = "hovering";
         private int? selectedRow;
         public int? SelectedRow { 
             get => selectedRow; 
@@ -56,10 +58,12 @@ namespace Components
         {
             Html.Instance.Div.ClassName("table-wrapper");
             RootHtmlElement = Html.Context as HTMLElement;
-            Html.Instance.Table.ClassName("table striped");
-            var table = Html.Context as HTMLTableElement;
-            Rerender(table);
-            Html.Instance.End.End.Render();
+            Html.Instance.Table.ClassName("table frozen");
+            _frozenTable = Html.Context as HTMLTableElement;
+            Html.Instance.End.Div.ClassName("non-frozen").Table.ClassName("table");
+            _mainTable = Html.Context as HTMLTableElement;
+            Rerender();
+            Html.Instance.EndOf(".table-wrapper");
             Headers.Subscribe(x =>
             {
                 // Rerender(table);
@@ -68,23 +72,23 @@ namespace Components
             {
                 if (args.Action == ObservableAction.Update)
                 {
-                    var tbodies = table.TBodies;
-                    // Remove the row at index
-                    if (tbodies != null && tbodies.Any())
-                    {
-                        var tbody = tbodies[0];
-                        tbody.Rows[args.Index].Remove();
-                        Html.Take(tbody);
-                        RenderRowData(args.Item, args.Index);
-                        tbody.InsertBefore(Html.Context, tbody.Rows[args.Index]);
-                    }
-                    // Update the row
+                    var tbodies = _mainTable.TBodies;
+                    //// Remove the row at index
+                    //if (tbodies != null && tbodies.Any())
+                    //{
+                    //    var tbody = tbodies[0];
+                    //    tbody.Rows[args.Index].Remove();
+                    //    Html.Take(tbody);
+                    //    RenderRowData(args.Item, args.Index);
+                    //    tbody.InsertBefore(Html.Context, tbody.Rows[args.Index]);
+                    //}
+                    //// Update the row
                 }
-                else Rerender(table);
+                else Rerender();
             });
         }
 
-        private void Rerender(Element table)
+        private void Rerender()
         {
             if (timeOut != null)
             {
@@ -92,17 +96,25 @@ namespace Components
             }
             timeOut = Window.SetTimeout(async () =>
             {
-                Html.Take(table).Clear();
                 SortHeaderByGroupName();
-                RenderTableHeader(table);
                 await LoadMasterData();
-                RenderTableContent(table);
+                var frozen = Headers.Data.Where(x => x.Frozen).ToList();
+                var nonFrozen = Headers.Data.Where(x => !x.Frozen).ToList();
+
+                Html.Take(_frozenTable).Clear();
+                RenderTableHeader(_frozenTable, frozen);
+                RenderTableContent(_frozenTable, frozen);
+
+                Html.Take(_mainTable).Clear();
+                RenderTableHeader(_mainTable, nonFrozen);
+                RenderTableContent(_mainTable, nonFrozen);
             });
         }
 
         private void SortHeaderByGroupName()
         {
-            Headers.NewValue = Headers.Data.OrderBy(x => x.Order)
+            Headers.NewValue = Headers.Data
+                .OrderByDescending(x => x.Frozen).ThenBy(x => x.Order)
                 .GroupBy(x => x.GroupName)
                 .Select(x => x.OrderBy(header => header.Order))
                 .SelectMany(x => x).ToArray();
@@ -118,11 +130,10 @@ namespace Components
             _refData = await Task.WhenAll(refEntities);
         }
 
-        private void RenderTableHeader(Element table)
+        private void RenderTableHeader(Element table, List<Header<T>> headers)
         {
             var html = Html.Take(table);
-            var headers = Headers.Data;
-            bool hasGroup = Headers.Data.Any(x => !string.IsNullOrEmpty(x.GroupName));
+            bool hasGroup = headers.Any(x => !string.IsNullOrEmpty(x.GroupName));
             // Render first header
             html.Thead.TRow.ForEach(headers, (header, index) =>
             {
@@ -139,6 +150,11 @@ namespace Components
                 {
                     html.RowSpan(2);
                 }
+                if (!hasGroup && Headers.Data.Any(x => x.GroupName.HasAnyChar()))
+                {
+                    html.ClassName("header-group");
+                }
+                if (header.StatusBar) html.ClassName("status-cell").Icon("fa fa-edit").End.Render();
                 if (header.EditEvent != null || header.DeleteEvent != null)
                 {
                     html.TextAlign(TextAlign.center).Icon("mif-folder-open").Margin(Direction.right, 0).End.Render();
@@ -176,44 +192,104 @@ namespace Components
             html.EndOf(ElementType.thead);
         }
 
-        private void RenderTableContent(Element table)
+        private void RenderTableContent(Element table, List<Header<T>> headers)
         {
             var html = Html.Take(table);
-            html.TBody.ForEach(RowData.Data, RenderRowData).EndOf(ElementType.table).Render();
+            html.TBody.ForEach(RowData.Data, (row, index) =>
+            {
+                RenderRowData(headers, row);
+            }).EndOf(ElementType.table).Render();
         }
 
-        private void RenderRowData(T row, int index)
+        private void RenderRowData(List<Header<T>> headers, T row)
         {
             var html = Html.Instance;
-            html.TRow.Render();
+            html.TRow
+                .Event(EventType.Click, ToggleSelectRow, row)
+                .Event(EventType.MouseEnter, HoverRow, row)
+                .Event(EventType.MouseLeave, LeaveRow, row);
             if (_tableParam.RowClick != null) html.Event(EventType.Click, _tableParam.RowClick, row);
             if (_tableParam.RowDblClick != null) html.Event(EventType.DblClick, _tableParam.RowDblClick, row);
-            html.ForEach(Headers.Data, (header, headerIndex) =>
+            html.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
+        }
+
+        private void ToggleSelectRow(T rowData)
+        {
+            var index = Array.IndexOf(RowData.Data, rowData);
+            ToggleSelectRow(index, _frozenTable.TBodies[0]);
+            ToggleSelectRow(index, _mainTable.TBodies[0]);
+        }
+
+        private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
+        {
+            var tableRow = body.Rows[index];
+            if (tableRow.ClassName.Contains(_selected))
             {
-                html.TData.Render();
-                if (header.EditEvent != null)
-                {
-                    html.Button.ClassName("button small warning")
-                        .Event(EventType.Click, async (data) =>
-                        {
-                            await header.EditEvent(data);
-                        }, row)
-                        .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
-                }
-                if (header.DeleteEvent != null)
-                {
-                    html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
-                        .AsyncEvent(EventType.Click, header.DeleteEvent, row)
-                        .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
-                }
-                if (string.IsNullOrEmpty(header.FieldName)) return;
-                if (!row.HasOwnProperty(header.FieldName)) return;
-                object cellData = row[header.FieldName];
-                var cellText = GetCellText(header, cellData);
-                header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-                header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
-                html.TextAlign(header.TextAlign).Text(cellText).End.Render();
-            });
+                tableRow.ReplaceClass(_selected, string.Empty);
+            }
+            else
+            {
+                tableRow.AddClass(_selected);
+            }
+            if (tableRow.ClassName.Contains(_hovering))
+                tableRow.ReplaceClass(_hovering, string.Empty);
+        }
+
+        private void HoverRow(T rowData)
+        {
+            var index = Array.IndexOf(RowData.Data, rowData);
+            HoverRow(index, _frozenTable.TBodies[0]);
+            HoverRow(index, _mainTable.TBodies[0]);
+        }
+
+        private static void HoverRow(int index, HTMLTableSectionElement body)
+        {
+            var tableRow = body.Rows[index];
+            if (!tableRow.ClassName.Contains(_hovering))
+                tableRow.AddClass(_hovering);
+        }
+
+        private void LeaveRow(T rowData)
+        {
+            var index = Array.IndexOf(RowData.Data, rowData);
+            LeaveRow(index, _frozenTable.TBodies[0]);
+            LeaveRow(index, _mainTable.TBodies[0]);
+        }
+
+        private static void LeaveRow(int index, HTMLTableSectionElement body)
+        {
+            var tableRow = body.Rows[index];
+            if (tableRow.ClassName.Contains(_hovering))
+                tableRow.ReplaceClass(_hovering, string.Empty);
+        }
+
+        private void RenderTableCell(T row, Header<T> header)
+        {
+            var html = Html.Instance;
+            html.TData.Render();
+            if (header.StatusBar) html.ClassName("status-cell").Icon("mif-pencil").End.Render();
+            if (header.EditEvent != null)
+            {
+                html.Button.ClassName("button small warning")
+                    .Event(EventType.Click, async (data) =>
+                    {
+                        await header.EditEvent(data);
+                    }, row)
+                    .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
+            }
+            if (header.DeleteEvent != null)
+            {
+                html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
+                    .AsyncEvent(EventType.Click, header.DeleteEvent, row)
+                    .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
+            }
+            if (string.IsNullOrEmpty(header.FieldName)) return;
+            if (!row.HasOwnProperty(header.FieldName)) return;
+            object cellData = row[header.FieldName];
+            var cellText = GetCellText(header, cellData);
+            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
+            header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+            html.TextAlign(header.TextAlign).Text(cellText).End.Render();
         }
 
         private string GetCellText(Header<T> header, object cellData)
