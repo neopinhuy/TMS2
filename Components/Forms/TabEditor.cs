@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using MVVM;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Components.Forms
 {
     public partial class TabEditor<T> : TabComponent
     {
         private readonly EditForm<T> _editor;
-        public T Data { get; set; }
+        public T Entity { get; set; }
+        public ObservableArray<T> EntityList { get; set; }
         public override string Title { get; set; } = $"{typeof(T).Name} List";
 
         public TabEditor()
@@ -27,7 +30,17 @@ namespace Components.Forms
         {
             var editor = new PopupEditor<T>
             {
-                Data = entity
+                Entity = entity,
+            };
+            await editor.RenderAsync();
+        }
+
+        public async Task Create()
+        {
+            var defaultT = (T)typeof(T).GetConstructors().First(x => x.GetParameters().Length == 0).Invoke();
+            var editor = new PopupEditor<T>
+            {
+                Entity = defaultT
             };
             await editor.RenderAsync();
         }

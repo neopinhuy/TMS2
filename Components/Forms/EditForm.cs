@@ -17,7 +17,8 @@ namespace Components.Forms
     public partial class EditForm<T> : Component
     {
         public string Title { get; set; } = $"{typeof(T).Name} Detail";
-        public T Data { get; set; }
+        public T Entity { get; set; }
+        public ObservableArray<T> EntityList { get; set; }
         protected readonly object _observableTruck;
 
         public EditForm()
@@ -28,16 +29,35 @@ namespace Components.Forms
         public virtual async Task Save()
         {
             var client = new Client<T>();
-            var data = await client.PutAsync(Data);
-            if (data != null)
+            if (Entity != null && Entity["Id"].As<int>() != 0)
             {
-                Toast.Create(new ToastOptions
+                var data = await client.PutAsync(Entity);
+                if (data != null)
                 {
-                    clsToast = "success", 
-                    timeout = 2000, 
-                    Message = $"Update {typeof(T).Name} succeeded", 
-                    showTop = true
-                });
+                    Toast.Create(new ToastOptions
+                    {
+                        clsToast = "success",
+                        timeout = 2000,
+                        Message = $"Update {typeof(T).Name} succeeded",
+                        showTop = true
+                    });
+                    // Update data back to observable
+                }
+            }
+            else
+            {
+                if (Entity["Active"] != null) Entity["Active"] = true;
+                var data = await client.PostAsync(Entity);
+                if (data != null)
+                {
+                    Toast.Create(new ToastOptions
+                    {
+                        clsToast = "success",
+                        timeout = 2000,
+                        Message = $"Create {typeof(T).Name} succeeded",
+                        showTop = true
+                    });
+                }
             }
         }
 
@@ -134,8 +154,6 @@ namespace Components.Forms
                         RenderButton(ui);
                         break;
                     case "Number":
-                        RenderNumberInput(ui);
-                        break;
                     case "Currency":
                         RenderNumberInput(ui);
                         break;
@@ -166,7 +184,7 @@ namespace Components.Forms
         private void RenderNumberInput(UserInterface ui)
         {
             var isDecimal = ui.Precision != null && ui.Precision != 0;
-            var parsed = decimal.TryParse(Data[ui.FieldName]?.ToString(), out decimal parsedVal);
+            var parsed = decimal.TryParse(Entity?[ui.FieldName]?.ToString(), out decimal parsedVal);
             if (!parsed)
             {
                 Html.Instance.EndOf(ElementType.td);
@@ -176,7 +194,7 @@ namespace Components.Forms
             var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
             _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             Html.Instance.MaskMoney(value, new Options
             {
                 thousands = isDecimal ? groupSeparator : string.Empty,
@@ -191,7 +209,7 @@ namespace Components.Forms
                 .Attr("data-id", ui.Id.ToString())
                 .Event(EventType.Click, () =>
                 {
-                    this.ExecuteEvent(ui.Events);
+                    RootParent.ExecuteEvent(ui.Events);
                 });
             //HotKeysExtension.HotKey(ui.HotKey, () =>
             //{
@@ -201,46 +219,46 @@ namespace Components.Forms
 
         private void RenderImage(UserInterface ui)
         {
-            var value = new Observable<string>(Data[ui.FieldName]?.ToString());
+            var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
             _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var uploader = new ImageUploader(value, ui);
             uploader.RenderAsync();
         }
 
         private void RenderCheckbox(UserInterface ui)
         {
-            var value = new Observable<bool?>((bool?)Data[ui.FieldName]);
+            var value = new Observable<bool?>((bool?)Entity?[ui.FieldName]);
             _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             Html.Instance.SmallCheckbox(string.Empty, value);
         }
 
         private void RenderDatepicker(UserInterface ui)
         {
-            var value = new Observable<DateTime?>((DateTime?)Data[ui.FieldName]);
+            var value = new Observable<DateTime?>((DateTime?)Entity?[ui.FieldName]);
             _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             Html.Instance.SmallDatePicker(value);
         }
 
         private void RenderDropdown(UserInterface ui)
         {
-            var value = new Observable<int?>((int?)Data[ui.FieldName]);
+            var value = new Observable<int?>((int?)Entity?[ui.FieldName]);
             _observableTruck[ui.FieldName] = value;
-            value.Subscribe(arg => Data[ui.FieldName] = arg.NewData);
+            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var searchEntry = new SearchEntry(value, ui);
             searchEntry.RenderAsync();
         }
 
         private void RenderInput(UserInterface ui)
         {
-            var value = new Observable<string>(Data?[ui.FieldName]?.ToString());
+            var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
             if (ui.FieldName.HasAnyChar())
             {
                 _observableTruck[ui.FieldName] = value;
                 value.Subscribe(arg => {
-                    if (Data != null) Data[ui.FieldName] = arg.NewData;
+                    if (Entity != null) Entity[ui.FieldName] = arg.NewData;
                 });
             }
             Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")

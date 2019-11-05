@@ -1,4 +1,5 @@
 ﻿using Bridge.Html5;
+using Common.Clients;
 using Components.Extensions;
 using MVVM;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace Components.Forms
     public partial class PopupEditor<T> : Component
     {
         private readonly EditForm<T> _editor;
-        public T Data { get; set; }
+        public T Entity { get; set; }
+        public ObservableArray<T> EntityList { get; set; }
 
         public PopupEditor()
         {
@@ -19,10 +21,16 @@ namespace Components.Forms
             };
         }
 
+        public virtual async Task Save()
+        {
+            _editor.Save();
+        }
+
         public override async Task RenderAsync()
         {
             Html.Take(Document.Body).Div.ClassName("backdrop");
             RootElement = Html.Context as HTMLElement;
+            _editor.RootElement = RootElement;
             jQuery.select(RootElement).HotKey("esc", Dispose);
             Html.Instance.Div.ClassName("popup-content")
                 .Div.ClassName("popup-title").Text(_editor.Title)
@@ -30,7 +38,7 @@ namespace Components.Forms
                     .Event(EventType.Click, Dispose)
                 .EndOf(".popup-title")
                 .Div.ClassName("popup-body");
-            _editor.Data = Data;
+            _editor.Entity = Entity;
             await _editor.RenderAsync();
         }
     }

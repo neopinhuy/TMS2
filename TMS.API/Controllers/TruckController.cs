@@ -40,7 +40,6 @@ namespace TMS.API.Controllers
                 HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return null;
             }
-
             db.Truck.Add(truck);
             await db.SaveChangesAsync();
             return truck;

@@ -8,3 +8,6 @@ dotnet_diagnostic.CS1998.severity = silent
 
 # IDE0067: Dispose objects before losing scope
 dotnet_diagnostic.IDE0067.severity = silent
+
+# IDE0034: Simplify 'default' expression
+csharp_prefer_simple_default_expression = true:none

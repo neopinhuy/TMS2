@@ -41,12 +41,12 @@ namespace Components.Extensions
             return string.Format(provider, rewrittenFormat, values.ToArray());
         }
 
-        public static void ExecuteEvent<T>(this T obj, string eventName, params object[] arguements)
+        public static void ExecuteEvent<T>(this T obj, string eventName, params object[] arguments)
         {
             try
             {
-                if (obj[eventName] is Func<Task> asyncF) asyncF.Invoke(obj, arguements);
-                else if (obj[eventName] is Action syncF) syncF.Invoke(obj, arguements);
+                //obj.GetType().GetMethod(eventName).Invoke(obj, arguments);
+                obj[eventName].As<Action>().Invoke(obj, arguments);
             }
             catch (Exception ex)
             {

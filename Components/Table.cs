@@ -214,7 +214,7 @@ namespace Components
                 }
                 else throw new InvalidOperationException($"Format of {header.FieldName} is null");
             }
-            else if (header.Format.HasAnyChar()) return string.Format(header.Format, cellData.ToString());
+            else if (header.Format.HasAnyChar()) return string.Format(header.Format, cellData);
             else return cellData.ToString();
         }
 
