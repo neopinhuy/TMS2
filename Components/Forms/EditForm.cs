@@ -5,11 +5,9 @@ using Components.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
-using static Retyped.jquery_maskmoney.jQueryMaskMoney;
 using ElementType = MVVM.ElementType;
 
 namespace Components.Forms
@@ -26,7 +24,8 @@ namespace Components.Forms
         public virtual void Create()
         {
             var defaultT = (T)Activator.CreateInstance(typeof(T));
-            var entities = CurrentEntities.FirstOrDefault((ObservableArray<object> x) => {
+            var entities = CurrentEntities.FirstOrDefault((ObservableArray<object> x) =>
+            {
                 var type = x.Data.FirstOrDefault().GetType();
                 return type.FullName == typeof(T).FullName;
             });
@@ -166,29 +165,29 @@ namespace Components.Forms
                 switch (ui.ComponentType.Trim())
                 {
                     case "Input":
-                        RenderTextbox(ui);
+                        AddChild(new Textbox(ui));
                         break;
                     case "Dropdown":
-                        RenderSearchEntry(ui);
+                        AddChild(new SearchEntry(ui));
                         break;
                     case "Datepicker":
-                        RenderDatepicker(ui);
+                        AddChild(new Datepicker(ui));
                         break;
                     case "Checkbox":
-                        RenderCheckbox(ui);
+                        AddChild(new Checkbox(ui));
                         break;
                     case "Image":
-                        RenderImage(ui);
+                        AddChild(new ImageUploader(ui));
                         break;
                     case "Button":
-                        RenderButton(ui);
+                        AddChild(new Button(ui));
                         break;
                     case "Number":
                     case "Currency":
-                        RenderNumberInput(ui);
+                        AddChild(new NumberInput(ui));
                         break;
                     case "GridView":
-                        RenderGridView(ui);
+                        AddChild(new GridView(ui));
                         break;
                 }
                 Html.Instance.EndOf(ElementType.td);
@@ -199,72 +198,6 @@ namespace Components.Forms
                     Html.Instance.EndOf(ElementType.tr).TRow.Render();
                 }
             }
-        }
-
-        private void RenderGridView(UserInterface ui)
-        {
-            AddChild(new GridView(ui) { Entity = Entity });
-        }
-
-        private void RenderNumberInput(UserInterface ui)
-        {
-            var isDecimal = ui.Precision != null && ui.Precision != 0;
-            var parsed = decimal.TryParse(Entity?[ui.FieldName]?.ToString(), out decimal parsedVal);
-            if (!parsed)
-            {
-                Html.Instance.EndOf(ElementType.td);
-                return;
-            }
-            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
-            var value = new Observable<decimal?>(parsedVal);
-            value.Subscribe(arg => { 
-                if (Entity != null) Entity[ui.FieldName] = arg.NewData;
-            });
-            Html.Instance.MaskMoney(value, new Options
-            {
-                thousands = isDecimal ? groupSeparator : string.Empty,
-                @decimal = separator,
-                precision = isDecimal ? ui.Precision : 0
-            });
-        }
-
-        private void RenderButton(UserInterface ui)
-        {
-            var button = new Button(ui)
-            {
-                Entity = Entity,
-                ParentEntity = ParentEntity.As<ObservableArray<object>>(),
-                CurrentEntities = CurrentEntities
-            };
-            AddChild(button);
-        }
-
-        private void RenderImage(UserInterface ui)
-        {
-            AddChild(new ImageUploader(ui) { Entity = Entity });
-        }
-
-        private void RenderCheckbox(UserInterface ui)
-        {
-            AddChild(new Checkbox(ui) { Entity = Entity });
-        }
-
-        private void RenderDatepicker(UserInterface ui)
-        {
-            var value = new Observable<DateTime?>((DateTime?)Entity?[ui.FieldName]);
-            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
-            Html.Instance.SmallDatePicker(value);
-        }
-
-        private void RenderSearchEntry(UserInterface ui)
-        {
-            AddChild(new SearchEntry(ui) { Entity = Entity });
-        }
-
-        private void RenderTextbox(UserInterface ui)
-        {
-            AddChild(new Textbox(ui) { Entity = Entity });
         }
     }
 }

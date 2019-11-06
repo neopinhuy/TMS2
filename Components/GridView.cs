@@ -35,6 +35,7 @@ namespace Components
             {
                 _ui.DataSourceFilter += Entity["Id"];
             }
+            else if (Entity != null && _ui.DataSourceFilter.HasAnyChar()) return;
             Window.SetTimeout(async() =>
             {
                 var entityName = _ui.Reference.Name;

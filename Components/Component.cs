@@ -28,6 +28,9 @@ namespace Components
         public void AddChild(Component child)
         {
             child.RootHtmlElement = Html.Context;
+            child.Entity = Entity;
+            child.ParentEntity = ParentEntity;
+            child.CurrentEntities = CurrentEntities;
             Children.Add(child);
             child.Parent = this;
             child.Render();
