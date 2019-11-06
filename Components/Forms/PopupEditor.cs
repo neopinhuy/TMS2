@@ -23,6 +23,7 @@ namespace Components.Forms
 
         public override void Dispose()
         {
+            Parent.Children.Remove(this);
             RootHtmlElement.ParentElement.ParentElement.Remove();
         }
     }

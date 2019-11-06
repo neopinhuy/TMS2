@@ -34,7 +34,7 @@ namespace Components.Forms
                 Entity = defaultT,
                 ParentEntity = entities,
             };
-            editor.Render();
+            AddChild(editor);
         }
 
         public virtual void Edit(T entity, ObservableArray<object> entityList)
@@ -44,12 +44,12 @@ namespace Components.Forms
                 Entity = entity,
                 ParentEntity = entityList,
             };
-            editor.Render();
+            AddChild(editor);
         }
 
         public virtual async Task Save()
         {
-            var client = new Client<T>();
+            var client = new TypeClient<T>();
             if (Entity != null && Entity["Id"].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
@@ -112,7 +112,7 @@ namespace Components.Forms
         {
             Task.Run(async () =>
             {
-                var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
+                var componentGroup = await TypeClient<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
                 componentGroup = BuildTree(componentGroup);
                 Html.Take(RootHtmlElement);
                 RenderGroup(componentGroup);

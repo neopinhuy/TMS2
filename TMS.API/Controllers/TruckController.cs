@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using TMS.API.Attributes;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
@@ -55,11 +54,11 @@ namespace TMS.API.Controllers
             return truck;
         }
 
-        [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
+        [HttpPost("Delete")]
+        public async Task<bool> Delete([FromBody]List<int> ids)
         {
-            var truck = db.Truck.Find(id);
-            truck.Active = false;
+            var truck = db.Truck.Where(x => ids.Contains(x.Id));
+            db.Truck.RemoveRange(truck);
             await db.SaveChangesAsync();
             return true;
         }

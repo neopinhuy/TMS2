@@ -126,7 +126,7 @@ namespace Components
             var refEntities = Headers.Data
                 .Where(x => x.Reference.HasAnyChar())
                 .DistinctBy(x => x.Reference + x.DataSource)
-                .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
+                .Select(x => TypeClient<object>.Instance.GetListEntity(x.Reference, x.DataSource));
             _refData = await Task.WhenAll(refEntities);
         }
 
@@ -216,20 +216,22 @@ namespace Components
         private void ToggleSelectRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
-            ToggleSelectRow(index, _frozenTable.TBodies[0]);
-            ToggleSelectRow(index, _mainTable.TBodies[0]);
+            ToggleSelectRow(rowData, index, _frozenTable.TBodies[0]);
+            ToggleSelectRow(rowData, index, _mainTable.TBodies[0]);
         }
 
-        private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
+        private static void ToggleSelectRow(T rowData, int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
             if (tableRow.ClassName.Contains(_selected))
             {
                 tableRow.ReplaceClass(_selected, string.Empty);
+                rowData["__selected__"] = false;
             }
             else
             {
                 tableRow.AddClass(_selected);
+                rowData["__selected__"] = true;
             }
             if (tableRow.ClassName.Contains(_hovering))
                 tableRow.ReplaceClass(_hovering, string.Empty);

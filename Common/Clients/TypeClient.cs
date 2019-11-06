@@ -6,20 +6,27 @@ using Newtonsoft.Json;
 
 namespace Common.Clients
 {
-    public class Client
+    public class TypeClient<T>
     {
-        public string EntityName { get; set; }
-        public Client(string entityName)
+        public string BaseUrl { get; set; }
+        public TypeClient()
         {
-            EntityName = entityName ?? throw new ArgumentNullException(nameof(entityName));
         }
 
-        public Task<List<object>> GetList(string filter = null)
+        public TypeClient(string url)
+        {
+            BaseUrl = url;
+        }
+
+        public static TypeClient<T> Instance => new TypeClient<T>();
+
+        public Task<List<T>> GetList(string filter = null)
         {
             filter = filter ?? "$filter=Active eq true";
-            var tcs = new TaskCompletionSource<List<object>>();
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<List<T>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"/api/{EntityName}?{filter}", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?{filter}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -29,23 +36,33 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<List<object>>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<List<T>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
                 {
-                    tcs.SetResult(null);
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
             xhr.Send();
             return tcs.Task;
         }
 
-        public Task<object> Get(int id)
+        public Task<List<object>> GetListEntity(string entity, string filter = null)
         {
-            var tcs = new TaskCompletionSource<object>();
+            var refType = Type.GetType("TMS.API.Models." + entity);
+            var clientType = typeof(TypeClient<>).MakeGenericType(new Type[] { refType });
+            var httpGetList = clientType.GetMethod("GetList");
+            var client = Activator.CreateInstance(clientType);
+            return httpGetList.Invoke(client, filter).As<Task<List<object>>>();
+        }
+
+        public Task<T> Get(int id)
+        {
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"/api/{EntityName}/{id}", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}/{id}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -55,12 +72,12 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<object>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
                 {
-                    tcs.SetResult(null);
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
             xhr.Send();
@@ -72,11 +89,12 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<object> CreateAsync(object value)
+        public Task<T> CreateAsync(T value)
         {
-            var tcs = new TaskCompletionSource<object>();
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/{EntityName}", true);
+            xhr.Open("POST", $"{BaseUrl}/api/{type.Name}", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {
@@ -87,12 +105,12 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<object>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
                 {
-                    tcs.SetResult(null);
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
@@ -108,7 +126,7 @@ namespace Common.Clients
         {
             var tcs = new TaskCompletionSource<List<string>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/File", true);
+            xhr.Open("POST", $"{BaseUrl}/api/File", true);
             xhr.AddEventListener(EventType.ReadyStateChange, () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -119,10 +137,6 @@ namespace Common.Clients
                 {
                     var parsed = JsonConvert.DeserializeObject<List<string>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
-                }
-                else
-                {
-                    tcs.SetResult(null);
                 }
             });
             xhr.AddEventListener(EventType.Progress, progressHandler);
@@ -135,11 +149,12 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<object> UpdateAsync(object value)
+        public Task<T> UpdateAsync(T value)
         {
-            var tcs = new TaskCompletionSource<object>();
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("PUT", $"/api/{EntityName}", true);
+            xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {
@@ -150,24 +165,25 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<object>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
                 {
-                    tcs.SetResult(null);
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
             return tcs.Task;
         }
 
-        public Task<bool> Delete(List<int> ids)
+        public Task<bool> Delete(int id)
         {
+            var type = typeof(T);
             var tcs = new TaskCompletionSource<bool>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/{EntityName}/Delete", true);
-            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
+            xhr.Open("DELETE", $"{BaseUrl}/api/{type.Name}/{id}", true);
+            xhr.SetRequestHeader("Content-type", "application/json");
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -181,10 +197,10 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetResult(false);
+                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
                 }
             };
-            xhr.Send(JsonConvert.SerializeObject(ids));
+            xhr.Send();
             return tcs.Task;
         }
     }

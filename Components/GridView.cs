@@ -2,8 +2,10 @@
 using Common.Clients;
 using Common.Extensions;
 using Components.Extensions;
+using Components.Forms;
 using MVVM;
 using Newtonsoft.Json;
+using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
@@ -12,12 +14,14 @@ namespace Components
     public class GridView : Component
     {
         private readonly UserInterface _ui;
+        private Table<object> _table;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
 
         public GridView(UserInterface ui)
         {
             _ui = ui;
+            Name = ui.FieldName;
             Header = new ObservableArray<Header<object>>();
             RowData = new ObservableArray<object>();
             Header.Add(new Header<object>
@@ -39,7 +43,7 @@ namespace Components
             Window.SetTimeout(async() =>
             {
                 var entityName = _ui.Reference.Name;
-                var gridPolicy = await Client<GridPolicy>.Instance
+                var gridPolicy = await TypeClient<GridPolicy>.Instance
                     .GetList("$expand=Reference($select=Name)" +
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
@@ -75,12 +79,54 @@ namespace Components
                         RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
                     };
                 }
-                var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
+                var rows = await TypeClient<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
                 RowData.Data = rows.ToArray();
-                var table = new Table<object>(tableParams);
+                _table = new Table<object>(tableParams);
                 Html.Take(RootHtmlElement);
-                table.Render();
+                _table.Render();
             });
+        }
+
+        public void DeleteSelected()
+        {
+            var confirm = new ConfirmDialog();
+            confirm.Render();
+            confirm.DeleteConfirmed += async () =>
+            {
+                confirm.Dispose();
+                await DeleteConfirmed();
+            };
+        }
+
+        public virtual async Task DeleteConfirmed()
+        {
+            var entity = _ui.Reference.Name;
+            var ids = RowData.Data
+                .Where(x => (bool?)x["__selected__"] == true)
+                .Select(x => (int)x["Id"]).ToList();
+            var client = new Client(entity);
+            var success = await client.Delete(ids);
+            if (success)
+            {
+                Toast.Create(new ToastOptions
+                {
+                    clsToast = "success",
+                    timeout = 2000,
+                    Message = $"Delete succeeded",
+                    showTop = true
+                });
+                RowData.Data = RowData.Data.Where(x => !ids.Contains((int)x["Id"])).ToArray();
+            }
+            else
+            {
+                Toast.Create(new ToastOptions
+                {
+                    clsToast = "warning",
+                    timeout = 2000,
+                    Message = $"Delete failed",
+                    showTop = true
+                });
+            }
         }
     }
 }

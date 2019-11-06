@@ -59,7 +59,7 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _source.Data = await GetDataSource();
-                RefField = await Client<GridPolicy>.Instance.GetList(
+                RefField = await TypeClient<GridPolicy>.Instance.GetList(
                     $"$filter=Active eq true and EntityId eq {_ui.ReferenceId}");
                 RefField = RefField.OrderBy(x => x.Order);
                 UpdateTextbox();
@@ -68,7 +68,7 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+            var source = await TypeClient<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
             return source.ToArray();
         }
 
