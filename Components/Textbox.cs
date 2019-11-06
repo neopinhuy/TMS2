@@ -6,13 +6,10 @@ using TMS.API.Models;
 
 namespace Components
 {
-    public class Textbox<T>: Component
+    public class Textbox: Component
     {
         private readonly UserInterface _ui;
-        public T Entity { get; set; }
-        public ObservableArray<T> ParentEntity { get; set; }
-        public List<ObservableArray<object>> CurrentEntities { get; set; }
-
+        
         public Textbox(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));

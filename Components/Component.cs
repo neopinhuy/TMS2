@@ -1,4 +1,5 @@
 ﻿using Bridge.Html5;
+using MVVM;
 using System.Collections.Generic;
 
 namespace Components
@@ -9,6 +10,9 @@ namespace Components
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; } = new List<Component>();
         public virtual Element RootHtmlElement { get; set; }
+        public object Entity { get; set; }
+        public ObservableArray<object> ParentEntity { get; set; }
+        public List<ObservableArray<object>> CurrentEntities { get; set; }
 
         public virtual Component RootComponent
         {

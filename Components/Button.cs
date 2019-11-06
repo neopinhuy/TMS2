@@ -7,13 +7,10 @@ using TMS.API.Models;
 
 namespace Components
 {
-    public class Button<T>: Component
+    public class Button: Component
     {
         private readonly UserInterface _ui;
-        public T Entity { get; set; }
-        public ObservableArray<T> ParentEntity { get; set; }
-        public List<ObservableArray<object>> CurrentEntities { get; set; }
-
+        
         public Button(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));

@@ -12,24 +12,18 @@ namespace Components
 {
     public class SearchEntry : Component
     {
-        private readonly Observable<int?> _value;
-        private readonly Observable<string> _text;
-        private readonly ObservableArray<object> _source;
+        private Observable<int?> _value;
+        private readonly Observable<string> _text = new Observable<string>();
+        private readonly ObservableArray<object> _source = new ObservableArray<object>();
         private FloatingTable<object> _table;
         private HTMLInputElement _input;
         private const string _refValueField = "Id";
         private IEnumerable<GridPolicy> RefField;
         private readonly UserInterface _ui;
 
-        public object Entity { get; set; }
-
-        public SearchEntry(UserInterface ui, object _entity)
+        public SearchEntry(UserInterface ui)
         {
-            Entity = _entity;
-            _value = new Observable<int?>((int?)Entity?[ui.FieldName]);
-            _ui = ui;
-            _text = new Observable<string>();
-            _source = new ObservableArray<object>();
+            _ui = ui ?? throw new System.ArgumentNullException(nameof(ui));
             _text.Subscribe((arg) =>
             {
                 if (arg.NewData.IsNullOrEmpty())
@@ -41,6 +35,12 @@ namespace Components
 
         public override void Render()
         {
+            _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
+            _value.Subscribe(arg =>
+            {
+                UpdateTextbox();
+                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+            });
             Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
@@ -52,11 +52,6 @@ namespace Components
                 });
             _input = Html.Context as HTMLInputElement;
             SearchRefField();
-            _value.Subscribe(arg =>
-            {
-                UpdateTextbox();
-                Entity[_ui.FieldName] = arg.NewData;
-            });
         }
 
         private void SearchRefField()
@@ -81,10 +76,10 @@ namespace Components
         {
             var position = _input.GetBoundingClientRect();
             var headers = RefField.Select(x => new Header<object>()
-                {
-                    FieldName = x.FieldName,
-                    HeaderText = x.ShortDesc
-                }).ToArray();
+            {
+                FieldName = x.FieldName,
+                HeaderText = x.ShortDesc
+            }).ToArray();
             if (_source.Data.Length == 0)
                 _source.Data = await GetDataSource();
             var tableParam = new TableParam<object>

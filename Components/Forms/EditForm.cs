@@ -17,9 +17,6 @@ namespace Components.Forms
     public partial class EditForm<T> : Component
     {
         public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
-        public T Entity { get; set; }
-        public ObservableArray<T> ParentEntity { get; set; }
-        public List<ObservableArray<object>> CurrentEntities { get; set; }
 
         public EditForm()
         {
@@ -36,12 +33,12 @@ namespace Components.Forms
             var editor = new PopupEditor<T>
             {
                 Entity = defaultT,
-                ParentEntity = entities.As<ObservableArray<T>>(),
+                ParentEntity = entities,
             };
             editor.Render();
         }
 
-        public virtual void Edit(T entity, ObservableArray<T> entityList)
+        public virtual void Edit(T entity, ObservableArray<object> entityList)
         {
             var editor = new PopupEditor<T>
             {
@@ -57,7 +54,7 @@ namespace Components.Forms
             if (Entity != null && Entity["Id"].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
-                var data = await client.CreateAsync(Entity);
+                var data = await client.CreateAsync((T)Entity);
                 if (data != null)
                 {
                     Toast.Create(new ToastOptions
@@ -73,7 +70,7 @@ namespace Components.Forms
             }
             else
             {
-                var data = await client.UpdateAsync(Entity);
+                var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
                     Toast.Create(new ToastOptions
@@ -169,10 +166,10 @@ namespace Components.Forms
                 switch (ui.ComponentType.Trim())
                 {
                     case "Input":
-                        RenderInput(ui);
+                        RenderTextbox(ui);
                         break;
                     case "Dropdown":
-                        RenderDropdown(ui);
+                        RenderSearchEntry(ui);
                         break;
                     case "Datepicker":
                         RenderDatepicker(ui);
@@ -242,10 +239,10 @@ namespace Components.Forms
 
         private void RenderButton(UserInterface ui)
         {
-            var button = new Button<T>(ui)
+            var button = new Button(ui)
             {
                 Entity = Entity,
-                ParentEntity = ParentEntity,
+                ParentEntity = ParentEntity.As<ObservableArray<object>>(),
                 CurrentEntities = CurrentEntities
             };
             AddChild(button);
@@ -261,11 +258,7 @@ namespace Components.Forms
 
         private void RenderCheckbox(UserInterface ui)
         {
-            var chkBox = new Checkbox(ui)
-            {
-                Entity = Entity
-            };
-            AddChild(chkBox);
+            AddChild(new Checkbox(ui) { Entity = Entity });
         }
 
         private void RenderDatepicker(UserInterface ui)
@@ -275,18 +268,14 @@ namespace Components.Forms
             Html.Instance.SmallDatePicker(value);
         }
 
-        private void RenderDropdown(UserInterface ui)
+        private void RenderSearchEntry(UserInterface ui)
         {
-            AddChild(new SearchEntry(ui, Entity));
+            AddChild(new SearchEntry(ui) { Entity = Entity });
         }
 
-        private void RenderInput(UserInterface ui)
+        private void RenderTextbox(UserInterface ui)
         {
-            var textbox = new Textbox<T>(ui)
-            {
-                Entity = Entity
-            };
-            AddChild(textbox);
+            AddChild(new Textbox(ui) { Entity = Entity });
         }
     }
 }
