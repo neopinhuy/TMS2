@@ -256,14 +256,16 @@ namespace Components.Forms
             var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var uploader = new ImageUploader(value, ui);
-            uploader.Render();
+            AddChild(uploader);
         }
 
         private void RenderCheckbox(UserInterface ui)
         {
-            var value = new Observable<bool?>((bool?)Entity?[ui.FieldName]);
-            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
-            Html.Instance.SmallCheckbox(string.Empty, value);
+            var chkBox = new Checkbox(ui)
+            {
+                Entity = Entity
+            };
+            AddChild(chkBox);
         }
 
         private void RenderDatepicker(UserInterface ui)
