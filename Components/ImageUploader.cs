@@ -9,19 +9,21 @@ namespace Components
 {
     public class ImageUploader : Component
     {
-        private readonly Observable<string> _path;
+        private Observable<string> _path;
         private readonly UserInterface _ui;
         private const string defaultImg = "image/truck.webp";
         private HTMLImageElement _img;
         private HTMLFormElement _form;
-        public ImageUploader(Observable<string> path, UserInterface ui)
+        public ImageUploader(UserInterface ui)
         {
-            _path = path;
             _ui = ui;
         }
 
         public override void Render()
         {
+            _path = new Observable<string>(Entity?[_ui.FieldName]?.ToString());
+            _path.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
+
             Html.Instance.ClassName("uploader").HeightRem(_ui.Row ?? 12).ColSpan(2)
                 .Label.Attr("for", $"id_{GetHashCode()}")
                 .Img.ClassName("thumb").Src(_path.Data ?? defaultImg).Render();

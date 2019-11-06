@@ -203,15 +203,7 @@ namespace Components.Forms
 
         private void RenderGridView(UserInterface ui)
         {
-            if (Entity != null && Entity["Id"].As<int>() != 0)
-                ui.DataSourceFilter += Entity["Id"];
-            var grid = new GridView(ui)
-            {
-                RootHtmlElement = Html.Context,
-                Parent = this
-            };
-            CurrentEntities.Add(grid.RowData);
-            _ = Window.SetTimeout(async () => grid.Render());
+            AddChild(new GridView(ui) { Entity = Entity });
         }
 
         private void RenderNumberInput(UserInterface ui)
@@ -250,10 +242,7 @@ namespace Components.Forms
 
         private void RenderImage(UserInterface ui)
         {
-            var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
-            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
-            var uploader = new ImageUploader(value, ui);
-            AddChild(uploader);
+            AddChild(new ImageUploader(ui) { Entity = Entity });
         }
 
         private void RenderCheckbox(UserInterface ui)

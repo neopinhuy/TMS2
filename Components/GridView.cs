@@ -30,6 +30,11 @@ namespace Components
 
         public override void Render()
         {
+            Parent.CurrentEntities.Add(RowData);
+            if (Entity != null && (int)Entity["Id"] != 0)
+            {
+                _ui.DataSourceFilter += Entity["Id"];
+            }
             Window.SetTimeout(async() =>
             {
                 var entityName = _ui.Reference.Name;
