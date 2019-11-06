@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Textbox.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="ColumnFilter.cs" />
     <Compile Include="Extensions\HotKeys.cs" />

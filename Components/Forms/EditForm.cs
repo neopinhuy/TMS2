@@ -283,16 +283,11 @@ namespace Components.Forms
 
         private void RenderInput(UserInterface ui)
         {
-            var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
-            if (ui.FieldName.HasAnyChar())
+            var textbox = new Textbox<T>(ui)
             {
-                value.Subscribe(arg => {
-                    if (Entity != null) Entity[ui.FieldName] = arg.NewData;
-                });
-            }
-            Html.Instance.Input.Attr("data-role", "input").ClassName("input-small")
-                .Value(value);
-            if (!ui.ShowLabel) Html.Instance.PlaceHolder(ui.Label);
+                Entity = Entity
+            };
+            AddChild(textbox);
         }
     }
 }
