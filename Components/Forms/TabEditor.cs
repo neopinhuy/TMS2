@@ -1,6 +1,5 @@
 ﻿using Bridge.Html5;
 using MVVM;
-using System.Threading.Tasks;
 
 namespace Components.Forms
 {
@@ -8,20 +7,24 @@ namespace Components.Forms
     {
         public override string Title { get; set; } = $"{typeof(T).Name} List";
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
             if (IsExisted()) return;
-            await base.RenderAsync();
+            base.Render();
         }
 
         public bool IsExisted()
         {
             var tab = Document.QuerySelector($"#tab-content #{ClassId}");
-            if (tab != null) return true;
+            if (tab != null) {
+                RootHtmlElement = tab;
+                return true;
+            }
             Html.Take("#tabs")
                 .Li.Anchor.Href($"#{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id(ClassId).Render();
+            RootHtmlElement = Html.Context;
             return false;
         }
 

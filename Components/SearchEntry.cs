@@ -22,7 +22,6 @@ namespace Components
         private readonly Type _entityType;
         private HTMLInputElement _input;
         private readonly string _refValueField = "Id";
-        private string _refDisplayField;
         private IEnumerable<GridPolicy> RefField;
         private readonly UserInterface _ui;
 
@@ -33,7 +32,6 @@ namespace Components
             _refEntity = ui.Reference.Name;
             _dataSource = ui.DataSourceFilter;
             _entityType = Type.GetType("TMS.API.Models." + _refEntity);
-            _refDisplayField = ui.Format;
             if (_entityType == null)
             {
                 throw new InvalidOperationException($"{_refEntity} is invalid entity");
@@ -49,7 +47,7 @@ namespace Components
             });
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
             Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
@@ -108,7 +106,7 @@ namespace Components
                 Left = position.Left - 1
             };
             Html.Take(Document.Body);
-            await _table.RenderAsync();
+            _table.Render();
         }
 
         private void Select(object rowData)

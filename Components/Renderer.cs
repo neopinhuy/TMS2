@@ -236,7 +236,7 @@ namespace Components
         public static Html Table<Data>(this Html html, TableParam<Data> tableParam)
         {
             Table<Data> table = new Table<Data>(tableParam);
-            table.RenderAsync();
+            table.Render();
             return html;
         }
 

@@ -20,7 +20,7 @@ namespace Components
             _ui = ui;
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
             Html.Instance.ClassName("uploader").HeightRem(_ui.Row ?? 12).ColSpan(2)
                 .Label.Attr("for", $"id_{GetHashCode()}")

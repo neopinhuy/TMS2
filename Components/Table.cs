@@ -54,7 +54,7 @@ namespace Components
             _tableParam = tableParam;
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
             Html.Instance.Div.ClassName("table-wrapper");
             RootHtmlElement = Html.Context as HTMLElement;
@@ -169,7 +169,7 @@ namespace Components
                             Html.Take(e.Target as HTMLElement).Closest(ElementType.th);
                             var boudingRect = Html.Context.GetBoundingClientRect();
                             var filter = new ColumnFilter();
-                            await filter.RenderAsync();
+                            filter.Render();
                             filter.Top = boudingRect.Bottom;
                             filter.Left = boudingRect.Left;
                             filter.Toggle();

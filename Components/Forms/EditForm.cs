@@ -38,7 +38,7 @@ namespace Components.Forms
                 Entity = defaultT,
                 ParentEntity = entities.As<ObservableArray<T>>(),
             };
-            editor.RenderAsync();
+            editor.Render();
         }
 
         public virtual void Edit(T entity, ObservableArray<T> entityList)
@@ -48,7 +48,7 @@ namespace Components.Forms
                 Entity = entity,
                 ParentEntity = entityList,
             };
-            editor.RenderAsync();
+            editor.Render();
         }
 
         public virtual async Task Save()
@@ -112,11 +112,15 @@ namespace Components.Forms
             return componentGroup.Where(x => x.ParentId == null).ToList();
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
-            var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
-            componentGroup = BuildTree(componentGroup);
-            RenderGroup(componentGroup);
+            Task.Run(async () =>
+            {
+                var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
+                componentGroup = BuildTree(componentGroup);
+                Html.Take(RootHtmlElement);
+                RenderGroup(componentGroup);
+            });
         }
 
         private void RenderGroup(List<ComponentGroup> componentGroup)
@@ -207,10 +211,10 @@ namespace Components.Forms
             var grid = new GridView(ui)
             {
                 RootHtmlElement = Html.Context,
-                ParentComponent = this
+                Parent = this
             };
             CurrentEntities.Add(grid.RowData);
-            _ = Window.SetTimeout(async () => await grid.RenderAsync());
+            _ = Window.SetTimeout(async () => grid.Render());
         }
 
         private void RenderNumberInput(UserInterface ui)
@@ -244,11 +248,6 @@ namespace Components.Forms
                 {
                     RootComponent.ExecuteEvent(ui.Events, Entity, ParentEntity, CurrentEntities);
                 });
-
-            //HotKeysExtension.HotKey(ui.HotKey, () =>
-            //{
-            //    ProcessEvents(ui);
-            //});
         }
 
         private void RenderImage(UserInterface ui)
@@ -256,7 +255,7 @@ namespace Components.Forms
             var value = new Observable<string>(Entity?[ui.FieldName]?.ToString());
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var uploader = new ImageUploader(value, ui);
-            uploader.RenderAsync();
+            uploader.Render();
         }
 
         private void RenderCheckbox(UserInterface ui)
@@ -278,7 +277,7 @@ namespace Components.Forms
             var value = new Observable<int?>((int?)Entity?[ui.FieldName]);
             value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
             var searchEntry = new SearchEntry(value, ui);
-            searchEntry.RenderAsync();
+            searchEntry.Render();
         }
 
         private void RenderInput(UserInterface ui)

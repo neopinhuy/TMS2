@@ -9,7 +9,7 @@ namespace TMS.UI.Business.Dashboard
 {
     public partial class Dashboard : TabComponent
     {
-        public override async Task RenderAsync()
+        public override void Render()
         {
             if (IsExisted())
             {

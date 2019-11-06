@@ -1,7 +1,6 @@
 ﻿using Bridge;
 using MVVM;
 using System;
-using System.Threading.Tasks;
 using static Retyped.jquery;
 
 namespace Components.Extensions
@@ -9,6 +8,7 @@ namespace Components.Extensions
     public static class HotKeysExtension
     {
         [Template("<self>{jq}.hotkey({keySet}, {action})")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static JQuery<TElement> HotKey<TElement>(this JQuery<TElement> jq, string keySet, Action action)
         {
             return jq;

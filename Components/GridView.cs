@@ -28,50 +28,53 @@ namespace Components
             });
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
-            var entityName = _ui.Reference.Name;
-            var gridPolicy = await Client<GridPolicy>.Instance
-                .GetList("$expand=Reference($select=Name)" +
-                    "&orderby=Order" +
-                    $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
-                    $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
-            foreach (var column in gridPolicy)
+            Window.SetTimeout(async() =>
             {
-                var header = new Header<object>
+                var entityName = _ui.Reference.Name;
+                var gridPolicy = await Client<GridPolicy>.Instance
+                    .GetList("$expand=Reference($select=Name)" +
+                        "&orderby=Order" +
+                        $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
+                        $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
+                foreach (var column in gridPolicy)
                 {
-                    FieldName = column.FieldName,
-                    Format = column.Format,
-                    Order = column.Order,
-                    GroupName = column.GroupName,
-                    HeaderText = column.ShortDesc,
-                    Description = column.Description,
-                    Reference = column.Reference?.Name,
-                    DataSource = column.DataSource,
-                    RefValueField = "Id",
-                    RefDisplayField = column.RefDisplayField,
-                    HasFilter = column.HasFilter,
-                    Frozen = column.Frozen
-                };
-                var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
-                if (parsed) header.TextAlign = textAlign;
-                Header.Add(header);
-            }
-            var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
-            if (_ui.Events.HasAnyChar())
-            {
-                var events = JsonConvert.DeserializeObject<object>(_ui.Events);
-                var dblClick = events[EventType.DblClick.ToString()]?.ToString();
-                tableParams.RowDblClick = row =>
+                    var header = new Header<object>
+                    {
+                        FieldName = column.FieldName,
+                        Format = column.Format,
+                        Order = column.Order,
+                        GroupName = column.GroupName,
+                        HeaderText = column.ShortDesc,
+                        Description = column.Description,
+                        Reference = column.Reference?.Name,
+                        DataSource = column.DataSource,
+                        RefValueField = "Id",
+                        RefDisplayField = column.RefDisplayField,
+                        HasFilter = column.HasFilter,
+                        Frozen = column.Frozen
+                    };
+                    var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
+                    if (parsed) header.TextAlign = textAlign;
+                    Header.Add(header);
+                }
+                var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
+                if (_ui.Events.HasAnyChar())
                 {
-                    RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
-                };
-            }
-            var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
-            RowData.Data = rows.ToArray();
-            var table = new Table<object>(tableParams);
-            Html.Take(RootHtmlElement);
-            table.RenderAsync();
+                    var events = JsonConvert.DeserializeObject<object>(_ui.Events);
+                    var dblClick = events[EventType.DblClick.ToString()]?.ToString();
+                    tableParams.RowDblClick = row =>
+                    {
+                        RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
+                    };
+                }
+                var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
+                RowData.Data = rows.ToArray();
+                var table = new Table<object>(tableParams);
+                Html.Take(RootHtmlElement);
+                table.Render();
+            });
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Components
 
         public FloatingTable(TableParam<Data> tableParam) : base(tableParam) { }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
-            await base.RenderAsync();
+            base.Render();
             Html.Take(RootHtmlElement).ClassName("floating")
                 .Position(Position.@fixed)
                 .Position(Direction.top, Top)

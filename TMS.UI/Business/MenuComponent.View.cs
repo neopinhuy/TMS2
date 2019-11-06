@@ -35,13 +35,16 @@ namespace TMS.UI.Business
             _feature = _feature.Where(f => f.ParentId == null && f.IsMenu).ToList();
         }
 
-        public override async Task RenderAsync()
+        public override void Render()
         {
-            _feature = await Client<Feature>.Instance.GetList();
-            BuildFeatureTree();
-            Html.Take(".sidebar-wrapper");
-            RenderMenuItems(_feature);
-            Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
+            Task.Run(async() =>
+            {
+                _feature = await Client<Feature>.Instance.GetList();
+                BuildFeatureTree();
+                Html.Take(".sidebar-wrapper");
+                RenderMenuItems(_feature);
+                Html.Take(".sidebar-wrapper ul").ClassName("sidebar-menu border bd-default");
+            });
         }
 
         private void RenderMenuItems(List<Feature> menuItems)
@@ -59,7 +62,7 @@ namespace TMS.UI.Business
                 else
                 {
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
-                    .Event(EventType.Click, async(menuItem, e) => await MenuItemClick(menuItem, e), item)
+                    .Event(EventType.Click, MenuItemClick, item)
                     .Span.ClassName("icon " + item.Icon).End
                     .Text(item.Name).EndOf(MVVM.ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
@@ -70,7 +73,7 @@ namespace TMS.UI.Business
             });
         }
 
-        private async Task MenuItemClick(Feature menu, Event e)
+        private void MenuItemClick(Feature menu, Event e)
         {
             var li = e.Target as HTMLElement;
             var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
@@ -89,7 +92,7 @@ namespace TMS.UI.Business
             {
                 var type = Type.GetType(menu.ViewClass);
                 var instance = Activator.CreateInstance(type) as Component;
-                await instance.RenderAsync();
+                instance.Render();
                 instance["Focus"].As<System.Action>().Invoke(instance);
             }
         }
