@@ -503,6 +503,11 @@ namespace MVVM
             return this;
         }
 
+        /// <summary>
+        /// Append text node, auto enclosing
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public Html Text(string val)
         {
             var text = new Text(val);

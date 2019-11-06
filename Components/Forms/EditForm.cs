@@ -242,12 +242,13 @@ namespace Components.Forms
 
         private void RenderButton(UserInterface ui)
         {
-            Html.Instance.Button(ui.Label, ui.ClassName, ui.Icon)
-                .Attr("data-id", ui.Id.ToString())
-                .Event(EventType.Click, () =>
-                {
-                    RootComponent.ExecuteEvent(ui.Events, Entity, ParentEntity, CurrentEntities);
-                });
+            var button = new Button<T>(ui)
+            {
+                Entity = Entity,
+                ParentEntity = ParentEntity,
+                CurrentEntities = CurrentEntities
+            };
+            AddChild(button);
         }
 
         private void RenderImage(UserInterface ui)

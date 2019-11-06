@@ -1,6 +1,5 @@
 ﻿using Bridge.Html5;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Components
 {
@@ -8,7 +7,7 @@ namespace Components
     {
         protected string ClassId => "feature_" + GetType().Name;
         public virtual Component Parent { get; set; }
-        public List<Component> Children { get; protected set; }
+        public List<Component> Children { get; protected set; } = new List<Component>();
         public virtual Element RootHtmlElement { get; set; }
 
         public virtual Component RootComponent
@@ -25,10 +24,13 @@ namespace Components
         public void AddChild(Component child)
         {
             Children.Add(child);
+            child.Parent = this;
+            child.Render();
         }
 
         public void RemoveChild(Component child)
         {
+            child.Dispose();
             Children.Remove(child);
         }
 
