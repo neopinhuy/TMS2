@@ -3,7 +3,6 @@ using Common.Clients;
 using Common.Extensions;
 using Components.Extensions;
 using MVVM;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,25 +16,18 @@ namespace Components
         private readonly Observable<string> _text;
         private readonly ObservableArray<object> _source;
         private FloatingTable<object> _table;
-        private readonly string _refEntity;
-        private readonly string _dataSource;
-        private readonly Type _entityType;
         private HTMLInputElement _input;
-        private readonly string _refValueField = "Id";
+        private const string _refValueField = "Id";
         private IEnumerable<GridPolicy> RefField;
         private readonly UserInterface _ui;
 
-        public SearchEntry(Observable<int?> value, UserInterface ui)
+        public object Entity { get; set; }
+
+        public SearchEntry(UserInterface ui, object _entity)
         {
-            _value = value;
+            Entity = _entity;
+            _value = new Observable<int?>((int?)Entity?[ui.FieldName]);
             _ui = ui;
-            _refEntity = ui.Reference.Name;
-            _dataSource = ui.DataSourceFilter;
-            _entityType = Type.GetType("TMS.API.Models." + _refEntity);
-            if (_entityType == null)
-            {
-                throw new InvalidOperationException($"{_refEntity} is invalid entity");
-            }
             _text = new Observable<string>();
             _source = new ObservableArray<object>();
             _text.Subscribe((arg) =>
@@ -62,7 +54,8 @@ namespace Components
             SearchRefField();
             _value.Subscribe(arg =>
             {
-                UpdateSearchText();
+                UpdateTextbox();
+                Entity[_ui.FieldName] = arg.NewData;
             });
         }
 
@@ -74,13 +67,13 @@ namespace Components
                 RefField = await Client<GridPolicy>.Instance.GetList(
                     $"$filter=Active eq true and EntityId eq {_ui.ReferenceId}");
                 RefField = RefField.OrderBy(x => x.Order);
-                UpdateSearchText();
+                UpdateTextbox();
             });
         }
 
         private async Task<object[]> GetDataSource()
         {
-            var source = await Client<object>.Instance.GetListEntity(_refEntity, _dataSource);
+            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
             return source.ToArray();
         }
 
@@ -111,25 +104,20 @@ namespace Components
 
         private void Select(object rowData)
         {
-            if (rowData != null) SetTextData(rowData);
             _value.Data = (int)rowData[_refValueField];
             DisposeSearchTable();
         }
 
-        private void SetTextData(object rowData)
-        {
-            if (rowData is null)
-            {
-                throw new ArgumentNullException(nameof(rowData));
-            }
-
-            _text.Data = Utils.FormatWith(_ui.Format, rowData);
-        }
-
-        private void UpdateSearchText()
+        private void UpdateTextbox()
         {
             var selected = _source.Data.FirstOrDefault(x => x[_refValueField]?.ToString() == _value.Data.ToString());
-            if (selected != null) SetTextData(selected);
+            if (selected is null)
+            {
+                _text.Data = string.Empty;
+                return;
+            }
+
+            _text.Data = Utils.FormatWith(_ui.Format, selected);
         }
 
         private void DisposeSearchTable()

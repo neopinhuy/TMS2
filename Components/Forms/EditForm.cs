@@ -277,10 +277,7 @@ namespace Components.Forms
 
         private void RenderDropdown(UserInterface ui)
         {
-            var value = new Observable<int?>((int?)Entity?[ui.FieldName]);
-            value.Subscribe(arg => { if (Entity != null) Entity[ui.FieldName] = arg.NewData; });
-            var searchEntry = new SearchEntry(value, ui);
-            searchEntry.Render();
+            AddChild(new SearchEntry(ui, Entity));
         }
 
         private void RenderInput(UserInterface ui)
