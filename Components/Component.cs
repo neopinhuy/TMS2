@@ -29,12 +29,12 @@ namespace Components
 
         public void AddChild(Component child)
         {
-            child.RootHtmlElement = Html.Context;
-            child.Entity = Entity;
-            child.ParentEntity = ParentEntity;
-            child.CurrentEntities = CurrentEntities;
+            if (child.RootHtmlElement is null) child.RootHtmlElement = Html.Context;
+            if (child.Entity is null) child.Entity = Entity;
+            if (child.ParentEntity is null) child.ParentEntity = ParentEntity;
+            if (child.CurrentEntities is null) child.CurrentEntities = CurrentEntities;
             Children.Add(child);
-            child.Parent = this;
+            if (child.Parent is null) child.Parent = this;
             child.Render();
         }
 
