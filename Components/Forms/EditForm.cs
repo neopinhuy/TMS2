@@ -143,41 +143,46 @@ namespace Components.Forms
         private void RenderComponent(ComponentGroup group)
         {
             var column = 0;
+            Component childComponent = null;
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
                 if (!ui.Visibility) continue;
+                var colSpan = ui.Column ?? 2;
                 if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Label)
-                    .EndOf(ElementType.td).TData.Render();
-                else Html.Instance.TData.ClassName("text-left").Style("padding-left: 0;").Render();
+                    .EndOf(ElementType.td).TData.ColSpan(colSpan - 1).Render();
+                else Html.Instance.TData.ColSpan(colSpan).ClassName("text-left").Style("padding-left: 0;").Render();
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
                 switch (ui.ComponentType.Trim())
                 {
                     case "Input":
-                        AddChild(new Textbox(ui));
+                        childComponent = new Textbox(ui);
                         break;
                     case "Dropdown":
-                        AddChild(new SearchEntry(ui));
+                        childComponent = new SearchEntry(ui);
                         break;
                     case "Datepicker":
-                        AddChild(new Datepicker(ui));
+                        childComponent = new Datepicker(ui);
                         break;
                     case "Checkbox":
-                        AddChild(new Checkbox(ui));
+                        childComponent = new Checkbox(ui);
                         break;
                     case "Image":
-                        AddChild(new ImageUploader(ui));
+                        childComponent = new ImageUploader(ui);
                         break;
                     case "Button":
-                        AddChild(new Button(ui));
+                        childComponent = new Button(ui);
                         break;
                     case "Number":
                     case "Currency":
-                        AddChild(new NumberInput(ui));
+                        childComponent = new NumberInput(ui);
                         break;
                     case "GridView":
-                        AddChild(new GridView(ui));
+                        childComponent = new GridView(ui);
                         break;
                 }
+                AddChild(childComponent);
+                childComponent.Disabled = ui.Disabled;
+                childComponent.Focus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);
                 column += ui.Column ?? 0;
                 if (column == group.Column)

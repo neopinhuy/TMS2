@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,10 +44,20 @@ namespace TMS.API.Controllers
             {
                 return BadRequest();
             }
-
+            CalcMaintenancePeriod(accessory);
+            if (accessory.InsertedBy == 0) accessory.InsertedBy = 1;
             db.Accessory.Add(accessory);
             await db.SaveChangesAsync();
             return Ok(accessory);
+        }
+
+        private void CalcMaintenancePeriod(Accessory value)
+        {
+            if (value.ApplyPeriod)
+            {
+                var period = value.NextMaintenanceDate - value.AssembledDate;
+                if (period != null) value.MaintenancePeriod = period.Value.Ticks;
+            }
         }
 
         [HttpPut]
@@ -56,7 +67,6 @@ namespace TMS.API.Controllers
             {
                 return BadRequest();
             }
-
             db.Accessory.Attach(accessory);
             db.Entry(accessory).State = EntityState.Modified;
             await db.SaveChangesAsync();

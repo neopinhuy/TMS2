@@ -22,8 +22,9 @@ namespace TMS.API.Models
         public int CurrencyId { get; set; }
         public DateTime? AssembledDate { get; set; }
         public DateTime? ExpiredDate { get; set; }
-        public TimeSpan? MaintenancePeriod { get; set; }
+        public long? MaintenancePeriod { get; set; }
         public DateTime? NextMaintenanceDate { get; set; }
+        public bool ApplyPeriod { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

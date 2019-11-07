@@ -8,11 +8,37 @@ namespace Components
 {
     public abstract class Component
     {
+        private bool disabled;
+        private bool focus;
+
         protected string ClassId => "feature_" + GetType().Name;
         protected virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
+        public virtual Element InteractiveElement { get; set; }
+        public virtual bool Disabled
+        {
+            get => disabled;
+            set
+            {
+                disabled = value;
+                if (InteractiveElement is null) return;
+                if (value) InteractiveElement.SetAttribute("disabled", "disabled");
+                else InteractiveElement.RemoveAttribute("disabled");
+            }
+        }
+        public virtual bool Focus
+        {
+            get => focus;
+            set
+            {
+                focus = value;
+                if (InteractiveElement is null) return;
+                if (value) InteractiveElement["focus"].As<Action>();
+                else InteractiveElement["blur"].As<Action>();
+            }
+        }
         public object Entity { get; set; }
         public ObservableArray<object> ParentEntity { get; set; }
         public List<ObservableArray<object>> CurrentEntities { get; set; }

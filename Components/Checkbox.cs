@@ -18,8 +18,8 @@ namespace Components
         {
             var value = new Observable<bool?>((bool?)Entity?[_ui.FieldName]);
             value.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
-            Html.Instance.SmallCheckbox(string.Empty, value)
-                .Disabled(_ui.Disabled);
+            Html.Instance.SmallCheckbox(string.Empty, value);
+            InteractiveElement = Html.Context;
         }
     }
 }

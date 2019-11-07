@@ -33,9 +33,9 @@ namespace Components
                 .Img.ClassName("icon").Src("image/icon_camera.png").EndOf(ElementType.label)
                 .Form.Attr("method", "POST").Attr("enctype", "multipart/form-data").Render();
             _form = Html.Context as HTMLFormElement;
-            Html.Instance.Input.Id($"id_{GetHashCode()}").Attr("name", "files").Type("file")
-                .Disabled(_ui.Disabled)
-                .AsyncEvent(EventType.Change, RenderImage).End.Render();
+            Html.Instance.Input.Id($"id_{GetHashCode()}").Attr("name", "files").Type("file");
+            InteractiveElement = Html.Context;
+            Html.Instance.AsyncEvent(EventType.Change, RenderImage).End.Render();
         }
 
         private async Task RenderImage(Event e)

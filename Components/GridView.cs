@@ -35,11 +35,6 @@ namespace Components
         public override void Render()
         {
             Parent.CurrentEntities.Add(RowData);
-            if (Entity != null && (int)Entity["Id"] != 0)
-            {
-                _ui.DataSourceFilter += Entity["Id"];
-            }
-            else if (Entity != null && _ui.DataSourceFilter.HasAnyChar()) return;
             Window.SetTimeout(async() =>
             {
                 var entityName = _ui.Reference.Name;
@@ -77,6 +72,10 @@ namespace Components
                     {
                         RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
                     };
+                }
+                if (Entity != null && _ui.DataSourceFilter.HasAnyChar())
+                {
+                    _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
                 }
                 var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
                 RowData.Data = rows.ToArray();

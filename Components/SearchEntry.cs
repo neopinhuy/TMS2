@@ -16,7 +16,6 @@ namespace Components
         private readonly Observable<string> _text = new Observable<string>();
         private readonly ObservableArray<object> _source = new ObservableArray<object>();
         private FloatingTable<object> _table;
-        private HTMLInputElement _input;
         private const string _refValueField = "Id";
         private IEnumerable<GridPolicy> RefField;
         private readonly UserInterface _ui;
@@ -44,7 +43,6 @@ namespace Components
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
             });
             Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
-                .Disabled(_ui.Disabled)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)
@@ -53,7 +51,7 @@ namespace Components
                     if (e["keyCode"].ToString() == "38") _table.MoveUp();
                     if (e["keyCode"].ToString() == "40") _table.MoveDown();
                 });
-            _input = Html.Context as HTMLInputElement;
+            InteractiveElement = Html.Context;
             SearchRefField();
         }
 
@@ -77,7 +75,7 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
-            var position = _input.GetBoundingClientRect();
+            var position = InteractiveElement.GetBoundingClientRect();
             var headers = RefField.Select(column => new Header<object>()
             {
                 FieldName = column.FieldName,
