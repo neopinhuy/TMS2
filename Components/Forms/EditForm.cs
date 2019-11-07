@@ -182,7 +182,7 @@ namespace Components.Forms
                 }
                 AddChild(childComponent);
                 childComponent.Disabled = ui.Disabled;
-                childComponent.Focus = ui.Focus;
+                childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);
                 column += ui.Column ?? 0;
                 if (column == group.Column)

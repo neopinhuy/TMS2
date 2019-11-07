@@ -1706,7 +1706,7 @@ namespace TMS.API.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DataSourceFormat)
+                entity.Property(e => e.DataSource)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 

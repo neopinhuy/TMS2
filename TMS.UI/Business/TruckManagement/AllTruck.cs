@@ -40,20 +40,51 @@ namespace TMS.UI.Business.TruckManagement
             AddChild(_accessoryForm);
         }
 
+        public void UpdateAccessory(Accessory accessory)
+        {
+            var truckGrid = FindComponent("Truck Detail") as PopupEditor<Truck>;
+            truckGrid.Show(false);
+            _accessoryForm = new PopupEditor<Accessory>
+            {
+                Entity = accessory,
+                Disposed = () =>
+                {
+                    truckGrid.Show(true);
+                }
+            };
+            AddChild(_accessoryForm);
+        }
+
         public async Task SaveAccessory()
         {
             _accessoryForm = FindComponent("Accessory Detail") as PopupEditor<Accessory>;
             var accessory = (Accessory)_accessoryForm.Entity;
             var client = new Client<Accessory>();
-            var created = await client.CreateAsync(accessory);
-            if (created != null)
+            if (accessory.Id == 0)
             {
-                Toast.Success($"Create Accessory succeeded");
-                _accessoryForm.Entity = accessory;
+                var created = await client.CreateAsync(accessory);
+                if (created != null)
+                {
+                    Toast.Success($"Create Accessory succeeded");
+                    _accessoryForm.Entity = accessory;
+                }
+                else
+                {
+                    Toast.Warning("Create Accessory failed");
+                }
             }
             else
             {
-                Toast.Warning("Create Accessory failed");
+                var updated = await client.UpdateAsync(accessory);
+                if (updated != null)
+                {
+                    Toast.Success($"Update Accessory succeeded");
+                    _accessoryForm.Entity = accessory;
+                }
+                else
+                {
+                    Toast.Warning("Update Accessory failed");
+                }
             }
         }
 

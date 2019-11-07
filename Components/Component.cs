@@ -28,7 +28,7 @@ namespace Components
                 else InteractiveElement.RemoveAttribute("disabled");
             }
         }
-        public virtual bool Focus
+        public virtual bool ShouldFocus
         {
             get => focus;
             set

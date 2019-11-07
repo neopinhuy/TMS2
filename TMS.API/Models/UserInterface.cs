@@ -12,7 +12,7 @@ namespace TMS.API.Models
         public string ComponentType { get; set; }
         public int? ComponentGroupId { get; set; }
         public string DataSourceFilter { get; set; }
-        public string DataSourceFormat { get; set; }
+        public string DataSource { get; set; }
         public int? ReferenceId { get; set; }
         public string Format { get; set; }
         public int? Column { get; set; }
