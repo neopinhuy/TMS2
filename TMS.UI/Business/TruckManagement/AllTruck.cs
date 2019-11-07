@@ -9,6 +9,7 @@ namespace TMS.UI.Business.TruckManagement
 {
     public class AllTruck : TabEditor<Truck>
     {
+        PopupEditor<Accessory> _accessoryForm;
         public void DeleteTruck()
         {
             var grid = FindComponent("TruckGrid") as GridView;
@@ -25,7 +26,7 @@ namespace TMS.UI.Business.TruckManagement
         {
             var truckGrid = FindComponent("Truck Detail") as PopupEditor<Truck>;
             truckGrid.Show(false);
-            var editor = new PopupEditor<Accessory>
+            _accessoryForm = new PopupEditor<Accessory>
             {
                 Entity = new Accessory() 
                 {
@@ -36,19 +37,19 @@ namespace TMS.UI.Business.TruckManagement
                     truckGrid.Show(true);
                 }
             };
-            AddChild(editor);
+            AddChild(_accessoryForm);
         }
 
         public async Task SaveAccessory()
         {
-            var form = FindComponent("Accessory Detail") as PopupEditor<Accessory>;
-            var accessory = (Accessory)form.Entity;
+            _accessoryForm = FindComponent("Accessory Detail") as PopupEditor<Accessory>;
+            var accessory = (Accessory)_accessoryForm.Entity;
             var client = new Client<Accessory>();
             var created = await client.CreateAsync(accessory);
             if (created != null)
             {
                 Toast.Success($"Create Accessory succeeded");
-                form.Entity = accessory;
+                _accessoryForm.Entity = accessory;
             }
             else
             {
@@ -58,8 +59,8 @@ namespace TMS.UI.Business.TruckManagement
 
         public void DisposeAccessoryDetail()
         {
-            var form = FindComponent("Accessory Detail") as PopupEditor<Accessory>;
-            form.Dispose();
+            RemoveChild(_accessoryForm);
+            _accessoryForm = null;
         }
     }
 }
