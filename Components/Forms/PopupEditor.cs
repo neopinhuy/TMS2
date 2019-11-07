@@ -7,9 +7,11 @@ namespace Components.Forms
 {
     public class PopupEditor<T> : EditForm<T>
     {
+        private Element _rootEle;
         public override void Render()
         {
-            Html.Take(Document.Body).Div.ClassName("backdrop");
+            Html.Take(Document.Body).Div.ClassName("backdrop").Trigger(EventType.Focus);
+            _rootEle = Html.Context;
             jQuery.select(Html.Context).HotKey("esc", Dispose);
             Html.Instance.Div.ClassName("popup-content")
                 .Div.ClassName("popup-title").Text(Title)
@@ -23,8 +25,16 @@ namespace Components.Forms
 
         public override void Dispose()
         {
-            Parent.Children.Remove(this);
-            RootHtmlElement.ParentElement.ParentElement.Remove();
+            Disposing?.Invoke();
+            if (Children != null)
+            {
+                foreach (var child in Children)
+                {
+                    child.Dispose();
+                }
+            }
+            _rootEle.Remove();
+            Disposed?.Invoke();
         }
     }
 }

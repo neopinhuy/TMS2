@@ -27,7 +27,11 @@ namespace Components.Forms
                     .Event(EventType.Click, () => { DeleteConfirmed(); }).End
                 .Button("No", "button info small", "mif-exit")
                     .MarginRem(Direction.left, 1)
+                    .Event(EventType.Click, Dispose).End
+                .Button("Cancel", "button info small", "fa fa-times")
+                    .MarginRem(Direction.left, 1)
                     .Event(EventType.Click, Dispose)
+                    .Trigger(EventType.Focus)
                 .EndOf(".backdrop");
         }
 

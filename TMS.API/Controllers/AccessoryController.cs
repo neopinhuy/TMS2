@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -62,13 +63,13 @@ namespace TMS.API.Controllers
             return Ok(accessory);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Delete(int id)
+        [HttpPost("Delete")]
+        public async Task<bool> Delete([FromBody]List<int> ids)
         {
-            var Accessory = db.Accessory.Find(id);
-            Accessory.Active = false;
+            var accessory = db.Accessory.Where(x => ids.Contains(x.Id));
+            db.Accessory.RemoveRange(accessory);
             await db.SaveChangesAsync();
-            return Ok(true);
+            return true;
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Components.Forms
     public partial class EditForm<T> : Component
     {
         public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
-
         public EditForm()
         {
             CurrentEntities = new List<ObservableArray<object>>();
+            Name = Title;
         }
 
         public virtual void Create()

@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,11 +11,20 @@ namespace Components
         protected string ClassId => "feature_" + GetType().Name;
         protected virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
-        public List<Component> Children { get; protected set; } = new List<Component>();
+        public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
         public object Entity { get; set; }
         public ObservableArray<object> ParentEntity { get; set; }
         public List<ObservableArray<object>> CurrentEntities { get; set; }
+
+        public void Show(bool show)
+        {
+            var ele = RootHtmlElement as HTMLElement;
+            if (!show)
+                ele.Style.Display = "none";
+            else
+                ele.Style.Display = "";
+        }
 
         public virtual Component RootComponent
         {
@@ -29,6 +39,7 @@ namespace Components
 
         public void AddChild(Component child)
         {
+            if (Children is null) Children = new List<Component>();
             if (child.RootHtmlElement is null) child.RootHtmlElement = Html.Context;
             if (child.Entity is null) child.Entity = Entity;
             if (child.ParentEntity is null) child.ParentEntity = ParentEntity;
@@ -59,9 +70,20 @@ namespace Components
         }
 
         public abstract void Render();
+        public Action Disposing { get; set; }
+        public Action Disposed { get; set; }
         public virtual void Dispose()
         {
+            Disposing?.Invoke();
+            if (Children != null)
+            {
+                foreach (var child in Children)
+                {
+                    child.Dispose();
+                }
+            }
             RootHtmlElement.Remove();
+            Disposed?.Invoke();
         }
     }
 }
