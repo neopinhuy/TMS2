@@ -44,6 +44,7 @@ namespace Components
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
             });
             Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
+                .Disabled(_ui.Disabled)
                 .Attr("data-role", "input").ClassName("input-small")
                 .AsyncEvent(EventType.Focus, RenderSuggestion)
                 .Event(EventType.Blur, DestroySuggestion)
@@ -62,7 +63,7 @@ namespace Components
             {
                 _source.Data = await GetDataSource();
                 RefField = await Client<GridPolicy>.Instance.GetList(
-                    $"$filter=Active eq true and EntityId eq {_ui.ReferenceId}");
+                    $"$expand=Reference($select=Name)&$filter=Active eq true and FeatureId eq null and EntityId eq {_ui.ReferenceId}");
                 RefField = RefField.OrderBy(x => x.Order);
                 UpdateTextbox();
             });
@@ -77,10 +78,15 @@ namespace Components
         public async Task RenderSuggestion()
         {
             var position = _input.GetBoundingClientRect();
-            var headers = RefField.Select(x => new Header<object>()
+            var headers = RefField.Select(column => new Header<object>()
             {
-                FieldName = x.FieldName,
-                HeaderText = x.ShortDesc
+                FieldName = column.FieldName,
+                Format = column.Format,
+                Order = column.Order,
+                HeaderText = column.ShortDesc,
+                Description = column.Description,
+                Reference = column.Reference?.Name,
+                DataSource = column.DataSource,
             }).ToArray();
             if (_source.Data.Length == 0)
                 _source.Data = await GetDataSource();

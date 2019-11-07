@@ -61,7 +61,6 @@ namespace Components
                         Reference = column.Reference?.Name,
                         DataSource = column.DataSource,
                         RefValueField = "Id",
-                        RefDisplayField = column.RefDisplayField,
                         HasFilter = column.HasFilter,
                         Frozen = column.Frozen
                     };

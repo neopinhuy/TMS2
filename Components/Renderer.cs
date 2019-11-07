@@ -138,8 +138,9 @@ namespace Components
             return html;
         }
 
-        public static Html Disabled(this Html html)
+        public static Html Disabled(this Html html, bool disabled)
         {
+            if (disabled == false) return html;
             return html.Attr("disabled", "disabled");
         }
 

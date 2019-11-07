@@ -36,7 +36,7 @@ namespace Components
                 thousands = isDecimal ? groupSeparator : string.Empty,
                 @decimal = separator,
                 precision = isDecimal ? _ui.Precision : 0
-            });
+            }).Disabled(_ui.Disabled);
         }
     }
 }

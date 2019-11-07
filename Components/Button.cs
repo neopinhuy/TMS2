@@ -24,6 +24,7 @@ namespace Components
                 html.Span.ClassName(_ui.Icon).End.Text(" ").Render();
             }
             html.ClassName(_ui.ClassName).Text(_ui.Label)
+                .Disabled(_ui.Disabled)
                 .Attr("data-id", _ui.Id.ToString())
                 .Event(EventType.Click, () =>
                 {

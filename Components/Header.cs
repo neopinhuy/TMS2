@@ -11,7 +11,6 @@ namespace Components
         public string Reference { get; set; }
         public string DataSource { get; set; }
         public string RefValueField { get; set; } = "Id";
-        public string RefDisplayField { get; set; } = "Name";
         public string GroupName { get; set; }
         public bool HasFilter { get; set; }
         public string Format { get; set; }

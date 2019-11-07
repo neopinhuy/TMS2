@@ -17,7 +17,9 @@ namespace Components
         {
             var value = new Observable<DateTime?>((DateTime?)Entity?[_ui.FieldName]);
             value.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
-            Html.Instance.SmallDatePicker(value);
+            Html.Instance
+                .SmallDatePicker(value)
+                .Disabled(_ui.Disabled);
         }
     }
 }

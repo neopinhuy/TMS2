@@ -8,9 +8,6 @@ namespace Components
     public class Checkbox: Component
     {
         private readonly UserInterface _ui;
-        public object Entity { get; set; }
-        public ObservableArray<object> ParentEntity { get; set; }
-        public List<ObservableArray<object>> CurrentEntities { get; set; }
 
         public Checkbox(UserInterface ui)
         {
@@ -21,7 +18,8 @@ namespace Components
         {
             var value = new Observable<bool?>((bool?)Entity?[_ui.FieldName]);
             value.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
-            Html.Instance.SmallCheckbox(string.Empty, value);
+            Html.Instance.SmallCheckbox(string.Empty, value)
+                .Disabled(_ui.Disabled);
         }
     }
 }

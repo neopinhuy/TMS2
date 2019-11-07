@@ -14,7 +14,6 @@ namespace TMS.API.Models
         public bool HasFilter { get; set; }
         public int? ReferenceId { get; set; }
         public string DataSource { get; set; }
-        public string RefDisplayField { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
         public string GroupName { get; set; }

@@ -98,6 +98,11 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(100);
 
+                entity.HasOne(d => d.Branch)
+                    .WithMany(p => p.Accessory)
+                    .HasForeignKey(d => d.BranchId)
+                    .HasConstraintName("FK_Accessory_Branch");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.AccessoryInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
@@ -791,10 +796,6 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.GroupName).HasMaxLength(50);
-
-                entity.Property(e => e.RefDisplayField)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.ShortDesc)
                     .IsRequired()
@@ -1702,6 +1703,10 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.DataSourceFilter)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DataSourceFormat)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 

@@ -24,7 +24,9 @@ namespace Components
                     if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
                 });
             }
-            Html.Instance.Input.Attr("data-role", "input").ClassName("input-small").Value(value);
+            Html.Instance.Input.Attr("data-role", "input")
+                .Disabled(_ui.Disabled)
+                .ClassName("input-small").Value(value);
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label);
         }
     }
