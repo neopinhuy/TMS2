@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,24 +9,28 @@ namespace TMS.API.Models
     {
         public override int SaveChanges()
         {
-            UpdateSoftDeleteStatuses();
+            SetDefaultValues();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            UpdateSoftDeleteStatuses();
+            SetDefaultValues();
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        private void UpdateSoftDeleteStatuses()
+        private void SetDefaultValues()
         {
             foreach (var entry in ChangeTracker.Entries())
             {
                 switch (entry.State)
                 {
                     case EntityState.Added:
+                        entry.CurrentValues["InsertedDate"] = DateTime.Now;
                         entry.CurrentValues["Active"] = true;
+                        break;
+                    case EntityState.Modified:
+                        entry.CurrentValues["UpdatedDate"] = DateTime.Now;
                         break;
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;

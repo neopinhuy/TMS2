@@ -6,19 +6,19 @@ using Newtonsoft.Json;
 
 namespace Common.Clients
 {
-    public class TypeClient<T>
+    public class Client<T>
     {
         public string BaseUrl { get; set; }
-        public TypeClient()
+        public Client()
         {
         }
 
-        public TypeClient(string url)
+        public Client(string url)
         {
             BaseUrl = url;
         }
 
-        public static TypeClient<T> Instance => new TypeClient<T>();
+        public static Client<T> Instance => new Client<T>();
 
         public Task<List<T>> GetList(string filter = null)
         {
@@ -51,7 +51,7 @@ namespace Common.Clients
         public Task<List<object>> GetListEntity(string entity, string filter = null)
         {
             var refType = Type.GetType("TMS.API.Models." + entity);
-            var clientType = typeof(TypeClient<>).MakeGenericType(new Type[] { refType });
+            var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
             var httpGetList = clientType.GetMethod("GetList");
             var client = Activator.CreateInstance(clientType);
             return httpGetList.Invoke(client, filter).As<Task<List<object>>>();

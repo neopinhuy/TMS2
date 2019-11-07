@@ -52,7 +52,7 @@ namespace Components
             // Upload to the server
             var form = new FormData(_form);
             var xhr = new XMLHttpRequest();
-            var client = new TypeClient<File>();
+            var client = new Client<File>();
             var path = await client.PostFilesAsync(form);
             _path.Data = path[0];
         }

@@ -43,7 +43,7 @@ namespace Components
             Window.SetTimeout(async() =>
             {
                 var entityName = _ui.Reference.Name;
-                var gridPolicy = await TypeClient<GridPolicy>.Instance
+                var gridPolicy = await Client<GridPolicy>.Instance
                     .GetList("$expand=Reference($select=Name)" +
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
@@ -79,7 +79,7 @@ namespace Components
                         RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
                     };
                 }
-                var rows = await TypeClient<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
+                var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
                 RowData.Data = rows.ToArray();
                 _table = new Table<object>(tableParams);
                 Html.Take(RootHtmlElement);
@@ -108,24 +108,12 @@ namespace Components
             var success = await client.Delete(ids);
             if (success)
             {
-                Toast.Create(new ToastOptions
-                {
-                    clsToast = "success",
-                    timeout = 2000,
-                    Message = $"Delete succeeded",
-                    showTop = true
-                });
+                Toast.Success("Delete succeeded");
                 RowData.Data = RowData.Data.Where(x => !ids.Contains((int)x["Id"])).ToArray();
             }
             else
             {
-                Toast.Create(new ToastOptions
-                {
-                    clsToast = "warning",
-                    timeout = 2000,
-                    Message = $"Delete failed",
-                    showTop = true
-                });
+                Toast.Warning("Delete failed");
             }
         }
     }

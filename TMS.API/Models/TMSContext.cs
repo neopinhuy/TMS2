@@ -18,6 +18,8 @@ namespace TMS.API.Models
         public virtual DbSet<Accessory> Accessory { get; set; }
         public virtual DbSet<Action> Action { get; set; }
         public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
+        public virtual DbSet<Branch> Branch { get; set; }
+        public virtual DbSet<BranchType> BranchType { get; set; }
         public virtual DbSet<CommodityType> CommodityType { get; set; }
         public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
@@ -161,6 +163,52 @@ namespace TMS.API.Models
                     .WithMany(p => p.ActionPolicyUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_ActionPolicy_User");
+            });
+
+            modelBuilder.Entity<Branch>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.BranchType)
+                    .WithMany(p => p.Branch)
+                    .HasForeignKey(d => d.BranchTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Branch_BranchType");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.BranchInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Branch_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.BranchUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Branch_UserUpdated");
+            });
+
+            modelBuilder.Entity<BranchType>(entity =>
+            {
+                entity.Property(e => e.Desciption).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.BranchTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_BranchType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.BranchTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_BranchType_UserUpdated");
             });
 
             modelBuilder.Entity<CommodityType>(entity =>

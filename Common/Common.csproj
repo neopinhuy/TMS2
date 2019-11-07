@@ -45,6 +45,12 @@
     <Compile Include="..\TMS.API\Models\ActionPolicy.cs">
       <Link>Models\ActionPolicy.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Branch.cs">
+      <Link>Models\Branch.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\BranchType.cs">
+      <Link>Models\BranchType.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
@@ -219,7 +225,7 @@
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\Util.cs" />
-    <Compile Include="Clients\TypeClient.cs" />
+    <Compile Include="Clients\TypedClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleLeaderBoardDataPoint.cs" />
   </ItemGroup>

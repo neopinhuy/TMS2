@@ -13,6 +13,10 @@ namespace TMS.API.Models
             ActionPolicyInsertedByNavigation = new HashSet<ActionPolicy>();
             ActionPolicyUpdatedByNavigation = new HashSet<ActionPolicy>();
             ActionUpdatedByNavigation = new HashSet<Action>();
+            BranchInsertedByNavigation = new HashSet<Branch>();
+            BranchTypeInsertedByNavigation = new HashSet<BranchType>();
+            BranchTypeUpdatedByNavigation = new HashSet<BranchType>();
+            BranchUpdatedByNavigation = new HashSet<Branch>();
             CommodityTypeInsertedByNavigation = new HashSet<CommodityType>();
             CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
@@ -143,6 +147,10 @@ namespace TMS.API.Models
         public virtual ICollection<ActionPolicy> ActionPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<ActionPolicy> ActionPolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<Action> ActionUpdatedByNavigation { get; set; }
+        public virtual ICollection<Branch> BranchInsertedByNavigation { get; set; }
+        public virtual ICollection<BranchType> BranchTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<BranchType> BranchTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<Branch> BranchUpdatedByNavigation { get; set; }
         public virtual ICollection<CommodityType> CommodityTypeInsertedByNavigation { get; set; }
         public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }

@@ -17,7 +17,7 @@ namespace Components
         public ObservableArray<object> ParentEntity { get; set; }
         public List<ObservableArray<object>> CurrentEntities { get; set; }
 
-        public void Show(bool show)
+        public virtual void Show(bool show)
         {
             var ele = RootHtmlElement as HTMLElement;
             if (!show)
@@ -55,14 +55,14 @@ namespace Components
             Children.Remove(child);
         }
 
-        public Component Find(string name)
+        public Component FindComponent(string name)
         {
             foreach (var child in Children)
             {
                 if (child.Name == name) return child;
                 else if (child.Children != null && child.Children.Any())
                 {
-                    var res = child.Find(name);
+                    var res = child.FindComponent(name);
                     if (res != null) return res;
                 }
             }

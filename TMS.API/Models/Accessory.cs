@@ -19,10 +19,10 @@ namespace TMS.API.Models
         public int VendorId { get; set; }
         public decimal Price { get; set; }
         public int CurrencyId { get; set; }
-        public DateTime AssembledDate { get; set; }
-        public DateTime ExpiredDate { get; set; }
-        public TimeSpan MaintenancePeriod { get; set; }
-        public DateTime NextMaintenanceDate { get; set; }
+        public DateTime? AssembledDate { get; set; }
+        public DateTime? ExpiredDate { get; set; }
+        public TimeSpan? MaintenancePeriod { get; set; }
+        public DateTime? NextMaintenanceDate { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

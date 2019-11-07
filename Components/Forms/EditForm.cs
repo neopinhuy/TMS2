@@ -49,20 +49,14 @@ namespace Components.Forms
 
         public virtual async Task Save()
         {
-            var client = new TypeClient<T>();
+            var client = new Client<T>();
             if (Entity != null && Entity["Id"].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 var data = await client.CreateAsync((T)Entity);
                 if (data != null)
                 {
-                    Toast.Create(new ToastOptions
-                    {
-                        clsToast = "success",
-                        timeout = 2000,
-                        Message = $"Create {typeof(T).Name} succeeded",
-                        showTop = true
-                    });
+                    Toast.Success($"Create {typeof(T).Name} succeeded");
                 }
                 Entity = data;
                 ParentEntity.Add(Entity);
@@ -72,13 +66,7 @@ namespace Components.Forms
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
-                    Toast.Create(new ToastOptions
-                    {
-                        clsToast = "success",
-                        timeout = 2000,
-                        Message = $"Update {typeof(T).Name} succeeded",
-                        showTop = true
-                    });
+                    Toast.Success($"Update {typeof(T).Name} succeeded");
                     // Update data back to observable
                     var index = Array.IndexOf(ParentEntity.Data, Entity);
                     ParentEntity.Update(Entity, index);
@@ -112,7 +100,7 @@ namespace Components.Forms
         {
             Task.Run(async () =>
             {
-                var componentGroup = await TypeClient<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
+                var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Title}'");
                 componentGroup = BuildTree(componentGroup);
                 Html.Take(RootHtmlElement);
                 RenderGroup(componentGroup);
@@ -148,7 +136,7 @@ namespace Components.Forms
                 }
                 Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
                 RenderComponent(group);
-                Html.Instance.EndOf(".group");
+                Html.Instance.EndOf("#group_" + group.Id);
             }
         }
 

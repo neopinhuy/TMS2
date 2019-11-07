@@ -35,6 +35,8 @@ namespace Components
 
         public override void Render()
         {
+            if (_ui.DataSourceFilter.HasAnyChar())
+                _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
             _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
             _value.Subscribe(arg =>
             {
@@ -59,7 +61,7 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _source.Data = await GetDataSource();
-                RefField = await TypeClient<GridPolicy>.Instance.GetList(
+                RefField = await Client<GridPolicy>.Instance.GetList(
                     $"$filter=Active eq true and EntityId eq {_ui.ReferenceId}");
                 RefField = RefField.OrderBy(x => x.Order);
                 UpdateTextbox();
@@ -68,7 +70,7 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            var source = await TypeClient<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
             return source.ToArray();
         }
 

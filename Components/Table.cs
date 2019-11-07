@@ -126,7 +126,7 @@ namespace Components
             var refEntities = Headers.Data
                 .Where(x => x.Reference.HasAnyChar())
                 .DistinctBy(x => x.Reference + x.DataSource)
-                .Select(x => TypeClient<object>.Instance.GetListEntity(x.Reference, x.DataSource));
+                .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
             _refData = await Task.WhenAll(refEntities);
         }
 
