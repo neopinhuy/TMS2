@@ -5,7 +5,7 @@ namespace Components.Forms
 {
     public class TabEditor<T> : EditForm<T>
     {
-        public override string FeatureName { get; set; } = $"{typeof(T).Name} List";
+        public override string Title { get; set; } = $"{typeof(T).Name} List";
 
         public override void Render()
         {
@@ -21,7 +21,7 @@ namespace Components.Forms
                 return true;
             }
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(FeatureName).End
+                .Li.Anchor.Href($"#{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id(ClassId).Render();
             RootHtmlElement = Html.Context;

@@ -6,10 +6,12 @@ namespace TMS.UI.Business.TruckManagement
 {
     public class AllTruck : TabEditor<Truck>
     {
-        PopupEditor<Accessory> _accessoryForm;
-        PopupEditor<Truck> _truckForm;
-        GridView _truckGrid;
-        GridView _accessoryGrid;
+        private PopupEditor<Accessory> _accessoryForm;
+        private PopupEditor<Truck> _truckForm;
+        private PopupEditor<TruckMaintenance> _maintenanceForm;
+        private GridView _truckGrid;
+        private GridView _accessoryGrid;
+        private GridView _maintenanceGrid;
 
         #region Truck
 
@@ -117,5 +119,62 @@ namespace TMS.UI.Business.TruckManagement
         }
 
         #endregion Accessory
+        
+        #region Maintenance
+
+        public void CreateMaintenance()
+        {
+            _truckForm.Show(false);
+            _maintenanceForm = new PopupEditor<TruckMaintenance>
+            {
+                Name = "TruckMaintenance Detail",
+                Entity = new TruckMaintenance()
+                {
+                    TruckId = (_truckForm.Entity as Truck).Id
+                }
+            };
+            AddMaintenanceForm();
+        }
+
+        private void AddMaintenanceForm()
+        {
+            _maintenanceForm.Disposed += () => _truckForm.Show(true);
+            _maintenanceForm.Saved += () =>
+            {
+                FindMaintenanceGrid();
+                _maintenanceGrid.LoadData();
+            };
+            _truckForm.AddChild(_maintenanceForm);
+        }
+
+        public void EditMaintenance(TruckMaintenance maintenance)
+        {
+            _truckForm.Show(false);
+            _maintenanceForm = new PopupEditor<TruckMaintenance>
+            {
+                Entity = maintenance
+            };
+            AddMaintenanceForm();
+        }
+
+        private void FindMaintenanceGrid()
+        {
+            _maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
+        }
+
+        public void DeleteMaintenance()
+        {
+            FindMaintenanceGrid();
+            _maintenanceGrid.DeleteSelected();
+        }
+
+        public void DisposeMaintenanceDetail()
+        {
+            _maintenanceForm.Dispose();
+            _truckForm.RemoveChild(_maintenanceForm);
+            _maintenanceForm = null;
+        }
+
+        #endregion Maintenance
     }
 }

@@ -61,7 +61,8 @@ namespace Components
             {
                 _source.Data = await GetDataSource();
                 RefField = await Client<GridPolicy>.Instance.GetList(
-                    $"$expand=Reference($select=Name)&$filter=Active eq true and FeatureId eq null and EntityId eq {_ui.ReferenceId}");
+                    $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
+                    $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
                 RefField = RefField.OrderBy(x => x.Order);
                 UpdateTextbox();
             });

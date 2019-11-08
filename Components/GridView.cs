@@ -38,7 +38,7 @@ namespace Components
             Window.SetTimeout(async() =>
             {
                 var gridPolicy = await Client<GridPolicy>.Instance
-                    .GetList("$expand=Reference($select=Name)" +
+                    .GetList("?$expand=Reference($select=Name)" +
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");

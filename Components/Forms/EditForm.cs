@@ -14,12 +14,12 @@ namespace Components.Forms
 {
     public partial class EditForm<T> : Component
     {
-        public virtual string FeatureName { get; set; } = $"{typeof(T).Name} Detail";
+        public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
         public System.Action Saved { get; set; }
         public EditForm()
         {
             CurrentEntities = new List<ObservableArray<object>>();
-            Name = FeatureName;
+            Name = Title;
         }
 
         public virtual async Task Save()
@@ -73,7 +73,8 @@ namespace Components.Forms
         {
             Task.Run(async () =>
             {
-                var componentGroup = await Client<ComponentGroup>.Instance.GetList($"$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{FeatureName}'");
+                var componentGroup = await Client<ComponentGroup>.Instance
+                    .GetList($"?$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Name}'");
                 componentGroup = BuildTree(componentGroup);
                 Html.Take(RootHtmlElement);
                 RenderGroup(componentGroup);

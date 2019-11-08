@@ -22,11 +22,11 @@ namespace Common.Clients
 
         public Task<List<T>> GetList(string filter = null)
         {
-            filter = filter ?? "$filter=Active eq true";
+            filter = filter ?? "?$filter=Active eq true";
             var type = typeof(T);
             var tcs = new TaskCompletionSource<List<T>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}?{filter}", true);
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}{filter}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)

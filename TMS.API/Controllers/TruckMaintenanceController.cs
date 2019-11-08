@@ -40,6 +40,8 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            // TODO: hard code for now
+            maintenance.InsertedBy = 1;
             db.TruckMaintenance.Add(maintenance);
             await db.SaveChangesAsync();
             return maintenance;

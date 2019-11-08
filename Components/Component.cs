@@ -12,7 +12,7 @@ namespace Components
         private bool focus;
 
         protected string ClassId => "feature_" + GetType().Name;
-        protected virtual string Name { get; set; }
+        public virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
