@@ -37,7 +37,7 @@ namespace Components.Forms
 
         public Action DeleteConfirmed { get; set; }
 
-        public override void Dispose()
+        protected override void RemoveDOM()
         {
             RootHtmlElement.Remove();
         }

@@ -21,59 +21,6 @@ namespace Components.Forms
             Name = Title;
         }
 
-        public virtual void Create()
-        {
-            var defaultT = (T)Activator.CreateInstance(typeof(T));
-            var entities = CurrentEntities.FirstOrDefault((ObservableArray<object> x) =>
-            {
-                var type = x.Data.FirstOrDefault().GetType();
-                return type.FullName == typeof(T).FullName;
-            });
-            var editor = new PopupEditor<T>
-            {
-                Entity = defaultT,
-                ParentEntity = entities,
-            };
-            AddChild(editor);
-        }
-
-        public virtual void Edit(T entity, ObservableArray<object> entityList)
-        {
-            var editor = new PopupEditor<T>
-            {
-                Entity = entity,
-                ParentEntity = entityList,
-            };
-            AddChild(editor);
-        }
-
-        public virtual async Task Save()
-        {
-            var client = new Client<T>();
-            if (Entity != null && Entity["Id"].As<int>() == 0)
-            {
-                if (Entity["Active"] != null) Entity["Active"] = true;
-                var data = await client.CreateAsync((T)Entity);
-                if (data != null)
-                {
-                    Toast.Success($"Create {typeof(T).Name} succeeded");
-                }
-                Entity = data;
-                ParentEntity.Add(Entity);
-            }
-            else
-            {
-                var data = await client.UpdateAsync((T)Entity);
-                if (data != null)
-                {
-                    Toast.Success($"Update {typeof(T).Name} succeeded");
-                    // Update data back to observable
-                    var index = Array.IndexOf(ParentEntity.Data, Entity);
-                    ParentEntity.Update(Entity, index);
-                }
-            }
-        }
-
         private List<ComponentGroup> BuildTree(IEnumerable<ComponentGroup> componentGroup)
         {
             var dic = componentGroup.ToDictionary(x => x.Id);

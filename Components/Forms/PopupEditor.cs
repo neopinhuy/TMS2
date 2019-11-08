@@ -21,18 +21,9 @@ namespace Components.Forms
             base.Render();
         }
 
-        public override void Dispose()
+        protected override void RemoveDOM()
         {
-            Disposing?.Invoke();
-            if (Children != null)
-            {
-                foreach (var child in Children)
-                {
-                    child.Dispose();
-                }
-            }
             RootHtmlElement.ParentElement.ParentElement.Remove();
-            Disposed?.Invoke();
         }
     }
 }

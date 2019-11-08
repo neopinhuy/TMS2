@@ -77,7 +77,6 @@ namespace Components
 
         public void RemoveChild(Component child)
         {
-            child.Dispose();
             Children.Remove(child);
         }
 
@@ -108,8 +107,13 @@ namespace Components
                     child.Dispose();
                 }
             }
-            RootHtmlElement.Remove();
+            RemoveDOM();
             Disposed?.Invoke();
+        }
+
+        protected virtual void RemoveDOM()
+        {
+            RootHtmlElement.Remove();
         }
     }
 }

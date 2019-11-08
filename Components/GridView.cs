@@ -63,15 +63,20 @@ namespace Components
                     if (parsed) header.TextAlign = textAlign;
                     Header.Add(header);
                 }
+                Html.Take(RootHtmlElement);
                 var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
                 if (_ui.Events.HasAnyChar())
                 {
                     var events = JsonConvert.DeserializeObject<object>(_ui.Events);
                     var dblClick = events[EventType.DblClick.ToString()]?.ToString();
-                    tableParams.RowDblClick = row =>
+                    if (dblClick.HasAnyChar())
                     {
-                        RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
-                    };
+                        Html.Instance.DataAttr("dblclick", dblClick);
+                        tableParams.RowDblClick = row =>
+                        {
+                            RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
+                        };
+                    }
                 }
                 if (Entity != null && _ui.DataSourceFilter.HasAnyChar())
                 {

@@ -10,6 +10,8 @@ namespace TMS.UI.Business.TruckManagement
     public class AllTruck : TabEditor<Truck>
     {
         PopupEditor<Accessory> _accessoryForm;
+        PopupEditor<Truck> _truckForm;
+
         public void DeleteTruck()
         {
             var grid = FindComponent("TruckGrid") as GridView;
@@ -24,40 +26,46 @@ namespace TMS.UI.Business.TruckManagement
 
         public void CreateAccessory()
         {
-            var truckGrid = FindComponent("Truck Detail") as PopupEditor<Truck>;
-            truckGrid.Show(false);
+            _truckForm.Show(false);
             _accessoryForm = new PopupEditor<Accessory>
             {
                 Entity = new Accessory() 
                 {
-                    TruckId = (int)truckGrid.Entity["Id"]
+                    TruckId = (int)_truckForm.Entity["Id"]
                 },
                 Disposed = () =>
                 {
-                    truckGrid.Show(true);
+                    _truckForm.Show(true);
                 }
             };
-            AddChild(_accessoryForm);
+            _truckForm.AddChild(_accessoryForm);
+        }
+
+        public void EditTruck(Truck truck)
+        {
+            _truckForm = new PopupEditor<Truck>
+            {
+                Entity = truck
+            };
+            AddChild(_truckForm);
         }
 
         public void UpdateAccessory(Accessory accessory)
         {
-            var truckGrid = FindComponent("Truck Detail") as PopupEditor<Truck>;
-            truckGrid.Show(false);
+            _truckForm.Show(false);
             _accessoryForm = new PopupEditor<Accessory>
             {
                 Entity = accessory,
                 Disposed = () =>
                 {
-                    truckGrid.Show(true);
+                    _truckForm.Show(true);
                 }
             };
-            AddChild(_accessoryForm);
+            _truckForm.AddChild(_accessoryForm);
         }
 
         public async Task SaveAccessory()
         {
-            _accessoryForm = FindComponent("Accessory Detail") as PopupEditor<Accessory>;
             var accessory = (Accessory)_accessoryForm.Entity;
             var client = new Client<Accessory>();
             if (accessory.Id == 0)
@@ -88,9 +96,17 @@ namespace TMS.UI.Business.TruckManagement
             }
         }
 
+        public void DisposeTruckDetail()
+        {
+            _truckForm.Dispose();
+            RemoveChild(_truckForm);
+            _truckForm = null;
+        }
+
         public void DisposeAccessoryDetail()
         {
-            RemoveChild(_accessoryForm);
+            _accessoryForm.Dispose();
+            _truckForm.RemoveChild(_accessoryForm);
             _accessoryForm = null;
         }
     }

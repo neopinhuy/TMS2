@@ -45,7 +45,7 @@ namespace Components.Forms
             }
         }
 
-        public override void Dispose()
+        protected override void RemoveDOM()
         {
             Html.Take($"#tabs a[href='#{ClassId}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");

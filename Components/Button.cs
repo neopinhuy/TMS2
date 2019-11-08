@@ -25,6 +25,7 @@ namespace Components
             }
             html.ClassName(_ui.ClassName).Text(_ui.Label)
                 .Attr("data-id", _ui.Id.ToString())
+                .Attr("data-event", _ui.Events)
                 .Event(EventType.Click, () =>
                 {
                     RootComponent.ExecuteEvent(_ui.Events, Entity, ParentEntity, CurrentEntities);
