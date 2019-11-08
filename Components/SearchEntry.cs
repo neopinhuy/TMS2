@@ -17,7 +17,7 @@ namespace Components
         private readonly ObservableArray<object> _source = new ObservableArray<object>();
         private FloatingTable<object> _table;
         private const string _refValueField = "Id";
-        private IEnumerable<GridPolicy> RefField;
+        private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
 
         public SearchEntry(UserInterface ui)
@@ -60,10 +60,6 @@ namespace Components
             Window.SetTimeout(async () =>
             {
                 _source.Data = await GetDataSource();
-                RefField = await Client<GridPolicy>.Instance.GetList(
-                    $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
-                    $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
-                RefField = RefField.OrderBy(x => x.Order);
                 UpdateTextbox();
             });
         }
@@ -76,8 +72,12 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
+            GridPolicy = await Client<GridPolicy>.Instance.GetList(
+                    $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
+                    $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
+            GridPolicy = GridPolicy.OrderBy(x => x.Order);
             var position = InteractiveElement.GetBoundingClientRect();
-            var headers = RefField.Select(column => new Header<object>()
+            var headers = GridPolicy.Select(column => new Header<object>()
             {
                 FieldName = column.FieldName,
                 Format = column.Format,

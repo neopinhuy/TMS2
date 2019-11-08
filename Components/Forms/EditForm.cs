@@ -33,6 +33,10 @@ namespace Components.Forms
                 {
                     Toast.Success($"Create {typeof(T).Name} succeeded");
                 }
+                else
+                {
+                    Toast.Warning($"Create {typeof(T).Name} failed");
+                }
                 Entity = data;
             }
             else
@@ -41,6 +45,10 @@ namespace Components.Forms
                 if (data != null)
                 {
                     Toast.Success($"Update {typeof(T).Name} succeeded");
+                }
+                else
+                {
+                    Toast.Warning($"Update {typeof(T).Name} failed");
                 }
                 Entity = data;
             }
