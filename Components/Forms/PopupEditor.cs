@@ -12,7 +12,7 @@ namespace Components.Forms
             Html.Take(Document.Body).Div.ClassName("backdrop").Trigger(EventType.Focus);
             jQuery.select(Html.Context).HotKey("esc", Dispose);
             Html.Instance.Div.ClassName("popup-content")
-                .Div.ClassName("popup-title").Text(Title)
+                .Div.ClassName("popup-title").Text(FeatureName)
                 .Div.ClassName("icon-box").Span.ClassName("fa fa-times")
                     .Event(EventType.Click, Dispose)
                 .EndOf(".popup-title")

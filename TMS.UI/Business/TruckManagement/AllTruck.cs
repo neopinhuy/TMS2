@@ -41,6 +41,15 @@ namespace TMS.UI.Business.TruckManagement
             _truckForm.AddChild(_accessoryForm);
         }
 
+        public void CreateTruck()
+        {
+            _truckForm = new PopupEditor<Truck>
+            {
+                Entity = new Truck()
+            };
+            AddChild(_truckForm);
+        }
+
         public void EditTruck(Truck truck)
         {
             _truckForm = new PopupEditor<Truck>
@@ -62,38 +71,6 @@ namespace TMS.UI.Business.TruckManagement
                 }
             };
             _truckForm.AddChild(_accessoryForm);
-        }
-
-        public async Task SaveAccessory()
-        {
-            var accessory = (Accessory)_accessoryForm.Entity;
-            var client = new Client<Accessory>();
-            if (accessory.Id == 0)
-            {
-                var created = await client.CreateAsync(accessory);
-                if (created != null)
-                {
-                    Toast.Success($"Create Accessory succeeded");
-                    _accessoryForm.Entity = accessory;
-                }
-                else
-                {
-                    Toast.Warning("Create Accessory failed");
-                }
-            }
-            else
-            {
-                var updated = await client.UpdateAsync(accessory);
-                if (updated != null)
-                {
-                    Toast.Success($"Update Accessory succeeded");
-                    _accessoryForm.Entity = accessory;
-                }
-                else
-                {
-                    Toast.Warning("Update Accessory failed");
-                }
-            }
         }
 
         public void DisposeTruckDetail()
