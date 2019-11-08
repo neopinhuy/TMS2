@@ -37,11 +37,10 @@ namespace Components
             Parent.CurrentEntities.Add(RowData);
             Window.SetTimeout(async() =>
             {
-                var entityName = _ui.Reference.Name;
                 var gridPolicy = await Client<GridPolicy>.Instance
                     .GetList("$expand=Reference($select=Name)" +
                         "&orderby=Order" +
-                        $"&$filter=Active eq true and Entity/Name eq '{entityName}' " +
+                        $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
                 foreach (var column in gridPolicy)
                 {
@@ -82,12 +81,18 @@ namespace Components
                 {
                     _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
                 }
-                var rows = await Client<object>.Instance.GetListEntity(entityName, _ui.DataSourceFilter);
-                RowData.Data = rows.ToArray();
+                await LoadData();
                 _table = new Table<object>(tableParams);
                 Html.Take(RootHtmlElement);
                 _table.Render();
             });
+        }
+
+        public async Task LoadData()
+        {
+            var rows = await Client<object>
+                .Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+            RowData.Data = rows.ToArray();
         }
 
         public void DeleteSelected()

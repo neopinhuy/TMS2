@@ -1,8 +1,5 @@
-﻿using Common.Clients;
-using Components;
-using Components.Extensions;
+﻿using Components;
 using Components.Forms;
-using System.Threading.Tasks;
 using TMS.API.Models;
 
 namespace TMS.UI.Business.TruckManagement
@@ -11,34 +8,15 @@ namespace TMS.UI.Business.TruckManagement
     {
         PopupEditor<Accessory> _accessoryForm;
         PopupEditor<Truck> _truckForm;
+        GridView _truckGrid;
+        GridView _accessoryGrid;
 
-        public void DeleteTruck()
-        {
-            var grid = FindComponent("TruckGrid") as GridView;
-            grid.DeleteSelected();
-        }
+        #region Truck
 
-        public void DeleteAccessory()
+        private GridView FindTruckGrid()
         {
-            var grid = FindComponent("Accessory") as GridView;
-            grid.DeleteSelected();
-        }
-
-        public void CreateAccessory()
-        {
-            _truckForm.Show(false);
-            _accessoryForm = new PopupEditor<Accessory>
-            {
-                Entity = new Accessory() 
-                {
-                    TruckId = (int)_truckForm.Entity["Id"]
-                },
-                Disposed = () =>
-                {
-                    _truckForm.Show(true);
-                }
-            };
-            _truckForm.AddChild(_accessoryForm);
+            _truckGrid = FindComponent("TruckGrid") as GridView;
+            return _truckGrid;
         }
 
         public void CreateTruck()
@@ -47,6 +25,7 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Entity = new Truck()
             };
+            _truckForm.Saved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
@@ -56,21 +35,21 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Entity = truck
             };
+            _truckForm.Saved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
-        public void UpdateAccessory(Accessory accessory)
+        public void DeleteTruck()
         {
-            _truckForm.Show(false);
-            _accessoryForm = new PopupEditor<Accessory>
-            {
-                Entity = accessory,
-                Disposed = () =>
-                {
-                    _truckForm.Show(true);
-                }
-            };
-            _truckForm.AddChild(_accessoryForm);
+            _truckGrid = FindTruckGrid();
+            _truckGrid.DeleteSelected();
+            ReloadTruckGrid();
+        }
+
+        private void ReloadTruckGrid()
+        {
+            _truckGrid = FindTruckGrid();
+            _truckGrid.LoadData();
         }
 
         public void DisposeTruckDetail()
@@ -80,11 +59,63 @@ namespace TMS.UI.Business.TruckManagement
             _truckForm = null;
         }
 
+        #endregion Truck
+
+        #region Accessory
+
+        public void CreateAccessory()
+        {
+            _truckForm.Show(false);
+            _accessoryForm = new PopupEditor<Accessory>
+            {
+                Entity = new Accessory()
+                {
+                    TruckId = (int)_truckForm.Entity["Id"]
+                }
+            };
+            AddAccessoryForm();
+        }
+
+        private void AddAccessoryForm()
+        {
+            _accessoryForm.Disposed += () => _truckForm.Show(true);
+            _accessoryForm.Saved += () =>
+            {
+                _accessoryGrid = FindAccessoryGrid();
+                _accessoryGrid.LoadData();
+            };
+            _truckForm.AddChild(_accessoryForm);
+        }
+
+        public void UpdateAccessory(Accessory accessory)
+        {
+            _truckForm.Show(false);
+            _accessoryForm = new PopupEditor<Accessory>
+            {
+                Entity = accessory
+            };
+            AddAccessoryForm();
+        }
+
+        private GridView FindAccessoryGrid()
+        {
+            _accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
+            return _accessoryGrid;
+        }
+
+        public void DeleteAccessory()
+        {
+            _accessoryGrid = FindAccessoryGrid();
+            _accessoryGrid.DeleteSelected();
+        }
+
         public void DisposeAccessoryDetail()
         {
             _accessoryForm.Dispose();
             _truckForm.RemoveChild(_accessoryForm);
             _accessoryForm = null;
         }
+
+        #endregion Accessory
     }
 }
