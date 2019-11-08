@@ -205,8 +205,8 @@ td {
     overflow: hidden;
 
     .status-cell {
-        background-color: #eee;
-        max-width: 20px;
+        background-color: @theadBg;
+        max-width: 1.8rem;
         border-color: @grayDark;
         color: @edit-icon;
         font-size: 0.8rem;
@@ -217,7 +217,7 @@ td {
     }
 
     th.status-cell span {
-        margin-left: -3px;
+        margin-left: -2px;
     }
 
     &.floating {
@@ -253,16 +253,17 @@ td {
     }
 
     thead {
-        background: @secondary;
+        background: @theadBg;
         border-bottom: 0;
+
         th {
             padding: 0.625rem;
             white-space: nowrap;
             border: 1px solid @grayNormal;
-            color: @white;
+            color: @theadColor;
             position: relative;
             vertical-align: middle;
-            font-weight: 400;
+            font-weight: 700;
 
             &.header-group {
                 height: 64px;
@@ -290,7 +291,7 @@ td {
 
     tbody {
         tr {
-            height: 20px;
+            line-height: 1.8rem;
 
             &:nth-child(odd) {
                 background-color: @light !important;
@@ -359,11 +360,11 @@ td {
 
 .fa-filter {
     font-size: 0.7rem;
-    color: @white;
+    color: @theadFilter;
     margin: 5px 0 0 2.3rem;
 
     &:hover {
-        color: #efc6c6;
+        color: @theadColor;
         cursor: pointer;
     }
 }
