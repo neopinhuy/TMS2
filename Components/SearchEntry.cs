@@ -16,7 +16,6 @@ namespace Components
         private readonly Observable<string> _text = new Observable<string>();
         private readonly ObservableArray<object> _source = new ObservableArray<object>();
         private FloatingTable<object> _table;
-        private const string _refValueField = "Id";
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
 
@@ -52,15 +51,19 @@ namespace Components
                     if (e["keyCode"].ToString() == "40") _table.MoveDown();
                 });
             InteractiveElement = Html.Context;
-            SearchRefField();
+            FindMatchItem();
         }
 
-        private void SearchRefField()
+        private void FindMatchItem()
         {
-            Window.SetTimeout(async () =>
+            Task.Run(async () =>
             {
-                _source.Data = await GetDataSource();
-                UpdateTextbox();
+                if (_value is null || _value.Data is null) return;
+                var matchSource = _ui.DataSourceFilter.HasAnyChar() 
+                    ? _ui.DataSourceFilter + $" and Id eq {_value.Data}"
+                    : $"?$filter=Id eq {_value.Data}";
+                var matched = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, matchSource);
+                _text.Data = Utils.FormatWith(_ui.Format, matched.FirstOrDefault());
             });
         }
 
@@ -72,10 +75,13 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
-            GridPolicy = await Client<GridPolicy>.Instance.GetList(
-                    $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
-                    $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
-            GridPolicy = GridPolicy.OrderBy(x => x.Order);
+            if (GridPolicy == null || !GridPolicy.Any())
+            {
+                GridPolicy = await Client<GridPolicy>.Instance.GetList(
+                        $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
+                        $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
+                GridPolicy = GridPolicy.OrderBy(x => x.Order);
+            }
             var position = InteractiveElement.GetBoundingClientRect();
             var headers = GridPolicy.Select(column => new Header<object>()
             {
@@ -106,13 +112,13 @@ namespace Components
 
         private void Select(object rowData)
         {
-            _value.Data = (int)rowData[_refValueField];
+            _value.Data = (int)rowData["Id"];
             DisposeSearchTable();
         }
 
         private void UpdateTextbox()
         {
-            var selected = _source.Data.FirstOrDefault(x => x[_refValueField]?.ToString() == _value.Data.ToString());
+            var selected = _source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
             if (selected is null)
             {
                 _text.Data = string.Empty;
