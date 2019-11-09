@@ -69,8 +69,13 @@ body {
     margin-left: 20px;
 }
 
+.input .button-group {
+    display: none;
+}
+
 .myCheck {
     border-color: @primary !important;
+
     &::before {
         border-color: @primary !important;
         background: @primary !important;
@@ -204,8 +209,10 @@ td {
     top: -2px;
     overflow: hidden;
     &.editable{
-        .input {
+        .input, input {
             background-color: transparent;
+            border: 0;
+            height: 20px;
         }
     }
 
