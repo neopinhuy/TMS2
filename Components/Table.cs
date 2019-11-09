@@ -31,9 +31,9 @@ namespace Components
         const string _selected = "selected-row";
         const string _hovering = "hovering";
         private int? selectedRow;
-        public int? SelectedRow { 
-            get => selectedRow; 
-            set 
+        public int? SelectedRow {
+            get => selectedRow;
+            set
             {
                 selectedRow = value;
                 RootHtmlElement
@@ -42,7 +42,7 @@ namespace Components
                 if (selectedRow is null) return;
                 RootHtmlElement.QuerySelectorAll("tbody tr")
                     .ElementAt(selectedRow.Value).AddClass(_selected);
-            } 
+            }
         }
 
         private int? timeOut = null;
@@ -132,39 +132,38 @@ namespace Components
 
         private void RenderTableHeader(Element table, List<Header<T>> headers)
         {
-            var html = Html.Take(table);
             bool hasGroup = headers.Any(x => !string.IsNullOrEmpty(x.GroupName));
             // Render first header
-            html.Thead.TRow.ForEach(headers, (header, index) =>
+            Html.Instance.Thead.TRow.ForEach(headers, (header, index) =>
             {
                 if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                 {
                     if (header != headers.FirstOrDefault(x => x.GroupName == header.GroupName)) return;
-                    html.Th.Render();
-                    html.ColSpan(headers.Count(x => x.GroupName == header.GroupName));
-                    html.Text(header.GroupName).Render();
+                    Html.Instance.Th.Render();
+                    Html.Instance.ColSpan(headers.Count(x => x.GroupName == header.GroupName));
+                    Html.Instance.Text(header.GroupName).Render();
                     return;
                 }
-                html.Th.Render();
+                Html.Instance.Th.Render();
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
-                    html.RowSpan(2);
+                    Html.Instance.RowSpan(2);
                 }
                 if (!hasGroup && Headers.Data.Any(x => x.GroupName.HasAnyChar()))
                 {
-                    html.ClassName("header-group");
+                    Html.Instance.ClassName("header-group");
                 }
-                if (header.StatusBar) html.ClassName("status-cell").Icon("fa fa-edit").End.Render();
+                if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("fa fa-edit").End.Render();
                 if (header.EditEvent != null || header.DeleteEvent != null)
                 {
-                    html.TextAlign(TextAlign.center).Icon("mif-folder-open").Margin(Direction.right, 0).End.Render();
+                    Html.Instance.TextAlign(TextAlign.center).Icon("mif-folder-open").Margin(Direction.right, 0).End.Render();
                 }
                 else
                 {
-                    html.Span.Text(header.HeaderText).End.Render();
+                    Html.Instance.Span.Text(header.HeaderText).End.Render();
                     if (header.HasFilter)
                     {
-                        html.Span.ClassName("fa fa-filter").Event(EventType.Click, async (e) =>
+                        Html.Instance.Span.ClassName("fa fa-filter").Event(EventType.Click, async (e) =>
                         {
                             Html.Take(e.Target as HTMLElement).Closest(ElementType.th);
                             var boudingRect = Html.Context.GetBoundingClientRect();
@@ -176,26 +175,25 @@ namespace Components
                         }).End.Render();
                     }
                 }
-                html.EndOf(ElementType.th);
+                Html.Instance.EndOf(ElementType.th);
             }).EndOf(ElementType.tr).Render();
 
             if (hasGroup)
             {
-                html.TRow.ForEach(headers, (header, index) =>
+                Html.Instance.TRow.ForEach(headers, (header, index) =>
                 {
                     if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                     {
-                        html.Th.Span.Text(header.HeaderText).EndOf(ElementType.th);
+                        Html.Instance.Th.Span.Text(header.HeaderText).EndOf(ElementType.th);
                     }
                 });
             }
-            html.EndOf(ElementType.thead);
+            Html.Instance.EndOf(ElementType.thead);
         }
 
         private void RenderTableContent(Element table, List<Header<T>> headers)
         {
-            var html = Html.Take(table);
-            html.TBody.ForEach(RowData.Data, (row, index) =>
+            Html.Instance.TBody.ForEach(RowData.Data, (row, index) =>
             {
                 RenderRowData(headers, row);
             }).EndOf(ElementType.table).Render();
@@ -203,26 +201,27 @@ namespace Components
 
         private void RenderRowData(List<Header<T>> headers, T row)
         {
-            var html = Html.Instance;
-            html.TRow
+            Html.Instance.TRow
                 .Event(EventType.Click, ToggleSelectRow, row)
                 .Event(EventType.MouseEnter, HoverRow, row)
                 .Event(EventType.MouseLeave, LeaveRow, row);
-            if (_tableParam.RowClick != null) html.Event(EventType.Click, _tableParam.RowClick, row);
-            if (_tableParam.RowDblClick != null) html.Event(EventType.DblClick, _tableParam.RowDblClick, row);
-            html.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
+            (Html.Context as HTMLElement)["rowData"] = row;
+            if (_tableParam.RowClick != null) Html.Instance.Event(EventType.Click, _tableParam.RowClick, row);
+            if (_tableParam.RowDblClick != null) Html.Instance.Event(EventType.DblClick, _tableParam.RowDblClick, row);
+            Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
         }
 
         private void ToggleSelectRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
-            ToggleSelectRow(rowData, index, _frozenTable.TBodies[0]);
-            ToggleSelectRow(rowData, index, _mainTable.TBodies[0]);
+            ToggleSelectRow(index, _frozenTable.TBodies[0]);
+            ToggleSelectRow(index, _mainTable.TBodies[0]);
         }
 
-        private static void ToggleSelectRow(T rowData, int index, HTMLTableSectionElement body)
+        private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
+            var rowData = tableRow["rowData"];
             if (tableRow.ClassName.Contains(_selected))
             {
                 tableRow.ReplaceClass(_selected, string.Empty);
@@ -267,12 +266,24 @@ namespace Components
 
         private void RenderTableCell(T row, Header<T> header)
         {
-            var html = Html.Instance;
-            html.TData.Render();
-            if (header.StatusBar) html.ClassName("status-cell").Icon("mif-pencil").End.Render();
+            Html.Instance.TData.Render();
+            if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
+            RenderCellButton(row, header);
+            if (string.IsNullOrEmpty(header.FieldName) || !row.HasOwnProperty(header.FieldName)) return;
+            var cellData = row[header.FieldName];
+            var cellText = GetCellText(header, cellData);
+            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
+            header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+            Html.Instance.TextAlign(header.TextAlign).Span.ClassName("cell-text").Text(cellText).End.Render();
+            RenderEditableCell(header, cellData);
+            Html.Instance.EndOf(ElementType.td);
+        }
+
+        private static void RenderCellButton(T row, Header<T> header)
+        {
             if (header.EditEvent != null)
             {
-                html.Button.ClassName("button small warning")
+                Html.Instance.Button.ClassName("button small warning")
                     .Event(EventType.Click, async (data) =>
                     {
                         await header.EditEvent(data);
@@ -281,17 +292,51 @@ namespace Components
             }
             if (header.DeleteEvent != null)
             {
-                html.Button.ClassName("button small secondary").Margin(Direction.left, 4)
+                Html.Instance.Button.ClassName("button small secondary").Margin(Direction.left, 4)
                     .AsyncEvent(EventType.Click, header.DeleteEvent, row)
                     .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
             }
-            if (string.IsNullOrEmpty(header.FieldName)) return;
-            if (!row.HasOwnProperty(header.FieldName)) return;
-            object cellData = row[header.FieldName];
-            var cellText = GetCellText(header, cellData);
-            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-            header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
-            html.TextAlign(header.TextAlign).Text(cellText).End.Render();
+        }
+
+        private void RenderEditableCell(Header<T> header, object cellData)
+        {
+            if (!header.Editable) return;
+            Html.Instance.Event(EventType.Click, ShowEditor);
+            var cell = Html.Context;
+            var observable = new Observable<string>(cellData?.ToString());
+            Html.Instance.Input
+                .Value(observable).Display("none")
+                .Event(EventType.Blur, HideEditor);
+            observable.Subscribe(args =>
+            {
+                var textNode = cell.QuerySelector("span") as HTMLSpanElement;
+                textNode.TextContent = GetCellText(header, args.NewData);
+            });
+        }
+
+        private static void HideEditor(Event e)
+        {
+            var input = e.Target.As<HTMLInputElement>();
+            input.Style.Display = "none";
+            input.ParentElement.FirstElementChild.Style.Display = "";
+        }
+
+        private static void ShowEditor(Event e)
+        {
+            Html.Take(e.Target as HTMLElement).Closest(ElementType.td);
+            var input = Html.Context.QuerySelector("input") as HTMLInputElement;
+            input.Style.Display = "";
+            input.ParentElement.FirstElementChild.Style.Display = "none";
+            var row = input.ParentElement.ParentElement as HTMLTableRowElement;
+            var tbody = row.ParentElement as HTMLTableSectionElement;
+            var index = Array.IndexOf(tbody.Rows.ToArray(), row);
+            // NOTE: Remove the selected class here so that row click event can add it later
+            // This is really magical
+            row.RemoveClass(_selected);
+            var frozenTable = row.ParentElement.ParentElement.ParentElement.PreviousElementSibling as HTMLTableElement;
+            frozenTable.TBodies[0].Rows.ElementAt(index).RemoveClass(_selected);
+            row["rowData"]["__selected__"] = true;
+            input.Focus();
         }
 
         private string GetCellText(Header<T> header, object cellData)

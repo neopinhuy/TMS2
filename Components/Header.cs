@@ -13,6 +13,8 @@ namespace Components
         public string RefValueField { get; set; } = "Id";
         public string GroupName { get; set; }
         public bool HasFilter { get; set; }
+        public bool Editable { get; set; }
+        public bool Disabled { get; set; }
         public string Format { get; set; }
         public string Icon { get; set; }
         public int? Order { get; set; }

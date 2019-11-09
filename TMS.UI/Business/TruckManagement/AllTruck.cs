@@ -128,6 +128,7 @@ namespace TMS.UI.Business.TruckManagement
             _maintenanceForm = new PopupEditor<TruckMaintenance>
             {
                 Name = "TruckMaintenance Detail",
+                Title = "Maintenance Detail",
                 Entity = new TruckMaintenance()
                 {
                     TruckId = (_truckForm.Entity as Truck).Id

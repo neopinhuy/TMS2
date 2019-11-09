@@ -56,7 +56,9 @@ namespace Components
                         DataSource = column.DataSource,
                         RefValueField = "Id",
                         HasFilter = column.HasFilter,
-                        Frozen = column.Frozen
+                        Frozen = column.Frozen,
+                        Editable = column.Editable,
+                        Disabled = column.Disabled,
                     };
                     var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
                     if (parsed) header.TextAlign = textAlign;

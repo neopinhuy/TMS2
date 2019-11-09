@@ -20,5 +20,11 @@ namespace Common.Extensions
             var element = node as Element;
             element.ClassName = (element.ClassName + " " + className).Trim();
         }
+
+        public static void RemoveClass(this Node node, string className)
+        {
+            if (string.IsNullOrEmpty(className)) return;
+            node.ReplaceClass(className, string.Empty);
+        }
     }
 }
