@@ -12,7 +12,7 @@ namespace TMS.API.Models
 
         public int Id { get; set; }
         public int? TruckId { get; set; }
-        public int? AccessaryId { get; set; }
+        public int? AccessoryId { get; set; }
         public int? ContainerId { get; set; }
         public int? AssigneeId { get; set; }
         public int? RoleId { get; set; }
@@ -25,7 +25,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Accessory Accessary { get; set; }
+        public virtual Accessory Accessory { get; set; }
         public virtual User Assignee { get; set; }
         public virtual Container Container { get; set; }
         public virtual GroupRole GroupRole { get; set; }

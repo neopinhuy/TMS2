@@ -23,6 +23,9 @@ namespace TMS.API.Models
         public string EditEvent { get; set; }
         public string DeleteEvent { get; set; }
         public int? Order { get; set; }
+        public bool Editable { get; set; }
+        public bool Disabled { get; set; }
+        public string Component { get; set; }
         public bool Frozen { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }

@@ -773,6 +773,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<GridPolicy>(entity =>
             {
+                entity.Property(e => e.Component)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DataSource)
                     .HasMaxLength(500)
                     .IsUnicode(false);
@@ -928,9 +932,9 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.HasOne(d => d.Accessary)
+                entity.HasOne(d => d.Accessory)
                     .WithMany(p => p.MaintenanceTicket)
-                    .HasForeignKey(d => d.AccessaryId)
+                    .HasForeignKey(d => d.AccessoryId)
                     .HasConstraintName("FK_MaintenanceTicket_Accessory");
 
                 entity.HasOne(d => d.Assignee)
@@ -1546,9 +1550,9 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
 
-                entity.HasOne(d => d.Accessary)
+                entity.HasOne(d => d.Accessory)
                     .WithMany(p => p.TruckMaintenanceDetail)
-                    .HasForeignKey(d => d.AccessaryId)
+                    .HasForeignKey(d => d.AccessoryId)
                     .HasConstraintName("FK_MaintenanceDetail_Accessory");
 
                 entity.HasOne(d => d.InsertedByNavigation)

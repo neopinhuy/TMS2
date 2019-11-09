@@ -7,7 +7,7 @@ namespace TMS.API.Models
     {
         public int Id { get; set; }
         public int? MaintenanceId { get; set; }
-        public int? AccessaryId { get; set; }
+        public int? AccessoryId { get; set; }
         public string Detail { get; set; }
         public decimal? Price { get; set; }
         public int? CurrencyId { get; set; }
@@ -17,7 +17,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Accessory Accessary { get; set; }
+        public virtual Accessory Accessory { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual TruckMaintenance Maintenance { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
