@@ -17,6 +17,7 @@ namespace Components
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
+        public bool SuggestActiveRecord { get; set; }
         public ObservableArray<object> Source { get; set; }
 
         public SearchEntry(UserInterface ui)
@@ -98,9 +99,14 @@ namespace Components
                 Reference = column.Reference?.Name,
                 DataSource = column.DataSource,
             }).ToArray();
-            if (Source == null || Source.Data.Length == 0) {
+            if (Source == null || Source.Data.Length == 0)
+            {
                 var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
                 Source.Data = source.ToArray();
+            }
+            if (SuggestActiveRecord)
+            {
+                Source.Data = Source.Data.Where(x => (bool)x["Active"]).ToArray();
             }
             var tableParam = new TableParam<object>
             {

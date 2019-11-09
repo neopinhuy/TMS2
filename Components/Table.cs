@@ -126,8 +126,13 @@ namespace Components
         {
             if (_refData != null && _refData.Any()) return;
             var refEntities = Headers.Data
-                .Where(x => x.Reference.HasAnyChar())
+                .Where(x => x.Reference.HasAnyChar() && x.DataSource.HasAnyChar())
                 .DistinctBy(x => x.Reference + x.DataSource)
+                .Select(x => new 
+                {
+                    DataSource = Utils.FormatWith(x.DataSource, RowData.Data.FirstOrDefault()),
+                    x.Reference
+                })
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
             _refData = await Task.WhenAll(refEntities);
         }
@@ -324,6 +329,7 @@ namespace Components
                 editor = new SearchEntry(ui)
                 {
                     Entity = rowData,
+                    SuggestActiveRecord = true,
                     RootHtmlElement = Html.Context,
                     Source = new ObservableArray<object>(_refData.GetSourceByTypeName(header.Reference).ToArray())
                 };
