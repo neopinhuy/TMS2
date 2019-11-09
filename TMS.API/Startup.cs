@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Swagger;
 using TMS.API.Extensions;
 using TMS.API.Models;
 
@@ -26,25 +24,15 @@ namespace TMS.API
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new IgnoreComplexTypeResolver();
-                    options.SerializerSettings.NullValueHandling = NullValueHandling.Include;
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "My API",
-                    Description = "My Billion dollar ASP.NET Core Web API",
-                    TermsOfService = "None",
+                    options.SerializerSettings.ContractResolver = new IgnoreNestedResolver();
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
-                options.DescribeAllEnumsAsStrings();
+
+            services.AddDbContext<TMSContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("TMS"));
             });
-            services.AddDbContext<TMSContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TMS")));
             services.AddResponseCompression();
-            services.AddApiVersioning();
             services.AddOData();
         }
 
@@ -69,11 +57,6 @@ namespace TMS.API
             });
             app.UseDefaultFiles();
             app.UseStaticFiles();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
         }
     }
 }

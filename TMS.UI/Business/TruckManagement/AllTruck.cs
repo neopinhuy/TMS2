@@ -27,7 +27,7 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Entity = new Truck()
             };
-            _truckForm.Saved += ReloadTruckGrid;
+            _truckForm.AfterSaved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
@@ -37,7 +37,7 @@ namespace TMS.UI.Business.TruckManagement
             {
                 Entity = truck
             };
-            _truckForm.Saved += ReloadTruckGrid;
+            _truckForm.AfterSaved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
@@ -81,7 +81,7 @@ namespace TMS.UI.Business.TruckManagement
         private void AddAccessoryForm()
         {
             _accessoryForm.Disposed += () => _truckForm.Show(true);
-            _accessoryForm.Saved += () =>
+            _accessoryForm.AfterSaved += () =>
             {
                 _accessoryGrid = FindAccessoryGrid();
                 _accessoryGrid.LoadData();
@@ -140,10 +140,12 @@ namespace TMS.UI.Business.TruckManagement
         private void AddMaintenanceForm()
         {
             _maintenanceForm.Disposed += () => _truckForm.Show(true);
-            _maintenanceForm.Saved += () =>
+            _maintenanceForm.AfterSaved += () =>
             {
                 FindMaintenanceGrid();
                 _maintenanceGrid.LoadData();
+                var detailGrid = _truckForm.FindComponent("TruckMaintenanceDetail") as GridView;
+                detailGrid.LoadData();
             };
             _truckForm.AddChild(_maintenanceForm);
         }

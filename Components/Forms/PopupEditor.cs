@@ -5,7 +5,7 @@ using static Retyped.jquery;
 
 namespace Components.Forms
 {
-    public class PopupEditor<T> : EditForm<T>
+    public class PopupEditor<T> : EditForm<T> where T : class
     {
         public override void Render()
         {

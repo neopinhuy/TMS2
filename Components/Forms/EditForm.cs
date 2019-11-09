@@ -12,46 +12,66 @@ using ElementType = MVVM.ElementType;
 
 namespace Components.Forms
 {
-    public partial class EditForm<T> : Component
+    public partial class EditForm<T> : Component where T : class
     {
-        public virtual string Title { get; set; } = $"{typeof(T).Name} Detail";
-        public System.Action Saved { get; set; }
+        public string Title { get; set; }
+        public System.Action AfterSaved { get; set; }
         public EditForm()
         {
+            Title = $"{typeof(T).Name} Detail";
             Name = Title;
         }
 
         public virtual async Task Save()
         {
             var client = new Client<T>();
-            if (Entity != null && Entity["Id"].As<int>() == 0)
+            if (Entity != null && Entity[Id].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 var data = await client.CreateAsync((T)Entity);
                 if (data != null)
                 {
+                    Entity[Id] = data[Id];
+                    UpdateProperties(data);
                     Toast.Success($"Create {typeof(T).Name} succeeded");
                 }
                 else
                 {
                     Toast.Warning($"Create {typeof(T).Name} failed");
                 }
-                Entity = data;
             }
             else
             {
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
+                    UpdateProperties(data);
                     Toast.Success($"Update {typeof(T).Name} succeeded");
                 }
                 else
                 {
                     Toast.Warning($"Update {typeof(T).Name} failed");
                 }
-                Entity = data;
             }
-            Saved?.Invoke();
+            AfterSaved?.Invoke();
+        }
+
+        private void UpdateProperties(T data)
+        {
+            var props = typeof(T).GetProperties();
+            foreach (var prop in props)
+            {
+                if (prop.PropertyType.IsAssignableFrom(typeof(IEnumerable<>)))
+                {
+                    // Update Id for each children
+                    var updatedChildren = (prop.GetValue(data) as IEnumerable<object>).ToArray();
+                    var entityChildren = (prop.GetValue(Entity) as IEnumerable<object>).ToArray();
+                    for (int i = 0; i < updatedChildren.Length; i++)
+                    {
+                        entityChildren[i][Id] = updatedChildren[i][Id];
+                    }
+                }
+            }
         }
 
         private List<ComponentGroup> BuildTree(IEnumerable<ComponentGroup> componentGroup)

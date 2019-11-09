@@ -3,9 +3,13 @@ using MVVM;
 
 namespace Components.Forms
 {
-    public class TabEditor<T> : EditForm<T>
+    public class TabEditor<T> : EditForm<T> where T : class
     {
-        public override string Title { get; set; } = $"{typeof(T).Name} List";
+        public TabEditor()
+        {
+            Title = $"{typeof(T).Name} List";
+            Name = Title; // Set default for form name
+        }
 
         public override void Render()
         {

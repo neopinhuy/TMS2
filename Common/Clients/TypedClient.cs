@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Common.Clients
 {
-    public class Client<T>
+    public class Client<T> where T : class
     {
         public string BaseUrl { get; set; }
         public Client()
@@ -41,7 +41,7 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                    tcs.SetResult(null);
                 }
             };
             xhr.Send();
@@ -77,7 +77,7 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                    tcs.SetResult(null);
                 }
             };
             xhr.Send();
@@ -95,7 +95,7 @@ namespace Common.Clients
             var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
             xhr.Open("POST", $"{BaseUrl}/api/{type.Name}", true);
-            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
+            xhr.SetRequestHeader("Content-type", "application/json");
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -110,7 +110,7 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                    tcs.SetResult(null);
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
@@ -138,6 +138,10 @@ namespace Common.Clients
                     var parsed = JsonConvert.DeserializeObject<List<string>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
+                else
+                {
+                    tcs.SetResult(null);
+                }
             });
             xhr.AddEventListener(EventType.Progress, progressHandler);
             xhr.Send(value);
@@ -155,7 +159,7 @@ namespace Common.Clients
             var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
             xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}", true);
-            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
+            xhr.SetRequestHeader("Content-type", "application/json");
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -170,7 +174,7 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                    tcs.SetResult(null);
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
@@ -197,7 +201,7 @@ namespace Common.Clients
                 }
                 else
                 {
-                    tcs.SetException(new Exception("Response status code does not indicate success: " + xhr.StatusText));
+                    tcs.SetResult(false);
                 }
             };
             xhr.Send();

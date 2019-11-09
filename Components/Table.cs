@@ -57,7 +57,8 @@ namespace Components
 
         public override void Render()
         {
-            Html.Instance.Div.ClassName("table-wrapper");
+            var editable = Headers.Data.Any(x => x.Editable);
+            Html.Instance.Div.ClassName("table-wrapper").ClassName(editable ? "editable" : string.Empty);
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;

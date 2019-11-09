@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.OData;
+﻿using Common.Extensions;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -48,12 +49,33 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<TruckMaintenance> PutAsync([FromBody]TruckMaintenance maintenance)
+        public async Task<ActionResult> PutAsync([FromBody]TruckMaintenance maintenance)
         {
             db.TruckMaintenance.Attach(maintenance);
             db.Entry(maintenance).State = EntityState.Modified;
+
+            // CRUD for TruckMaintenanceDetail here
+            // Query deleted maintenance detail
+            var deletedIds = db.TruckMaintenanceDetail
+                .Where(x => x.MaintenanceId == maintenance.Id).Select(x => x.Id)
+                .Except(maintenance.TruckMaintenanceDetail.Select(x => x.Id));
+            var deleted = db.TruckMaintenanceDetail.Where(x => deletedIds.Contains(x.Id));
+            db.TruckMaintenanceDetail.RemoveRange(deleted);
+            foreach (var detail in maintenance.TruckMaintenanceDetail)
+            {
+                if (detail.Id == 0)
+                {
+                    db.TruckMaintenanceDetail.Add(detail);
+                }
+                else
+                {
+                    db.TruckMaintenanceDetail.Attach(detail);
+                    db.Entry(detail).State = EntityState.Modified;
+                    db.TruckMaintenanceDetail.Update(detail);
+                }
+            }
             await db.SaveChangesAsync();
-            return maintenance;
+            return Ok(maintenance);
         }
 
         [HttpPost("Delete")]

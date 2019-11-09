@@ -11,6 +11,7 @@ namespace Components
         private bool disabled;
         private bool focus;
 
+        protected const string Id = "Id";
         protected string ClassId => "feature_" + GetType().Name;
         public virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
