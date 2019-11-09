@@ -17,6 +17,7 @@ namespace Components
         public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
         public virtual Element InteractiveElement { get; set; }
+        public Action<ObservableArgs> ValueChanged { get; set; }
         public virtual bool Disabled
         {
             get => disabled;
@@ -40,9 +41,6 @@ namespace Components
             }
         }
         public object Entity { get; set; }
-        public ObservableArray<object> ParentEntity { get; set; }
-        public List<ObservableArray<object>> CurrentEntities { get; set; }
-
         public virtual void Show(bool show)
         {
             var ele = RootHtmlElement as HTMLElement;
@@ -68,8 +66,6 @@ namespace Components
             if (Children is null) Children = new List<Component>();
             if (child.RootHtmlElement is null) child.RootHtmlElement = Html.Context;
             if (child.Entity is null) child.Entity = Entity;
-            if (child.ParentEntity is null) child.ParentEntity = ParentEntity;
-            if (child.CurrentEntities is null) child.CurrentEntities = CurrentEntities;
             Children.Add(child);
             if (child.Parent is null) child.Parent = this;
             child.Render();

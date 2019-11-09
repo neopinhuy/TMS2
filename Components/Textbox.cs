@@ -8,7 +8,6 @@ namespace Components
     public class Textbox : Component
     {
         private readonly UserInterface _ui;
-
         public Textbox(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
@@ -22,6 +21,7 @@ namespace Components
                 value.Subscribe(arg =>
                 {
                     if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                    ValueChanged?.Invoke(arg);
                 });
             }
             Html.Instance.Input.Attr("data-role", "input")

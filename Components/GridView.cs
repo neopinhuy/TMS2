@@ -34,7 +34,6 @@ namespace Components
 
         public override void Render()
         {
-            Parent.CurrentEntities.Add(RowData);
             Window.SetTimeout(async() =>
             {
                 var gridPolicy = await Client<GridPolicy>.Instance
@@ -59,6 +58,7 @@ namespace Components
                         Frozen = column.Frozen,
                         Editable = column.Editable,
                         Disabled = column.Disabled,
+                        Component = column.Component,
                     };
                     var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
                     if (parsed) header.TextAlign = textAlign;
@@ -95,6 +95,7 @@ namespace Components
             var rows = await Client<object>
                 .Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
             RowData.Data = rows.ToArray();
+            if (Entity != null) Entity[_ui.FieldName] = rows;
         }
 
         public void DeleteSelected()

@@ -14,10 +14,10 @@ namespace Components
     {
         private Observable<int?> _value;
         private readonly Observable<string> _text = new Observable<string>();
-        private readonly ObservableArray<object> _source = new ObservableArray<object>();
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
+        public ObservableArray<object> Source { get; set; }
 
         public SearchEntry(UserInterface ui)
         {
@@ -29,6 +29,7 @@ namespace Components
                     _value.Data = null;
                 }
             });
+            Source = new ObservableArray<object>();
         }
 
         public override void Render()
@@ -40,10 +41,11 @@ namespace Components
             {
                 UpdateTextbox();
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                ValueChanged?.Invoke(arg);
             });
-            Html.Instance.Input.PlaceHolder(_ui.Label).Value(_text)
+            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
-                .AsyncEvent(EventType.Focus, RenderSuggestion)
+                .Event(EventType.Focus, async() => await RenderSuggestion())
                 .Event(EventType.Blur, DestroySuggestion)
                 .Event(EventType.KeyDown, (Event e) =>
                 {
@@ -59,18 +61,21 @@ namespace Components
             Task.Run(async () =>
             {
                 if (_value is null || _value.Data is null) return;
-                var matchSource = _ui.DataSourceFilter.HasAnyChar() 
-                    ? _ui.DataSourceFilter + $" and Id eq {_value.Data}"
-                    : $"?$filter=Id eq {_value.Data}";
-                var matched = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, matchSource);
-                _text.Data = Utils.FormatWith(_ui.Format, matched.FirstOrDefault());
+                object matched;
+                if (Source != null && Source.Data.Length > 0)
+                {
+                    matched = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
+                }
+                else
+                {
+                    var matchSource = _ui.DataSourceFilter.HasAnyChar()
+                        ? _ui.DataSourceFilter + $" and Id eq {_value.Data}"
+                        : $"?$filter=Id eq {_value.Data}";
+                    matched = (await Client<object>.Instance.GetListEntity(_ui.Reference.Name, matchSource))
+                        .FirstOrDefault();
+                }
+                _text.Data = Utils.FormatWith(_ui.Format, matched);
             });
-        }
-
-        private async Task<object[]> GetDataSource()
-        {
-            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
-            return source.ToArray();
         }
 
         public async Task RenderSuggestion()
@@ -79,7 +84,7 @@ namespace Components
             {
                 GridPolicy = await Client<GridPolicy>.Instance.GetList(
                         $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
-                        $"FeatureId eq null and EntityId eq {_ui.ReferenceId}");
+                        $"FeatureId eq null and Entity/Name eq '{_ui.Reference.Name}'");
                 GridPolicy = GridPolicy.OrderBy(x => x.Order);
             }
             var position = InteractiveElement.GetBoundingClientRect();
@@ -93,12 +98,14 @@ namespace Components
                 Reference = column.Reference?.Name,
                 DataSource = column.DataSource,
             }).ToArray();
-            if (_source.Data.Length == 0)
-                _source.Data = await GetDataSource();
+            if (Source == null || Source.Data.Length == 0) {
+                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+                Source.Data = source.ToArray();
+            }
             var tableParam = new TableParam<object>
             {
                 RowClick = Select,
-                RowData = _source,
+                RowData = Source,
                 Headers = new ObservableArray<Header<object>>(headers)
             };
             _table = new FloatingTable<object>(tableParam)
@@ -118,7 +125,7 @@ namespace Components
 
         private void UpdateTextbox()
         {
-            var selected = _source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
+            var selected = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
             if (selected is null)
             {
                 _text.Data = string.Empty;

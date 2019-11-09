@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMS.API.Models;
 using ElementType = MVVM.ElementType;
 
 namespace Components
@@ -103,11 +104,11 @@ namespace Components
 
                 Html.Take(_frozenTable).Clear();
                 RenderTableHeader(_frozenTable, frozen);
-                RenderTableContent(_frozenTable, frozen);
+                RenderTableContent(frozen);
 
                 Html.Take(_mainTable).Clear();
                 RenderTableHeader(_mainTable, nonFrozen);
-                RenderTableContent(_mainTable, nonFrozen);
+                RenderTableContent(nonFrozen);
             });
         }
 
@@ -191,7 +192,7 @@ namespace Components
             Html.Instance.EndOf(ElementType.thead);
         }
 
-        private void RenderTableContent(Element table, List<Header<T>> headers)
+        private void RenderTableContent(List<Header<T>> headers)
         {
             Html.Instance.TBody.ForEach(RowData.Data, (row, index) =>
             {
@@ -275,7 +276,7 @@ namespace Components
             header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
             header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
             Html.Instance.TextAlign(header.TextAlign).Span.ClassName("cell-text").Text(cellText).End.Render();
-            RenderEditableCell(header, cellData);
+            RenderEditableCell(header);
             Html.Instance.EndOf(ElementType.td);
         }
 
@@ -298,45 +299,52 @@ namespace Components
             }
         }
 
-        private void RenderEditableCell(Header<T> header, object cellData)
+        private void RenderEditableCell(Header<T> header)
         {
             if (!header.Editable) return;
-            Html.Instance.Event(EventType.Click, ShowEditor);
-            var cell = Html.Context;
-            var observable = new Observable<string>(cellData?.ToString());
-            Html.Instance.Input
-                .Value(observable).Display("none")
-                .Event(EventType.Blur, HideEditor);
-            observable.Subscribe(args =>
+            var cell = Html.Context as HTMLElement;
+            cell.FirstElementChild.Remove();
+            var row = cell.ParentElement as HTMLElement;
+            var rowData = row["rowData"];
+            var ui = new UserInterface
             {
-                var textNode = cell.QuerySelector("span") as HTMLSpanElement;
-                textNode.TextContent = GetCellText(header, args.NewData);
-            });
+                Reference = new Entity { Name = header.Reference },
+                Format = header.Format,
+                DataSourceFilter = header.DataSource,
+                FieldName = header.FieldName
+            };
+            Component editor = null;
+            if (header.Component == "Input")
+            {
+                editor = new Textbox(ui) { Entity = rowData };
+            }
+            else if (header.Component == "Dropdown")
+            {
+                editor = new SearchEntry(ui)
+                {
+                    Entity = rowData,
+                    RootHtmlElement = Html.Context,
+                    Source = new ObservableArray<object>(_refData.GetSourceByTypeName(header.Reference).ToArray())
+                };
+            }
+            AddChild(editor);
+            editor.InteractiveElement.AddEventListener(EventType.Focus, SelectRow);
         }
 
-        private static void HideEditor(Event e)
+        private static void SelectRow(Event e)
         {
-            var input = e.Target.As<HTMLInputElement>();
-            input.Style.Display = "none";
-            input.ParentElement.FirstElementChild.Style.Display = "";
-        }
-
-        private static void ShowEditor(Event e)
-        {
-            Html.Take(e.Target as HTMLElement).Closest(ElementType.td);
-            var input = Html.Context.QuerySelector("input") as HTMLInputElement;
-            input.Style.Display = "";
-            input.ParentElement.FirstElementChild.Style.Display = "none";
-            var row = input.ParentElement.ParentElement as HTMLTableRowElement;
+            Html.Take(e.Target as HTMLElement).Closest(ElementType.tr);
+            var row = Html.Context as HTMLTableRowElement;
             var tbody = row.ParentElement as HTMLTableSectionElement;
             var index = Array.IndexOf(tbody.Rows.ToArray(), row);
-            // NOTE: Remove the selected class here so that row click event can add it later
-            // This is really magical
             row.RemoveClass(_selected);
             var frozenTable = row.ParentElement.ParentElement.ParentElement.PreviousElementSibling as HTMLTableElement;
             frozenTable.TBodies[0].Rows.ElementAt(index).RemoveClass(_selected);
-            row["rowData"]["__selected__"] = true;
-            input.Focus();
+            var rowData = row["rowData"];
+            if (rowData != null)
+            {
+                rowData["__selected__"] = true;
+            }
         }
 
         private string GetCellText(Header<T> header, object cellData)

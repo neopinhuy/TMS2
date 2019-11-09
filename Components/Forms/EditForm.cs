@@ -18,7 +18,6 @@ namespace Components.Forms
         public System.Action Saved { get; set; }
         public EditForm()
         {
-            CurrentEntities = new List<ObservableArray<object>>();
             Name = Title;
         }
 

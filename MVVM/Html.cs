@@ -626,6 +626,8 @@ namespace MVVM
         public Html Trigger(EventType type)
         {
             (Context[type.ToString()] as Action)();
+            var e = new Event(type.ToString(), new EventInit());
+            Context.DispatchEvent(e);
             return this;
         }
 

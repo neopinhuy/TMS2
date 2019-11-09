@@ -34,7 +34,7 @@ namespace Components
                     {
                         parent = parent.Parent;
                     }
-                    parent.ExecuteEvent(_ui.Events, Entity, ParentEntity, CurrentEntities);
+                    parent.ExecuteEvent(_ui.Events, Entity);
                 });
             InteractiveElement = Html.Context;
         }
