@@ -24,29 +24,14 @@ namespace Components
     {
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
+        public int? SelectedRow { get; set; }
         private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
         private HTMLTableElement _frozenTable;
         private HTMLTableElement _mainTable;
-
+        private int? timeOut = null;
         const string _selected = "selected-row";
         const string _hovering = "hovering";
-        private int? selectedRow;
-        public int? SelectedRow {
-            get => selectedRow;
-            set
-            {
-                selectedRow = value;
-                RootHtmlElement
-                    .QuerySelectorAll("tbody tr").ToList()
-                    .ForEach(x => x.ReplaceClass(_selected, string.Empty));
-                if (selectedRow is null) return;
-                RootHtmlElement.QuerySelectorAll("tbody tr")
-                    .ElementAt(selectedRow.Value).AddClass(_selected);
-            }
-        }
-
-        private int? timeOut = null;
 
         public Table(TableParam<T> tableParam)
         {
@@ -72,21 +57,10 @@ namespace Components
             });
             RowData.Subscribe(args =>
             {
-                if (args.Action == ObservableAction.Update)
+                if (args.Action == ObservableAction.Render)
                 {
-                    var tbodies = _mainTable.TBodies;
-                    //// Remove the row at index
-                    //if (tbodies != null && tbodies.Any())
-                    //{
-                    //    var tbody = tbodies[0];
-                    //    tbody.Rows[args.Index].Remove();
-                    //    Html.Take(tbody);
-                    //    RenderRowData(args.Item, args.Index);
-                    //    tbody.InsertBefore(Html.Context, tbody.Rows[args.Index]);
-                    //}
-                    //// Update the row
+                    Rerender();
                 }
-                else Rerender();
             });
         }
 
@@ -225,19 +199,43 @@ namespace Components
             ToggleSelectRow(index, _mainTable.TBodies[0]);
         }
 
+        private void ToggleSelectRow(int index, bool forceSelect = false)
+        {
+            ToggleSelectRow(forceSelect, index, _frozenTable.TBodies[0]);
+            ToggleSelectRow(forceSelect, index, _mainTable.TBodies[0]);
+        }
+
         private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
             var rowData = tableRow["rowData"];
-            if (tableRow.ClassName.Contains(_selected))
+            if (!tableRow.ClassName.Contains(_selected))
+            {
+                tableRow.AddClass(_selected);
+                rowData["__selected__"] = true;
+            }
+            else if (tableRow.ClassName.Contains(_selected))
             {
                 tableRow.ReplaceClass(_selected, string.Empty);
                 rowData["__selected__"] = false;
             }
-            else
+            if (tableRow.ClassName.Contains(_hovering))
+                tableRow.ReplaceClass(_hovering, string.Empty);
+        }
+
+        private static void ToggleSelectRow(bool selected, int index, HTMLTableSectionElement body)
+        {
+            var tableRow = body.Rows[index];
+            var rowData = tableRow["rowData"];
+            if (selected)
             {
                 tableRow.AddClass(_selected);
                 rowData["__selected__"] = true;
+            }
+            else
+            {
+                tableRow.ReplaceClass(_selected, string.Empty);
+                rowData["__selected__"] = false;
             }
             if (tableRow.ClassName.Contains(_hovering))
                 tableRow.ReplaceClass(_hovering, string.Empty);
@@ -393,14 +391,32 @@ namespace Components
 
         public void MoveUp()
         {
-            if (SelectedRow is null || SelectedRow == 0) SelectedRow = RowData.Data.Length - 1;
-            else if (SelectedRow > 0) SelectedRow--;
+            if (SelectedRow is null || SelectedRow == 0)
+            {
+                SelectedRow = RowData.Data.Length - 1;
+                ToggleSelectRow(0, false);
+            }
+            else if (SelectedRow > 0)
+            {
+                ToggleSelectRow(SelectedRow ?? -1, false);
+                SelectedRow--;
+            }
+            ToggleSelectRow(SelectedRow ?? -1, true);
         }
 
         public void MoveDown()
         {
-            if (SelectedRow is null || SelectedRow == RowData.Data.Length - 1) SelectedRow = 0;
-            else if (SelectedRow < RowData.Data.Length - 1) SelectedRow++;
+            if (SelectedRow is null || SelectedRow == RowData.Data.Length - 1)
+            {
+                SelectedRow = 0;
+                ToggleSelectRow(RowData.Data.Length - 1, false);
+            }
+            else if (SelectedRow < RowData.Data.Length - 1)
+            {
+                ToggleSelectRow(SelectedRow ?? -1, false);
+                SelectedRow++;
+            }
+            ToggleSelectRow(SelectedRow ?? -1, true);
         }
     }
 }
