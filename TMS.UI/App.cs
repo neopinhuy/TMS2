@@ -1,6 +1,6 @@
 ﻿using TMS.UI.Business;
 using TMS.UI.Business.Dashboard;
-using TMS.UI.Business.TruckManagement;
+using TMS.UI.Business.Asset;
 
 namespace TMS.UI
 {
@@ -13,7 +13,7 @@ namespace TMS.UI
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
-            var truck = new AllTruck();
+            var truck = new TruckBL();
             truck.Render();
             truck.Focus();
         }

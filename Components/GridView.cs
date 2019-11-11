@@ -120,7 +120,7 @@ namespace Components
             if (success)
             {
                 Toast.Success("Delete succeeded");
-                RowData.Data = RowData.Data.Where(x => !ids.Contains((int)x["Id"])).ToArray();
+                LoadData();
             }
             else
             {

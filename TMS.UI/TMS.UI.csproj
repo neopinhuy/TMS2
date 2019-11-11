@@ -36,13 +36,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Business\Asset\AccessoryBL.cs" />
     <Compile Include="Business\Dashboard\Dashboard.cs" />
     <Compile Include="Business\MenuComponent.cs" />
     <Compile Include="Business\MenuComponent.View.cs">
       <DependentUpon>MenuComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
-    <Compile Include="Business\TruckManagement\AllTruck.cs" />
+    <Compile Include="Business\Asset\TruckBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,24 +2,15 @@
 using Components.Forms;
 using TMS.API.Models;
 
-namespace TMS.UI.Business.TruckManagement
+namespace TMS.UI.Business.Asset
 {
-    public class AllTruck : TabEditor<Truck>
+    public class TruckBL : TabEditor<Truck>
     {
         private PopupEditor<Accessory> _accessoryForm;
         private PopupEditor<Truck> _truckForm;
         private PopupEditor<TruckMaintenance> _maintenanceForm;
-        private GridView _truckGrid;
-        private GridView _accessoryGrid;
-        private GridView _maintenanceGrid;
 
         #region Truck
-
-        private GridView FindTruckGrid()
-        {
-            _truckGrid = FindComponent("TruckGrid") as GridView;
-            return _truckGrid;
-        }
 
         public void CreateTruck()
         {
@@ -43,22 +34,14 @@ namespace TMS.UI.Business.TruckManagement
 
         public void DeleteTruck()
         {
-            _truckGrid = FindTruckGrid();
-            _truckGrid.DeleteSelected();
-            ReloadTruckGrid();
+            var truckGrid = FindComponent("TruckGrid") as GridView;
+            truckGrid.DeleteSelected();
         }
 
         private void ReloadTruckGrid()
         {
-            _truckGrid = FindTruckGrid();
-            _truckGrid.LoadData();
-        }
-
-        public void DisposeTruckDetail()
-        {
-            _truckForm.Dispose();
-            RemoveChild(_truckForm);
-            _truckForm = null;
+            var truckGrid = FindComponent("TruckGrid") as GridView;
+            truckGrid.LoadData();
         }
 
         #endregion Truck
@@ -83,8 +66,8 @@ namespace TMS.UI.Business.TruckManagement
             _accessoryForm.Disposed += () => _truckForm.Show(true);
             _accessoryForm.AfterSaved += () =>
             {
-                _accessoryGrid = FindAccessoryGrid();
-                _accessoryGrid.LoadData();
+                var accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
+                accessoryGrid.LoadData();
             };
             _truckForm.AddChild(_accessoryForm);
         }
@@ -99,23 +82,10 @@ namespace TMS.UI.Business.TruckManagement
             AddAccessoryForm();
         }
 
-        private GridView FindAccessoryGrid()
-        {
-            _accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
-            return _accessoryGrid;
-        }
-
         public void DeleteAccessory()
         {
-            _accessoryGrid = FindAccessoryGrid();
-            _accessoryGrid.DeleteSelected();
-        }
-
-        public void DisposeAccessoryDetail()
-        {
-            _accessoryForm.Dispose();
-            _truckForm.RemoveChild(_accessoryForm);
-            _accessoryForm = null;
+            var accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
+            accessoryGrid.DeleteSelected();
         }
 
         #endregion Accessory
@@ -142,9 +112,10 @@ namespace TMS.UI.Business.TruckManagement
             _maintenanceForm.Disposed += () => _truckForm.Show(true);
             _maintenanceForm.AfterSaved += () =>
             {
-                FindMaintenanceGrid();
-                _maintenanceGrid.LoadData();
+                var maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
+                maintenanceGrid.LoadData();
                 var detailGrid = _truckForm.FindComponent("TruckMaintenanceDetail") as GridView;
+                // Reload to update maintenance detail Id
                 detailGrid.LoadData();
             };
             _truckForm.AddChild(_maintenanceForm);
@@ -160,22 +131,10 @@ namespace TMS.UI.Business.TruckManagement
             AddMaintenanceForm();
         }
 
-        private void FindMaintenanceGrid()
-        {
-            _maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
-        }
-
         public void DeleteMaintenance()
         {
-            FindMaintenanceGrid();
-            _maintenanceGrid.DeleteSelected();
-        }
-
-        public void DisposeMaintenanceDetail()
-        {
-            _maintenanceForm.Dispose();
-            _truckForm.RemoveChild(_maintenanceForm);
-            _maintenanceForm = null;
+            var maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
+            maintenanceGrid.DeleteSelected();
         }
 
         #endregion Maintenance

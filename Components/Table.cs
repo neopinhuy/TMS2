@@ -100,11 +100,13 @@ namespace Components
         {
             if (_refData != null && _refData.Any()) return;
             var refEntities = Headers.Data
-                .Where(x => x.Reference.HasAnyChar() && x.DataSource.HasAnyChar())
+                .Where(x => x.Reference.HasAnyChar())
                 .DistinctBy(x => x.Reference + x.DataSource)
                 .Select(x => new 
                 {
-                    DataSource = Utils.FormatWith(x.DataSource, RowData.Data.FirstOrDefault()),
+                    DataSource = x.DataSource.HasAnyChar() 
+                        ? Utils.FormatWith(x.DataSource, RowData.Data.FirstOrDefault())
+                        : null,
                     x.Reference
                 })
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
