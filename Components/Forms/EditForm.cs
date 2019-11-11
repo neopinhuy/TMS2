@@ -16,6 +16,7 @@ namespace Components.Forms
     {
         public string Title { get; set; }
         public System.Action AfterSaved { get; set; }
+        public System.Action AfterRendered { get; set; }
         public EditForm()
         {
             Title = $"{typeof(T).Name} Detail";
@@ -105,6 +106,7 @@ namespace Components.Forms
                 componentGroup = BuildTree(componentGroup);
                 Html.Take(RootHtmlElement);
                 RenderGroup(componentGroup);
+                AfterRendered?.Invoke();
             });
         }
 
@@ -182,6 +184,7 @@ namespace Components.Forms
                         break;
                 }
                 AddChild(childComponent);
+                childComponent.Name = ui.FieldName;
                 childComponent.Disabled = ui.Disabled;
                 childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);

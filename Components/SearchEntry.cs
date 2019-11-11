@@ -18,6 +18,7 @@ namespace Components
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
         public bool SuggestActiveRecord { get; set; }
+        public string DataSourceFilter { get; set; }
         public ObservableArray<object> Source { get; set; }
 
         public SearchEntry(UserInterface ui)
@@ -30,13 +31,14 @@ namespace Components
                     _value.Data = null;
                 }
             });
+            DataSourceFilter = ui.DataSourceFilter;
             Source = new ObservableArray<object>();
         }
 
         public override void Render()
         {
-            if (_ui.DataSourceFilter.HasAnyChar())
-                _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
+            if (DataSourceFilter.HasAnyChar())
+                DataSourceFilter = Utils.FormatWith(DataSourceFilter, Entity);
             _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
             _value.Subscribe(arg =>
             {
@@ -69,8 +71,8 @@ namespace Components
                 }
                 else
                 {
-                    var matchSource = _ui.DataSourceFilter.HasAnyChar()
-                        ? _ui.DataSourceFilter + $" and Id eq {_value.Data}"
+                    var matchSource = DataSourceFilter.HasAnyChar()
+                        ? DataSourceFilter + $" and Id eq {_value.Data}"
                         : $"?$filter=Id eq {_value.Data}";
                     matched = (await Client<object>.Instance.GetListEntity(_ui.Reference.Name, matchSource))
                         .FirstOrDefault();
@@ -81,7 +83,7 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
-            if (GridPolicy == null || !GridPolicy.Any())
+            if (GridPolicy.Nothing())
             {
                 GridPolicy = await Client<GridPolicy>.Instance.GetList(
                         $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
@@ -101,7 +103,7 @@ namespace Components
             }).ToArray();
             if (Source == null || Source.Data.Length == 0)
             {
-                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, DataSourceFilter);
                 Source.Data = source.ToArray();
             }
             if (SuggestActiveRecord)

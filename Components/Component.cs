@@ -1,4 +1,5 @@
 ﻿using Bridge.Html5;
+using Components.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace Components
 
         public Component FindComponent(string name)
         {
+            if (Children.Nothing()) return null;
             foreach (var child in Children)
             {
                 if (child.Name == name) return child;

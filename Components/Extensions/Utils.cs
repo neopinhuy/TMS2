@@ -54,5 +54,10 @@ namespace Components.Extensions
                     throw;
             }
         }
+
+        public static bool Nothing<T>(this IEnumerable<T> source)
+        {
+            return source == null || !source.Any();
+        }
     }
 }

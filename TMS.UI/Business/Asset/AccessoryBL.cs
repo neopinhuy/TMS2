@@ -6,7 +6,6 @@ namespace TMS.UI.Business.Asset
 {
     public class AccessoryBL : TabEditor<Accessory>
     {
-        GridView _accessoryGrid;
         public AccessoryBL() : base()
         {
             Name = "AccessoryTab";
@@ -14,8 +13,8 @@ namespace TMS.UI.Business.Asset
 
         private void ReloadAccessoryGrid()
         {
-            _accessoryGrid = FindComponent("Accessory") as GridView;
-            _accessoryGrid.LoadData();
+            var accessoryGrid = FindComponent("Accessory") as GridView;
+            accessoryGrid.LoadData();
         }
 
         public void CreateAccessory()
@@ -26,6 +25,12 @@ namespace TMS.UI.Business.Asset
                 Name = "Accessory Detail"
             };
             accessoryForm.AfterSaved += ReloadAccessoryGrid;
+            accessoryForm.AfterRendered += () =>
+            {
+                var truck = accessoryForm.FindComponent("TruckId") as SearchEntry;
+                truck.DataSourceFilter = "?$filter=Active eq true";
+                truck.Disabled = false;
+            };
             AddChild(accessoryForm);
         }
 
@@ -42,8 +47,8 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteAccessory()
         {
-            _accessoryGrid = FindComponent("Accessory") as GridView;
-            _accessoryGrid.DeleteSelected();
+            var accessoryGrid = FindComponent("Accessory") as GridView;
+            accessoryGrid.DeleteSelected();
         }
     }
 }
