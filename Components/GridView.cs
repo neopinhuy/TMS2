@@ -84,7 +84,10 @@ namespace Components
                     _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
                 }
                 await LoadData();
-                _table = new Table<object>(tableParams);
+                _table = new Table<object>(tableParams)
+                {
+                    Entity = Entity
+                };
                 Html.Take(RootHtmlElement);
                 _table.Render();
             });
@@ -95,7 +98,7 @@ namespace Components
             var rows = await Client<object>
                 .Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
             RowData.Data = rows.ToArray();
-            if (Entity != null) Entity[_ui.FieldName] = rows;
+            if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
         }
 
         public void DeleteSelected()

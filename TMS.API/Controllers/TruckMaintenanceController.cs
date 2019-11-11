@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMS.API.Extensions;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
@@ -51,9 +52,6 @@ namespace TMS.API.Controllers
         [HttpPut]
         public async Task<ActionResult> PutAsync([FromBody]TruckMaintenance maintenance)
         {
-            db.TruckMaintenance.Attach(maintenance);
-            db.Entry(maintenance).State = EntityState.Modified;
-
             // CRUD for TruckMaintenanceDetail here
             // Query deleted maintenance detail
             var deletedIds = db.TruckMaintenanceDetail
@@ -63,8 +61,10 @@ namespace TMS.API.Controllers
             db.TruckMaintenanceDetail.RemoveRange(deleted);
             foreach (var detail in maintenance.TruckMaintenanceDetail)
             {
-                if (detail.Id == 0)
+                if (detail.Id <= 0)
                 {
+                    detail.Id = 0;
+                    detail.InsertedBy = 1; // hard code for now
                     db.TruckMaintenanceDetail.Add(detail);
                 }
                 else
@@ -74,6 +74,8 @@ namespace TMS.API.Controllers
                     db.TruckMaintenanceDetail.Update(detail);
                 }
             }
+            db.TruckMaintenance.Attach(maintenance);
+            db.Entry(maintenance).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return Ok(maintenance);
         }

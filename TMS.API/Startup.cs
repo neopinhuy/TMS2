@@ -26,6 +26,7 @@ namespace TMS.API
                 {
                     options.SerializerSettings.ContractResolver = new IgnoreNestedResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
             services.AddDbContext<TMSContext>(options =>

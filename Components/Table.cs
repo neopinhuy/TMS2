@@ -6,6 +6,7 @@ using MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using ElementType = MVVM.ElementType;
@@ -25,13 +26,18 @@ namespace Components
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
         public int? SelectedRow { get; set; }
+
         private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
         private HTMLTableElement _frozenTable;
         private HTMLTableElement _mainTable;
         private int? timeOut = null;
-        const string _selected = "selected-row";
-        const string _hovering = "hovering";
+        private bool _editable;
+        
+        public const string _selectedClass = "selected-row";
+        public const string _hovering = "hovering";
+        public const string _emptyFlag = "__empty__";
+        public const string _selectedFlag = "__selected__";
 
         public Table(TableParam<T> tableParam)
         {
@@ -42,8 +48,8 @@ namespace Components
 
         public override void Render()
         {
-            var editable = Headers.Data.Any(x => x.Editable);
-            Html.Instance.Div.ClassName("table-wrapper").ClassName(editable ? "editable" : string.Empty);
+            _editable = Headers.Data.Any(x => x.Editable);
+            Html.Instance.Div.ClassName("table-wrapper").ClassName(_editable ? "editable" : string.Empty);
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;
@@ -105,7 +111,7 @@ namespace Components
                 .Select(x => new 
                 {
                     DataSource = x.DataSource.HasAnyChar() 
-                        ? Utils.FormatWith(x.DataSource, RowData.Data.FirstOrDefault())
+                        ? Utils.FormatWith(x.DataSource, Entity)
                         : null,
                     x.Reference
                 })
@@ -179,7 +185,18 @@ namespace Components
             Html.Instance.TBody.ForEach(RowData.Data, (row, index) =>
             {
                 RenderRowData(headers, row);
-            }).EndOf(ElementType.table).Render();
+            });
+            if (_editable)
+            {
+                RenderEmptyRow(headers);
+            }
+        }
+
+        private void RenderEmptyRow(List<Header<T>> headers)
+        {
+            var emptyRowData = (T)Activator.CreateInstance(typeof(T));
+            emptyRowData[_emptyFlag] = true;
+            RenderRowData(headers, emptyRowData);
         }
 
         private void RenderRowData(List<Header<T>> headers, T row)
@@ -197,6 +214,7 @@ namespace Components
         private void ToggleSelectRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
+            if (index == -1 && _editable) index = RowData.Data.Length;
             ToggleSelectRow(index, _frozenTable.TBodies[0]);
             ToggleSelectRow(index, _mainTable.TBodies[0]);
         }
@@ -211,15 +229,15 @@ namespace Components
         {
             var tableRow = body.Rows[index];
             var rowData = tableRow["rowData"];
-            if (!tableRow.ClassName.Contains(_selected))
+            if (!tableRow.ClassName.Contains(_selectedClass))
             {
-                tableRow.AddClass(_selected);
-                rowData["__selected__"] = true;
+                tableRow.AddClass(_selectedClass);
+                rowData[_selectedFlag] = true;
             }
-            else if (tableRow.ClassName.Contains(_selected))
+            else if (tableRow.ClassName.Contains(_selectedClass))
             {
-                tableRow.ReplaceClass(_selected, string.Empty);
-                rowData["__selected__"] = false;
+                tableRow.ReplaceClass(_selectedClass, string.Empty);
+                rowData[_selectedFlag] = false;
             }
             if (tableRow.ClassName.Contains(_hovering))
                 tableRow.ReplaceClass(_hovering, string.Empty);
@@ -231,13 +249,13 @@ namespace Components
             var rowData = tableRow["rowData"];
             if (selected)
             {
-                tableRow.AddClass(_selected);
-                rowData["__selected__"] = true;
+                tableRow.AddClass(_selectedClass);
+                rowData[_selectedFlag] = true;
             }
             else
             {
-                tableRow.ReplaceClass(_selected, string.Empty);
-                rowData["__selected__"] = false;
+                tableRow.ReplaceClass(_selectedClass, string.Empty);
+                rowData[_selectedFlag] = false;
             }
             if (tableRow.ClassName.Contains(_hovering))
                 tableRow.ReplaceClass(_hovering, string.Empty);
@@ -246,6 +264,7 @@ namespace Components
         private void HoverRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
+            if (index == -1 && _editable) index = RowData.Data.Length;
             HoverRow(index, _frozenTable.TBodies[0]);
             HoverRow(index, _mainTable.TBodies[0]);
         }
@@ -260,6 +279,7 @@ namespace Components
         private void LeaveRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
+            if (index == -1 && _editable) index = RowData.Data.Length;
             LeaveRow(index, _frozenTable.TBodies[0]);
             LeaveRow(index, _mainTable.TBodies[0]);
         }
@@ -276,7 +296,7 @@ namespace Components
             Html.Instance.TData.Render();
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
             RenderCellButton(row, header);
-            if (string.IsNullOrEmpty(header.FieldName) || !row.HasOwnProperty(header.FieldName)) return;
+            if (string.IsNullOrEmpty(header.FieldName)) return;
             var cellData = row[header.FieldName];
             var cellText = GetCellText(header, cellData);
             header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
@@ -320,7 +340,7 @@ namespace Components
             var cell = Html.Context as HTMLElement;
             cell.FirstElementChild.Remove();
             var row = cell.ParentElement as HTMLElement;
-            var rowData = row["rowData"];
+            var rowData = (T)row["rowData"];
             var ui = new UserInterface
             {
                 Reference = new Entity { Name = header.Reference },
@@ -329,20 +349,45 @@ namespace Components
                 FieldName = header.FieldName
             };
             Component editor = null;
-            if (header.Component == "Input")
+            switch (header.Component)
             {
-                editor = new Textbox(ui) { Entity = rowData };
+                case "Input":
+                    editor = new Textbox(ui);
+                    break;
+                case "Dropdown":
+                    var source = _refData.GetSourceByTypeName(header.Reference);
+                    editor = new SearchEntry(ui)
+                    {
+                        SuggestActiveRecord = true,
+                        RootHtmlElement = Html.Context,
+                        Source = new ObservableArray<object>(source.ToArray())
+                    };
+                    break;
+                case "Number":
+                    editor = new NumberInput(ui);
+                    break;
+                case "Checkbox":
+                    editor = new Checkbox(ui);
+                    break;
+                case "Datepicker":
+                    editor = new Datepicker(ui);
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unrecognized {header.Component} component");
             }
-            else if (header.Component == "Dropdown")
+            editor.Entity = rowData;
+            editor.ValueChanged += (arg) =>
             {
-                editor = new SearchEntry(ui)
+                if ((bool)rowData[_emptyFlag])
                 {
-                    Entity = rowData,
-                    SuggestActiveRecord = true,
-                    RootHtmlElement = Html.Context,
-                    Source = new ObservableArray<object>(_refData.GetSourceByTypeName(header.Reference).ToArray())
-                };
-            }
+                    rowData[_emptyFlag] = false;
+                    RowData.Add(rowData);
+                    Html.Take(_frozenTable.TBodies[0]);
+                    RenderEmptyRow(Headers.Data.Where(x => x.Frozen).ToList());
+                    Html.Take(_mainTable.TBodies[0]);
+                    RenderEmptyRow(Headers.Data.Where(x => !x.Frozen).ToList());
+                }
+            };
             AddChild(editor);
             editor.InteractiveElement.AddEventListener(EventType.Focus, SelectRow);
         }
@@ -353,13 +398,13 @@ namespace Components
             var row = Html.Context as HTMLTableRowElement;
             var tbody = row.ParentElement as HTMLTableSectionElement;
             var index = Array.IndexOf(tbody.Rows.ToArray(), row);
-            row.RemoveClass(_selected);
+            row.RemoveClass(_selectedClass);
             var frozenTable = row.ParentElement.ParentElement.ParentElement.PreviousElementSibling as HTMLTableElement;
-            frozenTable.TBodies[0].Rows.ElementAt(index).RemoveClass(_selected);
+            frozenTable.TBodies[0].Rows.ElementAt(index).RemoveClass(_selectedClass);
             var rowData = row["rowData"];
             if (rowData != null)
             {
-                rowData["__selected__"] = true;
+                rowData[_selectedFlag] = true;
             }
         }
 

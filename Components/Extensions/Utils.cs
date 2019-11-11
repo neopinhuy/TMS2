@@ -14,7 +14,7 @@ namespace Components.Extensions
         {
             if (source is null)
             {
-                throw new ArgumentNullException(nameof(source));
+                return format;
             }
 
             return FormatWith(format, null, source);
