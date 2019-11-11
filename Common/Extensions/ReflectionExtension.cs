@@ -58,5 +58,10 @@ namespace Common.Extensions
         {
             return obj.GetType().GetProperty(propName).GetValue(obj);
         }
+
+        public static void SetPropValue(this object obj, string propName, object value)
+        {
+            obj.GetType().GetProperty(propName).SetValue(obj, value);
+        }
     }
 }

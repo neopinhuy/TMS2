@@ -18,19 +18,21 @@ namespace TMS.UI.Business.Asset
 
         public void CreateContainer()
         {
-            _ContainerForm = new PopupEditor<Container>
-            {
-                Entity = new Container()
-            };
-            _ContainerForm.AfterSaved += ReloadContainerGrid;
-            AddChild(_ContainerForm);
+            InitContainerForm(new Container());
         }
 
         public void EditContainer(Container Container)
         {
+            InitContainerForm(Container);
+        }
+
+        private void InitContainerForm(Container container)
+        {
             _ContainerForm = new PopupEditor<Container>
             {
-                Entity = Container
+                Entity = container,
+                Name = "Container Editor",
+                Title = "Container"
             };
             _ContainerForm.AfterSaved += ReloadContainerGrid;
             AddChild(_ContainerForm);

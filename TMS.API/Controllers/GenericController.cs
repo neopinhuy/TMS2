@@ -43,6 +43,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            entity.SetPropValue("InsertedBy", 1);
             db.Set<T>().Add(entity);
             await db.SaveChangesAsync();
             return entity;

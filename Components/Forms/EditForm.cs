@@ -82,6 +82,11 @@ namespace Components.Forms
             foreach (var item in componentGroup)
             {
                 if (item.ParentId is null) continue;
+                if (!dic.ContainsKey(item.ParentId.Value))
+                {
+                    Console.WriteLine($"The parent key {item.ParentId} of {item.Name} doesn't exist");
+                    continue;
+                }
                 parent = dic[item.ParentId.Value];
                 if (parent.InverseParent == null) parent.InverseParent = new List<ComponentGroup>();
                 parent.InverseParent.Add(item);
