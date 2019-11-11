@@ -223,8 +223,11 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Clients\Client.cs" />
+    <Compile Include="Extensions\BridgeExtensions.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
-    <Compile Include="Extensions\Util.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtension.cs" />
     <Compile Include="Clients\TypedClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleLeaderBoardDataPoint.cs" />

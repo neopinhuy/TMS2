@@ -281,7 +281,16 @@ namespace Components
             var cellText = GetCellText(header, cellData);
             header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
             header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
-            Html.Instance.TextAlign(header.TextAlign).Span.ClassName("cell-text").Text(cellText).End.Render();
+            Html.Instance.TextAlign(header.TextAlign);
+            if (cellData is bool cellBool)
+            {
+                // Render checkbox instead of simple true false
+                Html.Instance.Padding(Direction.bottom, 0).SmallCheckbox(string.Empty, cellBool).Disabled(true).End.Render();
+            }
+            else
+            {
+                Html.Instance.Span.ClassName("cell-text").Text(cellText).End.Render();
+            }
             RenderEditableCell(header);
             Html.Instance.EndOf(ElementType.td);
         }
@@ -380,14 +389,9 @@ namespace Components
         {
             if (textAlign != null || cellData is null)
                 return textAlign;
-            if (cellData.GetType().IsNumber())
-            {
-                return TextAlign.right;
-            }
-            else if (cellData is string)
-            {
-                return TextAlign.left;
-            }
+            if (cellData is bool || cellData is bool?) return TextAlign.center;
+            else if (cellData.GetType().IsNumber()) return TextAlign.right;
+            else if (cellData is string) return TextAlign.left;
             return TextAlign.center;
         }
 

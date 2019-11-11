@@ -138,6 +138,18 @@ namespace Components
             return html;
         }
 
+        public static Html SmallCheckbox(this Html html, string text, bool value)
+        {
+            html.Input.ClassName("input-small").Type("checkbox")
+                .Attr("data-role", "checkbox")
+                .Attr("data-style", "2")
+                .Attr("data-cls-check", "myCheckbox")
+                .Attr("data-caption", text);
+            var chk = Html.Context as HTMLInputElement;
+            chk.Checked = value;
+            return html;
+        }
+
         public static Html Disabled(this Html html, bool disabled)
         {
             if (disabled == false) return html;

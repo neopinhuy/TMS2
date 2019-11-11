@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace TMS.API.Extensions
+namespace TMS.API.Attributes
 {
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {

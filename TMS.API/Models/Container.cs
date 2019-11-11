@@ -15,14 +15,16 @@ namespace TMS.API.Models
         public int VendorId { get; set; }
         public int ContainerTypeId { get; set; }
         public string Code { get; set; }
-        public string Status { get; set; }
         public string Description { get; set; }
-        public int FreightStateId { get; set; }
-        public DateTime RentDate { get; set; }
-        public DateTime EndRentDate { get; set; }
-        public double Price { get; set; }
-        public string Currency { get; set; }
-        public bool InUse { get; set; }
+        public int? FreightStateId { get; set; }
+        public DateTime? RentDate { get; set; }
+        public DateTime? EndRentDate { get; set; }
+        public decimal? AdvancedPaid { get; set; }
+        public DateTime? NextPayment { get; set; }
+        public bool ApplyPeriod { get; set; }
+        public decimal? PeriodPayment { get; set; }
+        public int? CurrencyId { get; set; }
+        public bool? InUse { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

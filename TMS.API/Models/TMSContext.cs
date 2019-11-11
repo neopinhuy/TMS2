@@ -294,28 +294,24 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Container>(entity =>
             {
+                entity.Property(e => e.AdvancedPaid).HasColumnType("decimal(20, 5)");
+
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.Property(e => e.Status)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.InUse).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PeriodPayment).HasColumnType("decimal(20, 5)");
 
                 entity.HasOne(d => d.FreightState)
                     .WithMany(p => p.Container)
                     .HasForeignKey(d => d.FreightStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Container_FreightState");
 
                 entity.HasOne(d => d.InsertedByNavigation)
@@ -342,7 +338,7 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.Property(e => e.TypeName)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
 
@@ -606,15 +602,19 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Feature>(entity =>
             {
+                entity.HasIndex(e => e.Name)
+                    .HasName("UK_Feature")
+                    .IsUnique();
+
                 entity.Property(e => e.Description).HasMaxLength(500);
 
                 entity.Property(e => e.Icon)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Name).HasMaxLength(100);
-
                 entity.Property(e => e.Label).HasMaxLength(100);
+
+                entity.Property(e => e.Name).HasMaxLength(100);
 
                 entity.Property(e => e.ViewClass)
                     .HasMaxLength(150)

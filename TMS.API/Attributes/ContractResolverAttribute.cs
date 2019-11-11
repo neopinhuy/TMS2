@@ -6,7 +6,7 @@ using System;
 using System.Buffers;
 using TMS.API.Extensions;
 
-namespace Common.Extensions
+namespace TMS.API.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class ContractResolverAttribute : ActionFilterAttribute

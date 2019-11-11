@@ -1,5 +1,5 @@
 ﻿using Bridge.Html5;
-using Components.Extensions;
+using Common.Extensions;
 using MVVM;
 using System;
 using System.Collections.Generic;
