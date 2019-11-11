@@ -53,7 +53,7 @@ namespace TMS.UI.Business
             {
                 if (item.IsGroup)
                 {
-                    Html.Instance.Li.ClassName("group-title").Text(item.Name).End.Render();
+                    Html.Instance.Li.ClassName("group-title").Text(item.Label).End.Render();
                 }
                 else if (item.IsDevider)
                 {
@@ -64,7 +64,7 @@ namespace TMS.UI.Business
                     Html.Instance.Li.Anchor.Attr("data-role", "ripple")
                     .Event(EventType.Click, MenuItemClick, item)
                     .Span.ClassName("icon " + item.Icon).End
-                    .Text(item.Name).EndOf(MVVM.ElementType.a).Render();
+                    .Text(item.Label).EndOf(MVVM.ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
                     {
                         RenderMenuItems(item.InverseParent.ToList());

@@ -614,7 +614,7 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Name).HasMaxLength(100);
 
-                entity.Property(e => e.ShortName).HasMaxLength(100);
+                entity.Property(e => e.Label).HasMaxLength(100);
 
                 entity.Property(e => e.ViewClass)
                     .HasMaxLength(150)
