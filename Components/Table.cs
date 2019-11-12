@@ -377,7 +377,7 @@ namespace Components
                     break;
                 case "Dropdown":
                     var source = _refData.GetSourceByTypeName(header.Reference);
-                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)Entity?[ui.FieldName]);
+                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)rowData?[ui.FieldName]);
                     editor = new SearchEntry(ui)
                     {
                         SuggestActiveRecord = true,
