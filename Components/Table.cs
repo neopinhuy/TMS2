@@ -127,18 +127,12 @@ namespace Components
             var entityIds = RowData.Data.Select(x => (int?)x[header.FieldName])
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
-            if (!header.DataSource.Contains("?$"))
-            {
-                header.DataSourceOptimized = header.DataSource + "?";
-            }
-            if (!header.DataSource.Contains("$filter"))
-            {
-                header.DataSourceOptimized += header.DataSource + $"$filter=Id in ({strIds})";
-            }
-            else
-            {
-                header.DataSourceOptimized += header.DataSource + $" and Id in ({strIds})";
-            }
+            header.DataSourceOptimized = !header.DataSource.Contains("?$") 
+                ? header.DataSource + "?" 
+                : header.DataSource;
+            header.DataSourceOptimized += header.DataSource.Contains("$filter") 
+                ? $" and Id in ({strIds})"
+                : $"$filter=Id in ({strIds})";
             return header;
         }
 
