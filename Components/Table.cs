@@ -49,7 +49,8 @@ namespace Components
         public override void Render()
         {
             _editable = Headers.Data.Any(x => x.Editable);
-            Html.Instance.Div.ClassName("table-wrapper").ClassName(_editable ? "editable" : string.Empty);
+            Html.Instance.Div.ClassName("table-wrapper")
+                .ClassName(_editable ? "editable" : string.Empty);
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;
@@ -84,11 +85,11 @@ namespace Components
                 var nonFrozen = Headers.Data.Where(x => !x.Frozen).ToList();
 
                 Html.Take(_frozenTable).Clear();
-                RenderTableHeader(_frozenTable, frozen);
+                RenderTableHeader(frozen);
                 RenderTableContent(frozen);
 
                 Html.Take(_mainTable).Clear();
-                RenderTableHeader(_mainTable, nonFrozen);
+                RenderTableHeader(nonFrozen);
                 RenderTableContent(nonFrozen);
             });
         }
@@ -119,7 +120,18 @@ namespace Components
             _refData = await Task.WhenAll(refEntities);
         }
 
-        private void RenderTableHeader(Element table, List<Header<T>> headers)
+        public void RenderContextMenu(Event e)
+        {
+            var left = (float)e["clientX"];
+            var top = (float)e["clientY"];
+            Html.Instance.Ul.ClassName("context-menu")
+                .Position(Position.@fixed)
+                .Position(Direction.top, top)
+                .Position(Direction.left, left)
+                .Li.Icon("fa fa-trash").End.Text("Delete selected rows").EndOf(ElementType.li);
+        }
+
+        private void RenderTableHeader(List<Header<T>> headers)
         {
             bool hasGroup = headers.Any(x => !string.IsNullOrEmpty(x.GroupName));
             // Render first header
@@ -348,6 +360,10 @@ namespace Components
                 DataSourceFilter = header.DataSource,
                 FieldName = header.FieldName
             };
+            if (rowData.GetBool(_emptyFlag))
+            {
+                ui.Label = header.HeaderText;
+            }
             Component editor = null;
             switch (header.Component)
             {
@@ -378,7 +394,7 @@ namespace Components
             editor.Entity = rowData;
             editor.ValueChanged += (arg) =>
             {
-                if ((bool)rowData[_emptyFlag])
+                if (rowData.GetBool(_emptyFlag))
                 {
                     rowData[_emptyFlag] = false;
                     RowData.Add(rowData);

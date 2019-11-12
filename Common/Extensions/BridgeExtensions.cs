@@ -12,5 +12,11 @@ namespace Common.Extensions
         {
             return null;
         }
+
+        public static bool GetBool(this object obj, string prop)
+        {
+            var res = (bool?)obj[prop];
+            return res.HasValue && res.Value;
+        }
     }
 }

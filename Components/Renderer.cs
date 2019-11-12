@@ -285,6 +285,12 @@ namespace Components
             return html.Style($"position: {position}");
         }
 
+        /// <summary>
+        /// Render icon inside span, non auto-closing
+        /// </summary>
+        /// <param name="html"></param>
+        /// <param name="iconClass"></param>
+        /// <returns></returns>
         public static Html Icon(this Html html, string iconClass)
         {
             return html.Span.ClassName(iconClass);

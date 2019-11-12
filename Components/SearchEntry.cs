@@ -46,7 +46,7 @@ namespace Components
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
                 ValueChanged?.Invoke(arg);
             });
-            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label).Value(_text)
+            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty).Value(_text)
                 .Attr("data-role", "input").ClassName("input-small")
                 .Event(EventType.Focus, async() => await RenderSuggestion())
                 .Event(EventType.Blur, DestroySuggestion)

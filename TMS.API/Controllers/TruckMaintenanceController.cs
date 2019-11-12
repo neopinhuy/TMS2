@@ -1,11 +1,9 @@
-﻿using Common.Extensions;
-using Microsoft.AspNet.OData;
+﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Extensions;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
@@ -52,8 +50,6 @@ namespace TMS.API.Controllers
         [HttpPut]
         public async Task<ActionResult> PutAsync([FromBody]TruckMaintenance maintenance)
         {
-            // CRUD for TruckMaintenanceDetail here
-            // Query deleted maintenance detail
             var deletedIds = db.TruckMaintenanceDetail
                 .Where(x => x.MaintenanceId == maintenance.Id).Select(x => x.Id)
                 .Except(maintenance.TruckMaintenanceDetail.Select(x => x.Id));

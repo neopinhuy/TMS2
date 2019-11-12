@@ -27,7 +27,7 @@ namespace Components
             Html.Instance.Input.Attr("data-role", "input")
                 .ClassName("input-small").Value(value);
             InteractiveElement = Html.Context;
-            if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label);
+            if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);
         }
     }
 }

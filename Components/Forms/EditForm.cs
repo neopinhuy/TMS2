@@ -156,6 +156,7 @@ namespace Components.Forms
             {
                 if (!ui.Visibility) continue;
                 var colSpan = ui.Column ?? 2;
+                ui.Label = ui.Label ?? string.Empty;
                 if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Label)
                     .EndOf(ElementType.td).TData.ColSpan(colSpan - 1).Render();
                 else Html.Instance.TData.ColSpan(colSpan).ClassName("text-left").Style("padding-left: 0;").Render();
