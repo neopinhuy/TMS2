@@ -16,7 +16,12 @@ namespace Components
         public override void Render()
         {
             var value = new Observable<DateTime?>((DateTime?)Entity?[_ui.FieldName]);
-            value.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
+            value.Subscribe(arg => {
+                var res = ValueChanging?.Invoke(arg);
+                if (res == false) return;
+                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                ValueChanged?.Invoke(arg);
+            });
             Html.Instance
                 .SmallDatePicker(value);
             InteractiveElement = Html.Context;

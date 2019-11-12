@@ -27,6 +27,8 @@ namespace Components
         public int? SelectedRow { get; set; }
         public Action<Event> BodyContextMenu { get; set; }
         public bool Editable { get; private set; }
+        public Func<ObservableArgs, Header<T>, T, bool> CellChanging { get; set; }
+        public Action<ObservableArgs, Header<T>, T> CellChanged { get; set; }
 
         private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
@@ -400,6 +402,8 @@ namespace Components
             editor.Entity = rowData;
             editor.ValueChanged += (arg) =>
             {
+                var res = CellChanging?.Invoke(arg, header, rowData);
+                if (res == false) return;
                 if (rowData.GetBool(_emptyFlag))
                 {
                     rowData[_emptyFlag] = false;
@@ -409,6 +413,7 @@ namespace Components
                     Html.Take(_mainTable.TBodies[0]);
                     RenderEmptyRow(Headers.Data.Where(x => !x.Frozen).ToList());
                 }
+                CellChanged?.Invoke(arg, header, rowData);
             };
             AddChild(editor);
             editor.InteractiveElement.AddEventListener(EventType.Focus, SelectRow);

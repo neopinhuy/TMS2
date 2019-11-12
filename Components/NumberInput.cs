@@ -29,7 +29,10 @@ namespace Components
             var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
             value.Subscribe(arg => {
+                var res = ValueChanging?.Invoke(arg);
+                if (res == false) return;
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                ValueChanged?.Invoke(arg);
             });
             Html.Instance.MaskMoney(value, new Options
             {

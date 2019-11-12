@@ -36,6 +36,13 @@ namespace Components
             Html.Instance.Input.Id($"id_{GetHashCode()}").Attr("name", "files").Type("file");
             InteractiveElement = Html.Context;
             Html.Instance.AsyncEvent(EventType.Change, RenderImage).End.Render();
+            _path.Subscribe(arg =>
+            {
+                var res = ValueChanging?.Invoke(arg);
+                if (res == false) return;
+                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                ValueChanged?.Invoke(arg);
+            });
         }
 
         private async Task RenderImage(Event e)

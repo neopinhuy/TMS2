@@ -20,6 +20,8 @@ namespace Components
             {
                 value.Subscribe(arg =>
                 {
+                    var res = ValueChanging?.Invoke(arg);
+                    if (res == false) return;
                     if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
                     ValueChanged?.Invoke(arg);
                 });

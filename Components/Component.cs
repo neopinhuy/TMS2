@@ -19,6 +19,7 @@ namespace Components
         public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
         public virtual Element InteractiveElement { get; set; }
+        public Func<ObservableArgs, bool> ValueChanging { get; set; }
         public Action<ObservableArgs> ValueChanged { get; set; }
         public virtual bool Disabled
         {

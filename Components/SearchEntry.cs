@@ -44,6 +44,8 @@ namespace Components
             _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
             _value.Subscribe(arg =>
             {
+                var res = ValueChanging?.Invoke(arg);
+                if (res == false) return;
                 FindMatchItem();
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
                 ValueChanged?.Invoke(arg);
