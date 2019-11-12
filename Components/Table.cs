@@ -6,7 +6,6 @@ using MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using ElementType = MVVM.ElementType;
@@ -112,16 +111,35 @@ namespace Components
             if (_refData != null && _refData.Any()) return;
             var refEntities = Headers.Data
                 .Where(x => x.Reference.HasAnyChar())
-                .DistinctBy(x => x.Reference + x.DataSource)
-                .Select(x => new 
-                {
-                    DataSource = x.DataSource.HasAnyChar() 
-                        ? Utils.FormatWith(x.DataSource, Entity)
-                        : string.Empty,
-                    x.Reference
-                })
-                .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
-            _refData = await Task.WhenAll(refEntities);
+                .DistinctBy(x => x.Reference)
+                .ToList();
+            refEntities = refEntities.Select(FormatDataSource).ToList();
+
+            var optimizedSource = refEntities.Select(x => Client<object>.Instance
+                .GetListEntity(x.Reference, x.DataSourceOptimized));
+            _refData = await Task.WhenAll(optimizedSource);
+        }
+
+        private Header<T> FormatDataSource(Header<T> header)
+        {
+            header.DataSource = header.DataSource.HasAnyChar()
+                ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
+            var entityIds = RowData.Data.Select(x => (int?)x[header.FieldName])
+                .Distinct().Where(x => x != null);
+            var strIds = string.Join(",", entityIds);
+            if (!header.DataSource.Contains("?$"))
+            {
+                header.DataSourceOptimized = header.DataSource + "?";
+            }
+            if (!header.DataSource.Contains("$filter"))
+            {
+                header.DataSourceOptimized += header.DataSource + $"$filter=Id in ({strIds})";
+            }
+            else
+            {
+                header.DataSourceOptimized += header.DataSource + $" and Id in ({strIds})";
+            }
+            return header;
         }
 
         private void RenderTableHeader(List<Header<T>> headers)
@@ -368,8 +386,7 @@ namespace Components
                     editor = new SearchEntry(ui)
                     {
                         SuggestActiveRecord = true,
-                        RootHtmlElement = Html.Context,
-                        Source = new ObservableArray<object>(source.ToArray())
+                        RootHtmlElement = Html.Context
                     };
                     break;
                 case "Number":

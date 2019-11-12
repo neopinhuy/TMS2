@@ -21,6 +21,15 @@ namespace Common.Extensions
             return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0].Name == typeName);
         }
 
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach (var item in source)
+            {
+                action(item);
+            }
+            return source;
+        }
+
         public static bool Nothing<T>(this IEnumerable<T> source)
         {
             return source == null || !source.Any();

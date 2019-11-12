@@ -10,6 +10,7 @@ namespace Components
         public string FieldName { get; set; }
         public string Reference { get; set; }
         public string DataSource { get; set; }
+        public string DataSourceOptimized { get; set; }
         public string RefValueField { get; set; } = "Id";
         public string GroupName { get; set; }
         public bool HasFilter { get; set; }
