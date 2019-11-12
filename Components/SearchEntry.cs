@@ -71,14 +71,17 @@ namespace Components
                 }
                 else
                 {
-                    var matchSource = DataSourceFilter.HasAnyChar()
-                        ? DataSourceFilter + $" and Id eq {_value.Data}"
-                        : $"?$filter=Id eq {_value.Data}";
-                    matched = (await Client<object>.Instance.GetListEntity(_ui.Reference.Name, matchSource))
-                        .FirstOrDefault();
+                    Source.Data = await GetDataSource();
+                    matched = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
                 }
-                _text.Data = Utils.FormatWith(_ui.Format, matched);
+                _text.Data = matched != null ? Utils.FormatWith(_ui.Format, matched) : string.Empty;
             });
+        }
+
+        private async Task<object[]> GetDataSource()
+        {
+            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, DataSourceFilter);
+            return source.ToArray();
         }
 
         public async Task RenderSuggestion()
@@ -103,8 +106,7 @@ namespace Components
             }).ToArray();
             if (Source == null || Source.Data.Length == 0)
             {
-                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, DataSourceFilter);
-                Source.Data = source.ToArray();
+                Source.Data = await GetDataSource();
             }
             if (SuggestActiveRecord)
             {
