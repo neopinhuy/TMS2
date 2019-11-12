@@ -14,7 +14,7 @@ namespace TMS.API.Controllers
     [ValidateModel]
     public class GenericController<T> : ControllerBase where T : class
     {
-        readonly TMSContext db;
+        protected readonly TMSContext db;
 
         public GenericController(TMSContext context)
         {
@@ -23,13 +23,13 @@ namespace TMS.API.Controllers
 
         [HttpGet]
         [EnableQuery]
-        public IQueryable<T> Get()
+        public virtual IQueryable<T> Get()
         {
             return db.Set<T>().AsQueryable();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<T>> Get(int id)
+        public virtual async Task<ActionResult<T>> Get(int id)
         {
             var entity = await db.Set<T>().FindAsync(id);
             if (entity == null) return NotFound();
@@ -37,7 +37,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<T>> PostAsync([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> PostAsync([FromBody]T entity)
         {
             if (entity == null || !ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut]
-        public async Task<T> PutAsync([FromBody]T entity)
+        public virtual async Task<T> PutAsync([FromBody]T entity)
         {
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
@@ -59,7 +59,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("Delete")]
-        public async Task<bool> Delete([FromBody]List<int> ids)
+        public virtual async Task<bool> Delete([FromBody]List<int> ids)
         {
             var entity = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
             db.Set<T>().RemoveRange(entity);

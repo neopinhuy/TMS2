@@ -16,7 +16,6 @@ namespace Common.Clients
 
         public Task<List<object>> GetList(string filter = null)
         {
-            filter = filter ?? "$filter=Active eq true";
             var tcs = new TaskCompletionSource<List<object>>();
             var xhr = new XMLHttpRequest();
             xhr.Open("GET", $"/api/{EntityName}?{filter}", true);

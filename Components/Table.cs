@@ -117,7 +117,7 @@ namespace Components
                 {
                     DataSource = x.DataSource.HasAnyChar() 
                         ? Utils.FormatWith(x.DataSource, Entity)
-                        : null,
+                        : string.Empty,
                     x.Reference
                 })
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));

@@ -22,7 +22,6 @@ namespace Common.Clients
 
         public Task<List<T>> GetList(string filter = null)
         {
-            filter = filter ?? "?$filter=Active eq true";
             var type = typeof(T);
             var tcs = new TaskCompletionSource<List<T>>();
             var xhr = new XMLHttpRequest();
