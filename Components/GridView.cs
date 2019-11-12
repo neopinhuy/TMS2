@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
+using ElementType = MVVM.ElementType;
 
 namespace Components
 {
@@ -88,9 +89,23 @@ namespace Components
                 {
                     Entity = Entity
                 };
+                _table.BodyContextMenu += RenderContextMenu;
                 Html.Take(RootHtmlElement);
                 _table.Render();
             });
+        }
+
+        public void RenderContextMenu(Event e)
+        {
+            e.PreventDefault();
+            var top = (float)e["clientY"];
+            var left = (float)e["clientX"];
+            Html.Take(Document.Body).Ul.ClassName("context-menu")
+                .TabIndex(-1).Trigger(EventType.Focus).Floating(top, left);
+            var menu = Html.Context;
+            Html.Instance.Event(EventType.FocusOut, () => menu.Remove())
+                .Li.Event(EventType.Click, DeleteSelected)
+                .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
 
         public async Task LoadData()

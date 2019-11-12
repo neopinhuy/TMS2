@@ -587,6 +587,34 @@ td {
     }
 }
 
+.context-menu {
+    background-color: @white;
+    color: @theadColor;
+    z-index: 999;
+    list-style: none;
+    padding: 0;
+    .shadow;
+
+    li {
+        line-height: 2.35rem;
+        padding: 0 1rem;
+        cursor: pointer;
+        border: 1px solid @ctxMenuBorder;
+
+        &:hover {
+            background-color: rgba(0,0,0,.06);
+        }
+
+        span:not(.icon) {
+            margin-left: 1.2rem;
+        }
+    }
+
+    .icon {
+        color: @edit-icon;
+    }
+}
+
 ::-webkit-scrollbar {
     height: 0.65rem;
     width: 0.65rem;

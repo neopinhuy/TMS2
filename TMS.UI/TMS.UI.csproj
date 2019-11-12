@@ -41,9 +41,6 @@
     <Compile Include="Business\Asset\TruckBL.cs" />
     <Compile Include="Business\Dashboard\Dashboard.cs" />
     <Compile Include="Business\MenuComponent.cs" />
-    <Compile Include="Business\MenuComponent.View.cs">
-      <DependentUpon>MenuComponent.cs</DependentUpon>
-    </Compile>
     <Compile Include="App.cs" />
     <Compile Include="Business\Asset\ContainerBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

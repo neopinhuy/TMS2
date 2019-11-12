@@ -13,10 +13,7 @@ namespace Components
         public override void Render()
         {
             base.Render();
-            Html.Take(RootHtmlElement).ClassName("floating")
-                .Position(Position.@fixed)
-                .Position(Direction.top, Top)
-                .Position(Direction.left, Left);
+            Html.Take(RootHtmlElement).ClassName("floating").Floating(Top, Left);
         }
     }
 }

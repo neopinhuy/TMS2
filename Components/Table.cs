@@ -26,13 +26,14 @@ namespace Components
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
         public int? SelectedRow { get; set; }
+        public Action<Event> BodyContextMenu { get; set; }
+        public bool Editable { get; private set; }
 
         private readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
         private HTMLTableElement _frozenTable;
         private HTMLTableElement _mainTable;
         private int? timeOut = null;
-        private bool _editable;
         
         public const string _selectedClass = "selected-row";
         public const string _hovering = "hovering";
@@ -48,9 +49,9 @@ namespace Components
 
         public override void Render()
         {
-            _editable = Headers.Data.Any(x => x.Editable);
+            Editable = Headers.Data.Any(x => x.Editable);
             Html.Instance.Div.ClassName("table-wrapper")
-                .ClassName(_editable ? "editable" : string.Empty);
+                .ClassName(Editable ? "editable" : string.Empty);
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;
@@ -91,6 +92,9 @@ namespace Components
                 Html.Take(_mainTable).Clear();
                 RenderTableHeader(nonFrozen);
                 RenderTableContent(nonFrozen);
+
+                _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                _mainTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
             });
         }
 
@@ -118,17 +122,6 @@ namespace Components
                 })
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSource));
             _refData = await Task.WhenAll(refEntities);
-        }
-
-        public void RenderContextMenu(Event e)
-        {
-            var left = (float)e["clientX"];
-            var top = (float)e["clientY"];
-            Html.Instance.Ul.ClassName("context-menu")
-                .Position(Position.@fixed)
-                .Position(Direction.top, top)
-                .Position(Direction.left, left)
-                .Li.Icon("fa fa-trash").End.Text("Delete selected rows").EndOf(ElementType.li);
         }
 
         private void RenderTableHeader(List<Header<T>> headers)
@@ -198,7 +191,7 @@ namespace Components
             {
                 RenderRowData(headers, row);
             });
-            if (_editable)
+            if (Editable)
             {
                 RenderEmptyRow(headers);
             }
@@ -226,7 +219,7 @@ namespace Components
         private void ToggleSelectRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && _editable) index = RowData.Data.Length;
+            if (index == -1 && Editable) index = RowData.Data.Length;
             ToggleSelectRow(index, _frozenTable.TBodies[0]);
             ToggleSelectRow(index, _mainTable.TBodies[0]);
         }
@@ -276,7 +269,7 @@ namespace Components
         private void HoverRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && _editable) index = RowData.Data.Length;
+            if (index == -1 && Editable) index = RowData.Data.Length;
             HoverRow(index, _frozenTable.TBodies[0]);
             HoverRow(index, _mainTable.TBodies[0]);
         }
@@ -291,7 +284,7 @@ namespace Components
         private void LeaveRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && _editable) index = RowData.Data.Length;
+            if (index == -1 && Editable) index = RowData.Data.Length;
             LeaveRow(index, _frozenTable.TBodies[0]);
             LeaveRow(index, _mainTable.TBodies[0]);
         }

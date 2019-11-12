@@ -293,7 +293,21 @@ namespace Components
         /// <returns></returns>
         public static Html Icon(this Html html, string iconClass)
         {
-            return html.Span.ClassName(iconClass);
+            return html.Span.ClassName("icon").ClassName(iconClass);
+        }
+
+        public static Html Floating(this Html html, double top, double left)
+        {
+            return html.Position(Components.Position.@fixed)
+                .Position(Direction.top, top)
+                .Position(Direction.left, left);
+        }
+
+        public static Html TabIndex(this Html html, int tabIndex, bool force = false)
+        {
+            var oldTabIndex = Html.Context.GetAttribute("tabindex");
+            if (!string.IsNullOrEmpty(oldTabIndex) && !force) return html;
+            return html.Attr("tabindex", tabIndex.ToString());
         }
     }
 }
