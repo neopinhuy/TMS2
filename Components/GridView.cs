@@ -132,7 +132,7 @@ namespace Components
             var entity = _ui.Reference.Name;
             var ids = RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
-                .Select(x => (int)x["Id"]).ToList();
+                .Select(x => (int)x[Id]).ToList();
             var client = new Client(entity);
             var success = await client.Delete(ids);
             if (success)

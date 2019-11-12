@@ -383,10 +383,12 @@ namespace Components
                     break;
                 case "Dropdown":
                     var source = _refData.GetSourceByTypeName(header.Reference);
+                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)Entity?[ui.FieldName]);
                     editor = new SearchEntry(ui)
                     {
                         SuggestActiveRecord = true,
-                        RootHtmlElement = Html.Context
+                        RootHtmlElement = Html.Context,
+                        Matched = matched
                     };
                     break;
                 case "Number":
@@ -444,7 +446,7 @@ namespace Components
             else if (header.Reference != null)
             {
                 var source = _refData.GetSourceByTypeName(header.Reference);
-                var found = source.FirstOrDefault(x => (int)x["Id"] == (int)cellData);
+                var found = source.FirstOrDefault(x => (int)x[Id] == (int)cellData);
                 if (found == null) return string.Empty;
                 if (header.Format.HasAnyChar())
                 {

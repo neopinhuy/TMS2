@@ -20,6 +20,7 @@ namespace Components
         public bool SuggestActiveRecord { get; set; }
         public string DataSourceFilter { get; set; }
         public ObservableArray<object> Source { get; set; }
+        public object Matched { get; set; }
 
         public SearchEntry(UserInterface ui)
         {
@@ -30,6 +31,7 @@ namespace Components
                 {
                     _value.Data = null;
                 }
+                // TODO: Search here in data source
             });
             DataSourceFilter = ui.DataSourceFilter;
             Source = new ObservableArray<object>();
@@ -42,7 +44,7 @@ namespace Components
             _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
             _value.Subscribe(arg =>
             {
-                UpdateTextbox();
+                FindMatchItem();
                 if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
                 ValueChanged?.Invoke(arg);
             });
@@ -61,20 +63,25 @@ namespace Components
 
         private void FindMatchItem()
         {
+            if (_value is null || _value.Data is null)
+            {
+                Matched = null;
+                _text.Data = string.Empty;
+                return;
+            }
+            if (Matched != null && (int?)Matched[Id] == _value.Data)
+            {
+                _text.Data = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+                return;
+            }
             Task.Run(async () =>
             {
-                if (_value is null || _value.Data is null) return;
-                object matched;
-                if (Source != null && Source.Data.Length > 0)
-                {
-                    matched = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
-                }
-                else
+                if (Source == null || Source.Data.Length == 0)
                 {
                     Source.Data = await GetDataSource();
-                    matched = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
                 }
-                _text.Data = matched != null ? Utils.FormatWith(_ui.Format, matched) : string.Empty;
+                Matched = Source.Data.FirstOrDefault(x => (int)x[Id] == _value.Data);
+                _text.Data = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
             });
         }
 
@@ -129,20 +136,8 @@ namespace Components
 
         private void Select(object rowData)
         {
-            _value.Data = (int)rowData["Id"];
+            _value.Data = (int)rowData[Id];
             DisposeSearchTable();
-        }
-
-        private void UpdateTextbox()
-        {
-            var selected = Source.Data.FirstOrDefault(x => (int)x["Id"] == _value.Data);
-            if (selected is null)
-            {
-                _text.Data = string.Empty;
-                return;
-            }
-
-            _text.Data = Utils.FormatWith(_ui.Format, selected);
         }
 
         private void DisposeSearchTable()

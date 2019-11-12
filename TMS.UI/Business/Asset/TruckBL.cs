@@ -55,7 +55,7 @@ namespace TMS.UI.Business.Asset
             {
                 Entity = new Accessory()
                 {
-                    TruckId = (int)_truckForm.Entity["Id"]
+                    TruckId = (int)_truckForm.Entity[Id]
                 }
             };
             AddAccessoryForm();
