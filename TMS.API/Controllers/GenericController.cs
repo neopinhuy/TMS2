@@ -2,6 +2,7 @@
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +44,6 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            entity.SetPropValue("InsertedBy", 1);
             db.Set<T>().Add(entity);
             await db.SaveChangesAsync();
             return entity;

@@ -18,7 +18,7 @@ namespace Common.Extensions
 
         public static IEnumerable<object> GetSourceByTypeName(this IEnumerable<IEnumerable<object>> sources, string typeName)
         {
-            return sources.FirstOrDefault(x => x.GetType().GetGenericArguments()[0].Name == typeName);
+            return sources.FirstOrDefault(x => x != null && x.GetType().GetGenericArguments()[0].Name == typeName);
         }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)

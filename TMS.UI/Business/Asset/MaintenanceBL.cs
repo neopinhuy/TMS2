@@ -26,6 +26,11 @@ namespace TMS.UI.Business.Asset
                 var truck = maintenaceForm.FindComponent("TruckId") as SearchEntry;
                 truck.DataSourceFilter = "?$filter=Active eq true";
                 truck.Disabled = false;
+                var detailGrid = maintenaceForm.FindComponent("TruckMaintenanceDetail") as GridView;
+                truck.ValueChanged += arg =>
+                {
+                    detailGrid.LoadData();
+                };
             };
             AddChild(maintenaceForm);
         }

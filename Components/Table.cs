@@ -124,15 +124,15 @@ namespace Components
 
         private Header<T> FormatDataSource(Header<T> header)
         {
-            header.DataSource = header.DataSource.HasAnyChar()
+            var formattedDataSource = header.DataSource.HasAnyChar()
                 ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
             var entityIds = RowData.Data.Select(x => (int?)x[header.FieldName])
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
-            header.DataSourceOptimized = !header.DataSource.Contains("?$") 
-                ? header.DataSource + "?" 
-                : header.DataSource;
-            header.DataSourceOptimized += header.DataSource.Contains("$filter") 
+            header.DataSourceOptimized = !formattedDataSource.Contains("?$")
+                ? formattedDataSource + "?" 
+                : formattedDataSource;
+            header.DataSourceOptimized += formattedDataSource.Contains("$filter")
                 ? $" and Id in ({strIds})"
                 : $"$filter=Id in ({strIds})";
             return header;
@@ -364,7 +364,7 @@ namespace Components
             {
                 Reference = new Entity { Name = header.Reference },
                 Format = header.Format,
-                DataSourceFilter = header.DataSource,
+                DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
                 FieldName = header.FieldName
             };
             if (rowData.GetBool(_emptyFlag))

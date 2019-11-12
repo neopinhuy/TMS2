@@ -1,10 +1,7 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Components.Extensions
 {
@@ -12,11 +9,8 @@ namespace Components.Extensions
     {
         public static string FormatWith(string format, object source)
         {
-            if (source is null)
-            {
-                return format;
-            }
-
+            if (format is null) return null;
+            if (source is null) return format;
             return FormatWith(format, null, source);
         }
 
@@ -45,7 +39,6 @@ namespace Components.Extensions
         {
             try
             {
-                //obj.GetType().GetMethod(eventName).Invoke(obj, arguments);
                 obj[eventName].As<Action>().Invoke(obj, arguments);
             }
             catch (Exception ex)

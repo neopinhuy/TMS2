@@ -39,8 +39,6 @@ namespace Components
 
         public override void Render()
         {
-            if (DataSourceFilter.HasAnyChar())
-                DataSourceFilter = Utils.FormatWith(DataSourceFilter, Entity);
             _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
             _value.Subscribe(arg =>
             {
@@ -89,7 +87,8 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, DataSourceFilter);
+            var dataSource = Utils.FormatWith(DataSourceFilter, Entity);
+            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
             return source.ToArray();
         }
 

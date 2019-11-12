@@ -5,6 +5,7 @@ using Components.Extensions;
 using Components.Forms;
 using MVVM;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -108,10 +109,14 @@ namespace Components
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
 
-        public async Task LoadData()
+        public async Task LoadData(string dataSource = null)
         {
-            var rows = await Client<object>
-                .Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter);
+            if (dataSource.HasAnyChar())
+            {
+                _ui.DataSourceFilter = dataSource;
+            }
+            var rows = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter)
+                ?? new List<object>();
             RowData.Data = rows.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
         }

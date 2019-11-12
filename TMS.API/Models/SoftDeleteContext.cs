@@ -26,6 +26,7 @@ namespace TMS.API.Models
                 switch (entry.State)
                 {
                     case EntityState.Added:
+                        entry.CurrentValues["InsertedBy"] = 1; // hard code for now
                         entry.CurrentValues["InsertedDate"] = DateTime.Now;
                         entry.CurrentValues["Active"] = true;
                         break;
