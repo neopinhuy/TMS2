@@ -2,7 +2,6 @@
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -18,12 +17,13 @@ namespace TMS.API.Controllers
     public class GenericController<T> : ControllerBase where T : class
     {
         protected readonly TMSContext db;
-        protected IElasticClient _elasticClient;
+        protected IElasticClient _client;
+        private string typeName = typeof(T).Name.ToLower();
 
         public GenericController(TMSContext context, IElasticClient elasticClient)
         {
             db = context;
-            _elasticClient = elasticClient;
+            _client = elasticClient;
         }
 
         [HttpGet]
@@ -36,17 +36,17 @@ namespace TMS.API.Controllers
         [HttpGet("BuildIndex")]
         public virtual async Task<ActionResult<T>> BuildIndex()
         {
+            await _client.Indices.CreateAsync(typeName);
             var entities = await db.Set<T>().AsQueryable().ToListAsync();
-            _elasticClient = InitElasticSearchClient();
-            var res = await _elasticClient.IndexManyAsync(entities);
-            return Ok(res);
+            var indexResult = await _client.IndexManyAsync(entities);
+            return Ok(indexResult);
         }
 
-        private ElasticClient InitElasticSearchClient()
+        private IElasticClient InitElasticSearchClient()
         {
             var node = new Uri("http://localhost:9200");
             var settings = new ConnectionSettings(node);
-            settings.DefaultIndex(typeof(T).Name);
+            settings.DefaultIndex(typeName);
             var client = new ElasticClient(settings);
             return client;
         }
@@ -54,14 +54,16 @@ namespace TMS.API.Controllers
         [HttpGet("Search")]
         public virtual async Task<ActionResult<T>> Search(string query, int page = 1, int pageSize = 10)
         {
-            _elasticClient = InitElasticSearchClient();
-            var entities = await _elasticClient.SearchAsync<T>(s => s
-                .Query(q => q                           // define query
-                    .MultiMatch(mp => mp                // of type MultiMatch
-                        .Query(query)))
-                .From((page - 1) * pageSize)
-                .Size(pageSize));
-            return Ok(entities.Documents);
+            _client = InitElasticSearchClient();
+            var request = new SearchRequest
+            {
+                From = (page - 1) * pageSize,
+                Size = pageSize,
+                Query = new MultiMatchQuery { Query = query }
+            };
+            var matches = await _client.SearchAsync<T>(request);
+            
+            return Ok(matches.Documents);
         }
 
         [HttpPost]
@@ -73,7 +75,8 @@ namespace TMS.API.Controllers
             }
             db.Set<T>().Add(entity);
             await db.SaveChangesAsync();
-            await _elasticClient.IndexDocumentAsync(entity);
+            _client = InitElasticSearchClient();
+            await _client.IndexDocumentAsync(entity);
             return entity;
         }
 
@@ -83,7 +86,8 @@ namespace TMS.API.Controllers
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            await _elasticClient.UpdateAsync<T>(entity, u => u.Doc(entity));
+            _client = InitElasticSearchClient();
+            await _client.UpdateAsync(DocumentPath<T>.Id(entity), u => u.Doc(entity));
             return entity;
         }
 
@@ -93,7 +97,8 @@ namespace TMS.API.Controllers
             var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
             db.Set<T>().RemoveRange(entities);
             await db.SaveChangesAsync();
-            await _elasticClient.DeleteManyAsync(entities);
+            _client = InitElasticSearchClient();
+            await _client.DeleteManyAsync(entities);
             return true;
         }
     }

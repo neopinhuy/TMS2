@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nest;
 using System;
+using System.Text;
 using TMS.API.Models;
 
 namespace TMS.API.Extensions
@@ -16,7 +17,12 @@ namespace TMS.API.Extensions
             var defaultIndex = configuration["elasticsearch:index"];
 
             var settings = new ConnectionSettings(new Uri(url))
-                .DefaultIndex(defaultIndex);
+                .DefaultIndex(defaultIndex)
+                .DefaultMappingFor<Truck>(x => x
+                    .IndexName("truck"))
+                .DefaultMappingFor<Accessory>(x => x
+                    .IndexName("accessory"))
+                .DisableDirectStreaming();
             var client = new ElasticClient(settings);
             services.AddSingleton<IElasticClient>(client);
         }
