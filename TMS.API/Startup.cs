@@ -12,12 +12,12 @@ namespace TMS.API
 {
     public class Startup
     {
+        private IConfiguration _configuration;
+        
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -31,10 +31,11 @@ namespace TMS.API
 
             services.AddDbContext<TMSContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("TMS"));
+                options.UseSqlServer(_configuration.GetConnectionString("TMS"));
             });
             services.AddResponseCompression();
             services.AddOData();
+            services.AddElasticsearch(_configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

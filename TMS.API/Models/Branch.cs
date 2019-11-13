@@ -8,6 +8,7 @@ namespace TMS.API.Models
         public Branch()
         {
             Accessory = new HashSet<Accessory>();
+            Truck = new HashSet<Truck>();
         }
 
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
+        public virtual ICollection<Truck> Truck { get; set; }
     }
 }

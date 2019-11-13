@@ -11,6 +11,7 @@ namespace TMS.API.Models
             Container = new HashSet<Container>();
             OrderDetail = new HashSet<OrderDetail>();
             Quotation = new HashSet<Quotation>();
+            Truck = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
         }
 
@@ -33,6 +34,7 @@ namespace TMS.API.Models
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<Truck> Truck { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
     }
 }

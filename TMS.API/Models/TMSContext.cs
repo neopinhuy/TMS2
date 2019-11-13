@@ -1457,8 +1457,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Truck>(entity =>
             {
-                entity.Property(e => e.BrandName).HasMaxLength(100);
-
                 entity.Property(e => e.Color).HasMaxLength(50);
 
                 entity.Property(e => e.Image)
@@ -1487,6 +1485,11 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Year).HasColumnType("decimal(4, 0)");
 
+                entity.HasOne(d => d.Branch)
+                    .WithMany(p => p.Truck)
+                    .HasForeignKey(d => d.BranchId)
+                    .HasConstraintName("FK_Truck_Branch");
+
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Truck)
                     .HasForeignKey(d => d.CurrencyId)
@@ -1501,6 +1504,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.Truck)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Truck_TruckType");
+
+                entity.HasOne(d => d.Vendor)
+                    .WithMany(p => p.Truck)
+                    .HasForeignKey(d => d.VendorId)
+                    .HasConstraintName("FK_Truck_Vendor");
             });
 
             modelBuilder.Entity<TruckMaintenance>(entity =>

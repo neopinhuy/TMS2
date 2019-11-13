@@ -16,7 +16,7 @@ namespace TMS.API.Models
 
         public int Id { get; set; }
         public string TruckPlate { get; set; }
-        public string BrandName { get; set; }
+        public int? BranchId { get; set; }
         public string Model { get; set; }
         public decimal? Year { get; set; }
         public string Color { get; set; }
@@ -50,9 +50,11 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual Branch Branch { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual FuelType FuelType { get; set; }
         public virtual TruckType TruckType { get; set; }
+        public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
