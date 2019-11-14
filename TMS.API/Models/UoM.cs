@@ -3,19 +3,15 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class Currency
+    public partial class UoM
     {
-        public Currency()
+        public UoM()
         {
-            Ledger = new HashSet<Ledger>();
-            Quotation = new HashSet<Quotation>();
-            Truck = new HashSet<Truck>();
-            TruckMaintenance = new HashSet<TruckMaintenance>();
+            WeightRange = new HashSet<WeightRange>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Symbol { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -25,9 +21,6 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Ledger> Ledger { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
-        public virtual ICollection<Truck> Truck { get; set; }
-        public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
+        public virtual ICollection<WeightRange> WeightRange { get; set; }
     }
 }

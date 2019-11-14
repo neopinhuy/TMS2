@@ -198,6 +198,9 @@
     <Compile Include="..\TMS.API\Models\TruckType.cs">
       <Link>Models\TruckType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\UoM.cs">
+      <Link>Models\UoM.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\User.cs">
       <Link>Models\User.cs</Link>
     </Compile>

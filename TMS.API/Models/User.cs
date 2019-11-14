@@ -95,6 +95,8 @@ namespace TMS.API.Models
             TruckMonitorConfigUpdatedByNavigation = new HashSet<TruckMonitorConfig>();
             TruckTypeInsertedByNavigation = new HashSet<TruckType>();
             TruckTypeUpdatedByNavigation = new HashSet<TruckType>();
+            UoMInsertedByNavigation = new HashSet<UoM>();
+            UoMUpdatedByNavigation = new HashSet<UoM>();
             UserInterfaceInsertedByNavigation = new HashSet<UserInterface>();
             UserInterfaceUpdatedByNavigation = new HashSet<UserInterface>();
             VendorTypeInsertedByNavigation = new HashSet<VendorType>();
@@ -110,7 +112,7 @@ namespace TMS.API.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
-        public DateTime? DoB { get; set; }
+        public DateTime DoB { get; set; }
         public string Ssn { get; set; }
         public string Passport { get; set; }
         public string Address { get; set; }
@@ -229,6 +231,8 @@ namespace TMS.API.Models
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedByNavigation { get; set; }
         public virtual ICollection<TruckType> TruckTypeInsertedByNavigation { get; set; }
         public virtual ICollection<TruckType> TruckTypeUpdatedByNavigation { get; set; }
+        public virtual ICollection<UoM> UoMInsertedByNavigation { get; set; }
+        public virtual ICollection<UoM> UoMUpdatedByNavigation { get; set; }
         public virtual ICollection<UserInterface> UserInterfaceInsertedByNavigation { get; set; }
         public virtual ICollection<UserInterface> UserInterfaceUpdatedByNavigation { get; set; }
         public virtual ICollection<VendorType> VendorTypeInsertedByNavigation { get; set; }
