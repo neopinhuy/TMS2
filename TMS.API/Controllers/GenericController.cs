@@ -75,19 +75,24 @@ namespace TMS.API.Controllers
             }
             db.Set<T>().Add(entity);
             await db.SaveChangesAsync();
-            _client = InitElasticSearchClient();
-            await _client.IndexDocumentAsync(entity);
+            //_client = InitElasticSearchClient();
+            //await _client.IndexDocumentAsync(entity);
             return entity;
         }
 
         [HttpPut]
-        public virtual async Task<T> PutAsync([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> PutAsync([FromBody]T entity)
         {
+            if (entity == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            _client = InitElasticSearchClient();
-            await _client.UpdateAsync(DocumentPath<T>.Id(entity), u => u.Doc(entity));
+            //_client = InitElasticSearchClient();
+            //await _client.UpdateAsync(DocumentPath<T>.Id(entity), u => u.Doc(entity));
             return entity;
         }
 
@@ -97,8 +102,8 @@ namespace TMS.API.Controllers
             var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
             db.Set<T>().RemoveRange(entities);
             await db.SaveChangesAsync();
-            _client = InitElasticSearchClient();
-            await _client.DeleteManyAsync(entities);
+            //_client = InitElasticSearchClient();
+            //await _client.DeleteManyAsync(entities);
             return true;
         }
     }

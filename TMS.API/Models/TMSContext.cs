@@ -458,62 +458,20 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Address2).HasMaxLength(200);
-
-                entity.Property(e => e.Avatar).HasMaxLength(1000);
-
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.Passport)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PhoneNumber2)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Ssn)
-                    .IsRequired()
-                    .HasColumnName("SSN")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.HasIndex(e => e.UserId)
+                    .HasName("IX_Customer")
+                    .IsUnique();
 
                 entity.HasOne(d => d.CustomerGroup)
                     .WithMany(p => p.Customer)
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Customer_CustomerGroup");
 
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.CustomerInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
+                entity.HasOne(d => d.User)
+                    .WithOne(p => p.Customer)
+                    .HasForeignKey<Customer>(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Customer_UserInserted");
-
-                entity.HasOne(d => d.Nationality)
-                    .WithMany(p => p.Customer)
-                    .HasForeignKey(d => d.NationalityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Customer_Nationality");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.CustomerUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_Customer_UserUpdated");
+                    .HasConstraintName("FK_Customer_User");
             });
 
             modelBuilder.Entity<CustomerGroup>(entity =>
@@ -983,6 +941,8 @@ namespace TMS.API.Models
             modelBuilder.Entity<Nationality>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -1636,6 +1596,8 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Address2).HasMaxLength(200);
 
+                entity.Property(e => e.Avatar).HasMaxLength(1000);
+
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -1664,7 +1626,6 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Ssn)
                     .IsRequired()
-                    .HasColumnName("SSN")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

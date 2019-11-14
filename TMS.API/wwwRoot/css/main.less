@@ -229,6 +229,14 @@ td {
         }
     }
 
+    .cell-text {
+        img {
+            height: 23px;
+            width: auto;
+            border-radius: 20%;
+        }
+    }
+
     th.status-cell {
         height: 32px;
 
@@ -274,7 +282,7 @@ td {
         border-bottom: 0;
 
         th {
-            padding: 0.625rem;
+            padding: 0.625rem 0.6rem;
             white-space: nowrap;
             border: 1px solid @grayNormal;
             color: @theadColor;
@@ -286,13 +294,8 @@ td {
                 height: 64px;
             }
 
-            span:first-child {
-                margin-right: 2.5rem;
-            }
-
             span.fa-filter {
-                position: absolute;
-                right: 0.5rem;
+                margin-left: 2.5rem;
             }
 
             &:first-child {
@@ -544,14 +547,17 @@ td {
 
 .ui-layout {
     width: 100%;
-    tr {
-        td {
+
+    & > tbody > tr {
+        & > td {
             padding-right: 1rem;
         }
-        td:nth-child(odd) {
+
+        & > td:nth-child(odd) {
             text-align: right;
         }
-        td:nth-child(even) {
+
+        & > td:nth-child(even) {
             text-align: left;
         }
     }
@@ -581,8 +587,7 @@ td {
     label {
         cursor: pointer;
         img.thumb {
-            height: 100%;
-            width: auto;
+            width: 100%;
         }
     }
 }

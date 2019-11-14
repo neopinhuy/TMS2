@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -18,8 +16,12 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut]
-        public override async Task<TruckMaintenance> PutAsync([FromBody]TruckMaintenance maintenance)
+        public override async Task<ActionResult<TruckMaintenance>> PutAsync([FromBody]TruckMaintenance maintenance)
         {
+            if (maintenance == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var deletedIds = db.TruckMaintenanceDetail
                 .Where(x => x.MaintenanceId == maintenance.Id).Select(x => x.Id)
                 .Except(maintenance.TruckMaintenanceDetail.Select(x => x.Id));

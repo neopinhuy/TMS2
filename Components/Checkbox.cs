@@ -1,4 +1,5 @@
-﻿using MVVM;
+﻿using Common.Extensions;
+using MVVM;
 using System;
 using System.Collections.Generic;
 using TMS.API.Models;
@@ -16,11 +17,11 @@ namespace Components
 
         public override void Render()
         {
-            var value = new Observable<bool?>((bool?)Entity?[_ui.FieldName]);
+            var value = new Observable<bool?>((bool?)Entity?.GetComplexPropValue(_ui.FieldName));
             value.Subscribe(arg => {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
-                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
             Html.Instance.SmallCheckbox(string.Empty, value);

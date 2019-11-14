@@ -33,8 +33,6 @@ namespace TMS.API.Models
             CoordinationUpdatedByNavigation = new HashSet<Coordination>();
             CurrencyInsertedByNavigation = new HashSet<Currency>();
             CurrencyUpdatedByNavigation = new HashSet<Currency>();
-            CustomerInsertedByNavigation = new HashSet<Customer>();
-            CustomerUpdatedByNavigation = new HashSet<Customer>();
             DepartmentInsertedByNavigation = new HashSet<Department>();
             DepartmentLeader = new HashSet<Department>();
             DepartmentUpdatedByNavigation = new HashSet<Department>();
@@ -112,7 +110,7 @@ namespace TMS.API.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
-        public DateTime DoB { get; set; }
+        public DateTime? DoB { get; set; }
         public string Ssn { get; set; }
         public string Passport { get; set; }
         public string Address { get; set; }
@@ -123,6 +121,7 @@ namespace TMS.API.Models
         public int? ContractId { get; set; }
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
+        public string Avatar { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int? InsertedBy { get; set; }
@@ -137,6 +136,7 @@ namespace TMS.API.Models
         public virtual Role Role { get; set; }
         public virtual User Supervisor { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual Nationality NationalityIdNavigation { get; set; }
         public virtual Surcharge SurchargeIdNavigation { get; set; }
         public virtual Terminal TerminalIdNavigation { get; set; }
@@ -167,8 +167,6 @@ namespace TMS.API.Models
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
         public virtual ICollection<Currency> CurrencyInsertedByNavigation { get; set; }
         public virtual ICollection<Currency> CurrencyUpdatedByNavigation { get; set; }
-        public virtual ICollection<Customer> CustomerInsertedByNavigation { get; set; }
-        public virtual ICollection<Customer> CustomerUpdatedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentLeader { get; set; }
         public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }

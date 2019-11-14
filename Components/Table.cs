@@ -126,7 +126,7 @@ namespace Components
         {
             var formattedDataSource = header.DataSource.HasAnyChar()
                 ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
-            var entityIds = RowData.Data.Select(x => (int?)x[header.FieldName])
+            var entityIds = RowData.Data.Select(x => (int?)x.GetComplexPropValue(header.FieldName))
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
             header.DataSourceOptimized = !formattedDataSource.Contains("?$")
@@ -316,10 +316,9 @@ namespace Components
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
             RenderCellButton(row, header);
             if (string.IsNullOrEmpty(header.FieldName)) return;
-            var cellData = row[header.FieldName];
+            var cellData = row.GetComplexPropValue(header.FieldName);
             var cellText = GetCellText(header, cellData);
-            header.TextAlign = !string.IsNullOrEmpty(cellText) ? TextAlign.left : header.TextAlign;
-            header.TextAlign = CalcTextAlign(header.TextAlign, cellData);
+            header.TextAlign = CalcTextAlign(header, cellData);
             Html.Instance.TextAlign(header.TextAlign);
             if (cellData is bool cellBool)
             {
@@ -328,7 +327,10 @@ namespace Components
             }
             else
             {
-                Html.Instance.Span.ClassName("cell-text").Text(cellText).End.Render();
+                Html.Instance.Span.ClassName("cell-text");
+                if (header.Component == "Image")
+                    Html.Instance.Img.Src(cellText).End.Render();
+                else Html.Instance.Text(cellText).End.Render();
             }
             RenderEditableCell(header);
             Html.Instance.EndOf(ElementType.td);
@@ -374,12 +376,9 @@ namespace Components
             Component editor = null;
             switch (header.Component)
             {
-                case "Input":
-                    editor = new Textbox(ui);
-                    break;
                 case "Dropdown":
                     var source = _refData.GetSourceByTypeName(header.Reference);
-                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)rowData?[ui.FieldName]);
+                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)rowData?.GetComplexPropValue(ui.FieldName));
                     editor = new SearchEntry(ui)
                     {
                         SuggestActiveRecord = true,
@@ -387,17 +386,9 @@ namespace Components
                         Matched = matched
                     };
                     break;
-                case "Number":
-                    editor = new NumberInput(ui);
-                    break;
-                case "Checkbox":
-                    editor = new Checkbox(ui);
-                    break;
-                case "Datepicker":
-                    editor = new Datepicker(ui);
-                    break;
                 default:
-                    throw new InvalidOperationException($"Unrecognized {header.Component} component");
+                    editor = ComponentFactory.GetComponent(ui, header.Component);
+                    break;
             }
             editor.Entity = rowData;
             editor.ValueChanged += (arg) =>
@@ -457,10 +448,11 @@ namespace Components
             else return cellData.ToString();
         }
 
-        private static TextAlign? CalcTextAlign(TextAlign? textAlign, object cellData)
+        private static TextAlign? CalcTextAlign(Header<T> header, object cellData)
         {
-            if (textAlign != null || cellData is null)
-                return textAlign;
+            var textAlign = header.TextAlign;
+            if (textAlign != null || cellData is null) return textAlign;
+            if (header.Reference.HasAnyChar()) return TextAlign.center;
             if (cellData is bool || cellData is bool?) return TextAlign.center;
             else if (cellData.GetType().IsNumber()) return TextAlign.right;
             else if (cellData is string) return TextAlign.left;

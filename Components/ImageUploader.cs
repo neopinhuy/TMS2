@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
+using Common.Extensions;
 using MVVM;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -11,7 +12,7 @@ namespace Components
     {
         private Observable<string> _path;
         private readonly UserInterface _ui;
-        private const string defaultImg = "image/truck.webp";
+        private const string _defaultImg = "image/truck.webp";
         private HTMLImageElement _img;
         private HTMLFormElement _form;
         public ImageUploader(UserInterface ui)
@@ -21,12 +22,12 @@ namespace Components
 
         public override void Render()
         {
-            _path = new Observable<string>(Entity?[_ui.FieldName]?.ToString());
+            _path = new Observable<string>(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString());
             _path.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
 
-            Html.Instance.ClassName("uploader").HeightRem(_ui.Row ?? 12).ColSpan(2)
+            Html.Take(RootHtmlElement).ClassName("uploader").HeightRem(_ui.Row ?? 12).ColSpan(2)
                 .Label.Attr("for", $"id_{GetHashCode()}")
-                .Img.ClassName("thumb").Src(_path.Data ?? defaultImg).Render();
+                .Img.ClassName("thumb").Src(_path.Data ?? _ui.Label ?? _defaultImg).Render();
 
             _img = Html.Context as HTMLImageElement;
             Html.Instance.End
@@ -40,7 +41,7 @@ namespace Components
             {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
-                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
         }

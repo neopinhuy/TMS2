@@ -39,13 +39,13 @@ namespace Components
 
         public override void Render()
         {
-            _value = new Observable<int?>((int?)Entity?[_ui.FieldName]);
+            _value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
             _value.Subscribe(arg =>
             {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
                 FindMatchItem();
-                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
             Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty).Value(_text)

@@ -18,5 +18,37 @@ namespace Common.Extensions
             var res = (bool?)obj[prop];
             return res.HasValue && res.Value;
         }
+
+        public static object GetComplexPropValue(this object obj, string propName)
+        {
+            var hierarchy = propName.Split('.');
+            var res = obj;
+            foreach (var key in hierarchy)
+            {
+                if (res == null) return null;
+                res = res[key];
+            }
+            return res;
+        }
+
+        public static void SetComplexPropValue(this object obj, string propName, object value)
+        {
+            var hierarchy = propName.Split('.');
+            if (hierarchy.Length == 0) return;
+            if (hierarchy.Length == 1)
+            {
+                obj[propName] = value;
+                return;
+            }
+            var leaf = obj;
+            for (var i = 0; i < hierarchy.Length - 1; i++)
+            {
+                if (leaf == null) return;
+                var key = hierarchy[i];
+                leaf = leaf[key];
+            }
+            if (leaf == null) return;
+            leaf[hierarchy[hierarchy.Length - 1]] = value;
+        }
     }
 }

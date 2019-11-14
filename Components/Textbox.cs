@@ -15,14 +15,14 @@ namespace Components
 
         public override void Render()
         {
-            var value = new Observable<string>(Entity?[_ui.FieldName]?.ToString());
+            var value = new Observable<string>(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString());
             if (_ui.FieldName.HasAnyChar())
             {
                 value.Subscribe(arg =>
                 {
                     var res = ValueChanging?.Invoke(arg);
                     if (res == false) return;
-                    if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                    if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                     ValueChanged?.Invoke(arg);
                 });
             }

@@ -151,7 +151,6 @@ namespace Components.Forms
         private void RenderComponent(ComponentGroup group)
         {
             var column = 0;
-            Component childComponent = null;
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
                 if (!ui.Visibility) continue;
@@ -161,34 +160,7 @@ namespace Components.Forms
                     .EndOf(ElementType.td).TData.ColSpan(colSpan - 1).Render();
                 else Html.Instance.TData.ColSpan(colSpan).ClassName("text-left").Style("padding-left: 0;").Render();
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
-                switch (ui.ComponentType.Trim())
-                {
-                    case "Input":
-                        childComponent = new Textbox(ui);
-                        break;
-                    case "Dropdown":
-                        childComponent = new SearchEntry(ui);
-                        break;
-                    case "Datepicker":
-                        childComponent = new Datepicker(ui);
-                        break;
-                    case "Checkbox":
-                        childComponent = new Checkbox(ui);
-                        break;
-                    case "Image":
-                        childComponent = new ImageUploader(ui);
-                        break;
-                    case "Button":
-                        childComponent = new Button(ui);
-                        break;
-                    case "Number":
-                    case "Currency":
-                        childComponent = new NumberInput(ui);
-                        break;
-                    case "GridView":
-                        childComponent = new GridView(ui);
-                        break;
-                }
+                var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
                 AddChild(childComponent);
                 childComponent.Name = ui.FieldName;
                 childComponent.Disabled = ui.Disabled;

@@ -1,4 +1,5 @@
-﻿using Components.Extensions;
+﻿using Common.Extensions;
+using Components.Extensions;
 using MVVM;
 using System;
 using System.Globalization;
@@ -19,7 +20,7 @@ namespace Components
         public override void Render()
         {
             var isDecimal = _ui.Precision != null && _ui.Precision != 0;
-            var parsed = decimal.TryParse(Entity?[_ui.FieldName]?.ToString(), out decimal parsedVal);
+            var parsed = decimal.TryParse(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString(), out decimal parsedVal);
             if (!parsed)
             {
                 Html.Instance.EndOf(ElementType.td);
@@ -31,7 +32,7 @@ namespace Components
             value.Subscribe(arg => {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
-                if (Entity != null) Entity[_ui.FieldName] = arg.NewData;
+                if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
             Html.Instance.MaskMoney(value, new Options
