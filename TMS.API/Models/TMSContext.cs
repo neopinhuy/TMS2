@@ -66,6 +66,7 @@ namespace TMS.API.Models
         public virtual DbSet<TruckMonitorConfig> TruckMonitorConfig { get; set; }
         public virtual DbSet<TruckType> TruckType { get; set; }
         public virtual DbSet<UoM> UoM { get; set; }
+        public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserInterface> UserInterface { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
@@ -1602,10 +1603,37 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UoM_UserInserted");
 
+                entity.HasOne(d => d.UomType)
+                    .WithMany(p => p.UoM)
+                    .HasForeignKey(d => d.UomTypeId)
+                    .HasConstraintName("FK_UoM_UomType");
+
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.UoMUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_UoM_UserUpdated");
+            });
+
+            modelBuilder.Entity<UomType>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.UomTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UomType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.UomTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_UomType_UserUpdated");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -1822,6 +1850,11 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VolumeRange_UserInserted");
+
+                entity.HasOne(d => d.Uom)
+                    .WithMany(p => p.VolumeRange)
+                    .HasForeignKey(d => d.UomId)
+                    .HasConstraintName("FK_VolumeRange_UoM");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.VolumeRangeUpdatedByNavigation)
