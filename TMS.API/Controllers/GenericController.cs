@@ -13,7 +13,6 @@ using TMS.API.Models;
 namespace TMS.API.Controllers
 {
     [ApiController]
-    [ValidateModel]
     public class GenericController<T> : ControllerBase where T : class
     {
         protected readonly TMSContext db;

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class TruckType
+    public partial class QuotationType
     {
-        public TruckType()
+        public QuotationType()
         {
             Quotation = new HashSet<Quotation>();
-            Truck = new HashSet<Truck>();
         }
 
         public int Id { get; set; }
@@ -20,9 +19,6 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual User InsertedByNavigation { get; set; }
-        public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
-        public virtual ICollection<Truck> Truck { get; set; }
     }
 }

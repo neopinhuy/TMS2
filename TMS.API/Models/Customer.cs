@@ -8,7 +8,6 @@ namespace TMS.API.Models
         public Customer()
         {
             Order = new HashSet<Order>();
-            Quotation = new HashSet<Quotation>();
         }
 
         public int Id { get; set; }
@@ -23,6 +22,5 @@ namespace TMS.API.Models
         public virtual CustomerGroup CustomerGroup { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<Order> Order { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
     }
 }

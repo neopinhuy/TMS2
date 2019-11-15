@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public UoM()
         {
+            DistanceRange = new HashSet<DistanceRange>();
             VolumeRange = new HashSet<VolumeRange>();
             WeightRange = new HashSet<WeightRange>();
         }
@@ -24,6 +25,7 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual UomType UomType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<DistanceRange> DistanceRange { get; set; }
         public virtual ICollection<VolumeRange> VolumeRange { get; set; }
         public virtual ICollection<WeightRange> WeightRange { get; set; }
     }

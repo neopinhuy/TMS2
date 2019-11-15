@@ -452,10 +452,9 @@ namespace Components
         {
             var textAlign = header.TextAlign;
             if (textAlign != null || cellData is null) return textAlign;
-            if (header.Reference.HasAnyChar()) return TextAlign.center;
+            if (header.Reference.HasAnyChar() || cellData is string) return TextAlign.left;
+            if (cellData.GetType().IsNumber()) return TextAlign.right;
             if (cellData is bool || cellData is bool?) return TextAlign.center;
-            else if (cellData.GetType().IsNumber()) return TextAlign.right;
-            else if (cellData is string) return TextAlign.left;
             return TextAlign.center;
         }
 

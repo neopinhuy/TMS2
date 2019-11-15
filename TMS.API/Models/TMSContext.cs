@@ -23,6 +23,7 @@ namespace TMS.API.Models
         public virtual DbSet<CommodityType> CommodityType { get; set; }
         public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
+        public virtual DbSet<ContainerRange> ContainerRange { get; set; }
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
@@ -30,6 +31,7 @@ namespace TMS.API.Models
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
         public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<DistanceRange> DistanceRange { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
         public virtual DbSet<EntityPolicy> EntityPolicy { get; set; }
         public virtual DbSet<Feature> Feature { get; set; }
@@ -52,6 +54,7 @@ namespace TMS.API.Models
         public virtual DbSet<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual DbSet<Policy> Policy { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
+        public virtual DbSet<QuotationType> QuotationType { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<StatePolicy> StatePolicy { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
@@ -334,6 +337,22 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Container_Vendor");
             });
 
+            modelBuilder.Entity<ContainerRange>(entity =>
+            {
+                entity.Property(e => e.Note).HasMaxLength(500);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ContainerRangeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ContainerRange_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ContainerRangeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_ContainerRange_UserUpdated");
+            });
+
             modelBuilder.Entity<ContainerType>(entity =>
             {
                 entity.Property(e => e.Description)
@@ -509,6 +528,31 @@ namespace TMS.API.Models
                     .WithMany(p => p.DepartmentUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Department_UserUpdated");
+            });
+
+            modelBuilder.Entity<DistanceRange>(entity =>
+            {
+                entity.Property(e => e.MaxDistance).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.MinDistance).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Note).HasMaxLength(500);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.DistanceRangeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DistanceRange_UserInserted");
+
+                entity.HasOne(d => d.Uom)
+                    .WithMany(p => p.DistanceRange)
+                    .HasForeignKey(d => d.UomId)
+                    .HasConstraintName("FK_DistanceRange_UoM");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.DistanceRangeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_DistanceRange_UserUpdated");
             });
 
             modelBuilder.Entity<Entity>(entity =>
@@ -1146,14 +1190,23 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Quotation>(entity =>
             {
+                entity.Property(e => e.ContainerRangeId).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
 
-                entity.Property(e => e.TotalContainer).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Vat)
+                    .HasColumnName("VAT")
+                    .HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.CommodityType)
                     .WithMany(p => p.Quotation)
                     .HasForeignKey(d => d.CommodityTypeId)
                     .HasConstraintName("FK_Quotation_CommodityType");
+
+                entity.HasOne(d => d.ContainerRange)
+                    .WithMany(p => p.Quotation)
+                    .HasForeignKey(d => d.ContainerRangeId)
+                    .HasConstraintName("FK_Quotation_ContainerRange");
 
                 entity.HasOne(d => d.ContainerType)
                     .WithMany(p => p.Quotation)
@@ -1170,10 +1223,20 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Quotation_CustomerGroup");
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.DistanceRange)
                     .WithMany(p => p.Quotation)
-                    .HasForeignKey(d => d.CustomerId)
-                    .HasConstraintName("FK_Quotation_Customer");
+                    .HasForeignKey(d => d.DistanceRangeId)
+                    .HasConstraintName("FK_Quotation_DistanceRange");
+
+                entity.HasOne(d => d.EmptyContFromNavigation)
+                    .WithMany(p => p.QuotationEmptyContFromNavigation)
+                    .HasForeignKey(d => d.EmptyContFrom)
+                    .HasConstraintName("FK_Quotation_TerminalEmptyContFrom");
+
+                entity.HasOne(d => d.EmptyContToNavigation)
+                    .WithMany(p => p.QuotationEmptyContToNavigation)
+                    .HasForeignKey(d => d.EmptyContTo)
+                    .HasConstraintName("FK_Quotation_TerminalEmptyContTo");
 
                 entity.HasOne(d => d.From)
                     .WithMany(p => p.QuotationFrom)
@@ -1186,6 +1249,11 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Quotation_UserInserted");
 
+                entity.HasOne(d => d.QuotationType)
+                    .WithMany(p => p.Quotation)
+                    .HasForeignKey(d => d.QuotationTypeId)
+                    .HasConstraintName("FK_Quotation_QuotationType");
+
                 entity.HasOne(d => d.Timebox)
                     .WithMany(p => p.Quotation)
                     .HasForeignKey(d => d.TimeboxId)
@@ -1195,6 +1263,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.QuotationTo)
                     .HasForeignKey(d => d.ToId)
                     .HasConstraintName("FK_Quotation_TerminalTo");
+
+                entity.HasOne(d => d.TruckType)
+                    .WithMany(p => p.Quotation)
+                    .HasForeignKey(d => d.TruckTypeId)
+                    .HasConstraintName("FK_Quotation_TruckType");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.QuotationUpdatedByNavigation)
@@ -1215,6 +1288,15 @@ namespace TMS.API.Models
                     .WithMany(p => p.Quotation)
                     .HasForeignKey(d => d.WeightRangeId)
                     .HasConstraintName("FK_Quotation_WeightRange");
+            });
+
+            modelBuilder.Entity<QuotationType>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -1571,6 +1653,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<TruckType>(entity =>
             {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);

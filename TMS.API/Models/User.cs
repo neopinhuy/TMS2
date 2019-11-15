@@ -22,6 +22,8 @@ namespace TMS.API.Models
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
             ComponentGroupUpdatedByNavigation = new HashSet<ComponentGroup>();
             ContainerInsertedByNavigation = new HashSet<Container>();
+            ContainerRangeInsertedByNavigation = new HashSet<ContainerRange>();
+            ContainerRangeUpdatedByNavigation = new HashSet<ContainerRange>();
             ContainerTypeInsertedByNavigation = new HashSet<ContainerType>();
             ContainerTypeUpdatedByNavigation = new HashSet<ContainerType>();
             ContainerUpdatedByNavigation = new HashSet<Container>();
@@ -36,6 +38,8 @@ namespace TMS.API.Models
             DepartmentInsertedByNavigation = new HashSet<Department>();
             DepartmentLeader = new HashSet<Department>();
             DepartmentUpdatedByNavigation = new HashSet<Department>();
+            DistanceRangeInsertedByNavigation = new HashSet<DistanceRange>();
+            DistanceRangeUpdatedByNavigation = new HashSet<DistanceRange>();
             EntityInsertedByNavigation = new HashSet<Entity>();
             EntityPolicyInsertedByNavigation = new HashSet<EntityPolicy>();
             EntityPolicyUpdatedByNavigation = new HashSet<EntityPolicy>();
@@ -160,6 +164,8 @@ namespace TMS.API.Models
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
+        public virtual ICollection<ContainerRange> ContainerRangeInsertedByNavigation { get; set; }
+        public virtual ICollection<ContainerRange> ContainerRangeUpdatedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerUpdatedByNavigation { get; set; }
@@ -174,6 +180,8 @@ namespace TMS.API.Models
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentLeader { get; set; }
         public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }
+        public virtual ICollection<DistanceRange> DistanceRangeInsertedByNavigation { get; set; }
+        public virtual ICollection<DistanceRange> DistanceRangeUpdatedByNavigation { get; set; }
         public virtual ICollection<Entity> EntityInsertedByNavigation { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicyUpdatedByNavigation { get; set; }
