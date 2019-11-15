@@ -16,6 +16,8 @@ namespace Components
     public class GridView : Component
     {
         private readonly UserInterface _ui;
+        private int _pageIndex = 0;
+        private int _total = 0;
         private Table<object> _table;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
@@ -43,7 +45,7 @@ namespace Components
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
-                foreach (var column in gridPolicy)
+                foreach (var column in gridPolicy.Value)
                 {
                     var header = new Header<object>
                     {
@@ -109,15 +111,22 @@ namespace Components
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
 
-        public async Task LoadData(string dataSource = null)
+        //public async Task LoadData(string dataSource = null)
+        //{
+        //    var rows = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource ?? _ui.DataSourceFilter)
+        //        ?? new List<object>();
+        //    RowData.Data = rows.ToArray();
+        //    if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
+        //}
+
+        public virtual async Task LoadData(string dataSource = null)
         {
-            if (dataSource.HasAnyChar())
-            {
-                _ui.DataSourceFilter = dataSource;
-            }
-            var rows = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, _ui.DataSourceFilter)
-                ?? new List<object>();
-            RowData.Data = rows.ToArray();
+            dataSource = dataSource ?? _ui.DataSourceFilter;
+            var pagingQuery = dataSource + $"&$skip={_pageIndex * _ui.Row}&$top={_ui.Row}&$count=true";
+            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource ?? pagingQuery);
+            if (result == null) return;
+            _total = result.Odata?.Count ?? 0;
+            RowData.Data = result.Value?.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
         }
 

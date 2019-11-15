@@ -119,7 +119,8 @@ namespace Components
 
             var optimizedSource = refEntities.Select(x => Client<object>.Instance
                 .GetListEntity(x.Reference, x.DataSourceOptimized));
-            _refData = await Task.WhenAll(optimizedSource);
+            var refData = await Task.WhenAll(optimizedSource);
+            _refData = refData.Select(x => x.Value);
         }
 
         private Header<T> FormatDataSource(Header<T> header)

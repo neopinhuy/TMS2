@@ -7,7 +7,7 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    
     public class TruckMaintenanceController : GenericController<TruckMaintenance>
     {
         public TruckMaintenanceController(TMSContext context, IElasticClient client) 

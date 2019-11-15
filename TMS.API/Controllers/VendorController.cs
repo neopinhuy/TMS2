@@ -1,66 +1,14 @@
-﻿using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Nest;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[controller]")]
-    public class VendorController : BaseController
+    
+    public class VendorController : GenericController<Vendor>
     {
-        readonly TMSContext db;
-
-        public VendorController(TMSContext context)
+        public VendorController(TMSContext context, IElasticClient client) : base(context, client)
         {
-            db = context;
-        }
-
-        [HttpGet]
-        [EnableQuery]
-        public IQueryable<Vendor> Get()
-        {
-            return db.Vendor.AsQueryable();
-        }
-
-        [HttpGet("{id}")]
-        public async Task<Vendor> Get(int id)
-        {
-            return await db.Vendor.FindAsync(id);
-        }
-
-        [HttpPost]
-        public async Task<Vendor> PostAsync([FromBody]Vendor vendor)
-        {
-            if (vendor == null || !ModelState.IsValid)
-            {
-                HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return null;
-            }
-
-            db.Vendor.Add(vendor);
-            await db.SaveChangesAsync();
-            return vendor;
-        }
-
-        [HttpPut]
-        public async Task<Vendor> PutAsync([FromBody]Vendor vendor)
-        {
-            db.Vendor.Attach(vendor);
-            db.Entry(vendor).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return vendor;
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<bool> Delete(int id)
-        {
-            var Vendor = db.Vendor.Find(id);
-            Vendor.Active = false;
-            await db.SaveChangesAsync();
-            return true;
         }
     }
 }

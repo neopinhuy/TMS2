@@ -8,17 +8,17 @@ namespace Common.Clients
 {
     public class Client
     {
-        public string EntityName { get; set; }
+        private readonly string _entityName;
         public Client(string entityName)
         {
-            EntityName = entityName ?? throw new ArgumentNullException(nameof(entityName));
+            _entityName = entityName ?? throw new ArgumentNullException(nameof(entityName));
         }
 
-        public Task<List<object>> GetList(string filter = null)
+        public Task<OdataResult<object>> GetList(string filter = null)
         {
-            var tcs = new TaskCompletionSource<List<object>>();
+            var tcs = new TaskCompletionSource<OdataResult<object>>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"/api/{EntityName}?{filter}", true);
+            xhr.Open("GET", $"/api/{_entityName}/{filter}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -28,7 +28,7 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<List<object>>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<OdataResult<object>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
@@ -44,7 +44,7 @@ namespace Common.Clients
         {
             var tcs = new TaskCompletionSource<object>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("GET", $"/api/{EntityName}/{id}", true);
+            xhr.Open("GET", $"/api/{_entityName}/{id}", true);
             xhr.OnReadyStateChange = () =>
             {
                 if (xhr.ReadyState != AjaxReadyState.Done)
@@ -66,6 +66,32 @@ namespace Common.Clients
             return tcs.Task;
         }
 
+        public Task<int?> Count(string filter)
+        {
+            var tcs = new TaskCompletionSource<int?>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("GET", $"/api/{_entityName}/count/{filter}", true);
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var parsed = JsonConvert.DeserializeObject<int?>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else
+                {
+                    tcs.SetResult(null);
+                }
+            };
+            xhr.Send();
+            return tcs.Task;
+        }
+
         /// <summary>
         /// Create entity
         /// </summary>
@@ -75,7 +101,7 @@ namespace Common.Clients
         {
             var tcs = new TaskCompletionSource<object>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/{EntityName}", true);
+            xhr.Open("POST", $"/api/{_entityName}", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {
@@ -138,7 +164,7 @@ namespace Common.Clients
         {
             var tcs = new TaskCompletionSource<object>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("PUT", $"/api/{EntityName}", true);
+            xhr.Open("PUT", $"/api/{_entityName}", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {
@@ -165,7 +191,7 @@ namespace Common.Clients
         {
             var tcs = new TaskCompletionSource<bool>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/{EntityName}/Delete", true);
+            xhr.Open("POST", $"/api/{_entityName}/Delete", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {

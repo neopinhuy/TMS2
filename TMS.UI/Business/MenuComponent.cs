@@ -40,7 +40,8 @@ namespace TMS.UI.Business
         {
             Task.Run(async () =>
             {
-                _feature = await Client<Feature>.Instance.GetList();
+                var feature = await Client<Feature>.Instance.GetList();
+                _feature = feature.Value;
                 BuildFeatureTree();
                 Html.Take(".sidebar-wrapper");
                 RenderMenuItems(_feature);

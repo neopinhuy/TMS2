@@ -4,7 +4,7 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    
     public class StatePolicyController : GenericController<StatePolicy>
     {
         public StatePolicyController(TMSContext context, IElasticClient client) 

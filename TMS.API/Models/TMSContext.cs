@@ -1086,20 +1086,28 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<OrderComposition>(entity =>
             {
-                entity.HasKey(e => new { e.CoordinationId, e.OrderDetailId })
-                    .HasName("PK_OrderComposition_1");
-
                 entity.HasOne(d => d.Coordination)
                     .WithMany(p => p.OrderComposition)
                     .HasForeignKey(d => d.CoordinationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderComposition_Coordination");
 
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.OrderCompositionInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderComposition_UserInserted");
+
                 entity.HasOne(d => d.OrderDetail)
                     .WithMany(p => p.OrderComposition)
                     .HasForeignKey(d => d.OrderDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderComposition_OrderDetail");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.OrderCompositionUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_OrderComposition_UserUpdated");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -1481,19 +1489,28 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<TransitionAction>(entity =>
             {
-                entity.HasKey(e => new { e.TransitionId, e.ActionId });
-
                 entity.HasOne(d => d.Action)
                     .WithMany(p => p.TransitionAction)
                     .HasForeignKey(d => d.ActionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TransitionAction_Action");
 
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.TransitionActionInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TransitionAction_UserInserted");
+
                 entity.HasOne(d => d.Transition)
                     .WithMany(p => p.TransitionAction)
                     .HasForeignKey(d => d.TransitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TransitionAction_Transition");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.TransitionActionUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_TransitionAction_UserUpdated");
             });
 
             modelBuilder.Entity<Truck>(entity =>

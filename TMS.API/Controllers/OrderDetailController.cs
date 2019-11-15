@@ -4,7 +4,7 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    
     public class OrderDetailController : GenericController<OrderDetail>
     {
         public OrderDetailController(TMSContext context, IElasticClient client) : base(context, client)

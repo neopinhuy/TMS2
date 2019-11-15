@@ -1,5 +1,6 @@
 ﻿using Common.Extensions;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
@@ -7,13 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Attributes;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [ApiController]
-    public class GenericController<T> : ControllerBase where T : class
+    public class GenericController<T> : ODataController where T : class
     {
         protected readonly TMSContext db;
         protected IElasticClient _client;
@@ -26,10 +25,29 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet]
-        [EnableQuery]
-        public virtual IQueryable<T> Get()
+        //[EnableQuery]
+        public virtual async Task<IActionResult> Get(ODataQueryOptions<T> options)
         {
-            return db.Set<T>().AsQueryable();
+            options.Validate(new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All
+            });
+
+            var results = options.ApplyTo(db.Set<T>().AsQueryable());
+            return Ok(results);
+        }
+
+        protected virtual IQueryable<T> ApplyMandatoryFilter(IQueryable<T> query)
+        {
+            // Do nothing, by default
+            return query;
+        }
+
+        [HttpGet("count")]
+        public virtual long? Count(ODataQueryOptions query)
+        {
+            var data = db.Set<T>().AsQueryable();
+            return query.Count?.GetEntityCount(query.Filter?.ApplyTo(data, new ODataQuerySettings()) ?? data);
         }
 
         [HttpGet("BuildIndex")]

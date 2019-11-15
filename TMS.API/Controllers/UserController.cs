@@ -6,7 +6,7 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[controller]")]
+    
     public class UserController : GenericController<User>
     {
         public UserController(TMSContext context, IElasticClient client) : base(context, client)

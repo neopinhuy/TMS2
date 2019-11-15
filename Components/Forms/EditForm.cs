@@ -108,9 +108,9 @@ namespace Components.Forms
             {
                 var componentGroup = await Client<ComponentGroup>.Instance
                     .GetList($"?$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Name}'");
-                componentGroup = BuildTree(componentGroup);
+                var groupTree = BuildTree(componentGroup.Value);
                 Html.Take(RootHtmlElement);
-                RenderGroup(componentGroup);
+                RenderGroup(groupTree);
                 AfterRendered?.Invoke();
             });
         }

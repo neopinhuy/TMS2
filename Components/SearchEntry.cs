@@ -89,17 +89,17 @@ namespace Components
         {
             var dataSource = Utils.FormatWith(DataSourceFilter, Entity);
             var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
-            return source.ToArray();
+            return source?.Value?.ToArray();
         }
 
         public async Task RenderSuggestion()
         {
             if (GridPolicy.Nothing())
             {
-                GridPolicy = await Client<GridPolicy>.Instance.GetList(
+                var policies = await Client<GridPolicy>.Instance.GetList(
                         $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
                         $"FeatureId eq null and Entity/Name eq '{_ui.Reference.Name}'");
-                GridPolicy = GridPolicy.OrderBy(x => x.Order);
+                GridPolicy = policies.Value.OrderBy(x => x.Order);
             }
             var position = InteractiveElement.GetBoundingClientRect();
             var headers = GridPolicy.Select(column => new Header<object>()

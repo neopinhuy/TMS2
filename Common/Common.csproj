@@ -238,6 +238,7 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Clients\Client.cs" />
+    <Compile Include="Clients\OdataResult.cs" />
     <Compile Include="Extensions\BridgeExtensions.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

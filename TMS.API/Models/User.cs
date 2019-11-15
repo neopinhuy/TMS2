@@ -72,6 +72,8 @@ namespace TMS.API.Models
             MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
             NationalityUpdatedByNavigation = new HashSet<Nationality>();
+            OrderCompositionInsertedByNavigation = new HashSet<OrderComposition>();
+            OrderCompositionUpdatedByNavigation = new HashSet<OrderComposition>();
             OrderDetailInsertedByNavigation = new HashSet<OrderDetail>();
             OrderDetailUpdatedByNavigation = new HashSet<OrderDetail>();
             OrderInsertedByNavigation = new HashSet<Order>();
@@ -88,6 +90,8 @@ namespace TMS.API.Models
             TicketStateUpdatedByNavigation = new HashSet<TicketState>();
             TimeboxInsertedByNavigation = new HashSet<Timebox>();
             TimeboxUpdatedByNavigation = new HashSet<Timebox>();
+            TransitionActionInsertedByNavigation = new HashSet<TransitionAction>();
+            TransitionActionUpdatedByNavigation = new HashSet<TransitionAction>();
             TransitionInsertedByNavigation = new HashSet<Transition>();
             TransitionUpdatedByNavigation = new HashSet<Transition>();
             TruckMaintenanceAccountableUser = new HashSet<TruckMaintenance>();
@@ -214,6 +218,8 @@ namespace TMS.API.Models
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
         public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
+        public virtual ICollection<OrderComposition> OrderCompositionInsertedByNavigation { get; set; }
+        public virtual ICollection<OrderComposition> OrderCompositionUpdatedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailInsertedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailUpdatedByNavigation { get; set; }
         public virtual ICollection<Order> OrderInsertedByNavigation { get; set; }
@@ -230,6 +236,8 @@ namespace TMS.API.Models
         public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }
         public virtual ICollection<Timebox> TimeboxInsertedByNavigation { get; set; }
         public virtual ICollection<Timebox> TimeboxUpdatedByNavigation { get; set; }
+        public virtual ICollection<TransitionAction> TransitionActionInsertedByNavigation { get; set; }
+        public virtual ICollection<TransitionAction> TransitionActionUpdatedByNavigation { get; set; }
         public virtual ICollection<Transition> TransitionInsertedByNavigation { get; set; }
         public virtual ICollection<Transition> TransitionUpdatedByNavigation { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountableUser { get; set; }

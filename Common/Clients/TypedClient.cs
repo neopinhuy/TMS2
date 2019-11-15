@@ -20,10 +20,10 @@ namespace Common.Clients
 
         public static Client<T> Instance => new Client<T>();
 
-        public Task<List<T>> GetList(string filter = null)
+        public Task<OdataResult<T>> GetList(string filter = null)
         {
             var type = typeof(T);
-            var tcs = new TaskCompletionSource<List<T>>();
+            var tcs = new TaskCompletionSource<OdataResult<T>>();
             var xhr = new XMLHttpRequest();
             xhr.Open("GET", $"{BaseUrl}/api/{type.Name}{filter}", true);
             xhr.OnReadyStateChange = () =>
@@ -35,7 +35,7 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<List<T>>(xhr.ResponseText);
+                    var parsed = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
                     tcs.SetResult(parsed);
                 }
                 else
@@ -47,13 +47,13 @@ namespace Common.Clients
             return tcs.Task;
         }
 
-        public Task<List<object>> GetListEntity(string entity, string filter = null)
+        public Task<OdataResult<object>> GetListEntity(string entity, string filter = null)
         {
             var refType = Type.GetType("TMS.API.Models." + entity);
             var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
             var httpGetList = clientType.GetMethod("GetList");
             var client = Activator.CreateInstance(clientType);
-            return httpGetList.Invoke(client, filter).As<Task<List<object>>>();
+            return httpGetList.Invoke(client, filter).As<Task<OdataResult<object>>>();
         }
 
         public Task<T> Get(int id)
