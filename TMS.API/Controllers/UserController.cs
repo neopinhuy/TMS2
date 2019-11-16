@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Nest;
 using System.Linq;
+using System.Threading.Tasks;
+using TMS.API.Attributes;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    
     public class UserController : GenericController<User>
     {
         public UserController(TMSContext context, IElasticClient client) : base(context, client)
@@ -14,9 +17,9 @@ namespace TMS.API.Controllers
 
         }
 
-        [HttpGet("{groupName}")]
-        [EnableQuery]
-        public IQueryable<User> GetUserGroup(string groupName)
+        [HttpGet("api/User/{groupName}")]
+        [ContractResolver(AllowNested = true)]
+        public async Task<IActionResult> GetUserByGroup(string groupName, ODataQueryOptions<User> options)
         {
             var query =
                 from groupRole in db.GroupRole
@@ -26,7 +29,16 @@ namespace TMS.API.Controllers
                 where groupRole.Name == groupName
                 select user;
 
-            return query;
+            var appliedQuery = options.ApplyTo(query) as IQueryable<User>;
+            var result = await appliedQuery.ToListAsync();
+            return Ok(new OdataResult<User>
+            {
+                Value = result,
+                Odata = new Odata
+                {
+                    Count = options.Count?.Value == true ? query.Count() : 0
+                }
+            });
         }
     }
 }

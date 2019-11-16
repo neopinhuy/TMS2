@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Common.Clients
+namespace TMS.API.Models
 {
     public class Odata
     {

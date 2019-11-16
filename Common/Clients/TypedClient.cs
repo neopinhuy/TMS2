@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Html5;
 using Newtonsoft.Json;
+using TMS.API.Models;
 
 namespace Common.Clients
 {
@@ -121,7 +122,7 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value">Path of uploaded image</param>
         /// <returns></returns>
-        public Task<List<string>> PostFilesAsync(FormData value, Action progressHandler = null)
+        public Task<List<string>> PostFilesAsync(FormData value, System.Action progressHandler = null)
         {
             var tcs = new TaskCompletionSource<List<string>>();
             var xhr = new XMLHttpRequest();

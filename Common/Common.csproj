@@ -141,6 +141,9 @@
     <Compile Include="..\TMS.API\Models\Objective.cs">
       <Link>Models\Objective.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\OdataResult.cs">
+      <Link>Models\OdataResult.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\OperationType.cs">
       <Link>Models\OperationType.cs</Link>
     </Compile>
@@ -238,7 +241,6 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Clients\Client.cs" />
-    <Compile Include="Clients\OdataResult.cs" />
     <Compile Include="Extensions\BridgeExtensions.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />

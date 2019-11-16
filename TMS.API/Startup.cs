@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNet.OData.Builder;
+﻿using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OData.Edm;
 using Newtonsoft.Json;
+using System;
 using TMS.API.Extensions;
 using TMS.API.Models;
 

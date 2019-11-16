@@ -24,12 +24,18 @@ namespace TMS.API.Controllers
         [HttpGet]
         public virtual IActionResult Get(ODataQueryOptions<T> options)
         {
+            var query = db.Set<T>().AsQueryable();
+            return ApplyQuery(options, query);
+        }
+
+        protected IActionResult ApplyQuery(ODataQueryOptions<T> options, IQueryable<T> query)
+        {
             options.Validate(new ODataValidationSettings()
             {
                 AllowedQueryOptions = AllowedQueryOptions.All
             });
 
-            var results = options.ApplyTo(db.Set<T>().AsQueryable());
+            var results = options.ApplyTo(query);
             return Ok(results);
         }
 
