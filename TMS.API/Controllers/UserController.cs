@@ -18,7 +18,6 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet("api/User/{groupName}")]
-        [ContractResolver(AllowNested = true)]
         public async Task<IActionResult> GetUserByGroup(string groupName, ODataQueryOptions<User> options)
         {
             var query =

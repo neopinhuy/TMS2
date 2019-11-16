@@ -27,7 +27,7 @@ namespace TMS.API
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new IgnoreNestedResolver();
+                    options.SerializerSettings.ContractResolver = new IgnoreNullOrEmptyEnumResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
