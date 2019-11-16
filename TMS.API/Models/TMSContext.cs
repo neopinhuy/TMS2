@@ -1739,33 +1739,25 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(200);
+                entity.Property(e => e.Address).HasMaxLength(200);
 
                 entity.Property(e => e.Address2).HasMaxLength(200);
 
                 entity.Property(e => e.Avatar).HasMaxLength(1000);
 
-                entity.Property(e => e.FirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.FirstName).HasMaxLength(50);
 
                 entity.Property(e => e.FullName)
-                    .IsRequired()
                     .HasMaxLength(151)
                     .HasComputedColumnSql("(([FirstName]+' ')+[LastName])");
 
-                entity.Property(e => e.LastName)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.LastName).HasMaxLength(100);
 
                 entity.Property(e => e.Passport)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1774,7 +1766,6 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Ssn)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

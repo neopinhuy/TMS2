@@ -122,7 +122,7 @@ namespace TMS.API.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get; set; }
-        public DateTime DoB { get; set; }
+        public DateTime? DoB { get; set; }
         public string Ssn { get; set; }
         public string Passport { get; set; }
         public string Address { get; set; }
@@ -134,12 +134,12 @@ namespace TMS.API.Models
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
         public string Avatar { get; set; }
+        public int? SupervisorId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int? InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
-        public int? SupervisorId { get; set; }
 
         public virtual Contract Contract { get; set; }
         public virtual Department Department { get; set; }
