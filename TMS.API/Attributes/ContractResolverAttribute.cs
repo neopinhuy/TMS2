@@ -23,9 +23,11 @@ namespace TMS.API.Attributes
                 return;
             }
 
-            var resolver = AllowNested ? new DefaultContractResolver() : new IgnoreNestedResolver();
             var settings = JsonSerializerSettingsProvider.CreateSerializerSettings();
-            settings.ContractResolver = resolver;
+            if (AllowNested)
+                settings.ContractResolver = new IgnoreNullOrEmptyEnumResolver();
+            else
+                settings.ContractResolver = new IgnoreNestedResolver();
             var formatter = new JsonOutputFormatter(settings, ArrayPool<char>.Shared);
             var okResult = context.Result as ObjectResult;
             okResult.Formatters.Add(formatter);

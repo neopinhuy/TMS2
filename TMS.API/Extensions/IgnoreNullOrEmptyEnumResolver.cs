@@ -1,12 +1,11 @@
-﻿using Common.Extensions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Collections;
 using System.Reflection;
 
 namespace TMS.API.Extensions
 {
-    public class IgnoreNestedResolver : DefaultContractResolver
+    public class IgnoreNullOrEmptyEnumResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
@@ -24,8 +23,7 @@ namespace TMS.API.Extensions
                         {
                             if (!enumerable.GetEnumerator().MoveNext()) return false;
                         }
-                        var isSimple = prop.PropertyType.IsSimple();
-                        return isSimple;
+                        return true;
                     case MemberTypes.Field:
                         var field = instance.GetType().GetField(member.Name);
                         value = field.GetValue(instance);
@@ -34,7 +32,7 @@ namespace TMS.API.Extensions
                         {
                             if (!valEnumerable.GetEnumerator().MoveNext()) return false;
                         }
-                        return field.FieldType.IsSimple();
+                        return true;
                     default:
                         return true;
 
