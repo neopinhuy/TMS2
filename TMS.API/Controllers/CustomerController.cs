@@ -6,25 +6,13 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    
     public class CustomerController : GenericController<Customer>
     {
         public CustomerController(TMSContext context, IElasticClient client) : base(context, client)
         {
         }
 
-        public override async Task<ActionResult<Customer>> PostAsync([FromBody] Customer entity)
-        {
-            if (entity == null || !ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            db.Customer.Add(entity);
-            db.User.Add(entity.User);
-            await db.SaveChangesAsync();
-            return entity;
-        }
-
+        [HttpPut("api/[Controller]")]
         public override async Task<ActionResult<Customer>> PutAsync([FromBody] Customer entity)
         {
             if (entity == null || !ModelState.IsValid)

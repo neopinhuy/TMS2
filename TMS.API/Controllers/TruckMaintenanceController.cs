@@ -15,7 +15,7 @@ namespace TMS.API.Controllers
         {
         }
 
-        [HttpPut]
+        [HttpPut("api/[Controller]")]
         public override async Task<ActionResult<TruckMaintenance>> PutAsync([FromBody]TruckMaintenance maintenance)
         {
             if (maintenance == null || !ModelState.IsValid)
