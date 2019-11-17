@@ -128,11 +128,20 @@ namespace Components
         {
             dataSource = dataSource ?? _ui.DataSourceFilter;
             var pagingQuery = dataSource + $"&$skip={_pageIndex * _ui.Row}&$top={_ui.Row}&$count=true";
-            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, pagingQuery);
+            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name,
+                _ui.Row > 0 ? pagingQuery : dataSource);
             if (result == null) return;
             _total = result.Odata?.Count ?? 0;
+            UpdatePagination();
             RowData.Data = result.Value?.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
+        }
+
+        private void UpdatePagination()
+        {
+            if (_ui.Row is null || _ui.Row == 0) return;
+            if (_paginator is null) return;
+            Html.Take(_paginator).Pagination("updateItems", _total);
         }
 
         private void Pagination()
@@ -159,11 +168,11 @@ namespace Components
             confirm.DeleteConfirmed += async () =>
             {
                 confirm.Dispose();
-                await DeleteConfirmed();
+                await Delete();
             };
         }
 
-        public virtual async Task DeleteConfirmed()
+        public virtual async Task Delete()
         {
             var entity = _ui.Reference.Name;
             var ids = RowData.Data
@@ -174,6 +183,7 @@ namespace Components
             if (success)
             {
                 Toast.Success("Delete succeeded");
+                RowData.Data.Where(x => (bool?)x["__selected__"] == true).ForEach(RowData.Remove);
                 LoadData();
             }
             else

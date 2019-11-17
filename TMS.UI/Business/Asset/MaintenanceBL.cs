@@ -39,6 +39,8 @@ namespace TMS.UI.Business.Asset
         {
             var maintenanceGrid = FindComponent("Maintenance") as GridView;
             maintenanceGrid.LoadData();
+            var detailGrid = FindComponent("TruckMaintenanceDetail") as GridView;
+            detailGrid.LoadData();
         }
 
         public void EditMaintenance(TruckMaintenance maintenance)
