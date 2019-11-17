@@ -28,7 +28,6 @@ namespace Components
                 .Attr("data-event", _ui.Events)
                 .Event(EventType.Click, () =>
                 {
-                    // Find Parent component that has the event
                     var parent = Parent;
                     while (parent != null && parent[_ui.Events] == null)
                     {

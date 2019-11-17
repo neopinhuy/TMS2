@@ -5,7 +5,6 @@ using Components.Extensions;
 using Components.Forms;
 using MVVM;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -19,6 +18,7 @@ namespace Components
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
+        private HTMLElement _paginator;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
 
@@ -45,57 +45,70 @@ namespace Components
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
-                foreach (var column in gridPolicy.Value)
-                {
-                    var header = new Header<object>
-                    {
-                        FieldName = column.FieldName,
-                        Format = column.Format,
-                        Order = column.Order,
-                        GroupName = column.GroupName,
-                        HeaderText = column.ShortDesc,
-                        Description = column.Description,
-                        Reference = column.Reference?.Name,
-                        DataSource = column.DataSource,
-                        RefValueField = "Id",
-                        HasFilter = column.HasFilter,
-                        Frozen = column.Frozen,
-                        Editable = column.Editable,
-                        Disabled = column.Disabled,
-                        Component = column.Component,
-                    };
-                    var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
-                    if (parsed) header.TextAlign = textAlign;
-                    Header.Add(header);
-                }
-                Html.Take(RootHtmlElement);
+                Header.AddRange(gridPolicy.Value.Select(MapToHeader).ToArray());
                 var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
-                if (_ui.Events.HasAnyChar())
-                {
-                    var events = JsonConvert.DeserializeObject<object>(_ui.Events);
-                    var dblClick = events[EventType.DblClick.ToString()]?.ToString();
-                    if (dblClick.HasAnyChar())
-                    {
-                        Html.Instance.DataAttr("dblclick", dblClick);
-                        tableParams.RowDblClick = row =>
-                        {
-                            RootComponent.ExecuteEvent(dblClick, row, RowData, Header);
-                        };
-                    }
-                }
-                if (Entity != null && _ui.DataSourceFilter.HasAnyChar())
-                {
-                    _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
-                }
+                BindingEvents(tableParams);
+                FormatDatasource();
                 await LoadData();
                 _table = new Table<object>(tableParams)
                 {
                     Entity = Entity
                 };
                 _table.BodyContextMenu += RenderContextMenu;
-                Html.Take(RootHtmlElement);
+                Html.Take(RootHtmlElement).Clear();
                 _table.Render();
+                Pagination();
             });
+        }
+
+        private void FormatDatasource()
+        {
+            if (Entity == null || !_ui.DataSourceFilter.HasAnyChar()) return;
+            _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
+        }
+
+        private void BindingEvents(TableParam<object> tableParams)
+        {
+            if (!_ui.Events.HasAnyChar()) return;
+            var events = JsonConvert.DeserializeObject<object>(_ui.Events);
+            var dblClick = events[EventType.DblClick.ToString()]?.ToString();
+            if (dblClick.HasAnyChar())
+            {
+                Html.Instance.DataAttr("dblclick", dblClick);
+                tableParams.RowDblClick = row =>
+                {
+                    var parent = Parent;
+                    while (parent != null && parent[dblClick] == null)
+                    {
+                        parent = parent.Parent;
+                    }
+                    parent.ExecuteEvent(dblClick, row, RowData, Header);
+                };
+            }
+        }
+
+        private Header<object> MapToHeader(GridPolicy column)
+        {
+            var header = new Header<object>
+            {
+                FieldName = column.FieldName,
+                Format = column.Format,
+                Order = column.Order,
+                GroupName = column.GroupName,
+                HeaderText = column.ShortDesc,
+                Description = column.Description,
+                Reference = column.Reference?.Name,
+                DataSource = column.DataSource,
+                RefValueField = "Id",
+                HasFilter = column.HasFilter,
+                Frozen = column.Frozen,
+                Editable = column.Editable,
+                Disabled = column.Disabled,
+                Component = column.Component,
+            };
+            var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
+            if (parsed) header.TextAlign = textAlign;
+            return header;
         }
 
         public void RenderContextMenu(Event e)
@@ -110,24 +123,33 @@ namespace Components
                 .Li.Event(EventType.Click, DeleteSelected)
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
-
-        //public async Task LoadData(string dataSource = null)
-        //{
-        //    var rows = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource ?? _ui.DataSourceFilter)
-        //        ?? new List<object>();
-        //    RowData.Data = rows.ToArray();
-        //    if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
-        //}
-
+        
         public virtual async Task LoadData(string dataSource = null)
         {
             dataSource = dataSource ?? _ui.DataSourceFilter;
             var pagingQuery = dataSource + $"&$skip={_pageIndex * _ui.Row}&$top={_ui.Row}&$count=true";
-            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource ?? pagingQuery);
+            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, pagingQuery);
             if (result == null) return;
             _total = result.Odata?.Count ?? 0;
             RowData.Data = result.Value?.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
+        }
+
+        private void Pagination()
+        {
+            if (_ui.Row is null || _ui.Row == 0) return;
+            // Render paginator here
+            if (_paginator is null)
+            {
+                Html.Take(RootHtmlElement).Ul.ClassName("pagination");
+                _paginator = Html.Context as HTMLElement;
+            }
+            Html.Take(_paginator).Pagination(_total, _ui.Row ?? 0, (page, e) =>
+            {
+                (e["preventDefault"] as System.Action)();
+                _pageIndex = page - 1;
+                LoadData();
+            });
         }
 
         public void DeleteSelected()

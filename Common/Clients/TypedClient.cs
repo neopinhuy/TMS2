@@ -36,8 +36,10 @@ namespace Common.Clients
 
                 if (xhr.Status == 200 || xhr.Status == 204)
                 {
-                    var parsed = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
-                    tcs.SetResult(parsed);
+                    var json = JSON.Parse(xhr.ResponseText);
+                    var result = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
+                    result.Odata = new Odata() { Count = (int?)json["@odata.count"] };
+                    tcs.SetResult(result);
                 }
                 else
                 {

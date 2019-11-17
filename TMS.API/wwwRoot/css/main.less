@@ -620,6 +620,25 @@ td {
     }
 }
 
+.pagination li {
+    cursor: pointer;
+    display: list-item;
+    background-color: #ffffff;
+    color: #1d1d1d;
+    border: 1px solid #dfdfdf;
+    margin: 0.25rem;
+    -webkit-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+    min-width: 2.5rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    &:hover:not(.active) {
+        background-color: rgba(29, 29, 29, 0.1);
+    }
+}
+
 ::-webkit-scrollbar {
     height: 0.65rem;
     width: 0.65rem;

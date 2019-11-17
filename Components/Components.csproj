@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Checkbox.cs" />
     <Compile Include="Extensions\ComponentFactory.cs" />
+    <Compile Include="Extensions\Paginator.cs" />
     <Compile Include="Forms\ConfirmDialog.cs" />
     <Compile Include="NumberInput.cs" />
     <Compile Include="Datepicker.cs" />
@@ -101,6 +102,9 @@
     </Reference>
     <Reference Include="Retyped.jquery-maskmoney, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Retyped.jquery-maskmoney.3.0.6733\lib\net40\Retyped.jquery-maskmoney.dll</HintPath>
+    </Reference>
+    <Reference Include="Retyped.jquery.simplepagination, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Retyped.jquery.simplepagination.1.4.6733\lib\net40\Retyped.jquery.simplepagination.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

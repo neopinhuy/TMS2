@@ -53,17 +53,6 @@ namespace Components
                 ele.Style.Display = "";
         }
 
-        public virtual Component RootComponent
-        {
-            get
-            {
-                var result = this;
-                while (result.Parent != null)
-                    result = result.Parent;
-                return result;
-            }
-        }
-
         public void AddChild(Component child)
         {
             if (Children is null) Children = new List<Component>();

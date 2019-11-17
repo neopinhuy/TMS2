@@ -4,7 +4,7 @@ namespace TMS.API.Models
 {
     public class Odata
     {
-        public int Count { get; set; }
+        public int? Count { get; set; }
         public string Context { get; set; }
     }
 
