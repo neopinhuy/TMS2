@@ -637,6 +637,13 @@ td {
     &:hover:not(.active) {
         background-color: rgba(29, 29, 29, 0.1);
     }
+
+    &.active, &.disabled {
+        padding-top: 0.3rem;
+        font-size: 0.95rem;
+        pointer-events: none;
+        color: #e4e4e4;
+    }
 }
 
 ::-webkit-scrollbar {
