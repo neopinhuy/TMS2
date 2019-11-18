@@ -80,6 +80,8 @@ namespace TMS.API.Models
             OrderUpdatedByNavigation = new HashSet<Order>();
             PaymentPolicyInsertedByNavigation = new HashSet<PaymentPolicy>();
             PaymentPolicyUpdatedByNavigation = new HashSet<PaymentPolicy>();
+            PriceTypeInsertedByNavigation = new HashSet<PriceType>();
+            PriceTypeUpdatedByNavigation = new HashSet<PriceType>();
             QuotationInsertedByNavigation = new HashSet<Quotation>();
             QuotationUpdatedByNavigation = new HashSet<Quotation>();
             StatePolicyInsertedByNavigation = new HashSet<StatePolicy>();
@@ -226,6 +228,8 @@ namespace TMS.API.Models
         public virtual ICollection<Order> OrderUpdatedByNavigation { get; set; }
         public virtual ICollection<PaymentPolicy> PaymentPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<PaymentPolicy> PaymentPolicyUpdatedByNavigation { get; set; }
+        public virtual ICollection<PriceType> PriceTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<PriceType> PriceTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationInsertedByNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyInsertedByNavigation { get; set; }

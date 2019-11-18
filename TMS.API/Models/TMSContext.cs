@@ -53,8 +53,8 @@ namespace TMS.API.Models
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual DbSet<Policy> Policy { get; set; }
+        public virtual DbSet<PriceType> PriceType { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
-        public virtual DbSet<QuotationType> QuotationType { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<StatePolicy> StatePolicy { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
@@ -799,7 +799,7 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Format)
+                entity.Property(e => e.FormatCell)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1022,20 +1022,15 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.AdvancedPaid).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.ContactAddress).HasMaxLength(200);
 
-                entity.Property(e => e.ContactFirstName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.ContactFirstName).HasMaxLength(50);
 
-                entity.Property(e => e.ContactLastName)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.ContactLastName).HasMaxLength(100);
 
                 entity.Property(e => e.ContactNumber)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -1044,39 +1039,57 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ContactSsn)
-                    .IsRequired()
                     .HasColumnName("ContactSSN")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DiscountMoney).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(4, 2)");
+
+                entity.Property(e => e.TotalPriceAfterDiscount).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.TotalPriceAfterTax).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.TotalPriceBeforeDiscount).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_Customer");
+
+                entity.HasOne(d => d.EmptyContFrom)
+                    .WithMany(p => p.OrderEmptyContFrom)
+                    .HasForeignKey(d => d.EmptyContFromId)
+                    .HasConstraintName("FK_Order_Terminal_EmptyContFrom");
+
+                entity.HasOne(d => d.EmptyContTo)
+                    .WithMany(p => p.OrderEmptyContTo)
+                    .HasForeignKey(d => d.EmptyContToId)
+                    .HasConstraintName("FK_Order_Terminal_EmptyContTo");
 
                 entity.HasOne(d => d.From)
                     .WithMany(p => p.OrderFrom)
                     .HasForeignKey(d => d.FromId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_TerminalFrom");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.OrderIdNavigation)
-                    .HasForeignKey<Order>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_TerminalTo");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.OrderInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_UserInserted");
+
+                entity.HasOne(d => d.Quotation)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.QuotationId)
+                    .HasConstraintName("FK_Order_Quotation");
+
+                entity.HasOne(d => d.To)
+                    .WithMany(p => p.OrderTo)
+                    .HasForeignKey(d => d.ToId)
+                    .HasConstraintName("FK_Order_TerminalTo");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.OrderUpdatedByNavigation)
@@ -1196,6 +1209,26 @@ namespace TMS.API.Models
                     .HasMaxLength(150);
             });
 
+            modelBuilder.Entity<PriceType>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.PriceTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PriceType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.PriceTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_PriceType_UserUpdated");
+            });
+
             modelBuilder.Entity<Quotation>(entity =>
             {
                 entity.Property(e => e.ContainerRangeId).HasDefaultValueSql("((0))");
@@ -1260,7 +1293,7 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.QuotationType)
                     .WithMany(p => p.Quotation)
                     .HasForeignKey(d => d.QuotationTypeId)
-                    .HasConstraintName("FK_Quotation_QuotationType");
+                    .HasConstraintName("FK_Quotation_PriceType");
 
                 entity.HasOne(d => d.Timebox)
                     .WithMany(p => p.Quotation)
@@ -1296,15 +1329,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.Quotation)
                     .HasForeignKey(d => d.WeightRangeId)
                     .HasConstraintName("FK_Quotation_WeightRange");
-            });
-
-            modelBuilder.Entity<QuotationType>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<Role>(entity =>

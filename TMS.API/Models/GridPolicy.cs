@@ -17,7 +17,8 @@ namespace TMS.API.Models
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
         public string GroupName { get; set; }
-        public string Format { get; set; }
+        public string FormatCell { get; set; }
+        public string FormatRow { get; set; }
         public string TextAlign { get; set; }
         public bool Hidden { get; set; }
         public string EditEvent { get; set; }

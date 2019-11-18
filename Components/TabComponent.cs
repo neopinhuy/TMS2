@@ -5,7 +5,7 @@ namespace Components
 {
     public abstract class TabComponent : Component
     {
-        public abstract string Title { get; set; }
+        public virtual string Title { get; set; }
 
         /// <summary>
         /// Check if the component has been mounted to the main tab

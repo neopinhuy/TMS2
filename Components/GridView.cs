@@ -92,7 +92,8 @@ namespace Components
             var header = new Header<object>
             {
                 FieldName = column.FieldName,
-                Format = column.Format,
+                FormatCell = column.FormatCell,
+                FormatRow = column.FormatRow,
                 Order = column.Order,
                 GroupName = column.GroupName,
                 HeaderText = column.ShortDesc,

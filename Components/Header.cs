@@ -16,7 +16,8 @@ namespace Components
         public bool HasFilter { get; set; }
         public bool Editable { get; set; }
         public bool Disabled { get; set; }
-        public string Format { get; set; }
+        public string FormatCell { get; set; }
+        public string FormatRow { get; set; }
         public string Icon { get; set; }
         public string Component { get; set; }
         public int? Order { get; set; }

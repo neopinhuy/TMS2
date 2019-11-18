@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class QuotationType
+    public partial class PriceType
     {
-        public QuotationType()
+        public PriceType()
         {
             Quotation = new HashSet<Quotation>();
         }
@@ -19,6 +19,8 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual User InsertedByNavigation { get; set; }
+        public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
     }
 }

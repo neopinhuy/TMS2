@@ -165,11 +165,11 @@
     <Compile Include="..\TMS.API\Models\Policy.cs">
       <Link>Models\Policy.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\PriceType.cs">
+      <Link>Models\PriceType.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Quotation.cs">
       <Link>Models\Quotation.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\QuotationType.cs">
-      <Link>Models\QuotationType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Role.cs">
       <Link>Models\Role.cs</Link>

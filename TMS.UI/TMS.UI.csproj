@@ -45,6 +45,7 @@
     <Compile Include="Business\MenuComponent.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Business\Asset\ContainerBL.cs" />
+    <Compile Include="Business\Sale\SaleOrderBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

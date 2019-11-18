@@ -9,7 +9,10 @@ namespace TMS.API.Models
         {
             CoordinationFrom = new HashSet<Coordination>();
             CoordinationTo = new HashSet<Coordination>();
+            OrderEmptyContFrom = new HashSet<Order>();
+            OrderEmptyContTo = new HashSet<Order>();
             OrderFrom = new HashSet<Order>();
+            OrderTo = new HashSet<Order>();
             QuotationEmptyContFromNavigation = new HashSet<Quotation>();
             QuotationEmptyContToNavigation = new HashSet<Quotation>();
             QuotationFrom = new HashSet<Quotation>();
@@ -35,10 +38,12 @@ namespace TMS.API.Models
         public virtual User IdNavigation { get; set; }
         public virtual Nationality Nationality { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual Order OrderIdNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationFrom { get; set; }
         public virtual ICollection<Coordination> CoordinationTo { get; set; }
+        public virtual ICollection<Order> OrderEmptyContFrom { get; set; }
+        public virtual ICollection<Order> OrderEmptyContTo { get; set; }
         public virtual ICollection<Order> OrderFrom { get; set; }
+        public virtual ICollection<Order> OrderTo { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContFromNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContToNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationFrom { get; set; }

@@ -105,7 +105,8 @@ namespace Components
             var headers = GridPolicy.Select(column => new Header<object>()
             {
                 FieldName = column.FieldName,
-                Format = column.Format,
+                FormatCell = column.FormatCell,
+                FormatRow = column.FormatRow,
                 Order = column.Order,
                 HeaderText = column.ShortDesc,
                 Description = column.Description,

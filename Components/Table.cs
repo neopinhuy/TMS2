@@ -318,7 +318,7 @@ namespace Components
             RenderCellButton(row, header);
             if (string.IsNullOrEmpty(header.FieldName)) return;
             var cellData = row.GetComplexPropValue(header.FieldName);
-            var cellText = GetCellText(header, cellData);
+            var cellText = GetCellText(header, cellData, row);
             header.TextAlign = CalcTextAlign(header, cellData);
             Html.Instance.TextAlign(header.TextAlign);
             if (cellData is bool cellBool)
@@ -366,7 +366,7 @@ namespace Components
             var ui = new UserInterface
             {
                 Reference = new Entity { Name = header.Reference },
-                Format = header.Format,
+                Format = header.FormatCell,
                 DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
                 FieldName = header.FieldName
             };
@@ -427,25 +427,30 @@ namespace Components
             }
         }
 
-        private string GetCellText(Header<T> header, object cellData)
+        private string GetCellText(Header<T> header, object cellData, T row)
         {
             if (cellData == null) return string.Empty;
             if (cellData is DateTime)
             {
-                return string.Format(header.Format ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
+                return string.Format(header.FormatCell ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
             }
             else if (header.Reference != null)
             {
                 var source = _refData.GetSourceByTypeName(header.Reference);
                 var found = source.FirstOrDefault(x => (int)x[Id] == (int)cellData);
                 if (found == null) return string.Empty;
-                if (header.Format.HasAnyChar())
+                if (header.FormatCell.HasAnyChar())
                 {
-                    return Utils.FormatWith(header.Format, found);
+                    return Utils.FormatWith(header.FormatCell, found);
                 }
-                else throw new InvalidOperationException($"Format of {header.FieldName} is null");
+                else
+                {
+                    Console.WriteLine($"Format of {header.FieldName} is null");
+                    throw new InvalidOperationException($"Format of {header.FieldName} is null");
+                }
             }
-            else if (header.Format.HasAnyChar()) return string.Format(header.Format, cellData);
+            else if (header.FormatCell.HasAnyChar()) return string.Format(header.FormatCell, cellData);
+            else if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
             else return cellData.ToString();
         }
 

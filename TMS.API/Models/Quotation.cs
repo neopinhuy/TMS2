@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public Quotation()
         {
+            Order = new HashSet<Order>();
             OrderDetail = new HashSet<OrderDetail>();
         }
 
@@ -50,7 +51,7 @@ namespace TMS.API.Models
         public virtual Terminal EmptyContToNavigation { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual QuotationType QuotationType { get; set; }
+        public virtual PriceType QuotationType { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
         public virtual TruckType TruckType { get; set; }
@@ -58,6 +59,7 @@ namespace TMS.API.Models
         public virtual Vendor Vendor { get; set; }
         public virtual VolumeRange VolumeRange { get; set; }
         public virtual WeightRange WeightRange { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }
