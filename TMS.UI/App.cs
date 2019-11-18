@@ -1,6 +1,7 @@
 ﻿using TMS.UI.Business;
 using TMS.UI.Business.Dashboard;
 using TMS.UI.Business.Asset;
+using TMS.UI.Business.Sale;
 
 namespace TMS.UI
 {
@@ -15,7 +16,9 @@ namespace TMS.UI
 
             var truck = new TruckBL();
             truck.Render();
-            truck.Focus();
+            var so = new SaleOrderBL();
+            so.Render();
+            so.Focus();
         }
     }
 }

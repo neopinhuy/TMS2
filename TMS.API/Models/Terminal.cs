@@ -9,10 +9,10 @@ namespace TMS.API.Models
         {
             CoordinationFrom = new HashSet<Coordination>();
             CoordinationTo = new HashSet<Coordination>();
-            OrderEmptyContFrom = new HashSet<Order>();
-            OrderEmptyContTo = new HashSet<Order>();
-            OrderFrom = new HashSet<Order>();
-            OrderTo = new HashSet<Order>();
+            OrderDetailEmptyContFrom = new HashSet<OrderDetail>();
+            OrderDetailEmptyContTo = new HashSet<OrderDetail>();
+            OrderDetailFrom = new HashSet<OrderDetail>();
+            OrderDetailTo = new HashSet<OrderDetail>();
             QuotationEmptyContFromNavigation = new HashSet<Quotation>();
             QuotationEmptyContToNavigation = new HashSet<Quotation>();
             QuotationFrom = new HashSet<Quotation>();
@@ -40,10 +40,10 @@ namespace TMS.API.Models
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationFrom { get; set; }
         public virtual ICollection<Coordination> CoordinationTo { get; set; }
-        public virtual ICollection<Order> OrderEmptyContFrom { get; set; }
-        public virtual ICollection<Order> OrderEmptyContTo { get; set; }
-        public virtual ICollection<Order> OrderFrom { get; set; }
-        public virtual ICollection<Order> OrderTo { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailEmptyContFrom { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailEmptyContTo { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailFrom { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailTo { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContFromNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContToNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationFrom { get; set; }

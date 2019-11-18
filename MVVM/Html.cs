@@ -825,38 +825,38 @@ namespace MVVM
             return index;
         }
 
-        public Html Visible(bool visible)
+        public Html Visibility(bool visible)
         {
             var ele = Context as HTMLElement;
-            ele.Style.Display = visible ? "" : Display.None.ToString();
+            ele.Style.Visibility = visible ? "" : Bridge.Html5.Visibility.Hidden.ToString();
             return this;
         }
 
-        public Html Visible(Observable<bool> visible)
+        public Html Visibility(Observable<bool> visible)
         {
             var ele = Context as HTMLElement;
-            ele.Style.Display = visible.Data ? "" : Display.None.ToString();
+            ele.Style.Visibility = visible.Data ? "" : Bridge.Html5.Visibility.Hidden.ToString();
             visible.Subscribe(arg =>
             {
-                ele.Style.Display = arg.NewData ? "" : Display.None.ToString();
+                ele.Style.Visibility = arg.NewData ? "" : Bridge.Html5.Visibility.Hidden.ToString();
             });
             return this;
         }
 
-        public Html Hidden(bool hidden)
+        public Html Display(bool shouldShow)
         {
             var ele = Context as HTMLElement;
-            ele.Style.Display = hidden ? Display.None.ToString() : string.Empty;
+            ele.Style.Display = shouldShow ? string.Empty : Bridge.Html5.Display.None.ToString();
             return this;
         }
 
-        public Html Hidden(Observable<bool> hidden)
+        public Html Display(Observable<bool> shouldShow)
         {
             var ele = Context as HTMLElement;
-            ele.Style.Display = hidden.Data ? Display.None.ToString() : string.Empty;
-            hidden.Subscribe(arg =>
+            ele.Style.Display = shouldShow.Data ? string.Empty : Bridge.Html5.Display.None.ToString();
+            shouldShow.Subscribe(arg =>
             {
-                ele.Style.Display = arg.NewData ? Display.None.ToString() : string.Empty;
+                ele.Style.Display = arg.NewData ? string.Empty : Bridge.Html5.Display.None.ToString();
             });
             return this;
         }

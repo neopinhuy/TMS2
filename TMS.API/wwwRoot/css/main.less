@@ -204,7 +204,6 @@ td {
 }
 
 .table-wrapper {
-    margin: 1rem 0;
     border: 1px solid @grayNormal;
     top: -2px;
     overflow: hidden;
@@ -494,9 +493,13 @@ td {
     top: 2.5rem;
     background-color: #fff;
     box-shadow: 0px 0px 15px 16px rgba(0, 0, 0, 0.22);
+    align-items: center;
+    justify-self: center;
+
     .tabs-list {
         border: 0;
     }
+
     .popup-title {
         position: relative;
         background-color: @infoDark;
@@ -506,37 +509,52 @@ td {
         font-size: 1.1rem;
         .radiusTopLeft(@radius);
         .radiusTopRight(@radius);
+
         .fa-times {
             top: 0.53rem;
             position: absolute;
             right: 0.45rem;
             font-size: 1.3rem;
+
             &:hover {
                 cursor: pointer;
             }
         }
     }
+
     .popup-body {
         padding: 1rem;
         text-align: center;
+
         .tabs-wrapper {
             width: calc(100% - 20px);
+        }
+
+        & > .tabs-wrapper {
             margin-top: -3.38rem;
         }
+
+        .tabs-content {
+            width: 100%;
+        }
     }
+
     .icon-box {
         float: right;
         height: 100%;
         background-color: transparent;
     }
+
     ul.tabs-list {
         border: 0 !important;
+
         li {
             border-bottom-width: 0px;
             background-color: @infoDark;
             color: white;
             margin-bottom: 0;
             height: 2.4rem;
+
             &:hover:not(.active) {
                 background-color: #91c9e4;
                 color: #1c1717;
@@ -621,7 +639,7 @@ td {
 }
 
 .pagination {
-    margin: 0;
+    margin: 1rem 0 0 0;
 
     li {
         cursor: pointer;
@@ -629,7 +647,7 @@ td {
         background-color: #ffffff;
         color: #1d1d1d;
         border: 1px solid #8e8d8d;
-        margin: 0.25rem;
+        margin: 0 0.25rem;
         -webkit-transition: all 0.15s ease-in-out;
         transition: all 0.15s ease-in-out;
         min-width: 2.5rem;
@@ -637,7 +655,9 @@ td {
         font-weight: 500;
         font-size: 0.8rem;
         line-height: 2rem;
-
+        &:first-child {
+            margin-left: 0;
+        }
         &:hover:not(.active) {
             background-color: rgba(29, 29, 29, 0.1);
         }

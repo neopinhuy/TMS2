@@ -121,22 +121,23 @@ namespace Components.Forms
             {
                 if (group.IsTab)
                 {
-                    var tab = Document.GetElementById("feature_" + group.FeatureId);
+                    var tabGroup = group.ParentId is null ? group.FeatureId.ToString() : group.TabGroup;
+                    var tab = Document.GetElementById("tab_group_" + tabGroup);
                     if (tab is null)
                     {
-                        Html.Instance.Tab().Id("feature_" + group.FeatureId)
+                        Html.Instance.Tab().Id("tab_group_" + tabGroup)
                             .TabItem(group.Name, "group_" + group.Id, true).EndOf(ElementType.ul)
-                            .TabContent().Id("feature_content_" + group.FeatureId);
+                            .TabContent().Id("tab_content_" + tabGroup);
                     }
                     else
                     {
                         Html.Take(tab).TabItem(group.Name, "group_" + group.Id).EndOf(ElementType.ul);
-                        Html.Take("#feature_content_" + group.FeatureId);
+                        Html.Take("#tab_content_" + tabGroup);
                     }
                 }
                 Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("group_" + group.Id)
                     .ClassName("group").ClassName(group.ClassName)
-                    .ClassName(group.IsTab ? "tab" : string.Empty).Hidden(group.Hidden)
+                    .ClassName(group.IsTab ? "tab" : string.Empty).Display(!group.Hidden)
                     .Width(group.Width).Style(group.Style ?? string.Empty);
                 if (group.InverseParent != null && group.InverseParent.Any())
                 {
@@ -153,12 +154,12 @@ namespace Components.Forms
             var column = 0;
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
-                if (!ui.Visibility) continue;
                 var colSpan = ui.Column ?? 2;
                 ui.Label = ui.Label ?? string.Empty;
-                if (ui.ShowLabel) Html.Instance.TData.Label.Text(ui.Label)
-                    .EndOf(ElementType.td).TData.ColSpan(colSpan - 1).Render();
-                else Html.Instance.TData.ColSpan(colSpan).ClassName("text-left").Style("padding-left: 0;").Render();
+                if (ui.ShowLabel) Html.Instance.TData.Visibility(ui.Visibility).Label.Text(ui.Label)
+                    .EndOf(ElementType.td).TData.Visibility(ui.Visibility).ColSpan(colSpan - 1).Render();
+                else Html.Instance.TData.Visibility(ui.Visibility).ColSpan(colSpan).ClassName("text-left")
+                        .Style("padding-left: 0;").Render();
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
                 var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
                 AddChild(childComponent);

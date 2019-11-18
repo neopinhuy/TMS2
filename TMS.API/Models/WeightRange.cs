@@ -11,8 +11,8 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public double WeightStart { get; set; }
-        public double? WeightEnd { get; set; }
+        public decimal WeightStart { get; set; }
+        public decimal? WeightEnd { get; set; }
         public int? UomId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }

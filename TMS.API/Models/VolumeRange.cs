@@ -11,8 +11,8 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public double VolumeStart { get; set; }
-        public double? VolumeEnd { get; set; }
+        public decimal VolumeStart { get; set; }
+        public decimal? VolumeEnd { get; set; }
         public int? UomId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }

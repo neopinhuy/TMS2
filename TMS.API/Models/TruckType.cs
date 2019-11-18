@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public TruckType()
         {
+            OrderDetail = new HashSet<OrderDetail>();
             Quotation = new HashSet<Quotation>();
             Truck = new HashSet<Truck>();
         }
@@ -22,6 +23,7 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
         public virtual ICollection<Truck> Truck { get; set; }
     }

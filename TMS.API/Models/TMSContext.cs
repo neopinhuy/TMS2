@@ -800,7 +800,11 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.FormatCell)
-                    .HasMaxLength(50)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormatRow)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.GroupName).HasMaxLength(50);
@@ -1060,21 +1064,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Order_Customer");
 
-                entity.HasOne(d => d.EmptyContFrom)
-                    .WithMany(p => p.OrderEmptyContFrom)
-                    .HasForeignKey(d => d.EmptyContFromId)
-                    .HasConstraintName("FK_Order_Terminal_EmptyContFrom");
-
-                entity.HasOne(d => d.EmptyContTo)
-                    .WithMany(p => p.OrderEmptyContTo)
-                    .HasForeignKey(d => d.EmptyContToId)
-                    .HasConstraintName("FK_Order_Terminal_EmptyContTo");
-
-                entity.HasOne(d => d.From)
-                    .WithMany(p => p.OrderFrom)
-                    .HasForeignKey(d => d.FromId)
-                    .HasConstraintName("FK_Order_TerminalFrom");
-
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.OrderInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
@@ -1085,11 +1074,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.QuotationId)
                     .HasConstraintName("FK_Order_Quotation");
-
-                entity.HasOne(d => d.To)
-                    .WithMany(p => p.OrderTo)
-                    .HasForeignKey(d => d.ToId)
-                    .HasConstraintName("FK_Order_TerminalTo");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.OrderUpdatedByNavigation)
@@ -1125,22 +1109,52 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.DiscountMoney).HasColumnType("decimal(20, 5)");
 
-                entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(4, 2)");
 
-                entity.Property(e => e.Volume).HasDefaultValueSql("((0))");
+                entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");
 
-                entity.Property(e => e.Weight).HasDefaultValueSql("((0))");
+                entity.Property(e => e.TotalDiscountAfterTax).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.TotalPriceAfterDiscount).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.TotalPriceBeforeDiscount).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
+
+                entity.Property(e => e.Volume)
+                    .HasColumnType("decimal(20, 5)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Weight)
+                    .HasColumnType("decimal(20, 5)")
+                    .HasDefaultValueSql("((0))");
 
                 entity.HasOne(d => d.CommodityType)
                     .WithMany(p => p.OrderDetail)
                     .HasForeignKey(d => d.CommodityTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_CommodityType");
+
+                entity.HasOne(d => d.ContainerType)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.ContainerTypeId)
+                    .HasConstraintName("FK_OrderDetail_ContainerType");
+
+                entity.HasOne(d => d.EmptyContFrom)
+                    .WithMany(p => p.OrderDetailEmptyContFrom)
+                    .HasForeignKey(d => d.EmptyContFromId)
+                    .HasConstraintName("FK_OrderDetail_Terminal_EmptyContFrom");
+
+                entity.HasOne(d => d.EmptyContTo)
+                    .WithMany(p => p.OrderDetailEmptyContTo)
+                    .HasForeignKey(d => d.EmptyContToId)
+                    .HasConstraintName("FK_OrderDetail_Terminal_EmptyContTo");
+
+                entity.HasOne(d => d.From)
+                    .WithMany(p => p.OrderDetailFrom)
+                    .HasForeignKey(d => d.FromId)
+                    .HasConstraintName("FK_OrderDetail_Terminal_From");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.OrderDetailInsertedByNavigation)
@@ -1163,6 +1177,16 @@ namespace TMS.API.Models
                     .WithMany(p => p.OrderDetail)
                     .HasForeignKey(d => d.TimeboxId)
                     .HasConstraintName("FK_OrderDetail_Timebox");
+
+                entity.HasOne(d => d.To)
+                    .WithMany(p => p.OrderDetailTo)
+                    .HasForeignKey(d => d.ToId)
+                    .HasConstraintName("FK_OrderDetail_Terminal_To");
+
+                entity.HasOne(d => d.TruckType)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.TruckTypeId)
+                    .HasConstraintName("FK_OrderDetail_TruckType");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.OrderDetailUpdatedByNavigation)
@@ -1961,6 +1985,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<VolumeRange>(entity =>
             {
+                entity.Property(e => e.VolumeEnd).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.VolumeStart).HasColumnType("decimal(20, 5)");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.VolumeRangeInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
@@ -1980,6 +2008,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<WeightRange>(entity =>
             {
+                entity.Property(e => e.WeightEnd).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.WeightStart).HasColumnType("decimal(20, 5)");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.WeightRangeInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
