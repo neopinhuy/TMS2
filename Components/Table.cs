@@ -35,6 +35,7 @@ namespace Components
         private HTMLTableElement _frozenTable;
         private HTMLTableElement _mainTable;
         private int? timeOut = null;
+        private bool _isFocusCell;
         
         public const string _selectedClass = "selected-row";
         public const string _hovering = "hovering";
@@ -233,6 +234,11 @@ namespace Components
 
         private void ToggleSelectRow(T rowData)
         {
+            if (_isFocusCell)
+            {
+                _isFocusCell = false;
+                return;
+            }
             var index = Array.IndexOf(RowData.Data, rowData);
             if (index == -1 && Editable) index = RowData.Data.Length;
             ToggleSelectRow(index, _frozenTable.TBodies[0]);
@@ -411,15 +417,15 @@ namespace Components
             editor.InteractiveElement.AddEventListener(EventType.Focus, SelectRow);
         }
 
-        private static void SelectRow(Event e)
+        private void SelectRow(Event e)
         {
-            Html.Take(e.Target as HTMLElement).Closest(ElementType.tr);
-            var row = Html.Context as HTMLTableRowElement;
-            var tbody = row.ParentElement as HTMLTableSectionElement;
-            var index = Array.IndexOf(tbody.Rows.ToArray(), row);
-            row.RemoveClass(_selectedClass);
-            var frozenTable = row.ParentElement.ParentElement.ParentElement.PreviousElementSibling as HTMLTableElement;
-            frozenTable.TBodies[0].Rows.ElementAt(index).RemoveClass(_selectedClass);
+            _isFocusCell = true;
+            var row = Html.Take(e.Target as HTMLElement).Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
+            var index = Array.IndexOf((row.ParentElement as HTMLTableSectionElement).Rows.ToArray(), row);
+            _mainTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
+            _frozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
+            _mainTable.TBodies[0].Rows[index].AddClass(_selectedClass);
+            _frozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
             var rowData = row["rowData"];
             if (rowData != null)
             {

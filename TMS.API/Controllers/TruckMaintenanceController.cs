@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Nest;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -20,24 +19,8 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            foreach (var detail in maintenance.TruckMaintenanceDetail)
-            {
-                if (detail.Id <= 0)
-                {
-                    detail.Id = 0;
-                    db.TruckMaintenanceDetail.Add(detail);
-                }
-                else
-                {
-                    db.TruckMaintenanceDetail.Attach(detail);
-                    db.Entry(detail).State = EntityState.Modified;
-                    db.TruckMaintenanceDetail.Update(detail);
-                }
-            }
-            db.TruckMaintenance.Attach(maintenance);
-            db.Entry(maintenance).State = EntityState.Modified;
-            await db.SaveChangesAsync();
-            return maintenance;
+            UpdateChildren<TruckMaintenanceDetail>(maintenance);
+            return await base.PutAsync(maintenance);
         }
     }
 }

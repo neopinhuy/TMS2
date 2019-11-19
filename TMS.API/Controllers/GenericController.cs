@@ -73,5 +73,25 @@ namespace TMS.API.Controllers
             await db.SaveChangesAsync();
             return true;
         }
+
+        protected void UpdateChildren<Child>(T entity) where Child : class
+        {
+            var childProp = typeof(T).GetProperty(typeof(Child).Name);
+            var childValue = childProp.GetValue(entity) as ICollection<Child>;
+            foreach (var detail in childValue)
+            {
+                if ((int)detail.GetPropValue("Id") <= 0)
+                {
+                    detail.SetPropValue("Id", 0);
+                    db.Set<Child>().Add(detail);
+                }
+                else
+                {
+                    db.Set<Child>().Attach(detail);
+                    db.Entry(detail).State = EntityState.Modified;
+                    db.Set<Child>().Update(detail);
+                }
+            }
+        }
     }
 }

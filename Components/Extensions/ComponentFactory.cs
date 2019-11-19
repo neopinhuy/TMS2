@@ -1,4 +1,5 @@
-﻿using TMS.API.Models;
+﻿using System;
+using TMS.API.Models;
 
 namespace Components.Extensions
 {
@@ -33,6 +34,9 @@ namespace Components.Extensions
                     break;
                 case "GridView":
                     childComponent = new GridView(ui);
+                    break;
+                default:
+                    Console.WriteLine($"Component type {componentType} of {ui.Id}_{ui.FieldName} not supported");
                     break;
             }
 
