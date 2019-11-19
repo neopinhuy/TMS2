@@ -2,7 +2,6 @@
 using Components.Extensions;
 using MVVM;
 using System;
-using System.Globalization;
 using TMS.API.Models;
 using static Retyped.jquery_maskmoney.jQueryMaskMoney;
 
@@ -26,8 +25,6 @@ namespace Components
                 Html.Instance.EndOf(ElementType.td);
                 return;
             }
-            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            var groupSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
             var value = new Observable<decimal?>(parsedVal);
             value.Subscribe(arg => {
                 var res = ValueChanging?.Invoke(arg);
@@ -37,8 +34,8 @@ namespace Components
             });
             Html.Instance.MaskMoney(value, new Options
             {
-                thousands = isDecimal ? groupSeparator : string.Empty,
-                @decimal = separator,
+                thousands = isDecimal ? "," : string.Empty,
+                @decimal = ".",
                 precision = isDecimal ? _ui.Precision : 0
             });
             InteractiveElement = Html.Context;

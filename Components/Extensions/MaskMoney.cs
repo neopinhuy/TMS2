@@ -32,7 +32,7 @@ namespace Components.Extensions
             {
                 isFocusing = true;
                 var ele = e.Target as HTMLInputElement;
-                var parsed = decimal.TryParse(ele.Value, System.Globalization.CultureInfo.CurrentCulture, out decimal value);
+                var parsed = decimal.TryParse(ele.Value.Replace(",", string.Empty), out decimal value);
                 if (!parsed || ele.Value.IsNullOrEmpty()) observable.Data = null;
                 observable.Data = value;
             });

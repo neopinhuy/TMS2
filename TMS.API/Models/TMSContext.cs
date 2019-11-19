@@ -1314,9 +1314,9 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Quotation_UserInserted");
 
-                entity.HasOne(d => d.QuotationType)
+                entity.HasOne(d => d.PriceType)
                     .WithMany(p => p.Quotation)
-                    .HasForeignKey(d => d.QuotationTypeId)
+                    .HasForeignKey(d => d.PriceTypeId)
                     .HasConstraintName("FK_Quotation_PriceType");
 
                 entity.HasOne(d => d.Timebox)

@@ -33,7 +33,7 @@ namespace TMS.API.Models
         public DateTime? ExpiredDate { get; set; }
         public decimal? Price { get; set; }
         public int? CurrencyId { get; set; }
-        public int? QuotationTypeId { get; set; }
+        public int? PriceTypeId { get; set; }
         public decimal? Vat { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -51,7 +51,7 @@ namespace TMS.API.Models
         public virtual Terminal EmptyContToNavigation { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual PriceType QuotationType { get; set; }
+        public virtual PriceType PriceType { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
         public virtual TruckType TruckType { get; set; }

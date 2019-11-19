@@ -160,6 +160,7 @@ namespace Components.Forms
                     .EndOf(ElementType.td).TData.Visibility(ui.Visibility).ColSpan(colSpan - 1).Render();
                 else Html.Instance.TData.Visibility(ui.Visibility).ColSpan(colSpan).ClassName("text-left")
                         .Style("padding-left: 0;").Render();
+                Html.Instance.DataAttr("com-id", ui.Id.ToString());
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
                 var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
                 AddChild(childComponent);
