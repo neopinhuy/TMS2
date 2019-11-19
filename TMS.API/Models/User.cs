@@ -87,6 +87,8 @@ namespace TMS.API.Models
             StatePolicyInsertedByNavigation = new HashSet<StatePolicy>();
             StatePolicyUpdatedByNavigation = new HashSet<StatePolicy>();
             SurchargeInsertedByNavigation = new HashSet<Surcharge>();
+            SurchargeTypeInsertedByNavigation = new HashSet<SurchargeType>();
+            SurchargeTypeUpdatedByNavigation = new HashSet<SurchargeType>();
             TerminalUpdatedByNavigation = new HashSet<Terminal>();
             TicketStateInsertedByNavigation = new HashSet<TicketState>();
             TicketStateUpdatedByNavigation = new HashSet<TicketState>();
@@ -235,6 +237,8 @@ namespace TMS.API.Models
         public virtual ICollection<StatePolicy> StatePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<Surcharge> SurchargeInsertedByNavigation { get; set; }
+        public virtual ICollection<SurchargeType> SurchargeTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<SurchargeType> SurchargeTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Terminal> TerminalUpdatedByNavigation { get; set; }
         public virtual ICollection<TicketState> TicketStateInsertedByNavigation { get; set; }
         public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }

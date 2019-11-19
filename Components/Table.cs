@@ -374,7 +374,9 @@ namespace Components
                 Reference = new Entity { Name = header.Reference },
                 Format = header.FormatCell,
                 DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
-                FieldName = header.FieldName
+                FieldName = header.FieldName,
+                Precision = header.Precision,
+                Validation = header.Validation
             };
             if (rowData.GetBool(_emptyFlag))
             {

@@ -8,6 +8,7 @@ namespace TMS.API.Models
         public Order()
         {
             OrderDetail = new HashSet<OrderDetail>();
+            Surcharge = new HashSet<Surcharge>();
         }
 
         public int Id { get; set; }
@@ -31,6 +32,7 @@ namespace TMS.API.Models
         public int? CurrencyId { get; set; }
         public DateTime? AdvancedPaidDate { get; set; }
         public DateTime? PaidDate { get; set; }
+        public string Note { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -42,5 +44,6 @@ namespace TMS.API.Models
         public virtual Quotation Quotation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
+        public virtual ICollection<Surcharge> Surcharge { get; set; }
     }
 }

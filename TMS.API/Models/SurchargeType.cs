@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class PriceType
+    public partial class SurchargeType
     {
-        public PriceType()
+        public SurchargeType()
         {
-            Quotation = new HashSet<Quotation>();
             Surcharge = new HashSet<Surcharge>();
-            SurchargeType = new HashSet<SurchargeType>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public int? PriceTypeId { get; set; }
         public string Description { get; set; }
+        public int? CurrencyId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
@@ -22,9 +23,8 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
+        public virtual PriceType PriceType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
-        public virtual ICollection<SurchargeType> SurchargeType { get; set; }
     }
 }

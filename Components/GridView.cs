@@ -106,6 +106,8 @@ namespace Components
                 Editable = column.Editable,
                 Disabled = column.Disabled,
                 Component = column.Component,
+                Precision = column.Precision,
+                Validation = column.Validation,
             };
             var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
             if (parsed) header.TextAlign = textAlign;

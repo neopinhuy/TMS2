@@ -521,6 +521,9 @@ td {
         }
     }
 
+    ul.tabs-list {
+        border: 0 !important;
+    }
     .popup-body {
         padding: 1rem;
         text-align: center;
@@ -536,29 +539,29 @@ td {
         .tabs-content {
             width: 100%;
         }
+
+        & > ul.tabs-list {
+            border: 0 !important;
+
+            li {
+                border-bottom-width: 0px;
+                background-color: @infoDark;
+                color: white;
+                margin-bottom: 0;
+                height: 2.4rem;
+
+                &:hover:not(.active) {
+                    background-color: #91c9e4;
+                    color: #1c1717;
+                }
+            }
+        }
     }
 
     .icon-box {
         float: right;
         height: 100%;
         background-color: transparent;
-    }
-
-    ul.tabs-list {
-        border: 0 !important;
-
-        li {
-            border-bottom-width: 0px;
-            background-color: @infoDark;
-            color: white;
-            margin-bottom: 0;
-            height: 2.4rem;
-
-            &:hover:not(.active) {
-                background-color: #91c9e4;
-                color: #1c1717;
-            }
-        }
     }
 }
 

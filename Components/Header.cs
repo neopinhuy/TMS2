@@ -20,6 +20,8 @@ namespace Components
         public string FormatRow { get; set; }
         public string Icon { get; set; }
         public string Component { get; set; }
+        public int? Precision { get; set; }
+        public string Validation { get; set; }
         public int? Order { get; set; }
         public bool StatusBar { get; set; }
         public bool Frozen { get; set; }

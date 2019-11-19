@@ -34,6 +34,13 @@ namespace TMS.UI.Business.Sale
                 Name = "SaleOrder Editor",
                 Title = "Sale order"
             };
+            _saleOrderForm.AfterSaved += () =>
+            {
+                var orderDetail = _saleOrderForm.FindComponent("OrderDetail") as GridView;
+                orderDetail.LoadData();
+                var surcharge = _saleOrderForm.FindComponent("Surcharge") as GridView;
+                surcharge.LoadData();
+            };
             _saleOrderForm.AfterSaved += ReloadSaleOrderGrid;
             AddChild(_saleOrderForm);
         }

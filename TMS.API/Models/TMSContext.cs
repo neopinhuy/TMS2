@@ -58,6 +58,7 @@ namespace TMS.API.Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<StatePolicy> StatePolicy { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
+        public virtual DbSet<SurchargeType> SurchargeType { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
         public virtual DbSet<TicketState> TicketState { get; set; }
         public virtual DbSet<Timebox> Timebox { get; set; }
@@ -133,6 +134,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Action>(entity =>
             {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -817,6 +820,8 @@ namespace TMS.API.Models
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Validation).HasMaxLength(1000);
+
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.GridPolicyEntity)
                     .HasForeignKey(d => d.EntityId)
@@ -1051,6 +1056,8 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(4, 2)");
 
+                entity.Property(e => e.Note).HasMaxLength(2000);
+
                 entity.Property(e => e.TotalPriceAfterDiscount).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.TotalPriceAfterTax).HasColumnType("decimal(20, 5)");
@@ -1114,6 +1121,8 @@ namespace TMS.API.Models
                 entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(4, 2)");
 
                 entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Note).HasMaxLength(2000);
 
                 entity.Property(e => e.TotalDiscountAfterTax).HasColumnType("decimal(20, 5)");
 
@@ -1394,12 +1403,20 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.Currency)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Note).HasMaxLength(200);
 
-                entity.Property(e => e.Price).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.PriceAfterTax).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Quantity).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.Surcharge)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .HasConstraintName("FK_Surcharge_Currency");
 
                 entity.HasOne(d => d.IdNavigation)
                     .WithOne(p => p.SurchargeIdNavigation)
@@ -1416,8 +1433,50 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.OrderDetail)
                     .WithMany(p => p.Surcharge)
                     .HasForeignKey(d => d.OrderDetailId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Surcharge_OrderDetail");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Surcharge)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Surcharge_Order");
+
+                entity.HasOne(d => d.PriceType)
+                    .WithMany(p => p.Surcharge)
+                    .HasForeignKey(d => d.PriceTypeId)
+                    .HasConstraintName("FK_Surcharge_PriceType");
+
+                entity.HasOne(d => d.SurchargeType)
+                    .WithMany(p => p.Surcharge)
+                    .HasForeignKey(d => d.SurchargeTypeId)
+                    .HasConstraintName("FK_Surcharge_SurchargeType");
+            });
+
+            modelBuilder.Entity<SurchargeType>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.UnitPrice).HasColumnType("decimal(20, 5)");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.SurchargeTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SurchargeType_UserInserted");
+
+                entity.HasOne(d => d.PriceType)
+                    .WithMany(p => p.SurchargeType)
+                    .HasForeignKey(d => d.PriceTypeId)
+                    .HasConstraintName("FK_SurchargeType_PriceType");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.SurchargeTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_SurchargeType_UserUpdated");
             });
 
             modelBuilder.Entity<Terminal>(entity =>
@@ -1896,6 +1955,8 @@ namespace TMS.API.Models
                 entity.Property(e => e.Style)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Validation).HasMaxLength(1000);
 
                 entity.HasOne(d => d.ComponentGroup)
                     .WithMany(p => p.UserInterface)

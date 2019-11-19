@@ -9,6 +9,7 @@ namespace TMS.API.Models
         {
             Ledger = new HashSet<Ledger>();
             Quotation = new HashSet<Quotation>();
+            Surcharge = new HashSet<Surcharge>();
             Truck = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
         }
@@ -27,6 +28,7 @@ namespace TMS.API.Models
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Ledger> Ledger { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
+        public virtual ICollection<Surcharge> Surcharge { get; set; }
         public virtual ICollection<Truck> Truck { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
     }

@@ -35,6 +35,7 @@ namespace TMS.API.Models
         public decimal? Vat { get; set; }
         public decimal? TotalDiscountAfterTax { get; set; }
         public int? CurrencyId { get; set; }
+        public string Note { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }
