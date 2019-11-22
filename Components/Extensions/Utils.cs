@@ -44,7 +44,10 @@ namespace Components.Extensions
             catch (Exception ex)
             {
                 if (ex.Message != "Cannot read property 'isCompleted' of undefined")
+                {
+                    Console.WriteLine(ex);
                     throw;
+                }
             }
         }
     }

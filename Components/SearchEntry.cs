@@ -13,7 +13,7 @@ namespace Components
     public class SearchEntry : Component
     {
         private Observable<int?> _value;
-        private readonly Observable<string> _text = new Observable<string>();
+        private HTMLInputElement _input;
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
@@ -25,14 +25,6 @@ namespace Components
         public SearchEntry(UserInterface ui)
         {
             _ui = ui ?? throw new System.ArgumentNullException(nameof(ui));
-            _text.Subscribe((arg) =>
-            {
-                if (arg.NewData.IsNullOrEmpty())
-                {
-                    _value.Data = null;
-                }
-                // TODO: Search here in data source
-            });
             DataSourceFilter = ui.DataSourceFilter;
             Source = new ObservableArray<object>();
         }
@@ -48,16 +40,30 @@ namespace Components
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
-            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty).Value(_text)
+            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty)
                 .Attr("data-role", "input").ClassName("input-small")
                 .Event(EventType.Focus, async() => await RenderSuggestion())
                 .Event(EventType.Blur, DestroySuggestion)
                 .Event(EventType.KeyDown, (Event e) =>
                 {
-                    if (e["keyCode"].ToString() == "38") _table.MoveUp();
-                    if (e["keyCode"].ToString() == "40") _table.MoveDown();
+                    if (_table != null)
+                    {
+                        if (e["keyCode"].ToString() == "38") _table.MoveUp();
+                        if (e["keyCode"].ToString() == "40") _table.MoveDown();
+                        if (e["keyCode"].ToString() == "13") Select(Source.Data[_table.SelectedRow ?? 0]);
+                    }
+                    else if (e["keyCode"].ToString() == "13") RenderSuggestion();
+                })
+                .Event(EventType.Input, () =>
+                {
+                    if (_input.Value.IsNullOrEmpty())
+                    {
+                        _value.Data = null;
+                    }
+                    // Searching here
                 });
             InteractiveElement = Html.Context;
+            _input = InteractiveElement as HTMLInputElement;
             FindMatchItem();
         }
 
@@ -66,12 +72,12 @@ namespace Components
             if (_value is null || _value.Data is null)
             {
                 Matched = null;
-                _text.Data = string.Empty;
+                _input.Value = string.Empty;
                 return;
             }
             if (Matched != null && (int?)Matched[Id] == _value.Data)
             {
-                _text.Data = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+                _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
                 return;
             }
             Task.Run(async () =>
@@ -81,7 +87,7 @@ namespace Components
                     Source.Data = await GetDataSource();
                 }
                 Matched = Source.Data.FirstOrDefault(x => (int)x[Id] == _value.Data);
-                _text.Data = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+                _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
             });
         }
 
@@ -138,6 +144,7 @@ namespace Components
 
         private void Select(object rowData)
         {
+            if (rowData is null) return;
             _value.Data = (int)rowData[Id];
             DisposeSearchTable();
         }

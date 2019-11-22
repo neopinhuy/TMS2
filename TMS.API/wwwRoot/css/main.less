@@ -260,6 +260,7 @@ td {
         position: fixed;
         background-color: @white;
         margin: 0;
+        border-left: 1px solid @grayDark;
         z-index: 9999;
 
         th {
@@ -278,11 +279,13 @@ td {
     }
 
     table {
+        width: auto;
         margin: 0;
         border: 1px solid @grayDark;
 
         &:last-child {
             border-left: 0;
+            border-right: 0;
         }
     }
 
@@ -506,10 +509,6 @@ td {
     align-items: center;
     justify-self: center;
 
-    .tabs-list {
-        border: 0;
-    }
-
     .popup-title {
         position: relative;
         background-color: @infoDark;
@@ -552,8 +551,6 @@ td {
         }
 
         & > ul.tabs-list {
-            border: 0 !important;
-
             li {
                 border-bottom-width: 0px;
                 background-color: @infoDark;
