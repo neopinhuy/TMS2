@@ -9,7 +9,7 @@ namespace Components.Extensions
     {
         public static string FormatWith(string format, object source)
         {
-            if (format is null) return null;
+            if (!format.HasAnyChar()) return string.Empty;
             if (source is null) return format;
             return FormatWith(format, null, source);
         }

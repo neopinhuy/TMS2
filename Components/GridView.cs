@@ -48,7 +48,6 @@ namespace Components
                 Header.AddRange(gridPolicy.Value.Select(MapToHeader).ToArray());
                 var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
                 BindingEvents(tableParams);
-                FormatDatasource();
                 await LoadData();
                 _table = new Table<object>(tableParams)
                 {
@@ -59,12 +58,6 @@ namespace Components
                 _table.Render();
                 Pagination();
             });
-        }
-
-        private void FormatDatasource()
-        {
-            if (Entity == null || !_ui.DataSourceFilter.HasAnyChar()) return;
-            _ui.DataSourceFilter = Utils.FormatWith(_ui.DataSourceFilter, Entity);
         }
 
         private void BindingEvents(TableParam<object> tableParams)
@@ -129,7 +122,8 @@ namespace Components
         
         public virtual async Task LoadData(string dataSource = null)
         {
-            dataSource = dataSource ?? _ui.DataSourceFilter;
+            var formatted = Utils.FormatWith(_ui.DataSourceFilter, Entity);
+            dataSource = dataSource ?? formatted;
             var pagingQuery = dataSource + $"&$skip={_pageIndex * _ui.Row}&$top={_ui.Row}&$count=true";
             var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name,
                 _ui.Row > 0 ? pagingQuery : dataSource);

@@ -237,9 +237,16 @@ namespace Components
                 .Event(EventType.Click, ToggleSelectRow, row)
                 .Event(EventType.MouseEnter, HoverRow, row)
                 .Event(EventType.MouseLeave, LeaveRow, row);
-            (Html.Context as HTMLElement)[_rowData] = row;
-            if (_tableParam.RowClick != null) Html.Instance.Event(EventType.Click, _tableParam.RowClick, row);
-            if (_tableParam.RowDblClick != null) Html.Instance.Event(EventType.DblClick, _tableParam.RowDblClick, row);
+            var tr = Html.Context as HTMLTableRowElement;
+            tr[_rowData] = row;
+            if (_tableParam.RowClick != null)
+            {
+                tr.AddEventListener(EventType.Click, _ => _tableParam.RowClick(row));
+            }
+            if (_tableParam.RowDblClick != null)
+            {
+                tr.AddEventListener(EventType.DblClick, _ => _tableParam.RowDblClick(row));
+            }
             Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
         }
 
