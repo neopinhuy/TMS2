@@ -111,7 +111,6 @@ namespace Components
             var emptyRowData = (T)Activator.CreateInstance(typeof(T));
             emptyRowData[Id] = -1; // Not to add this row into the submitted list
             emptyRowData[_emptyFlag] = true;
-            RowData.Add(emptyRowData);
             Html.Take(_frozenTable.TBodies[0]);
             RenderEmptyRow(frozen, emptyRowData);
 
@@ -404,7 +403,7 @@ namespace Components
                     {
                         SuggestActiveRecord = true,
                         RootHtmlElement = Html.Context,
-                        Matched = matched
+                        Matched = matched,
                     };
                     break;
                 default:
@@ -418,6 +417,7 @@ namespace Components
                 if (res == false) return;
                 if (rowData.GetBool(_emptyFlag))
                 {
+                    RowData.Add(rowData);
                     rowData[_emptyFlag] = false;
                     rowData[Id] = 0;
                     AddNewEmptyRow(Headers.Data.Where(x => x.Frozen).ToList(),

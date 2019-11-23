@@ -13,7 +13,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut("api/[Controller]")]
-        public override async Task<ActionResult<Customer>> PutAsync([FromBody] Customer entity)
+        public override async Task<ActionResult<Customer>> UpdateAsync([FromBody] Customer entity)
         {
             if (entity == null || !ModelState.IsValid)
             {

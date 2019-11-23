@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nest;
-using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
@@ -12,16 +11,25 @@ namespace TMS.API.Controllers
         {
         }
 
-        [HttpPut("api/[Controller]")]
-        public override async Task<ActionResult<Order>> PutAsync([FromBody]Order order)
+        [HttpPost("api/[Controller]")]
+        public override async Task<ActionResult<Order>> CreateAsync([FromBody]Order order)
         {
             if (order == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            order.OrderDetail = order.OrderDetail.Where(x => x.Id >= 0).ToList();
+            return await base.CreateAsync(order);
+        }
+
+        [HttpPut("api/[Controller]")]
+        public override async Task<ActionResult<Order>> UpdateAsync([FromBody]Order order)
+        {
+            if (order == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             UpdateChildren<OrderDetail>(order);
-            return await base.PutAsync(order);
+            return await base.UpdateAsync(order);
         }
     }
 }

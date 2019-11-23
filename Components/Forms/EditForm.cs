@@ -33,7 +33,7 @@ namespace Components.Forms
                 if (data != null)
                 {
                     Entity[Id] = data[Id];
-                    UpdateProperties(data);
+                    UpdateComponentEntity(data);
                     Toast.Success($"Create {typeof(T).Name} succeeded");
                     RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
                 }
@@ -48,7 +48,7 @@ namespace Components.Forms
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
-                    UpdateProperties(data);
+                    UpdateComponentEntity(data);
                     Toast.Success($"Update {typeof(T).Name} succeeded");
                     RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
                 }
@@ -60,21 +60,12 @@ namespace Components.Forms
             }
         }
 
-        private void UpdateProperties(T data)
+        private void UpdateComponentEntity(T data)
         {
             var props = typeof(T).GetProperties();
             foreach (var prop in props)
             {
-                if (prop.PropertyType.IsAssignableFrom(typeof(IEnumerable<>)))
-                {
-                    // Update Id for each children
-                    var updatedChildren = (prop.GetValue(data) as IEnumerable<object>).ToArray();
-                    var entityChildren = (prop.GetValue(Entity) as IEnumerable<object>).ToArray();
-                    for (int i = 0; i < updatedChildren.Length; i++)
-                    {
-                        entityChildren[i][Id] = updatedChildren[i][Id];
-                    }
-                }
+                prop.SetValue(Entity, prop.GetValue(data));
             }
         }
 

@@ -13,14 +13,14 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut("api/[Controller]")]
-        public override async Task<ActionResult<TruckMaintenance>> PutAsync([FromBody]TruckMaintenance maintenance)
+        public override async Task<ActionResult<TruckMaintenance>> UpdateAsync([FromBody]TruckMaintenance maintenance)
         {
             if (maintenance == null || !ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             UpdateChildren<TruckMaintenanceDetail>(maintenance);
-            return await base.PutAsync(maintenance);
+            return await base.UpdateAsync(maintenance);
         }
     }
 }

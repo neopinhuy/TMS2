@@ -40,7 +40,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]")]
-        public virtual async Task<ActionResult<T>> PostAsync([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> CreateAsync([FromBody]T entity)
         {
             if (entity == null || !ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPut("api/[Controller]")]
-        public virtual async Task<ActionResult<T>> PutAsync([FromBody]T entity)
+        public virtual async Task<ActionResult<T>> UpdateAsync([FromBody]T entity)
         {
             if (entity == null || !ModelState.IsValid)
             {
