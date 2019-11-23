@@ -41,6 +41,7 @@ namespace Components
         public const string _hovering = "hovering";
         public const string _emptyFlag = "__empty__";
         public const string _selectedFlag = "__selected__";
+        public const string _rowData = "rowData";
 
         public Table(TableParam<T> tableParam)
         {
@@ -129,7 +130,6 @@ namespace Components
 
         private async Task LoadMasterData()
         {
-            if (_refData != null && _refData.Any()) return;
             var refEntities = Headers.Data
                 .Where(x => x.Reference.HasAnyChar())
                 .DistinctBy(x => x.Reference)
@@ -238,7 +238,7 @@ namespace Components
                 .Event(EventType.Click, ToggleSelectRow, row)
                 .Event(EventType.MouseEnter, HoverRow, row)
                 .Event(EventType.MouseLeave, LeaveRow, row);
-            (Html.Context as HTMLElement)["rowData"] = row;
+            (Html.Context as HTMLElement)[_rowData] = row;
             if (_tableParam.RowClick != null) Html.Instance.Event(EventType.Click, _tableParam.RowClick, row);
             if (_tableParam.RowDblClick != null) Html.Instance.Event(EventType.DblClick, _tableParam.RowDblClick, row);
             Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
@@ -266,7 +266,7 @@ namespace Components
         private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
-            var rowData = tableRow["rowData"];
+            var rowData = tableRow[_rowData];
             if (!tableRow.ClassName.Contains(_selectedClass))
             {
                 tableRow.AddClass(_selectedClass);
@@ -284,7 +284,7 @@ namespace Components
         private static void ToggleSelectRow(bool selected, int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
-            var rowData = tableRow["rowData"];
+            var rowData = tableRow[_rowData];
             if (selected)
             {
                 tableRow.AddClass(_selectedClass);
@@ -380,7 +380,7 @@ namespace Components
             var cell = Html.Context as HTMLElement;
             cell.FirstElementChild.Remove();
             var row = cell.ParentElement as HTMLElement;
-            var rowData = (T)row["rowData"];
+            var rowData = (T)row[_rowData];
             var ui = new UserInterface
             {
                 Reference = new Entity { Name = header.Reference },
@@ -438,7 +438,7 @@ namespace Components
             _frozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
             _mainTable.TBodies[0].Rows[index].AddClass(_selectedClass);
             _frozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
-            var rowData = row["rowData"];
+            var rowData = row[_rowData];
             if (rowData != null)
             {
                 rowData[_selectedFlag] = true;
