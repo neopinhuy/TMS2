@@ -23,11 +23,11 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual Currency Currency { get; set; }
-        public virtual User IdNavigation { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }
         public virtual OrderDetail OrderDetail { get; set; }
         public virtual PriceType PriceType { get; set; }
         public virtual SurchargeType SurchargeType { get; set; }
+        public virtual User UpdatedByNavigation { get; set; }
     }
 }

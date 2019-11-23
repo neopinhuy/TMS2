@@ -2,7 +2,7 @@
 
 namespace Components
 {
-    public class FloatingTable<Data> : Table<Data>
+    public class FloatingTable<Data> : Table<Data> where Data : class
     {
         public double Top { get; set; }
         public double Left { get; set; }

@@ -15,10 +15,8 @@ namespace Common.Extensions
 
         public static bool GetBool(this object obj, string prop)
         {
-            var res = (bool?)obj[prop];
-            return res.HasValue && res.Value;
+            return (bool?)obj?[prop] ?? false;
         }
-
         public static object GetComplexPropValue(this object obj, string propName)
         {
             var hierarchy = propName.Split('.');

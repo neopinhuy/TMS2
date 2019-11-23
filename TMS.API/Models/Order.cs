@@ -20,7 +20,6 @@ namespace TMS.API.Models
         public string ContactPassport { get; set; }
         public string ContactAddress { get; set; }
         public int? TotalContainer { get; set; }
-        public int? QuotationId { get; set; }
         public decimal? AdvancedPaid { get; set; }
         public bool Paid { get; set; }
         public decimal? DiscountMoney { get; set; }
@@ -41,7 +40,6 @@ namespace TMS.API.Models
 
         public virtual Customer Customer { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual Quotation Quotation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }

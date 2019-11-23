@@ -20,7 +20,7 @@ namespace Components
         public Action<Data> RowDblClick { get; set; }
     }
 
-    public class Table<T> : Component
+    public class Table<T> : Component where T : class
     {
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
@@ -95,9 +95,27 @@ namespace Components
                 RenderTableHeader(nonFrozen);
                 RenderTableContent(nonFrozen);
 
+                if (Editable)
+                {
+                    AddNewEmptyRow(frozen, nonFrozen);
+                }
+
                 _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
                 _mainTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
             });
+        }
+
+        private void AddNewEmptyRow(List<Header<T>> frozen, List<Header<T>> nonFrozen)
+        {
+            var emptyRowData = (T)Activator.CreateInstance(typeof(T));
+            emptyRowData[Id] = -1; // Not to add this row into the submitted list
+            emptyRowData[_emptyFlag] = true;
+            RowData.Add(emptyRowData);
+            Html.Take(_frozenTable.TBodies[0]);
+            RenderEmptyRow(frozen, emptyRowData);
+
+            Html.Take(_mainTable.TBodies[0]);
+            RenderEmptyRow(nonFrozen, emptyRowData);
         }
 
         private void SortHeaderByGroupName()
@@ -207,16 +225,10 @@ namespace Components
             {
                 RenderRowData(headers, row);
             });
-            if (Editable)
-            {
-                RenderEmptyRow(headers);
-            }
         }
 
-        private void RenderEmptyRow(List<Header<T>> headers)
+        private void RenderEmptyRow(List<Header<T>> headers, T emptyRowData)
         {
-            var emptyRowData = (T)Activator.CreateInstance(typeof(T));
-            emptyRowData[_emptyFlag] = true;
             RenderRowData(headers, emptyRowData);
         }
 
@@ -407,11 +419,9 @@ namespace Components
                 if (rowData.GetBool(_emptyFlag))
                 {
                     rowData[_emptyFlag] = false;
-                    RowData.Add(rowData);
-                    Html.Take(_frozenTable.TBodies[0]);
-                    RenderEmptyRow(Headers.Data.Where(x => x.Frozen).ToList());
-                    Html.Take(_mainTable.TBodies[0]);
-                    RenderEmptyRow(Headers.Data.Where(x => !x.Frozen).ToList());
+                    rowData[Id] = 0;
+                    AddNewEmptyRow(Headers.Data.Where(x => x.Frozen).ToList(),
+                        Headers.Data.Where(x => !x.Frozen).ToList());
                 }
                 CellChanged?.Invoke(arg, header, rowData);
             };

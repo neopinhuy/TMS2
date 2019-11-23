@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Quotation()
         {
-            Order = new HashSet<Order>();
             OrderDetail = new HashSet<OrderDetail>();
         }
 
@@ -59,7 +58,6 @@ namespace TMS.API.Models
         public virtual Vendor Vendor { get; set; }
         public virtual VolumeRange VolumeRange { get; set; }
         public virtual WeightRange WeightRange { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

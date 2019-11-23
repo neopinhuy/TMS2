@@ -246,9 +246,9 @@ namespace Components
         /// <param name="rowData">Row data</param>
         /// <typeparam name="Data">Generic type of the data row</typeparam>
         /// <returns></returns>
-        public static Html Table<Data>(this Html html, TableParam<Data> tableParam)
+        public static Html Table<Data>(this Html html, TableParam<Data> tableParam) where Data : class
         {
-            Table<Data> table = new Table<Data>(tableParam);
+            var table = new Table<Data>(tableParam);
             table.Render();
             return html;
         }

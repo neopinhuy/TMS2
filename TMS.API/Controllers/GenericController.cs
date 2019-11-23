@@ -80,12 +80,13 @@ namespace TMS.API.Controllers
             var childValue = childProp.GetValue(entity) as ICollection<Child>;
             foreach (var detail in childValue)
             {
-                if ((int)detail.GetPropValue("Id") <= 0)
+                var id = (int)detail.GetPropValue("Id");
+                if (id == 0)
                 {
                     detail.SetPropValue("Id", 0);
                     db.Set<Child>().Add(detail);
                 }
-                else
+                else if (id > 0)
                 {
                     db.Set<Child>().Attach(detail);
                     db.Entry(detail).State = EntityState.Modified;

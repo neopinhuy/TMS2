@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Nest;
+using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
@@ -18,6 +19,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            order.OrderDetail = order.OrderDetail.Where(x => x.Id >= 0).ToList();
             UpdateChildren<OrderDetail>(order);
             return await base.PutAsync(order);
         }

@@ -1077,11 +1077,6 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_UserInserted");
 
-                entity.HasOne(d => d.Quotation)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.QuotationId)
-                    .HasConstraintName("FK_Order_Quotation");
-
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.OrderUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
@@ -1401,8 +1396,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Surcharge>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Note).HasMaxLength(200);
 
                 entity.Property(e => e.PriceAfterTax).HasColumnType("decimal(20, 5)");
@@ -1417,12 +1410,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.Surcharge)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Surcharge_Currency");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.SurchargeIdNavigation)
-                    .HasForeignKey<Surcharge>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Surcharge_UserUpdated");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.SurchargeInsertedByNavigation)
@@ -1450,6 +1437,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.Surcharge)
                     .HasForeignKey(d => d.SurchargeTypeId)
                     .HasConstraintName("FK_Surcharge_SurchargeType");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.SurchargeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Surcharge_UserUpdated");
             });
 
             modelBuilder.Entity<SurchargeType>(entity =>
