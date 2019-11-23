@@ -137,7 +137,6 @@ namespace Components.Forms
                 {
                     RenderGroup(group.InverseParent.ToList());
                 }
-                Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
                 RenderComponent(group);
                 Html.Instance.EndOf("#group_" + group.Id);
             }
@@ -145,6 +144,8 @@ namespace Components.Forms
 
         private void RenderComponent(ComponentGroup group)
         {
+            if (group.UserInterface.Nothing()) return;
+            Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
             var column = 0;
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {

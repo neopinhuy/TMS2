@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using ElementType = MVVM.ElementType;
+using InvalidOperationException = Common.Extensions.InvalidOperationException;
 
 namespace Components
 {
@@ -138,7 +139,7 @@ namespace Components
             var optimizedSource = refEntities.Select(x => Client<object>.Instance
                 .GetListEntity(x.Reference, x.DataSourceOptimized));
             var refData = await Task.WhenAll(optimizedSource);
-            _refData = refData.Select(x => x.Value);
+            _refData = refData.Select(x => x?.Value);
         }
 
         private Header<T> FormatDataSource(Header<T> header)

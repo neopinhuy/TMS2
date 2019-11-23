@@ -17,8 +17,14 @@ namespace Common.Extensions
         {
             return (bool?)obj?[prop] ?? false;
         }
+
         public static object GetComplexPropValue(this object obj, string propName)
         {
+            if (obj == null)
+            {
+                throw new InvalidOperationException($"{nameof(obj)} is null");
+            }
+            if (string.IsNullOrWhiteSpace(propName)) return null;
             var hierarchy = propName.Split('.');
             var res = obj;
             foreach (var key in hierarchy)
@@ -31,6 +37,14 @@ namespace Common.Extensions
 
         public static void SetComplexPropValue(this object obj, string propName, object value)
         {
+            if (obj == null)
+            {
+                throw new InvalidOperationException($"{nameof(obj)} is null");
+            }
+            if (string.IsNullOrWhiteSpace(propName))
+            {
+                throw new InvalidOperationException($"{nameof(propName)} is null");
+            }
             var hierarchy = propName.Split('.');
             if (hierarchy.Length == 0) return;
             if (hierarchy.Length == 1)
