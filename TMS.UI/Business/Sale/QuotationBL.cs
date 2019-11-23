@@ -26,7 +26,6 @@ namespace TMS.UI.Business.Sale
                 Name = "Quotation Detail",
                 Title = "Quotation"
             };
-            form.AfterSaved += ReloadQuotationGrid;
             AddChild(form);
         }
 
@@ -34,12 +33,6 @@ namespace TMS.UI.Business.Sale
         {
             var grid = FindComponent("QuotationGrid") as GridView;
             grid.DeleteSelected();
-        }
-
-        private void ReloadQuotationGrid()
-        {
-            var grid = FindComponent("QuotationGrid") as GridView;
-            grid.LoadData();
         }
 
         #endregion Quotation

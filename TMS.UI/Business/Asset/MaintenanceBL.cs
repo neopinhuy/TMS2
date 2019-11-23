@@ -20,7 +20,6 @@ namespace TMS.UI.Business.Asset
                 Name = "TruckMaintenance Detail",
                 Title = "Maintenance Detail"
             };
-            maintenaceForm.AfterSaved += ReloadMaintenanceGrid;
             maintenaceForm.AfterRendered += () =>
             {
                 var truck = maintenaceForm.FindComponent("TruckId") as SearchEntry;
@@ -35,14 +34,6 @@ namespace TMS.UI.Business.Asset
             AddChild(maintenaceForm);
         }
 
-        private void ReloadMaintenanceGrid()
-        {
-            var maintenanceGrid = FindComponent("Maintenance") as GridView;
-            maintenanceGrid.LoadData();
-            var detailGrid = FindComponent("TruckMaintenanceDetail") as GridView;
-            detailGrid.LoadData();
-        }
-
         public void EditMaintenance(TruckMaintenance maintenance)
         {
             var maintenanceForm = new PopupEditor<TruckMaintenance>
@@ -51,7 +42,6 @@ namespace TMS.UI.Business.Asset
                 Name = "TruckMaintenance Detail",
                 Title = "Maintenance Detail"
             };
-            maintenanceForm.AfterSaved += ReloadMaintenanceGrid;
             AddChild(maintenanceForm);
         }
 

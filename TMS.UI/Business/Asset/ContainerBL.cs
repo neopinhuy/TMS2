@@ -34,7 +34,6 @@ namespace TMS.UI.Business.Asset
                 Name = "Container Editor",
                 Title = "Container"
             };
-            _ContainerForm.AfterSaved += ReloadContainerGrid;
             AddChild(_ContainerForm);
         }
 
@@ -42,12 +41,6 @@ namespace TMS.UI.Business.Asset
         {
             var ContainerGrid = FindComponent("ContainerGrid") as GridView;
             ContainerGrid.DeleteSelected();
-        }
-
-        private void ReloadContainerGrid()
-        {
-            var ContainerGrid = FindComponent("ContainerGrid") as GridView;
-            ContainerGrid.LoadData();
         }
 
         #endregion Container

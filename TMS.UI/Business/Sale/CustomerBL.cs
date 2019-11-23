@@ -26,7 +26,6 @@ namespace TMS.UI.Business.Sale
                 Name = "Customer Detail",
                 Title = "Customer"
             };
-            customerForm.AfterSaved += ReloadCustomerGrid;
             AddChild(customerForm);
         }
 
@@ -34,12 +33,6 @@ namespace TMS.UI.Business.Sale
         {
             var CustomerGrid = FindComponent("CustomerGrid") as GridView;
             CustomerGrid.DeleteSelected();
-        }
-
-        private void ReloadCustomerGrid()
-        {
-            var CustomerGrid = FindComponent("CustomerGrid") as GridView;
-            CustomerGrid.LoadData();
         }
 
         #endregion Customer

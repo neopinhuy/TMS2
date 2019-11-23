@@ -21,6 +21,18 @@ namespace Components
         public virtual Element InteractiveElement { get; set; }
         public Func<ObservableArgs, bool> ValueChanging { get; set; }
         public Action<ObservableArgs> ValueChanged { get; set; }
+        public virtual Component RootComponent
+        {
+            get
+            {
+                var parent = Parent;
+                while (parent.Parent != null)
+                {
+                    parent = parent.Parent;
+                }
+                return parent;
+            }
+        }
         public virtual bool Disabled
         {
             get => disabled;
@@ -81,6 +93,21 @@ namespace Components
                 }
             }
             return null;
+        }
+
+        public IEnumerable<T> FindComponent<T>() where T : class
+        {
+            var result = new List<T>();
+            var type = typeof(T);
+            if (Children.Nothing()) return Enumerable.Empty<T>();
+            foreach (var child in Children)
+            {
+                if (child.GetType().IsAssignableFrom(type)) result.Add(child as T);
+                if (child.Children.Nothing()) continue;
+                var res = child.FindComponent<T>();
+                if (res != null) result.AddRange(res);
+            }
+            return result;
         }
 
         public abstract void Render();

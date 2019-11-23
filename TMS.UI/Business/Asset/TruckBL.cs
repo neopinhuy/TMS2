@@ -18,7 +18,6 @@ namespace TMS.UI.Business.Asset
             {
                 Entity = new Truck()
             };
-            _truckForm.AfterSaved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
@@ -28,7 +27,6 @@ namespace TMS.UI.Business.Asset
             {
                 Entity = truck
             };
-            _truckForm.AfterSaved += ReloadTruckGrid;
             AddChild(_truckForm);
         }
 
@@ -36,12 +34,6 @@ namespace TMS.UI.Business.Asset
         {
             var truckGrid = FindComponent("TruckGrid") as GridView;
             truckGrid.DeleteSelected();
-        }
-
-        private void ReloadTruckGrid()
-        {
-            var truckGrid = FindComponent("TruckGrid") as GridView;
-            truckGrid.LoadData();
         }
 
         #endregion Truck
@@ -64,11 +56,6 @@ namespace TMS.UI.Business.Asset
         private void AddAccessoryForm()
         {
             _accessoryForm.Disposed += () => _truckForm.Show(true);
-            _accessoryForm.AfterSaved += () =>
-            {
-                var accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
-                accessoryGrid.LoadData();
-            };
             _truckForm.AddChild(_accessoryForm);
         }
 
@@ -110,14 +97,6 @@ namespace TMS.UI.Business.Asset
         private void AddMaintenanceForm()
         {
             _maintenanceForm.Disposed += () => _truckForm.Show(true);
-            _maintenanceForm.AfterSaved += () =>
-            {
-                var maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
-                maintenanceGrid.LoadData();
-                var detailGrid = _truckForm.FindComponent("TruckMaintenanceDetail") as GridView;
-                // Reload to update maintenance detail Id
-                detailGrid.LoadData();
-            };
             _truckForm.AddChild(_maintenanceForm);
         }
 

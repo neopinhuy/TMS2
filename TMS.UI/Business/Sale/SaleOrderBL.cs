@@ -14,8 +14,6 @@ namespace TMS.UI.Business.Sale
             Title = Name;
         }
 
-        #region SaleOrder
-
         public void CreateSaleOrder()
         {
             InitSaleOrderForm(new Order());
@@ -34,14 +32,6 @@ namespace TMS.UI.Business.Sale
                 Name = "SaleOrder Editor",
                 Title = "Sale order"
             };
-            _saleOrderForm.AfterSaved += () =>
-            {
-                var orderDetail = _saleOrderForm.FindComponent("OrderDetail") as GridView;
-                orderDetail.LoadData();
-                var surcharge = _saleOrderForm.FindComponent("Surcharge") as GridView;
-                surcharge.LoadData();
-            };
-            _saleOrderForm.AfterSaved += ReloadSaleOrderGrid;
             AddChild(_saleOrderForm);
         }
 
@@ -49,15 +39,6 @@ namespace TMS.UI.Business.Sale
         {
             var SaleOrderGrid = FindComponent("SaleOrderGrid") as GridView;
             SaleOrderGrid.DeleteSelected();
-            ReloadSaleOrderGrid();
         }
-
-        private void ReloadSaleOrderGrid()
-        {
-            var SaleOrderGrid = FindComponent("SaleOrderGrid") as GridView;
-            SaleOrderGrid.LoadData();
-        }
-
-        #endregion SaleOrder
     }
 }

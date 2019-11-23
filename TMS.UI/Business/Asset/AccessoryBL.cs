@@ -11,12 +11,6 @@ namespace TMS.UI.Business.Asset
             Name = "AccessoryTab";
         }
 
-        private void ReloadAccessoryGrid()
-        {
-            var accessoryGrid = FindComponent("Accessory") as GridView;
-            accessoryGrid.LoadData();
-        }
-
         public void CreateAccessory()
         {
             var accessoryForm = new PopupEditor<Accessory>
@@ -24,7 +18,6 @@ namespace TMS.UI.Business.Asset
                 Entity = new Accessory(),
                 Name = "Accessory Detail"
             };
-            accessoryForm.AfterSaved += ReloadAccessoryGrid;
             accessoryForm.AfterRendered += () =>
             {
                 var truck = accessoryForm.FindComponent("TruckId") as SearchEntry;
@@ -41,7 +34,6 @@ namespace TMS.UI.Business.Asset
                 Entity = accessory,
                 Name = "Accessory Detail"
             };
-            accessoryForm.AfterSaved += ReloadAccessoryGrid;
             AddChild(accessoryForm);
         }
 

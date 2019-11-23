@@ -15,7 +15,7 @@ namespace Components.Forms
     public partial class EditForm<T> : Component where T : class
     {
         public string Title { get; set; }
-        public System.Action AfterSaved { get; set; }
+        public Action<bool> AfterSaved { get; set; }
         public System.Action AfterRendered { get; set; }
         public EditForm()
         {
@@ -35,11 +35,13 @@ namespace Components.Forms
                     Entity[Id] = data[Id];
                     UpdateProperties(data);
                     Toast.Success($"Create {typeof(T).Name} succeeded");
+                    RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
                 }
                 else
                 {
                     Toast.Warning($"Create {typeof(T).Name} failed");
                 }
+                AfterSaved?.Invoke(data != null);
             }
             else
             {
@@ -48,13 +50,14 @@ namespace Components.Forms
                 {
                     UpdateProperties(data);
                     Toast.Success($"Update {typeof(T).Name} succeeded");
+                    RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
                 }
                 else
                 {
                     Toast.Warning($"Update {typeof(T).Name} failed");
                 }
+                AfterSaved?.Invoke(data != null);
             }
-            AfterSaved?.Invoke();
         }
 
         private void UpdateProperties(T data)
