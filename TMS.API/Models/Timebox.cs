@@ -12,8 +12,8 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public TimeSpan TimeboxStart { get; set; }
-        public TimeSpan TimeboxEnd { get; set; }
+        public string TimeboxStart { get; set; }
+        public string TimeboxEnd { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

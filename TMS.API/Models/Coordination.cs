@@ -12,13 +12,13 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public int TruckId { get; set; }
-        public int DriverId { get; set; }
-        public int FromId { get; set; }
-        public int ToId { get; set; }
-        public double Distance { get; set; }
-        public int FreightStateId { get; set; }
-        public int ContainerId { get; set; }
+        public int? TruckId { get; set; }
+        public int? DriverId { get; set; }
+        public int? FromId { get; set; }
+        public int? ToId { get; set; }
+        public decimal? Distance { get; set; }
+        public int? FreightStateId { get; set; }
+        public int? ContainerId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

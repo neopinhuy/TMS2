@@ -405,28 +405,26 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Coordination>(entity =>
             {
+                entity.Property(e => e.Distance).HasColumnType("decimal(18, 2)");
+
                 entity.HasOne(d => d.Container)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.ContainerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_Container");
 
                 entity.HasOne(d => d.Driver)
                     .WithMany(p => p.CoordinationDriver)
                     .HasForeignKey(d => d.DriverId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_UserDriver");
 
                 entity.HasOne(d => d.FreightState)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.FreightStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_FreightState");
 
                 entity.HasOne(d => d.From)
                     .WithMany(p => p.CoordinationFrom)
                     .HasForeignKey(d => d.FromId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_TerminalFrom");
 
                 entity.HasOne(d => d.InsertedByNavigation)
@@ -438,13 +436,11 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.To)
                     .WithMany(p => p.CoordinationTo)
                     .HasForeignKey(d => d.ToId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_TerminalTo");
 
                 entity.HasOne(d => d.Truck)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.TruckId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_Truck");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
@@ -1542,6 +1538,16 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Timebox>(entity =>
             {
+                entity.Property(e => e.TimeboxEnd)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TimeboxStart)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.TimeboxInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
