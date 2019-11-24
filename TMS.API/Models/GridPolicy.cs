@@ -16,6 +16,8 @@ namespace TMS.API.Models
         public string GroupName { get; set; }
         public string FormatCell { get; set; }
         public string FormatRow { get; set; }
+        public string MinWidth { get; set; }
+        public string MaxWidth { get; set; }
         public int? Precision { get; set; }
         public string Validation { get; set; }
         public string TextAlign { get; set; }

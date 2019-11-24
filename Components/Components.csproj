@@ -40,6 +40,7 @@
     <Compile Include="Extensions\ComponentFactory.cs" />
     <Compile Include="Extensions\Paginator.cs" />
     <Compile Include="Forms\ConfirmDialog.cs" />
+    <Compile Include="GroupTable.cs" />
     <Compile Include="NumberInput.cs" />
     <Compile Include="Datepicker.cs" />
     <Compile Include="Textbox.cs" />

@@ -19,6 +19,7 @@ namespace Components
         public ObservableArray<Data> RowData { get; set; }
         public Action<Data> RowClick { get; set; }
         public Action<Data> RowDblClick { get; set; }
+        public string GroupFormat { get; set; }
     }
 
     public class Table<T> : Component where T : class
@@ -31,7 +32,7 @@ namespace Components
         public Func<ObservableArgs, Header<T>, T, bool> CellChanging { get; set; }
         public Action<ObservableArgs, Header<T>, T> CellChanged { get; set; }
 
-        private readonly TableParam<T> _tableParam;
+        protected readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
         private HTMLTableElement _frozenTable;
         private HTMLTableElement _mainTable;
@@ -232,7 +233,7 @@ namespace Components
             RenderRowData(headers, emptyRowData);
         }
 
-        private void RenderRowData(List<Header<T>> headers, T row)
+        protected virtual void RenderRowData(List<Header<T>> headers, T row)
         {
             Html.Instance.TRow
                 .Event(EventType.Click, ToggleSelectRow, row)

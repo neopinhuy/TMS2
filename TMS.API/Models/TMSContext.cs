@@ -834,6 +834,14 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.GroupName).HasMaxLength(50);
 
+                entity.Property(e => e.MaxWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MinWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ShortDesc)
                     .IsRequired()
                     .HasMaxLength(50);

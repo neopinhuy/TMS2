@@ -38,17 +38,18 @@ namespace Components
 
         public override void Render()
         {
+            var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
+            BindingEvents(tableParams);
             Window.SetTimeout(async() =>
             {
-                var gridPolicy = await Client<GridPolicy>.Instance
+                var gridPolicyTask = Client<GridPolicy>.Instance
                     .GetList("?$expand=Reference($select=Name)" +
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
-                Header.AddRange(gridPolicy.Value.Select(MapToHeader).ToArray());
-                var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
-                BindingEvents(tableParams);
-                await LoadData();
+                var loadDataTask = LoadData();
+                await Task.WhenAll(gridPolicyTask, loadDataTask);
+                Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
                 _table = new Table<object>(tableParams)
                 {
                     Entity = Entity
