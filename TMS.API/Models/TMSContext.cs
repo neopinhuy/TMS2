@@ -405,7 +405,13 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Coordination>(entity =>
             {
-                entity.Property(e => e.Distance).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Note).HasMaxLength(2000);
+
+                entity.Property(e => e.Volume).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
 
                 entity.HasOne(d => d.Container)
                     .WithMany(p => p.Coordination)
@@ -416,6 +422,16 @@ namespace TMS.API.Models
                     .WithMany(p => p.CoordinationDriver)
                     .HasForeignKey(d => d.DriverId)
                     .HasConstraintName("FK_Coordination_UserDriver");
+
+                entity.HasOne(d => d.EmptyContFrom)
+                    .WithMany(p => p.CoordinationEmptyContFrom)
+                    .HasForeignKey(d => d.EmptyContFromId)
+                    .HasConstraintName("FK_Coordination_Terminal_EmptyContFrom");
+
+                entity.HasOne(d => d.EmptyContTo)
+                    .WithMany(p => p.CoordinationEmptyContTo)
+                    .HasForeignKey(d => d.EmptyContToId)
+                    .HasConstraintName("FK_Coordination_Terminal_EmptyContTo");
 
                 entity.HasOne(d => d.FreightState)
                     .WithMany(p => p.Coordination)
@@ -433,6 +449,11 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_UserInserted");
 
+                entity.HasOne(d => d.Timebox)
+                    .WithMany(p => p.Coordination)
+                    .HasForeignKey(d => d.TimeboxId)
+                    .HasConstraintName("FK_Coordination_Timebox");
+
                 entity.HasOne(d => d.To)
                     .WithMany(p => p.CoordinationTo)
                     .HasForeignKey(d => d.ToId)
@@ -442,6 +463,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.TruckId)
                     .HasConstraintName("FK_Coordination_Truck");
+
+                entity.HasOne(d => d.TruckType)
+                    .WithMany(p => p.Coordination)
+                    .HasForeignKey(d => d.TruckTypeId)
+                    .HasConstraintName("FK_Coordination_TruckType");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.CoordinationUpdatedByNavigation)
@@ -1081,6 +1107,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<OrderComposition>(entity =>
             {
+                entity.HasIndex(e => e.OrderDetailId)
+                    .HasName("IX_OrderComposition")
+                    .IsUnique();
+
                 entity.HasOne(d => d.Coordination)
                     .WithMany(p => p.OrderComposition)
                     .HasForeignKey(d => d.CoordinationId)
@@ -1094,8 +1124,8 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_OrderComposition_UserInserted");
 
                 entity.HasOne(d => d.OrderDetail)
-                    .WithMany(p => p.OrderComposition)
-                    .HasForeignKey(d => d.OrderDetailId)
+                    .WithOne(p => p.OrderComposition)
+                    .HasForeignKey<OrderComposition>(d => d.OrderDetailId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderComposition_OrderDetail");
 
@@ -1934,6 +1964,10 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Format)
                     .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupFormat)
+                    .HasMaxLength(500)
                     .IsUnicode(false);
 
                 entity.Property(e => e.HotKey)

@@ -21,6 +21,13 @@ namespace TMS.API.Controllers
             _client = elasticClient;
         }
 
+        [HttpGet("api/[Controller]/{id}")]
+        public virtual async Task<IActionResult> Get(int id)
+        {
+            var res = await db.Set<T>().FindAsync(id);
+            return Ok(res);
+        }
+
         [HttpGet]
         public virtual IActionResult Get(ODataQueryOptions<T> options)
         {

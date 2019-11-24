@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public OrderDetail()
         {
-            OrderComposition = new HashSet<OrderComposition>();
             Surcharge = new HashSet<Surcharge>();
         }
 
@@ -55,7 +54,7 @@ namespace TMS.API.Models
         public virtual TruckType TruckType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual ICollection<OrderComposition> OrderComposition { get; set; }
+        public virtual OrderComposition OrderComposition { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
     }
 }

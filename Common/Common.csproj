@@ -117,6 +117,9 @@
     <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\FreightStateEnum.cs">
+      <Link>Models\FreightStateEnum.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\FuelType.cs">
       <Link>Models\FuelType.cs</Link>
     </Compile>

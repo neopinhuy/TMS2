@@ -7,6 +7,8 @@ namespace TMS.API.Models
     {
         public Terminal()
         {
+            CoordinationEmptyContFrom = new HashSet<Coordination>();
+            CoordinationEmptyContTo = new HashSet<Coordination>();
             CoordinationFrom = new HashSet<Coordination>();
             CoordinationTo = new HashSet<Coordination>();
             OrderDetailEmptyContFrom = new HashSet<OrderDetail>();
@@ -38,6 +40,8 @@ namespace TMS.API.Models
         public virtual User IdNavigation { get; set; }
         public virtual Nationality Nationality { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<Coordination> CoordinationEmptyContFrom { get; set; }
+        public virtual ICollection<Coordination> CoordinationEmptyContTo { get; set; }
         public virtual ICollection<Coordination> CoordinationFrom { get; set; }
         public virtual ICollection<Coordination> CoordinationTo { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailEmptyContFrom { get; set; }
