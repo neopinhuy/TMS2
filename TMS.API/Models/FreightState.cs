@@ -10,6 +10,7 @@ namespace TMS.API.Models
             ComponentGroup = new HashSet<ComponentGroup>();
             Container = new HashSet<Container>();
             Coordination = new HashSet<Coordination>();
+            CoordinationDetail = new HashSet<CoordinationDetail>();
             FreightHistory = new HashSet<FreightHistory>();
             GridPolicy = new HashSet<GridPolicy>();
             StatePolicy = new HashSet<StatePolicy>();
@@ -34,6 +35,7 @@ namespace TMS.API.Models
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
+        public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
         public virtual ICollection<GridPolicy> GridPolicy { get; set; }
         public virtual ICollection<StatePolicy> StatePolicy { get; set; }

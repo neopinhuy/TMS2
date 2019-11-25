@@ -27,6 +27,7 @@ namespace TMS.API.Models
         public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
+        public virtual DbSet<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
@@ -413,15 +414,10 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
 
-                entity.HasOne(d => d.Container)
+                entity.HasOne(d => d.ContainerType)
                     .WithMany(p => p.Coordination)
-                    .HasForeignKey(d => d.ContainerId)
+                    .HasForeignKey(d => d.ContainerTypeId)
                     .HasConstraintName("FK_Coordination_Container");
-
-                entity.HasOne(d => d.Driver)
-                    .WithMany(p => p.CoordinationDriver)
-                    .HasForeignKey(d => d.DriverId)
-                    .HasConstraintName("FK_Coordination_UserDriver");
 
                 entity.HasOne(d => d.EmptyContFrom)
                     .WithMany(p => p.CoordinationEmptyContFrom)
@@ -459,11 +455,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.ToId)
                     .HasConstraintName("FK_Coordination_TerminalTo");
 
-                entity.HasOne(d => d.Truck)
-                    .WithMany(p => p.Coordination)
-                    .HasForeignKey(d => d.TruckId)
-                    .HasConstraintName("FK_Coordination_Truck");
-
                 entity.HasOne(d => d.TruckType)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.TruckTypeId)
@@ -473,6 +464,34 @@ namespace TMS.API.Models
                     .WithMany(p => p.CoordinationUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Coordination_UserUpdated");
+            });
+
+            modelBuilder.Entity<CoordinationDetail>(entity =>
+            {
+                entity.HasOne(d => d.Container)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.ContainerId)
+                    .HasConstraintName("FK_CoordinationDetail_Container");
+
+                entity.HasOne(d => d.Coordination)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.CoordinationId)
+                    .HasConstraintName("FK_CoordinationDetail_Coordination");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.DriverId)
+                    .HasConstraintName("FK_CoordinationDetail_Driver");
+
+                entity.HasOne(d => d.FrieghtState)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.FrieghtStateId)
+                    .HasConstraintName("FK_CoordinationDetail_FreightState");
+
+                entity.HasOne(d => d.Truck)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.TruckId)
+                    .HasConstraintName("FK_CoordinationDetail_Truck");
             });
 
             modelBuilder.Entity<Currency>(entity =>

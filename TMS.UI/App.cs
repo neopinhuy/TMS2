@@ -17,7 +17,7 @@ namespace TMS.UI
 
             var so = new SaleOrderBL();
             so.Render();
-            var orderComp = new OrderCompositionBL();
+            var orderComp = new CoordinationBL();
             orderComp.Render();
             orderComp.Focus();
         }

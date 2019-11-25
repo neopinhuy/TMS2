@@ -8,7 +8,7 @@ namespace TMS.API.Models
         public Truck()
         {
             Accessory = new HashSet<Accessory>();
-            Coordination = new HashSet<Coordination>();
+            CoordinationDetail = new HashSet<CoordinationDetail>();
             MaintenanceTicket = new HashSet<MaintenanceTicket>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
             TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
@@ -56,7 +56,7 @@ namespace TMS.API.Models
         public virtual TruckType TruckType { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
-        public virtual ICollection<Coordination> Coordination { get; set; }
+        public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }

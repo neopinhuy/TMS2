@@ -9,12 +9,12 @@ using TMS.API.Models;
 
 namespace TMS.UI.Business.Freight
 {
-    public class OrderCompositionBL : TabEditor<OrderComposition>
+    public class CoordinationBL : TabEditor<Coordination>
     {
-        public OrderCompositionBL()
+        public CoordinationBL()
         {
             Name = "Order Composition List";
-            Title = "Order composition";
+            Title = "Coordination";
         }
 
         public async Task Composite()

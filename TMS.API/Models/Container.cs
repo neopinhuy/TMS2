@@ -7,7 +7,7 @@ namespace TMS.API.Models
     {
         public Container()
         {
-            Coordination = new HashSet<Coordination>();
+            CoordinationDetail = new HashSet<CoordinationDetail>();
             MaintenanceTicket = new HashSet<MaintenanceTicket>();
         }
 
@@ -35,7 +35,7 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
-        public virtual ICollection<Coordination> Coordination { get; set; }
+        public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
     }
 }

@@ -7,13 +7,12 @@ namespace TMS.API.Models
     {
         public Coordination()
         {
+            CoordinationDetail = new HashSet<CoordinationDetail>();
             FreightHistory = new HashSet<FreightHistory>();
             OrderComposition = new HashSet<OrderComposition>();
         }
 
         public int Id { get; set; }
-        public int? TruckId { get; set; }
-        public int? DriverId { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
         public int? EmptyContFromId { get; set; }
@@ -25,7 +24,7 @@ namespace TMS.API.Models
         public decimal? Distance { get; set; }
         public int? TimeboxId { get; set; }
         public int? FreightStateId { get; set; }
-        public int? ContainerId { get; set; }
+        public int? ContainerTypeId { get; set; }
         public string Note { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -33,8 +32,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Container Container { get; set; }
-        public virtual User Driver { get; set; }
+        public virtual ContainerType ContainerType { get; set; }
         public virtual Terminal EmptyContFrom { get; set; }
         public virtual Terminal EmptyContTo { get; set; }
         public virtual FreightState FreightState { get; set; }
@@ -42,9 +40,9 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
-        public virtual Truck Truck { get; set; }
         public virtual TruckType TruckType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<FreightHistory> FreightHistory { get; set; }
         public virtual ICollection<OrderComposition> OrderComposition { get; set; }
     }

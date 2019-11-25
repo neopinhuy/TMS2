@@ -30,7 +30,7 @@ namespace TMS.API.Models
             ContractInsertedByNavigation = new HashSet<Contract>();
             ContractUpdatedByNavigation = new HashSet<Contract>();
             ContractUser = new HashSet<Contract>();
-            CoordinationDriver = new HashSet<Coordination>();
+            CoordinationDetail = new HashSet<CoordinationDetail>();
             CoordinationInsertedByNavigation = new HashSet<Coordination>();
             CoordinationUpdatedByNavigation = new HashSet<Coordination>();
             CurrencyInsertedByNavigation = new HashSet<Currency>();
@@ -180,7 +180,7 @@ namespace TMS.API.Models
         public virtual ICollection<Contract> ContractInsertedByNavigation { get; set; }
         public virtual ICollection<Contract> ContractUpdatedByNavigation { get; set; }
         public virtual ICollection<Contract> ContractUser { get; set; }
-        public virtual ICollection<Coordination> CoordinationDriver { get; set; }
+        public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<Coordination> CoordinationInsertedByNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
         public virtual ICollection<Currency> CurrencyInsertedByNavigation { get; set; }

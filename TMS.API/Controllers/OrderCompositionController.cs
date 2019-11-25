@@ -18,19 +18,22 @@ namespace TMS.API.Controllers
         [HttpPost("api/[Controller]/Delete")]
         public override async Task<bool> Delete([FromBody] List<int> ids)
         {
-            var entities = db.OrderComposition.Where(x => ids.Contains(x.Id));
-            db.OrderComposition.RemoveRange(entities);
-            await db.SaveChangesAsync();
+            using (var ctx = new TMSContext())
+            {
+                var entities = ctx.OrderComposition.Where(x => ids.Contains(x.Id));
+                ctx.OrderComposition.RemoveRange(entities);
+                await ctx.SaveChangesAsync();
+                var deleting =
+                    from coor in ctx.Coordination
+                    join compositionLeft in ctx.OrderComposition on coor.Id equals compositionLeft.CoordinationId
+                        into compositionLeftJoin
+                    from composition in compositionLeftJoin.DefaultIfEmpty()
+                    where composition == null
+                    select coor;
 
-            var emptyCoordination =
-                from coordination in db.Coordination.Include(x => x.OrderComposition)
-                join composition in db.OrderComposition on coordination.Id equals composition.CoordinationId
-                where coordination.Active
-                group new { composition } by coordination into g
-                where g.Count() == 0
-                select g.Key;
-            db.Coordination.RemoveRange(emptyCoordination);
-            await db.SaveChangesAsync();
+                ctx.Coordination.RemoveRange(deleting);
+                await ctx.SaveChangesAsync();
+            }
             return true;
         }
     }
