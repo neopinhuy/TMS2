@@ -1974,9 +1974,11 @@ namespace TMS.API.Models
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
-                entity.Property(e => e.GroupFormat)
-                    .HasMaxLength(500)
+                entity.Property(e => e.GroupBy)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
+
+                entity.Property(e => e.GroupFormat).HasMaxLength(500);
 
                 entity.Property(e => e.HotKey)
                     .HasMaxLength(50)

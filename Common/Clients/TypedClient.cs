@@ -182,32 +182,5 @@ namespace Common.Clients
             xhr.Send(JsonConvert.SerializeObject(value));
             return tcs.Task;
         }
-
-        public Task<bool> Delete(int id)
-        {
-            var type = typeof(T);
-            var tcs = new TaskCompletionSource<bool>();
-            var xhr = new XMLHttpRequest();
-            xhr.Open("DELETE", $"{BaseUrl}/api/{type.Name}/{id}", true);
-            xhr.SetRequestHeader("Content-type", "application/json");
-            xhr.OnReadyStateChange = () =>
-            {
-                if (xhr.ReadyState != AjaxReadyState.Done)
-                {
-                    return;
-                }
-                if (xhr.Status == 200 || xhr.Status == 204)
-                {
-                    var parsed = JsonConvert.DeserializeObject<bool>(xhr.ResponseText);
-                    tcs.SetResult(parsed);
-                }
-                else
-                {
-                    tcs.SetResult(false);
-                }
-            };
-            xhr.Send();
-            return tcs.Task;
-        }
     }
 }

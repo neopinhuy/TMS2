@@ -31,11 +31,8 @@ namespace TMS.API.Models
                         entry.CurrentValues["Active"] = true;
                         break;
                     case EntityState.Modified:
+                        entry.CurrentValues["UpdatedBy"] = 1; // hard code for now
                         entry.CurrentValues["UpdatedDate"] = DateTime.Now;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["Active"] = false;
                         break;
                 }
             }

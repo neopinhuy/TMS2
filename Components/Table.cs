@@ -19,6 +19,7 @@ namespace Components
         public ObservableArray<Data> RowData { get; set; }
         public Action<Data> RowClick { get; set; }
         public Action<Data> RowDblClick { get; set; }
+        public string GroupBy { get; set; }
         public string GroupFormat { get; set; }
     }
 
@@ -34,8 +35,8 @@ namespace Components
 
         protected readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
-        private HTMLTableElement _frozenTable;
-        private HTMLTableElement _mainTable;
+        protected HTMLTableElement _frozenTable;
+        protected HTMLTableElement _mainTable;
         private int? timeOut = null;
         private bool _isFocusCell;
         
@@ -236,9 +237,9 @@ namespace Components
         protected virtual void RenderRowData(List<Header<T>> headers, T row)
         {
             Html.Instance.TRow
-                .Event(EventType.Click, ToggleSelectRow, row)
-                .Event(EventType.MouseEnter, HoverRow, row)
-                .Event(EventType.MouseLeave, LeaveRow, row);
+                .Event(EventType.Click, ToggleSelectRow)
+                .Event(EventType.MouseEnter, HoverRow)
+                .Event(EventType.MouseLeave, LeaveRow);
             var tr = Html.Context as HTMLTableRowElement;
             tr[_rowData] = row;
             if (_tableParam.RowClick != null)
@@ -252,15 +253,14 @@ namespace Components
             Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
         }
 
-        private void ToggleSelectRow(T rowData)
+        private void ToggleSelectRow(Event e)
         {
             if (_isFocusCell)
             {
                 _isFocusCell = false;
                 return;
             }
-            var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && Editable) index = RowData.Data.Length;
+            var index = GetIndex(e);
             ToggleSelectRow(index, _frozenTable.TBodies[0]);
             ToggleSelectRow(index, _mainTable.TBodies[0]);
         }
@@ -289,11 +289,11 @@ namespace Components
                 tableRow.ReplaceClass(_hovering, string.Empty);
         }
 
-        private static void ToggleSelectRow(bool selected, int index, HTMLTableSectionElement body)
+        private static void ToggleSelectRow(bool forceSelect, int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
             var rowData = tableRow[_rowData];
-            if (selected)
+            if (forceSelect)
             {
                 tableRow.AddClass(_selectedClass);
                 rowData[_selectedFlag] = true;
@@ -307,10 +307,9 @@ namespace Components
                 tableRow.ReplaceClass(_hovering, string.Empty);
         }
 
-        private void HoverRow(T rowData)
+        private void HoverRow(Event e)
         {
-            var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && Editable) index = RowData.Data.Length;
+            var index = GetIndex(e);
             HoverRow(index, _frozenTable.TBodies[0]);
             HoverRow(index, _mainTable.TBodies[0]);
         }
@@ -318,22 +317,30 @@ namespace Components
         private static void HoverRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
-            if (!tableRow.ClassName.Contains(_hovering))
+            if (!tableRow.HasClass(_hovering))
                 tableRow.AddClass(_hovering);
         }
 
-        private void LeaveRow(T rowData)
+        private void LeaveRow(Event e)
         {
-            var index = Array.IndexOf(RowData.Data, rowData);
-            if (index == -1 && Editable) index = RowData.Data.Length;
+            var index = GetIndex(e);
             LeaveRow(index, _frozenTable.TBodies[0]);
             LeaveRow(index, _mainTable.TBodies[0]);
+        }
+
+        protected int GetIndex(Event e)
+        {
+            var tableRow = Html.Take(e.Target as HTMLElement)
+                .Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
+            var tbody = tableRow.ParentElement as HTMLTableSectionElement;
+            var index = Array.IndexOf(tbody.Rows.ToArray(), tableRow);
+            return index;
         }
 
         private static void LeaveRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
-            if (tableRow.ClassName.Contains(_hovering))
+            if (tableRow.HasClass(_hovering))
                 tableRow.ReplaceClass(_hovering, string.Empty);
         }
 

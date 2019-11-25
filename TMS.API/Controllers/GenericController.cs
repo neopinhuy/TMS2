@@ -76,7 +76,7 @@ namespace TMS.API.Controllers
         public virtual async Task<bool> Delete([FromBody]List<int> ids)
         {
             var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
-            db.Set<T>().RemoveRange(entities);
+            await entities.ForEachAsync(x => x.SetPropValue("Active", false));
             await db.SaveChangesAsync();
             return true;
         }

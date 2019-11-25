@@ -19,19 +19,16 @@ namespace TMS.UI.Business.Freight
 
         public async Task Composite()
         {
-            // Get selected order details
             var grid = FindComponent<GridView>().First();
             var selected = grid.RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Cast<OrderDetail>().ToList();
 
-            // Notify if the user hasn't selected any row
             if (selected.Nothing() || selected.Count() < 2)
             {
                 Toast.Warning("Please select at least two order to composite.");
+                return;
             }
-
-            // Notify if the selected order detail have different condition that cannot composite
             for (int i = 0; i < selected.Count - 1; i++)
             {
                 if (!CanComposite(selected[i], selected[i + 1]))
@@ -42,7 +39,6 @@ namespace TMS.UI.Business.Freight
             }
             var orderDetail = selected.First();
 
-            // Create a new order composition object
             var coordination = new Coordination
             {
                 FromId = orderDetail.FromId,
@@ -60,12 +56,8 @@ namespace TMS.UI.Business.Freight
                     OrderDetailId = x.Id
                 }).ToList()
             };
-
-            // Submit to the server
             var client = new Client<Coordination>();
             var res = await client.CreateAsync(coordination);
-
-            // Notify success
             if (res is null)
             {
                 Toast.Warning("Create order composition failed!");
@@ -73,14 +65,13 @@ namespace TMS.UI.Business.Freight
             else
             {
                 Toast.Success("Create order composition succeeded!");
+                FindComponent<GridView>().ForEach(x => x.ReloadData());
             }
         }
 
         private bool CanComposite(OrderDetail first, OrderDetail second)
         {
             return first.FromId == second.FromId && first.ToId == second.ToId
-                && first.EmptyContFromId == second.EmptyContFromId
-                && first.EmptyContToId == second.EmptyContToId
                 && first.TimeboxId == second.TimeboxId;
         }
 
@@ -95,6 +86,30 @@ namespace TMS.UI.Business.Freight
                 Title = "Sale order"
             };
             AddChild(_saleOrderForm);
+        }
+
+        public async Task Decomposite()
+        {
+            var grid = FindComponent<GridView>().Last();
+            var selected = grid.RowData.Data
+                .Where(x => (bool?)x["__selected__"] == true)
+                .Cast<OrderDetail>().ToList();
+            if (selected.Nothing())
+            {
+                Toast.Warning("Please select at least one order to decomposite!");
+                return;
+            }
+            var deleted = await new Client(nameof(OrderComposition))
+                .Delete(selected.Select(x => x.OrderComposition.Id).ToList());
+            if (deleted)
+            {
+                Toast.Success("Decomposite order succeeded!");
+                FindComponent<GridView>().ForEach(x => x.ReloadData());
+            }
+            else
+            {
+                Toast.Warning("Decomposite order failed!");
+            }
         }
     }
 }

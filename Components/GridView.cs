@@ -38,8 +38,6 @@ namespace Components
 
         public override void Render()
         {
-            var tableParams = new TableParam<object> { Headers = Header, RowData = RowData };
-            BindingEvents(tableParams);
             Window.SetTimeout(async() =>
             {
                 var gridPolicyTask = Client<GridPolicy>.Instance
@@ -47,18 +45,29 @@ namespace Components
                         "&orderby=Order" +
                         $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
                         $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
-                var loadDataTask = LoadData();
+                var loadDataTask = ReloadData();
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
                 Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
-                _table = new Table<object>(tableParams)
-                {
-                    Entity = Entity
-                };
-                _table.BodyContextMenu += RenderContextMenu;
-                Html.Take(RootHtmlElement).Clear();
-                _table.Render();
+                RenderTable();
                 Pagination();
             });
+        }
+
+        public void RenderTable()
+        {
+            var tableParams = new TableParam<object> 
+            {
+                Headers = Header, RowData = RowData,
+                GroupBy = _ui.GroupBy, GroupFormat = _ui.GroupFormat,
+            };
+            BindingEvents(tableParams);
+            _table = _ui.GroupFormat.HasAnyChar()
+                ? new GroupTable(tableParams)
+                : new Table<object>(tableParams);
+            _table.Entity = Entity;
+            _table.BodyContextMenu += RenderContextMenu;
+            Html.Take(RootHtmlElement).Clear();
+            _table.Render();
         }
 
         private void BindingEvents(TableParam<object> tableParams)
@@ -121,7 +130,7 @@ namespace Components
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
         
-        public virtual async Task LoadData(string dataSource = null)
+        public virtual async Task ReloadData(string dataSource = null)
         {
             var formatted = Utils.FormatWith(_ui.DataSourceFilter, Entity);
             dataSource = dataSource ?? formatted;
@@ -155,7 +164,7 @@ namespace Components
             {
                 (e["preventDefault"] as System.Action)();
                 _pageIndex = page - 1;
-                LoadData();
+                ReloadData();
             });
         }
 
@@ -182,7 +191,7 @@ namespace Components
             {
                 Toast.Success("Delete succeeded");
                 RowData.Data.Where(x => (bool?)x["__selected__"] == true).ForEach(RowData.Remove);
-                LoadData();
+                ReloadData();
             }
             else
             {

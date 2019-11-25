@@ -28,7 +28,7 @@ namespace TMS.UI.Business.Asset
                 var detailGrid = maintenaceForm.FindComponent("TruckMaintenanceDetail") as GridView;
                 truck.ValueChanged += arg =>
                 {
-                    detailGrid.LoadData();
+                    detailGrid.ReloadData();
                 };
             };
             AddChild(maintenaceForm);

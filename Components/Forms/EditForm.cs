@@ -35,7 +35,7 @@ namespace Components.Forms
                     Entity[Id] = data[Id];
                     UpdateComponentEntity(data);
                     Toast.Success($"Create {typeof(T).Name} succeeded");
-                    RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
+                    RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Components.Forms
                 {
                     UpdateComponentEntity(data);
                     Toast.Success($"Update {typeof(T).Name} succeeded");
-                    RootComponent.FindComponent<GridView>().ForEach(x => x.LoadData());
+                    RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
                 }
                 else
                 {
