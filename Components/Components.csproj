@@ -49,7 +49,6 @@
     <Compile Include="Extensions\HotKeys.cs" />
     <Compile Include="Extensions\MaskMoney.cs" />
     <Compile Include="Extensions\ReflectionFormatProvider.cs" />
-    <Compile Include="Extensions\Toast.cs" />
     <Compile Include="Extensions\Utils.cs" />
     <Compile Include="Forms\TabEditor.cs" />
     <Compile Include="Forms\PopupEditor.cs" />

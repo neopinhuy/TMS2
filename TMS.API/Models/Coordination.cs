@@ -18,7 +18,9 @@ namespace TMS.API.Models
         public int? EmptyContFromId { get; set; }
         public int? EmptyContToId { get; set; }
         public int? TruckTypeId { get; set; }
+        public int? CommodityTypeId { get; set; }
         public int? TotalContainer { get; set; }
+        public bool IsComposited { get; set; }
         public decimal? Weight { get; set; }
         public decimal? Volume { get; set; }
         public decimal? Distance { get; set; }
@@ -32,6 +34,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual CommodityType CommodityType { get; set; }
         public virtual ContainerType ContainerType { get; set; }
         public virtual Terminal EmptyContFrom { get; set; }
         public virtual Terminal EmptyContTo { get; set; }

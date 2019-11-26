@@ -19,19 +19,19 @@ namespace TMS.UI.Business.Freight
 
         public async Task Composite()
         {
-            var grid = FindComponent<GridView>().First();
+            var grid = FindComponent("OrderCompositionGrid") as GridView;
             var selected = grid.RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Cast<OrderDetail>().ToList();
 
-            if (selected.Nothing() || selected.Count() < 2)
+            if (selected.Nothing())
             {
-                Toast.Warning("Please select at least two order to composite.");
+                Toast.Warning("Please select at least one order to composite.");
                 return;
             }
             for (int i = 0; i < selected.Count - 1; i++)
             {
-                if (!CanComposite(selected[i], selected[i + 1]))
+                if (selected.Count > 1 && !CanComposite(selected[i], selected[i + 1]))
                 {
                     Toast.Warning("Cannot composite selected order because there are miss matched condition!");
                     return;
@@ -51,6 +51,9 @@ namespace TMS.UI.Business.Freight
                 Distance = orderDetail.Distance,
                 TimeboxId = orderDetail.TimeboxId,
                 FreightStateId = (int)FreightStateEnum.InCoordination,
+                IsComposited = selected.Count > 1,
+                CommodityTypeId = selected.Select(x => x.CommodityTypeId).Distinct().Count() == 1
+                    ? orderDetail.CommodityTypeId : null,
                 OrderComposition = selected.Select(x => new OrderComposition
                 {
                     OrderDetailId = x.Id
@@ -90,7 +93,7 @@ namespace TMS.UI.Business.Freight
 
         public async Task Decomposite()
         {
-            var grid = FindComponent<GridView>().Last();
+            var grid = FindComponent("OrderDeCompositionGrid") as GridView;
             var selected = grid.RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Cast<OrderDetail>().ToList();

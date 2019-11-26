@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Nest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMS.API.Extensions;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
@@ -22,9 +23,16 @@ namespace TMS.API.Controllers
                 return BadRequest(ModelState);
             }
             var res = await base.CreateAsync(order);
+            var coordination = CreateCoordination(order.OrderDetail);
+            db.Coordination.AddRange(coordination);
+            await db.SaveChangesAsync();
+            return res;
+        }
 
-            var coordination = 
-                from orderDetail in order.OrderDetail
+        private IEnumerable<Coordination> CreateCoordination(IEnumerable<OrderDetail> orderDetails)
+        {
+            return
+                from orderDetail in orderDetails
                 join vendor in db.Vendor on orderDetail.VendorId equals vendor.Id
                 where orderDetail.IsContainer && vendor.IsSelf
                 select new Coordination
@@ -36,9 +44,9 @@ namespace TMS.API.Controllers
                     ToId = orderDetail.ToId,
                     FreightStateId = (int)FreightStateEnum.InCoordination,
                     Note = orderDetail.Note,
-                    OrderComposition = new List<OrderComposition> 
+                    OrderComposition = new List<OrderComposition>
                     {
-                        new OrderComposition { OrderDetailId = orderDetail.Id } 
+                        new OrderComposition { OrderDetailId = orderDetail.Id }
                     },
                     TimeboxId = orderDetail.TimeboxId,
                     TotalContainer = orderDetail.TotalContainer,
@@ -46,10 +54,8 @@ namespace TMS.API.Controllers
                     Weight = orderDetail.Weight,
                     Volume = orderDetail.Volume,
                     Distance = orderDetail.Distance,
+                    CommodityTypeId = orderDetail.CommodityTypeId
                 };
-            db.Coordination.AddRange(coordination);
-            await db.SaveChangesAsync();
-            return res;
         }
 
         [HttpPut("api/[Controller]")]
@@ -59,22 +65,74 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            using (var transaction = db.Database.BeginTransaction())
+            try
             {
                 UpdateChildren<OrderDetail>(order);
-                var res = await base.UpdateAsync(order);
-                //var detailIds = order.OrderDetail.Select(x => x.Id);
-                //var inCoordinationState = (int)FreightStateEnum.InCoordination;
-                //var coordination = db.OrderComposition
-                //    .Include(x => x.Coordination)
-                //    .ThenInclude(x => x.CoordinationDetail)
-                //    .Where(x => detailIds.Contains(x.OrderDetailId)
-                //        && x.Coordination.FreightStateId == inCoordinationState)
-                //    .Select(x => x.Coordination);
-                //var coorDetail = coordination.SelectMany(x => x.CoordinationDetail);
-
+                await base.UpdateAsync(order);
+                await UpdateCoordination(order);
                 await db.SaveChangesAsync();
-                return res;
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return order;
+        }
+
+        private async Task UpdateCoordination(Order order)
+        {
+            foreach (var orderDetail in order.OrderDetail)
+            {
+                var coordination = await db.FindCoordination(orderDetail);
+                var vendor = await db.Vendor.FindAsync(orderDetail.VendorId ?? 0);
+                if (coordination != null && coordination.FreightStateId != (int)FreightStateEnum.InCoordination)
+                    throw new InvalidOperationException($"The coordination associated with the order detail id - {orderDetail.Id} is in progress!");
+                var updateCondition = coordination != null && vendor.IsSelf && orderDetail.IsContainer;
+                if (updateCondition)
+                {
+                    UpdateCoordination(orderDetail, coordination);
+                }
+                else
+                {
+                    RemoveCoordination(coordination);
+                    await InitCoordinationForContainer(orderDetail);
+                }
+            }
+        }
+
+        private void RemoveCoordination(Coordination coordination)
+        {
+            if (coordination is null) return;
+            db.OrderComposition.RemoveRange(coordination.OrderComposition);
+            db.CoordinationDetail.RemoveRange(coordination.CoordinationDetail);
+            db.Coordination.Remove(coordination);
+        }
+
+        private static void UpdateCoordination(OrderDetail orderDetail, Coordination coordination)
+        {
+            if (coordination is null || orderDetail is null) return;
+            coordination.ContainerTypeId = orderDetail.ContainerTypeId;
+            coordination.CommodityTypeId = orderDetail.CommodityTypeId;
+            coordination.EmptyContFromId = orderDetail.EmptyContFromId;
+            coordination.EmptyContToId = orderDetail.EmptyContToId;
+            coordination.FromId = orderDetail.FromId;
+            coordination.ToId = orderDetail.ToId;
+            coordination.Note = orderDetail.Note;
+            coordination.TimeboxId = orderDetail.TimeboxId;
+            coordination.TotalContainer = orderDetail.TotalContainer;
+            coordination.TruckTypeId = orderDetail.TruckTypeId;
+            coordination.Weight = orderDetail.Weight;
+            coordination.Volume = orderDetail.Volume;
+            coordination.Distance = orderDetail.Distance;
+        }
+
+        private async Task InitCoordinationForContainer(OrderDetail orderDetail)
+        {
+            var vendor = await db.Vendor.FindAsync(orderDetail.VendorId ?? 0);
+            if (orderDetail.IsContainer && vendor != null && vendor.IsSelf)
+            {
+                var created = CreateCoordination(new List<OrderDetail> { orderDetail });
+                db.Coordination.AddRange(created);
             }
         }
     }

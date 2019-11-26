@@ -414,6 +414,11 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
 
+                entity.HasOne(d => d.CommodityType)
+                    .WithMany(p => p.Coordination)
+                    .HasForeignKey(d => d.CommodityTypeId)
+                    .HasConstraintName("FK_Coordination_CommodityType");
+
                 entity.HasOne(d => d.ContainerType)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.ContainerTypeId)
@@ -1153,7 +1158,6 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.OrderDetail)
                     .WithOne(p => p.OrderComposition)
                     .HasForeignKey<OrderComposition>(d => d.OrderDetailId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderComposition_OrderDetail");
 
                 entity.HasOne(d => d.UpdatedByNavigation)

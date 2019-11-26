@@ -7,7 +7,7 @@ namespace TMS.API.Models
     {
         public int Id { get; set; }
         public int CoordinationId { get; set; }
-        public int OrderDetailId { get; set; }
+        public int? OrderDetailId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

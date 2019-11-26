@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Html5;
+using Common.Extensions;
 using Newtonsoft.Json;
 using TMS.API.Models;
 
@@ -35,6 +36,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send();
@@ -61,6 +63,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send();
@@ -87,6 +90,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send();
@@ -119,6 +123,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
@@ -149,6 +154,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             });
             xhr.AddEventListener(EventType.Progress, progressHandler);
@@ -182,6 +188,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(value));
@@ -208,6 +215,7 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(false);
+                    Toast.Warning(xhr.ResponseText);
                 }
             };
             xhr.Send(JsonConvert.SerializeObject(ids));

@@ -34,5 +34,10 @@ namespace Common.Extensions
         {
             return source == null || !source.Any();
         }
+
+        public static bool HasElement<T>(this IEnumerable<T> source)
+        {
+            return source != null && source.Any();
+        }
     }
 }

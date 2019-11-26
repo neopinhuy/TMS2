@@ -1,7 +1,7 @@
 ﻿using Bridge;
 using System;
 
-namespace Components.Extensions
+namespace Common.Extensions
 {
     public class ToastOptions
     {

@@ -4,11 +4,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
 using TMS.API.Models;
-using Microsoft.EntityFrameworkCore;
+using TMS.API.Extensions;
 
 namespace TMS.API.Controllers
 {
-
     public class OrderCompositionController : GenericController<OrderComposition>
     {
         public OrderCompositionController(TMSContext context, IElasticClient client) : base(context, client)
@@ -16,24 +15,13 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public override async Task<bool> Delete([FromBody] List<int> ids)
+        public override async Task<ActionResult<bool>> Delete([FromBody] List<int> ids)
         {
-            using (var ctx = new TMSContext())
-            {
-                var entities = ctx.OrderComposition.Where(x => ids.Contains(x.Id));
-                ctx.OrderComposition.RemoveRange(entities);
-                await ctx.SaveChangesAsync();
-                var deleting =
-                    from coor in ctx.Coordination
-                    join compositionLeft in ctx.OrderComposition on coor.Id equals compositionLeft.CoordinationId
-                        into compositionLeftJoin
-                    from composition in compositionLeftJoin.DefaultIfEmpty()
-                    where composition == null
-                    select coor;
-
-                ctx.Coordination.RemoveRange(deleting);
-                await ctx.SaveChangesAsync();
-            }
+            var entities = db.OrderComposition.Where(x => ids.Contains(x.Id));
+            db.OrderComposition.RemoveRange(entities);
+            await db.SaveChangesAsync();
+            db.RemoveEmptyCoordination();
+            await db.SaveChangesAsync();
             return true;
         }
     }

@@ -73,7 +73,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public virtual async Task<bool> Delete([FromBody]List<int> ids)
+        public virtual async Task<ActionResult<bool>> Delete([FromBody]List<int> ids)
         {
             var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
             await entities.ForEachAsync(x => x.SetPropValue("Active", false));
@@ -90,7 +90,6 @@ namespace TMS.API.Controllers
                 var id = (int)detail.GetPropValue("Id");
                 if (id == 0)
                 {
-                    detail.SetPropValue("Id", 0);
                     db.Set<Child>().Add(detail);
                 }
                 else if (id > 0)
