@@ -54,7 +54,7 @@ namespace TMS.API.Controllers
                     Weight = orderDetail.Weight,
                     Volume = orderDetail.Volume,
                     Distance = orderDetail.Distance,
-                    CommodityTypeId = orderDetail.CommodityTypeId
+                    CommodityTypeId = orderDetail.CommodityTypeId,
                 };
         }
 

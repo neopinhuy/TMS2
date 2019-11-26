@@ -91,7 +91,7 @@ namespace TMS.UI.Business.Freight
             AddChild(_saleOrderForm);
         }
 
-        public async Task Decomposite()
+        public async Task DecompositeOrderDetail()
         {
             var grid = FindComponent("OrderDeCompositionGrid") as GridView;
             var selected = grid.RowData.Data
@@ -112,6 +112,37 @@ namespace TMS.UI.Business.Freight
             else
             {
                 Toast.Warning("Decomposite order failed!");
+            }
+        }
+
+        public async Task DecompositeCoordination()
+        {
+            var grid = FindComponent("Coordination") as GridView;
+            var selected = grid.RowData.Data
+                .Where(x => (bool?)x["__selected__"] == true)
+                .Cast<Coordination>().ToList();
+            if (selected.Nothing() || !selected.All(x => x.IsComposited))
+            {
+                Toast.Warning("Please select composited coordinations to delete!");
+                return;
+            }
+
+            if (selected.Any(x => x.FreightStateId != (int)FreightStateEnum.InCoordination))
+            {
+                Toast.Warning("Please select in-progress coordinations to delete!");
+                return;
+            }
+
+            var deleted = await new Client(nameof(Coordination))
+                .Delete(selected.Select(x => x.Id).ToList());
+            if (deleted)
+            {
+                Toast.Success("Delete coordination succeeded!");
+                FindComponent<GridView>().ForEach(x => x.ReloadData());
+            }
+            else
+            {
+                Toast.Warning("Delete coordination failed!");
             }
         }
     }
