@@ -34,6 +34,7 @@ namespace TMS.API.Models
         public int? VendorId { get; set; }
         public double? Long { get; set; }
         public double? Lat { get; set; }
+        public int? FreightStateId { get; set; }
         public int? DriverId { get; set; }
         public decimal? Price { get; set; }
         public int? CurrencyId { get; set; }

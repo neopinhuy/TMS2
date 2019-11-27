@@ -13,6 +13,9 @@ namespace Components.Extensions
                 case "Input":
                     childComponent = new Textbox(ui);
                     break;
+                case "Textarea":
+                    childComponent = new Textbox(ui) { MultipleLine = true };
+                    break;
                 case "Dropdown":
                     childComponent = new SearchEntry(ui);
                     break;

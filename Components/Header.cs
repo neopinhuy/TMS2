@@ -25,6 +25,9 @@ namespace Components
         public int? Order { get; set; }
         public bool StatusBar { get; set; }
         public bool Frozen { get; set; }
+        public string Width { get; set; }
+        public string MinWidth { get; set; }
+        public string MaxWidth { get; set; }
         public TextAlign? TextAlign { get; set; }
         public Func<T, Task> EditEvent { get; set; }
         public Func<T, Task> DeleteEvent { get; set; }

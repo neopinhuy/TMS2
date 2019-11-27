@@ -8,6 +8,7 @@ namespace Components
     public class Textbox : Component
     {
         private readonly UserInterface _ui;
+        public bool MultipleLine { get; set; }
         public Textbox(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
@@ -26,7 +27,10 @@ namespace Components
                     ValueChanged?.Invoke(arg);
                 });
             }
-            Html.Instance.Input.Attr("data-role", "input")
+            if (MultipleLine) Html.Instance.TextArea
+                    .Attr("data-role", "textarea").Value(value);
+            else Html.Instance.Input
+                .Attr("data-role", "input")
                 .ClassName("input-small").Value(value);
             InteractiveElement = Html.Context;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);

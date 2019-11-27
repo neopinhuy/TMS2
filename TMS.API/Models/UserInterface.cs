@@ -31,6 +31,9 @@ namespace TMS.API.Models
         public bool Visibility { get; set; }
         public string Validation { get; set; }
         public bool Focus { get; set; }
+        public string Width { get; set; }
+        public string MinWidth { get; set; }
+        public string MaxWidth { get; set; }
         public int? Order { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }

@@ -111,6 +111,9 @@ namespace Components
                 Component = column.Component,
                 Precision = column.Precision,
                 Validation = column.Validation,
+                Width = column.Width,
+                MinWidth = column.MinWidth,
+                MaxWidth = column.MaxWidth,
             };
             var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
             if (parsed) header.TextAlign = textAlign;

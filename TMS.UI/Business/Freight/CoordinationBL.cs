@@ -13,7 +13,7 @@ namespace TMS.UI.Business.Freight
     {
         public CoordinationBL()
         {
-            Name = "Order Composition List";
+            Name = "CoordinationManagement";
             Title = "Coordination";
         }
 
@@ -144,6 +144,16 @@ namespace TMS.UI.Business.Freight
             {
                 Toast.Warning("Delete coordination failed!");
             }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void EditCoordination(Coordination coordination)
+        {
+            var popup = new PopupEditor<Coordination>()
+            {
+                Entity = coordination,
+            };
+            popup.Render();
         }
     }
 }

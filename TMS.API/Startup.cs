@@ -81,6 +81,7 @@ namespace TMS.API
             builder.EntitySet<ContainerType>(nameof(ContainerType));
             builder.EntitySet<Contract>(nameof(Contract));
             builder.EntitySet<Coordination>(nameof(Coordination));
+            builder.EntitySet<CoordinationDetail>(nameof(CoordinationDetail));
             builder.EntitySet<Currency>(nameof(Currency));
             builder.EntitySet<Customer>(nameof(Customer));
             builder.EntitySet<CustomerGroup>(nameof(CustomerGroup));

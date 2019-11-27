@@ -137,7 +137,6 @@ namespace Components
                 .DistinctBy(x => x.Reference)
                 .ToList();
             refEntities = refEntities.Select(FormatDataSource).ToList();
-
             var optimizedSource = refEntities.Select(x => Client<object>.Instance
                 .GetListEntity(x.Reference, x.DataSourceOptimized));
             var refData = await Task.WhenAll(optimizedSource);
@@ -146,17 +145,10 @@ namespace Components
 
         private Header<T> FormatDataSource(Header<T> header)
         {
-            var formattedDataSource = header.DataSource.HasAnyChar()
-                ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
             var entityIds = RowData.Data.Select(x => (int?)x.GetComplexPropValue(header.FieldName))
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
-            header.DataSourceOptimized = !formattedDataSource.Contains("?$")
-                ? formattedDataSource + "?" 
-                : formattedDataSource;
-            header.DataSourceOptimized += formattedDataSource.Contains("$filter")
-                ? $" and Id in ({strIds})"
-                : $"$filter=Id in ({strIds})";
+            header.DataSourceOptimized = $"?$filter=Id in ({strIds})";
             return header;
         }
 
@@ -174,7 +166,7 @@ namespace Components
                     Html.Instance.Text(header.GroupName).Render();
                     return;
                 }
-                Html.Instance.Th.Render();
+                Html.Instance.Th.Width(header.Width).Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}").Render();
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
                     Html.Instance.RowSpan(2);
@@ -403,7 +395,7 @@ namespace Components
                 DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
                 FieldName = header.FieldName,
                 Precision = header.Precision,
-                Validation = header.Validation
+                Validation = header.Validation,
             };
             if (rowData.GetBool(_emptyFlag))
             {

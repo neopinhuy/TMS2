@@ -488,9 +488,9 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.DriverId)
                     .HasConstraintName("FK_CoordinationDetail_Driver");
 
-                entity.HasOne(d => d.FrieghtState)
+                entity.HasOne(d => d.FreightState)
                     .WithMany(p => p.CoordinationDetail)
-                    .HasForeignKey(d => d.FrieghtStateId)
+                    .HasForeignKey(d => d.FreightStateId)
                     .HasConstraintName("FK_CoordinationDetail_FreightState");
 
                 entity.HasOne(d => d.Truck)
@@ -875,6 +875,10 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Validation).HasMaxLength(1000);
+
+                entity.Property(e => e.Width)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.GridPolicyEntity)
@@ -2013,6 +2017,14 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Label).HasMaxLength(50);
 
+                entity.Property(e => e.MaxWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MinWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Renderer)
                     .HasMaxLength(200)
                     .IsUnicode(false);
@@ -2022,6 +2034,10 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Validation).HasMaxLength(1000);
+
+                entity.Property(e => e.Width)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.ComponentGroup)
                     .WithMany(p => p.UserInterface)

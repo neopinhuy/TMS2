@@ -82,18 +82,20 @@ namespace Components
             }
             Task.Run(async () =>
             {
-                if (Source == null || Source.Data.Length == 0)
-                {
-                    Source.Data = await GetDataSource();
-                }
-                Matched = Source.Data.FirstOrDefault(x => (int)x[Id] == _value.Data);
+                var ids = new List<int> { _value.Data.Value };
+                var strIds = string.Join(",", ids);
+                var query = $"?$filter=Id in ({strIds})";
+                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
+                Matched = source?.Value?.FirstOrDefault();
+                if (Matched is null) return;
                 _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
             });
         }
 
         private async Task<object[]> GetDataSource()
         {
-            var dataSource = Utils.FormatWith(DataSourceFilter, Entity);
+            var dataSourceFilter = DataSourceFilter.HasAnyChar() ? DataSourceFilter : "?$filter=Active eq true";
+            var dataSource = Utils.FormatWith(dataSourceFilter, Entity);
             var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
             return source?.Value?.ToArray();
         }

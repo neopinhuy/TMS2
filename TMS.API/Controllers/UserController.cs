@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Query;
+﻿using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Attributes;
 using TMS.API.Models;
 
 namespace TMS.API.Controllers
