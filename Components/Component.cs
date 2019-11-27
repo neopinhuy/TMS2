@@ -110,6 +110,11 @@ namespace Components
             return result;
         }
 
+        public T FindComponent<T>(string name) where T : class
+        {
+            return FindComponent(name) as T;
+        }
+
         public abstract void Render();
         public Action Disposing { get; set; }
         public Action Disposed { get; set; }

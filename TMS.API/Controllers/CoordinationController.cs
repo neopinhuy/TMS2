@@ -16,6 +16,25 @@ namespace TMS.API.Controllers
         {
         }
 
+        [HttpPost("api/[Controller]")]
+        public override Task<ActionResult<Coordination>> CreateAsync([FromBody] Coordination entity)
+        {
+            UpdateChildren<CoordinationDetail>(entity, AssignState);
+            return base.CreateAsync(entity);
+        }
+
+        [HttpPut("api/[Controller]")]
+        public override Task<ActionResult<Coordination>> UpdateAsync([FromBody] Coordination entity)
+        {
+            UpdateChildren<CoordinationDetail>(entity, AssignState);
+            return base.UpdateAsync(entity);
+        }
+
+        private static void AssignState(CoordinationDetail detail)
+        {
+            detail.FreightStateId = (int)FreightStateEnum.InCoordination;
+        }
+
         [HttpPost("api/[Controller]/Delete")]
         public override async Task<ActionResult<bool>> Delete([FromBody] List<int> ids)
         {

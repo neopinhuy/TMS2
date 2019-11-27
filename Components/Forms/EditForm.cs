@@ -33,7 +33,6 @@ namespace Components.Forms
                 if (data != null)
                 {
                     Entity[Id] = data[Id];
-                    UpdateComponentEntity(data);
                     Toast.Success($"Create {typeof(T).Name} succeeded");
                     RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
                 }
@@ -48,7 +47,6 @@ namespace Components.Forms
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
-                    UpdateComponentEntity(data);
                     Toast.Success($"Update {typeof(T).Name} succeeded");
                     RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
                 }
@@ -57,15 +55,6 @@ namespace Components.Forms
                     Toast.Warning($"Update {typeof(T).Name} failed");
                 }
                 AfterSaved?.Invoke(data != null);
-            }
-        }
-
-        private void UpdateComponentEntity(T data)
-        {
-            var props = typeof(T).GetProperties();
-            foreach (var prop in props)
-            {
-                prop.SetValue(Entity, prop.GetValue(data));
             }
         }
 

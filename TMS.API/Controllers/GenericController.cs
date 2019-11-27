@@ -3,6 +3,7 @@ using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -81,7 +82,7 @@ namespace TMS.API.Controllers
             return true;
         }
 
-        protected void UpdateChildren<Child>(T entity) where Child : class
+        protected void UpdateChildren<Child>(T entity, Action<Child> add = null, Action<Child> update = null) where Child : class
         {
             var childProp = typeof(T).GetProperty(typeof(Child).Name);
             var childValue = childProp.GetValue(entity) as ICollection<Child>;
@@ -91,12 +92,14 @@ namespace TMS.API.Controllers
                 if (id == 0)
                 {
                     db.Set<Child>().Add(detail);
+                    add?.Invoke(detail);
                 }
                 else if (id > 0)
                 {
                     db.Set<Child>().Attach(detail);
                     db.Entry(detail).State = EntityState.Modified;
                     db.Set<Child>().Update(detail);
+                    update?.Invoke(detail);
                 }
             }
         }
