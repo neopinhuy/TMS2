@@ -84,7 +84,17 @@ namespace Components
             {
                 var ids = new List<int> { _value.Data.Value };
                 var strIds = string.Join(",", ids);
-                var query = $"?$filter=Id in ({strIds})";
+                var formattedDataSource = FormatDataSource();
+                var filterIndex = formattedDataSource.IndexOf("$filter");
+                var endFilterIndex = formattedDataSource.Substring(filterIndex).IndexOf("&");
+                formattedDataSource = formattedDataSource.Substring(0, filterIndex) +
+                formattedDataSource.Substring(endFilterIndex);
+                var query = !formattedDataSource.Contains("?$")
+                    ? formattedDataSource + "?"
+                    : formattedDataSource;
+                query += formattedDataSource.Contains("$filter")
+                    ? $" and Id in ({strIds})"
+                    : $"$filter=Id in ({strIds})";
                 var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
                 Matched = source?.Value?.FirstOrDefault();
                 if (Matched is null) return;
@@ -94,10 +104,16 @@ namespace Components
 
         private async Task<object[]> GetDataSource()
         {
-            var dataSourceFilter = DataSourceFilter.HasAnyChar() ? DataSourceFilter : "?$filter=Active eq true";
-            var dataSource = Utils.FormatWith(dataSourceFilter, Entity);
+            var dataSource = FormatDataSource();
             var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
             return source?.Value?.ToArray();
+        }
+
+        private string FormatDataSource()
+        {
+            var dataSourceFilter = DataSourceFilter.HasAnyChar() ? DataSourceFilter : "?$filter=Active eq true";
+            var dataSource = Utils.FormatWith(dataSourceFilter, Entity);
+            return dataSource;
         }
 
         public async Task RenderSuggestion()
