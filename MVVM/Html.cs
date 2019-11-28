@@ -394,7 +394,16 @@ namespace MVVM
 
         public Html Style(string style)
         {
-            Context["style"]["cssText"] += style.Trim();
+            var oldStyle = Context["style"]["cssText"] as string;
+            if (oldStyle[oldStyle.Length - 1] != ';') oldStyle += ';';
+            var styleComputed = oldStyle + style.Trim();
+            var distinctStyle = styleComputed.Trim().Split(";").Select(x =>
+            {
+                var keyValue = x.Trim().Split(":");
+                return new { Key = keyValue.First().Trim(), Value = keyValue.Last().Trim() };
+            }).GroupBy(x => x.Key).Select(x => x.Last())
+            .Select(x => $"{x.Key}: {x.Value}");
+            Context["style"]["cssText"] = string.Join(";", distinctStyle);
             return this;
         }
 
@@ -437,19 +446,8 @@ namespace MVVM
 
         public Html Value(string val)
         {
-            var (input, textArea) = GetInputOrTextArea();
-            if (input != null)
-            {
-                input.Value = val;
-            }
-            else if (textArea != null)
-            {
-                textArea.Value = val;
-            }
-            else
-            {
-                Attr("value", val);
-            }
+            var input = Context;
+            input["value"] = val;
             return this;
         }
 

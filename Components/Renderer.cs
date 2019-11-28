@@ -45,16 +45,33 @@ namespace Components
 
         public static Html SmallDatePicker(this Html html, Observable<DateTime?> value)
         {
-            html.Input.ClassName("input-small").Value(value)
+            html.Input.ClassName("input-small").Value(value.Data?.ToString())
                 .Attr("data-role", "calendarpicker")
                 .Attr("data-format", "%d/%m/%Y")
-                .Event(EventType.Change, (e) =>
+                .Attr("data-cls-calendar", "compact")
+                .Event(EventType.Blur, (e) =>
                 {
                     var input = e.Target as HTMLInputElement;
                     var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy",
                         CultureInfo.InvariantCulture, out DateTime dateTime);
-                    if (!parsed) return;
-                    value.Data = (DateTime?)(object)dateTime;
+                    if (!parsed)
+                    {
+                        input.Value = "";
+                        value.Data = null;
+                    }
+                    value.Data = (DateTime?)dateTime;
+                    Html.Take(input.NextElementSibling.NextElementSibling).Style("display: none !important;");
+                })
+                .Event(EventType.Focus, (e) => {
+                    var input = e.Target as HTMLInputElement;
+                    input.ReadOnly = false;
+                    var rect = input.GetBoundingClientRect();
+                    var screenHeight = Window.ScreenY;
+                    var top = rect.Top > screenHeight / 2 ? rect.Top - 270 : rect.Bottom;
+                    Html.Take(input.NextElementSibling.NextElementSibling)
+                        .Style("display: block !important;")
+                        .HeightPx(270)
+                        .Floating(rect.Bottom, rect.Left - 1);
                 });
             return html;
         }
@@ -216,6 +233,11 @@ namespace Components
             return html.Style($"height: {height}");
         }
 
+        public static Html HeightPx(this Html html, double height)
+        {
+            return html.Style($"height: {height}px");
+        }
+
         public static Html HeightRem(this Html html, double height)
         {
             return html.Style($"height: {height}rem");
@@ -279,7 +301,12 @@ namespace Components
         {
             return html.Style($"{direction}: {value}px");
         }
-        
+
+        public static Html Position(this Html html, Direction direction, string value)
+        {
+            return html.Style($"{direction}: {value}");
+        }
+
         public static Html Position(this Html html, Position position)
         {
             return html.Style($"position: {position}");
@@ -297,6 +324,13 @@ namespace Components
         }
 
         public static Html Floating(this Html html, double top, double left)
+        {
+            return html.Position(Components.Position.@fixed)
+                .Position(Direction.top, top)
+                .Position(Direction.left, left);
+        }
+
+        public static Html Floating(this Html html, string top, string left)
         {
             return html.Position(Components.Position.@fixed)
                 .Position(Direction.top, top)

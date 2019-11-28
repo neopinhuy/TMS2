@@ -94,6 +94,7 @@ namespace Components
         {
             var header = new Header<object>
             {
+                Id = column.Id,
                 FieldName = column.FieldName,
                 FormatCell = column.FormatCell,
                 FormatRow = column.FormatRow,

@@ -1,4 +1,5 @@
 ﻿using Common.Clients;
+using Common.Enums;
 using Common.Extensions;
 using Components;
 using Components.Extensions;
@@ -46,9 +47,9 @@ namespace TMS.UI.Business.Freight
                 EmptyContFromId = orderDetail.EmptyContFromId,
                 EmptyContToId = orderDetail.EmptyContToId,
                 TotalContainer = 1,
-                Weight = selected.Sum(x => x.Weight),
-                Volume = selected.Sum(x => x.Volume),
-                Distance = orderDetail.Distance,
+                Weight = selected.Sum(x => x.TotalWeight),
+                Volume = selected.Sum(x => x.TotalVolume),
+                Distance = orderDetail.TransportDistance,
                 TimeboxId = orderDetail.TimeboxId,
                 FreightStateId = (int)FreightStateEnum.InCoordination,
                 IsComposited = selected.Count > 1,

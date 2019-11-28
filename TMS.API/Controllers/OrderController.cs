@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Common.Enums;
+using Common.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -22,11 +25,95 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            SetTerminals(order);
             var res = await base.CreateAsync(order);
             var coordination = CreateCoordination(order.OrderDetail);
             db.Coordination.AddRange(coordination);
             await db.SaveChangesAsync();
             return res;
+        }
+
+        private static void SetTerminals(Order order)
+        {
+            var firstOrderDetail = order.OrderDetail.FirstOrDefault();
+            order.FromId = firstOrderDetail?.FromId;
+            order.ToId = firstOrderDetail?.ToId;
+        }
+
+        private async Task LoadOrderAdditionalData(Order order)
+        {
+            if (order is null || order.OrderDetail.Nothing()) return;
+            var terminalIds = order.OrderDetail.Where(x => x.FromId.HasValue).Select(x => x.FromId.Value)
+                .Union(order.OrderDetail.Where(x => x.FromId.HasValue).Select(x => x.ToId.Value));
+            var quotationIds = order.OrderDetail.Where(x => x.QuotationId.HasValue).Select(x => x.QuotationId.Value);
+            var terminals = db.Terminal.Where(x => terminalIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
+            var quotations = db.Quotation.Where(x => quotationIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
+            await Task.WhenAll(terminals, quotations);
+            order.OrderDetail.ForEach(x => 
+            {
+                x.From = terminals.Result.TryGet(x.FromId ?? 0);
+                x.To = terminals.Result.TryGet(x.ToId ?? 0);
+                x.Quotation = quotations.Result.TryGet(x.QuotationId ?? 0);
+            });
+        }
+
+        private static void CalcDefaultAndPrice(OrderDetail detail)
+        {
+            if (detail is null) return;
+            detail.CurrencyId = detail.Order.CurrencyId;
+            detail.Vat = detail.Order.Vat;
+            detail.TotalWeight = detail.BoxWeight * detail.TotalBox;
+            if (detail.BoxVolume is null)
+                detail.BoxVolume = detail.BoxLength * detail.BoxWidth * detail.BoxHeight;
+            if (detail.TotalVolume is null)
+                detail.TotalVolume = detail.BoxVolume * detail.TotalBox;
+            if (detail.TransportDistance is null && detail.From != null && detail.To != null)
+            {
+                var from = new System.Device.Location.GeoCoordinate(detail.From.Lat, detail.From.Long);
+                var to = new System.Device.Location.GeoCoordinate(detail.To.Lat, detail.To.Long);
+                detail.TransportDistance = (decimal)from.GetDistanceTo(to);
+            }
+            CalcOrderDetailPrice(detail);
+        }
+
+        private static void CalcOrderDetailPrice(OrderDetail detail)
+        {
+            if (detail is null) return;
+            if (detail.QuotationId is null)
+                throw new InvalidOperationException($"Quotation of order detail OD{detail.Id:00000} is null");
+            var price = detail.Quotation.Price;
+            var priceType = (PriceTypeEnum)detail.Quotation.PriceTypeId;
+            if (price is null)
+                throw new InvalidOperationException($"No price has been set for the order detail OD{detail.Id:00000}");
+            switch (priceType)
+            {
+                case PriceTypeEnum.Distance:
+                    detail.TotalPriceBeforeDiscount = price * detail.TransportDistance;
+                    break;
+                case PriceTypeEnum.Weight:
+                    detail.TotalPriceBeforeDiscount = price * detail.TotalWeight;
+                    break;
+                case PriceTypeEnum.WholeFreight:
+                    detail.TotalPriceBeforeDiscount = price * detail.TotalContainer;
+                    break;
+                case PriceTypeEnum.Volume:
+                    detail.TotalPriceBeforeDiscount = price * detail.TotalVolume;
+                    break;
+                default:
+                    detail.TotalPriceBeforeDiscount = price;
+                    break;
+            }
+            CalcDiscountAndTax(detail);
+        }
+
+        private static void CalcDiscountAndTax(OrderDetail detail)
+        {
+            if (detail.DiscountMoney.HasValue)
+                detail.TotalPriceAfterDiscount = detail.TotalPriceBeforeDiscount - detail.DiscountMoney;
+            else if (detail.DiscountPercentage.HasValue)
+                detail.TotalPriceAfterDiscount = detail.TotalPriceBeforeDiscount * (100 - detail.DiscountPercentage) / 100;
+            else detail.TotalPriceAfterDiscount = detail.TotalPriceBeforeDiscount;
+            detail.TotalDiscountAfterTax = detail.TotalPriceAfterDiscount * (detail.Order.Vat ?? detail.Vat);
         }
 
         private IEnumerable<Coordination> CreateCoordination(IEnumerable<OrderDetail> orderDetails)
@@ -51,9 +138,9 @@ namespace TMS.API.Controllers
                     TimeboxId = orderDetail.TimeboxId,
                     TotalContainer = orderDetail.TotalContainer,
                     TruckTypeId = orderDetail.TruckTypeId,
-                    Weight = orderDetail.Weight,
-                    Volume = orderDetail.Volume,
-                    Distance = orderDetail.Distance,
+                    Weight = orderDetail.TotalWeight,
+                    Volume = orderDetail.TotalVolume,
+                    Distance = orderDetail.TransportDistance,
                     CommodityTypeId = orderDetail.CommodityTypeId,
                 };
         }
@@ -67,6 +154,9 @@ namespace TMS.API.Controllers
             }
             try
             {
+                SetTerminals(order);
+                await LoadOrderAdditionalData(order);
+                order.OrderDetail.ForEach(x => x.Order = order).ForEach(CalcDefaultAndPrice);
                 UpdateChildren<OrderDetail>(order);
                 await base.UpdateAsync(order);
                 await UpdateCoordination(order);
@@ -76,7 +166,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return order;
+            return NoContent();
         }
 
         private async Task UpdateCoordination(Order order)
@@ -121,9 +211,9 @@ namespace TMS.API.Controllers
             coordination.TimeboxId = orderDetail.TimeboxId;
             coordination.TotalContainer = orderDetail.TotalContainer;
             coordination.TruckTypeId = orderDetail.TruckTypeId;
-            coordination.Weight = orderDetail.Weight;
-            coordination.Volume = orderDetail.Volume;
-            coordination.Distance = orderDetail.Distance;
+            coordination.Weight = orderDetail.TotalWeight;
+            coordination.Volume = orderDetail.TotalVolume;
+            coordination.Distance = orderDetail.TransportDistance;
         }
 
         private async Task InitCoordinationForContainer(OrderDetail orderDetail)

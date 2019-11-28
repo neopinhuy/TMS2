@@ -5,6 +5,7 @@ namespace Components
 {
     public class Header<T>
     {
+        public int Id { get; set; }
         public string HeaderText { get; set; }
         public string Description { get; set; }
         public string FieldName { get; set; }

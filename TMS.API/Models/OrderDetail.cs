@@ -12,6 +12,8 @@ namespace TMS.API.Models
 
         public int Id { get; set; }
         public int OrderId { get; set; }
+        public string GoodsName { get; set; }
+        public DateTime? ExpectedTransportDate { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
         public int? EmptyContFromId { get; set; }
@@ -19,12 +21,21 @@ namespace TMS.API.Models
         public int? ContainerTypeId { get; set; }
         public int? TruckTypeId { get; set; }
         public bool IsContainer { get; set; }
-        public int? TotalContainer { get; set; }
-        public int? VendorId { get; set; }
         public int? CommodityTypeId { get; set; }
-        public decimal? Weight { get; set; }
-        public decimal? Volume { get; set; }
-        public decimal? Distance { get; set; }
+        public int? VendorId { get; set; }
+        public decimal? BoxLength { get; set; }
+        public decimal? BoxWidth { get; set; }
+        public decimal? BoxHeight { get; set; }
+        public decimal? BoxVolume { get; set; }
+        public decimal? BoxWeight { get; set; }
+        public decimal? TotalWeight { get; set; }
+        public decimal? TotalVolume { get; set; }
+        public int? TotalBox { get; set; }
+        public int? TotalContainer { get; set; }
+        public int? StackDirectionId { get; set; }
+        public int? MinStack { get; set; }
+        public int? MaxStack { get; set; }
+        public decimal? TransportDistance { get; set; }
         public int? TimeboxId { get; set; }
         public int? QuotationId { get; set; }
         public decimal? TotalPriceBeforeDiscount { get; set; }
@@ -49,6 +60,7 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }
         public virtual Quotation Quotation { get; set; }
+        public virtual StackDirection StackDirection { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
         public virtual TruckType TruckType { get; set; }

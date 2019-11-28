@@ -120,9 +120,6 @@
     <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\FreightStateEnum.cs">
-      <Link>Models\FreightStateEnum.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\FuelType.cs">
       <Link>Models\FuelType.cs</Link>
     </Compile>
@@ -180,8 +177,14 @@
     <Compile Include="..\TMS.API\Models\Role.cs">
       <Link>Models\Role.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\StackDirection.cs">
+      <Link>Models\StackDirection.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\StatePolicy.cs">
       <Link>Models\StatePolicy.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\StateType.cs">
+      <Link>Models\StateType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Surcharge.cs">
       <Link>Models\Surcharge.cs</Link>
@@ -250,7 +253,10 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Clients\Client.cs" />
+    <Compile Include="Enums\FreightStateEnum.cs" />
+    <Compile Include="Enums\PriceTypeEnum.cs" />
     <Compile Include="Extensions\BridgeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvalidOperationException.cs" />
@@ -262,6 +268,7 @@
     <Compile Include="SaleLeaderBoardDataPoint.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="bridge.json" />
     <None Include="packages.config" />
   </ItemGroup>

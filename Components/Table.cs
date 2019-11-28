@@ -150,14 +150,17 @@ namespace Components
             var entityIds = RowData.Data.Select(x => (int?)x.GetComplexPropValue(header.FieldName))
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
-            var filterIndex = formattedDataSource.IndexOf("$filter");
+            var filterIndex = formattedDataSource.IndexOf("?$filter");
+            if (filterIndex == -1) filterIndex = formattedDataSource.IndexOf("$filter");
             var endFilterIndex = formattedDataSource.Substring(filterIndex).IndexOf("&");
-            formattedDataSource = formattedDataSource.Substring(0, filterIndex) +
+            endFilterIndex = endFilterIndex == -1 ? formattedDataSource.Length : endFilterIndex + filterIndex;
+
+            var noFilterQuery = formattedDataSource.Substring(0, filterIndex) +
                 formattedDataSource.Substring(endFilterIndex);
-            header.DataSourceOptimized = !formattedDataSource.Contains("?$")
-                ? formattedDataSource + "?"
-                : formattedDataSource;
-            header.DataSourceOptimized += formattedDataSource.Contains("$filter")
+            header.DataSourceOptimized = !noFilterQuery.Contains("?$")
+                ? noFilterQuery + "?"
+                : noFilterQuery;
+            header.DataSourceOptimized += noFilterQuery.Contains("$filter")
                 ? $" and Id in ({strIds})"
                 : $"$filter=Id in ({strIds})";
             return header;
@@ -177,7 +180,8 @@ namespace Components
                     Html.Instance.Text(header.GroupName).Render();
                     return;
                 }
-                Html.Instance.Th.Width(header.Width).Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}").Render();
+                Html.Instance.Th.DataAttr("grid-id", header.Id.ToString()).Width(header.Width)
+                    .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}").Render();
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
                     Html.Instance.RowSpan(2);

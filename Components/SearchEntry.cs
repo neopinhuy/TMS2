@@ -77,7 +77,13 @@ namespace Components
             }
             if (Matched != null && (int?)Matched[Id] == _value.Data)
             {
-                _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+                SetMatchedValue();
+                return;
+            }
+            if (Source != null && Source.Data.HasElement())
+            {
+                Matched = Source.Data.FirstOrDefault(x => (int)x[Id] == _value.Data.Value);
+                SetMatchedValue();
                 return;
             }
             Task.Run(async () =>
@@ -85,21 +91,29 @@ namespace Components
                 var ids = new List<int> { _value.Data.Value };
                 var strIds = string.Join(",", ids);
                 var formattedDataSource = FormatDataSource();
-                var filterIndex = formattedDataSource.IndexOf("$filter");
+                var filterIndex = formattedDataSource.IndexOf("?$filter");
+                if (filterIndex == -1)
+                    filterIndex = formattedDataSource.IndexOf("$filter");
                 var endFilterIndex = formattedDataSource.Substring(filterIndex).IndexOf("&");
-                formattedDataSource = formattedDataSource.Substring(0, filterIndex) +
-                formattedDataSource.Substring(endFilterIndex);
-                var query = !formattedDataSource.Contains("?$")
-                    ? formattedDataSource + "?"
-                    : formattedDataSource;
-                query += formattedDataSource.Contains("$filter")
+                endFilterIndex = endFilterIndex == -1 ? formattedDataSource.Length : endFilterIndex + filterIndex;
+
+                var noFilterQuery = formattedDataSource.Substring(0, filterIndex) +
+                    formattedDataSource.Substring(endFilterIndex);
+                var query = !noFilterQuery.Contains("?$")
+                    ? noFilterQuery + "?"
+                    : noFilterQuery;
+                query += noFilterQuery.Contains("$filter")
                     ? $" and Id in ({strIds})"
                     : $"$filter=Id in ({strIds})";
                 var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
                 Matched = source?.Value?.FirstOrDefault();
-                if (Matched is null) return;
-                _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+                SetMatchedValue();
             });
+        }
+
+        private void SetMatchedValue()
+        {
+            _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
         }
 
         private async Task<object[]> GetDataSource()

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class Department
+    public partial class StateType
     {
-        public Department()
+        public StateType()
         {
-            Order = new HashSet<Order>();
-            User = new HashSet<User>();
+            FreightState = new HashSet<FreightState>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int LeaderId { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -22,9 +20,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
-        public virtual User Leader { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<FreightState> FreightState { get; set; }
     }
 }

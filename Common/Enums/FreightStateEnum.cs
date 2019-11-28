@@ -1,4 +1,4 @@
-﻿namespace TMS.API.Models
+﻿namespace Common.Enums
 {
     public enum FreightStateEnum
     {

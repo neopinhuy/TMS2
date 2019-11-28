@@ -23,6 +23,15 @@ namespace Components.Forms
             Name = Title;
         }
 
+        public virtual async Task Edit(T entity)
+        {
+            var popup = new PopupEditor<T>
+            {
+                Entity = entity
+            };
+            AddChild(popup);
+        }
+
         public virtual async Task Save()
         {
             var client = new Client<T>();

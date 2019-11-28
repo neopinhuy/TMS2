@@ -111,6 +111,7 @@ namespace TMS.API
             builder.EntitySet<Quotation>(nameof(Quotation));
             builder.EntitySet<PriceType>(nameof(PriceType));
             builder.EntitySet<Role>(nameof(Role));
+            builder.EntitySet<StackDirection>(nameof(StackDirection));
             builder.EntitySet<StatePolicy>(nameof(StatePolicy));
             builder.EntitySet<Surcharge>(nameof(Surcharge));
             builder.EntitySet<SurchargeType>(nameof(SurchargeType));

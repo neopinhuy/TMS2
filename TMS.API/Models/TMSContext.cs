@@ -57,7 +57,9 @@ namespace TMS.API.Models
         public virtual DbSet<PriceType> PriceType { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
         public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<StackDirection> StackDirection { get; set; }
         public virtual DbSet<StatePolicy> StatePolicy { get; set; }
+        public virtual DbSet<StateType> StateType { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
         public virtual DbSet<SurchargeType> SurchargeType { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
@@ -795,6 +797,11 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_FreightState_UserInserted");
 
+                entity.HasOne(d => d.StateType)
+                    .WithMany(p => p.FreightState)
+                    .HasForeignKey(d => d.StateTypeId)
+                    .HasConstraintName("FK_FreightState_StateType");
+
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.FreightStateUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
@@ -1124,10 +1131,25 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
 
+                entity.HasOne(d => d.AccountableDepartment)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.AccountableDepartmentId)
+                    .HasConstraintName("FK_Order_Department_Accountable");
+
+                entity.HasOne(d => d.AccountableUser)
+                    .WithMany(p => p.OrderAccountableUser)
+                    .HasForeignKey(d => d.AccountableUserId)
+                    .HasConstraintName("FK_Order_User_Accountable");
+
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Order_Customer");
+
+                entity.HasOne(d => d.FreightState)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.FreightStateId)
+                    .HasConstraintName("FK_Order_FreightState");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.OrderInsertedByNavigation)
@@ -1172,29 +1194,41 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.Property(e => e.DiscountMoney).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.BoxHeight).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(4, 2)");
+                entity.Property(e => e.BoxLength).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.Note).HasMaxLength(2000);
-
-                entity.Property(e => e.TotalDiscountAfterTax).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.TotalPriceAfterDiscount).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.TotalPriceBeforeDiscount).HasColumnType("decimal(20, 5)");
-
-                entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
-
-                entity.Property(e => e.Volume)
-                    .HasColumnType("decimal(20, 5)")
+                entity.Property(e => e.BoxVolume)
+                    .HasColumnType("decimal(18, 2)")
                     .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.Weight)
-                    .HasColumnType("decimal(20, 5)")
+                entity.Property(e => e.BoxWeight)
+                    .HasColumnType("decimal(18, 2)")
                     .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.BoxWidth).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.DiscountMoney).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.DiscountPercentage).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.GoodsName).HasMaxLength(50);
+
+                entity.Property(e => e.Note).HasMaxLength(1000);
+
+                entity.Property(e => e.TotalDiscountAfterTax).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPriceAfterDiscount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalPriceBeforeDiscount).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalVolume).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TotalWeight).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TransportDistance).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.Vat).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.CommodityType)
                     .WithMany(p => p.OrderDetail)
@@ -1237,6 +1271,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.OrderDetail)
                     .HasForeignKey(d => d.QuotationId)
                     .HasConstraintName("FK_OrderDetail_Quotation");
+
+                entity.HasOne(d => d.StackDirection)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.StackDirectionId)
+                    .HasConstraintName("FK_OrderDetail_StackDirection");
 
                 entity.HasOne(d => d.Timebox)
                     .WithMany(p => p.OrderDetail)
@@ -1300,6 +1339,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<PriceType>(entity =>
             {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
@@ -1358,14 +1399,14 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.DistanceRangeId)
                     .HasConstraintName("FK_Quotation_DistanceRange");
 
-                entity.HasOne(d => d.EmptyContFromNavigation)
-                    .WithMany(p => p.QuotationEmptyContFromNavigation)
-                    .HasForeignKey(d => d.EmptyContFrom)
+                entity.HasOne(d => d.EmptyContFrom)
+                    .WithMany(p => p.QuotationEmptyContFrom)
+                    .HasForeignKey(d => d.EmptyContFromId)
                     .HasConstraintName("FK_Quotation_TerminalEmptyContFrom");
 
-                entity.HasOne(d => d.EmptyContToNavigation)
-                    .WithMany(p => p.QuotationEmptyContToNavigation)
-                    .HasForeignKey(d => d.EmptyContTo)
+                entity.HasOne(d => d.EmptyContTo)
+                    .WithMany(p => p.QuotationEmptyContTo)
+                    .HasForeignKey(d => d.EmptyContToId)
                     .HasConstraintName("FK_Quotation_TerminalEmptyContTo");
 
                 entity.HasOne(d => d.From)
@@ -1429,6 +1470,13 @@ namespace TMS.API.Models
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<StackDirection>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Name).HasMaxLength(20);
+            });
+
             modelBuilder.Entity<StatePolicy>(entity =>
             {
                 entity.HasOne(d => d.InsertedByNavigation)
@@ -1453,6 +1501,24 @@ namespace TMS.API.Models
                     .WithMany(p => p.StatePolicyUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_StatePolicy_UserUpdated");
+            });
+
+            modelBuilder.Entity<StateType>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(150);
+
+                entity.Property(e => e.Name).HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.StateTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StateType_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.StateTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_StateType_UserUpdated");
             });
 
             modelBuilder.Entity<Surcharge>(entity =>

@@ -174,10 +174,14 @@ namespace Common.Clients
                     return;
                 }
 
-                if (xhr.Status == 200 || xhr.Status == 204)
+                if (xhr.Status == 200)
                 {
                     var parsed = JsonConvert.DeserializeObject<T>(xhr.ResponseText);
                     tcs.SetResult(parsed);
+                }
+                else if (xhr.Status == 204)
+                {
+                    tcs.SetResult(value);
                 }
                 else
                 {

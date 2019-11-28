@@ -19,7 +19,13 @@ namespace TMS.API.Models
         public string ContactSsn { get; set; }
         public string ContactPassport { get; set; }
         public string ContactAddress { get; set; }
+        public int? FromId { get; set; }
+        public int? ToId { get; set; }
         public int? TotalContainer { get; set; }
+        public int? FreightStateId { get; set; }
+        public DateTime? Deadline { get; set; }
+        public int? AccountableUserId { get; set; }
+        public int? AccountableDepartmentId { get; set; }
         public decimal? AdvancedPaid { get; set; }
         public bool Paid { get; set; }
         public decimal? DiscountMoney { get; set; }
@@ -38,7 +44,10 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual Department AccountableDepartment { get; set; }
+        public virtual User AccountableUser { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual FreightState FreightState { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }

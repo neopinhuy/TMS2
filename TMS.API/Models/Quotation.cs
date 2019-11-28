@@ -16,8 +16,8 @@ namespace TMS.API.Models
         public bool ForGroupOnly { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
-        public int? EmptyContFrom { get; set; }
-        public int? EmptyContTo { get; set; }
+        public int? EmptyContFromId { get; set; }
+        public int? EmptyContToId { get; set; }
         public int? DistanceRangeId { get; set; }
         public int? ContainerTypeId { get; set; }
         public int? TruckTypeId { get; set; }
@@ -46,8 +46,8 @@ namespace TMS.API.Models
         public virtual Currency Currency { get; set; }
         public virtual CustomerGroup CustomerGroup { get; set; }
         public virtual DistanceRange DistanceRange { get; set; }
-        public virtual Terminal EmptyContFromNavigation { get; set; }
-        public virtual Terminal EmptyContToNavigation { get; set; }
+        public virtual Terminal EmptyContFrom { get; set; }
+        public virtual Terminal EmptyContTo { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual PriceType PriceType { get; set; }

@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Common\Enums\FreightStateEnum.cs" Link="Enums\FreightStateEnum.cs" />
+    <Compile Include="..\Common\Enums\PriceTypeEnum.cs" Link="Enums\PriceTypeEnum.cs" />
+    <Compile Include="..\Common\Extensions\DictionaryExtensions.cs" Link="Extensions\DictionaryExtensions.cs" />
     <Compile Include="..\Common\Extensions\IEnumerableExtensions.cs" Link="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="..\Common\Extensions\ReflectionExtension.cs" Link="Extensions\ReflectionExtension.cs" />
     <Compile Include="..\Common\Extensions\StringExtensions.cs" Link="Extensions\StringExtensions.cs" />
@@ -58,6 +61,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="NEST" Version="7.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="System.Device.Location.Portable" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -136,6 +140,10 @@
     <Content Update="wwwroot\css\webfonts\fa-solid-900.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>

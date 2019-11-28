@@ -72,6 +72,7 @@ namespace TMS.API.Models
             MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
             NationalityUpdatedByNavigation = new HashSet<Nationality>();
+            OrderAccountableUser = new HashSet<Order>();
             OrderCompositionInsertedByNavigation = new HashSet<OrderComposition>();
             OrderCompositionUpdatedByNavigation = new HashSet<OrderComposition>();
             OrderDetailInsertedByNavigation = new HashSet<OrderDetail>();
@@ -86,6 +87,8 @@ namespace TMS.API.Models
             QuotationUpdatedByNavigation = new HashSet<Quotation>();
             StatePolicyInsertedByNavigation = new HashSet<StatePolicy>();
             StatePolicyUpdatedByNavigation = new HashSet<StatePolicy>();
+            StateTypeInsertedByNavigation = new HashSet<StateType>();
+            StateTypeUpdatedByNavigation = new HashSet<StateType>();
             SurchargeInsertedByNavigation = new HashSet<Surcharge>();
             SurchargeTypeInsertedByNavigation = new HashSet<SurchargeType>();
             SurchargeTypeUpdatedByNavigation = new HashSet<SurchargeType>();
@@ -222,6 +225,7 @@ namespace TMS.API.Models
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
         public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
+        public virtual ICollection<Order> OrderAccountableUser { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionInsertedByNavigation { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionUpdatedByNavigation { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailInsertedByNavigation { get; set; }
@@ -236,6 +240,8 @@ namespace TMS.API.Models
         public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyUpdatedByNavigation { get; set; }
+        public virtual ICollection<StateType> StateTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<StateType> StateTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Surcharge> SurchargeInsertedByNavigation { get; set; }
         public virtual ICollection<SurchargeType> SurchargeTypeInsertedByNavigation { get; set; }
         public virtual ICollection<SurchargeType> SurchargeTypeUpdatedByNavigation { get; set; }
