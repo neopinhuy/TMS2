@@ -6,8 +6,6 @@ namespace TMS.UI.Business.Sale
 {
     public class SaleOrderBL : TabEditor<Order>
     {
-        private PopupEditor<Order> _saleOrderForm;
-
         public SaleOrderBL()
         {
             Name = "SaleOrder";
@@ -26,13 +24,18 @@ namespace TMS.UI.Business.Sale
 
         private void InitSaleOrderForm(Order SaleOrder)
         {
-            _saleOrderForm = new PopupEditor<Order>
+            var soForm = new PopupEditor<Order>
             {
                 Entity = SaleOrder,
                 Name = "SaleOrder Editor",
                 Title = "Sale order"
             };
-            AddChild(_saleOrderForm);
+            soForm.AfterRendered += () =>
+            {
+                var customer = FindComponent<SearchEntry>(nameof(Order.CustomerId));
+                customer.ValueChanged += (e) => FindComponent<GridView>(nameof(Order.OrderDetail)).ReloadData();
+            };
+            AddChild(soForm);
         }
 
         public void DeleteSaleOrder()

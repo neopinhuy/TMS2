@@ -4,7 +4,7 @@
     {
         Distance = 1,
         Weight = 2,
-        WholeFreight = 3,
+        Container = 3,
         Volume = 4
     }
 }

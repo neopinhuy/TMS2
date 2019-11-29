@@ -29,6 +29,7 @@ namespace Components
             }
             if (MultipleLine) Html.Instance.TextArea
                     .Attr("data-role", "textarea").Value(value);
+            if (_ui.Row > 0) Html.Instance.Attr("rows", _ui.Row ?? 1);
             else Html.Instance.Input
                 .Attr("data-role", "input")
                 .ClassName("input-small").Value(value);

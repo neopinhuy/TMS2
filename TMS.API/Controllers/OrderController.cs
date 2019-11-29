@@ -93,7 +93,7 @@ namespace TMS.API.Controllers
                 case PriceTypeEnum.Weight:
                     detail.TotalPriceBeforeDiscount = price * detail.TotalWeight;
                     break;
-                case PriceTypeEnum.WholeFreight:
+                case PriceTypeEnum.Container:
                     detail.TotalPriceBeforeDiscount = price * detail.TotalContainer;
                     break;
                 case PriceTypeEnum.Volume:
@@ -113,7 +113,7 @@ namespace TMS.API.Controllers
             else if (detail.DiscountPercentage.HasValue)
                 detail.TotalPriceAfterDiscount = detail.TotalPriceBeforeDiscount * (100 - detail.DiscountPercentage) / 100;
             else detail.TotalPriceAfterDiscount = detail.TotalPriceBeforeDiscount;
-            detail.TotalDiscountAfterTax = detail.TotalPriceAfterDiscount * (detail.Order.Vat ?? detail.Vat);
+            detail.TotalDiscountAfterTax = detail.TotalPriceAfterDiscount * (100 + detail.Order.Vat ?? detail.Vat) / 100;
         }
 
         private IEnumerable<Coordination> CreateCoordination(IEnumerable<OrderDetail> orderDetails)

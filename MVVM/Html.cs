@@ -488,6 +488,12 @@ namespace MVVM
             return this;
         }
 
+        public Html Attr(string attr, int val)
+        {
+            Context.SetAttribute(attr, val.ToString());
+            return this;
+        }
+
         public Html DataAttr(string attr, string val)
         {
             Context.SetAttribute("data-" + attr, val);

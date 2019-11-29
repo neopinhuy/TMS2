@@ -49,19 +49,8 @@ namespace Components
                 .Attr("data-role", "calendarpicker")
                 .Attr("data-format", "%d/%m/%Y")
                 .Attr("data-cls-calendar", "compact")
-                .Event(EventType.Blur, (e) =>
-                {
-                    var input = e.Target as HTMLInputElement;
-                    var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy",
-                        CultureInfo.InvariantCulture, out DateTime dateTime);
-                    if (!parsed)
-                    {
-                        input.Value = "";
-                        value.Data = null;
-                    }
-                    value.Data = (DateTime?)dateTime;
-                    Html.Take(input.NextElementSibling.NextElementSibling).Style("display: none !important;");
-                })
+                .Event(EventType.Input, (e) => ParseDate(value, e))
+                .Event(EventType.Change, (e) => ParseDate(value, e))
                 .Event(EventType.Focus, (e) => {
                     var input = e.Target as HTMLInputElement;
                     input.ReadOnly = false;
@@ -69,11 +58,24 @@ namespace Components
                     var screenHeight = Window.ScreenY;
                     var top = rect.Top > screenHeight / 2 ? rect.Top - 270 : rect.Bottom;
                     Html.Take(input.NextElementSibling.NextElementSibling)
-                        .Style("display: block !important;")
                         .HeightPx(270)
                         .Floating(rect.Bottom, rect.Left - 1);
                 });
             return html;
+        }
+
+        private static void ParseDate(Observable<DateTime?> value, Event e)
+        {
+            var input = e.Target as HTMLInputElement;
+            if (string.IsNullOrWhiteSpace(input.Value))
+            {
+                value.Data = null;
+                return;
+            }
+            var parsed = DateTime.TryParseExact(input.Value, "dd/MM/yyyy",
+                CultureInfo.InvariantCulture, out DateTime dateTime);
+            if (!parsed) return;
+            value.Data = (DateTime?)dateTime;
         }
 
         /// <summary>

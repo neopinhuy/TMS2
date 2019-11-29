@@ -471,7 +471,8 @@ namespace Components
         private string GetCellText(Header<T> header, object cellData, T row)
         {
             if (cellData == null) return string.Empty;
-            if (cellData is DateTime)
+            else if (header.FieldName == Id && (int)cellData == -1) return string.Empty;
+            else if (cellData is DateTime)
             {
                 return string.Format(header.FormatCell ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
             }
