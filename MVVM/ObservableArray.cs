@@ -32,6 +32,11 @@ namespace MVVM
             }
         }
 
+        public void UnsubscribeAll()
+        {
+            _subscribers?.Clear();
+        }
+
         protected override void Notify()
         {
             NotifyArrayChanged(new ObservableArrayArgs<T>

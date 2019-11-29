@@ -42,17 +42,22 @@ namespace Components
         {
             Window.SetTimeout(async() =>
             {
-                var gridPolicyTask = Client<GridPolicy>.Instance
-                    .GetList("?$expand=Reference($select=Name)" +
-                        "&orderby=Order" +
-                        $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
-                        $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
+                var gridPolicyTask = LoadGridPolicy();
                 var loadDataTask = ReloadData();
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
                 Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
                 RenderTable();
                 Pagination();
             });
+        }
+
+        private Task<OdataResult<GridPolicy>> LoadGridPolicy()
+        {
+            return Client<GridPolicy>.Instance
+                    .GetList("?$expand=Reference($select=Name)" +
+                    "&orderby=Order" +
+                    $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
+                    $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
         }
 
         public void RenderTable()
@@ -136,7 +141,9 @@ namespace Components
                 .Li.Event(EventType.Click, DeleteSelected)
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
-        
+
+        public async Task UpdateRow(object row) => await _table.UpdateRow(row);
+
         public virtual async Task ReloadData(string dataSource = null)
         {
             var formatted = Utils.FormatWith(_ui.DataSourceFilter, Entity);

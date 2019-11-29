@@ -39,7 +39,22 @@ namespace Components
         protected HTMLTableElement _mainTable;
         private int? timeOut = null;
         private bool _isFocusCell;
-        
+
+        private List<Header<T>> FrozenHeader
+        {
+            get
+            {
+                return Headers.Data.Where(x => x.Frozen).ToList();
+            }
+        }
+        private List<Header<T>> NonFrozenHeader
+        {
+            get
+            {
+                return Headers.Data.Where(x => !x.Frozen).ToList();
+            }
+        }
+
         public const string _selectedClass = "selected-row";
         public const string _hovering = "hovering";
         public const string _emptyFlag = "__empty__";
@@ -88,8 +103,8 @@ namespace Components
             {
                 SortHeaderByGroupName();
                 await LoadMasterData();
-                var frozen = Headers.Data.Where(x => x.Frozen).ToList();
-                var nonFrozen = Headers.Data.Where(x => !x.Frozen).ToList();
+                var frozen = FrozenHeader;
+                var nonFrozen = NonFrozenHeader;
 
                 Html.Take(_frozenTable).Clear();
                 RenderTableHeader(frozen);
@@ -132,14 +147,13 @@ namespace Components
 
         private async Task LoadMasterData()
         {
-            var refEntities = Headers.Data
-                .Where(x => x.Reference.HasAnyChar())
-                .DistinctBy(x => x.Reference)
-                .ToList();
-            refEntities = refEntities.Select(FormatDataSource).ToList();
-            var optimizedSource = refEntities.Select(x => Client<object>.Instance
-                .GetListEntity(x.Reference, x.DataSourceOptimized));
-            var refData = await Task.WhenAll(optimizedSource);
+            var refEntities = Headers.Data.Where(x => x.Reference.HasAnyChar());
+            var dataTask = refEntities.Select(FormatDataSource)
+                .GroupBy(x => new { x.Reference, x.DataSourceOptimized })
+                .Select(x => x.First())
+                .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSourceOptimized));
+
+            var refData = await Task.WhenAll(dataTask);
             _refData = refData.Select(x => x?.Value);
         }
 
@@ -239,6 +253,22 @@ namespace Components
         private void RenderEmptyRow(List<Header<T>> headers, T emptyRowData)
         {
             RenderRowData(headers, emptyRowData);
+        }
+
+        public virtual async Task UpdateRow(T rowData)
+        {
+            var index = Array.IndexOf(RowData.Data, rowData);
+            var fronzenRows = _frozenTable.TBodies[0].Rows;
+            fronzenRows[index].Remove();
+            var mainRows = _mainTable.TBodies[0].Rows;
+            mainRows[index].Remove();
+
+            Html.Take(_frozenTable);
+            RenderRowData(FrozenHeader, rowData);
+            Html.Take(_mainTable);
+            RenderRowData(NonFrozenHeader, rowData);
+            fronzenRows[fronzenRows.Length - 1].InsertBefore(fronzenRows.First().ParentNode, fronzenRows[index]);
+            mainRows[mainRows.Length - 1].InsertBefore(mainRows.First().ParentNode, mainRows[index]);
         }
 
         protected virtual void RenderRowData(List<Header<T>> headers, T row)
@@ -424,7 +454,6 @@ namespace Components
                     var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)rowData?.GetComplexPropValue(ui.FieldName));
                     editor = new SearchEntry(ui)
                     {
-                        SuggestActiveRecord = true,
                         RootHtmlElement = Html.Context,
                         Matched = matched,
                     };
@@ -534,6 +563,16 @@ namespace Components
                 SelectedRow++;
             }
             ToggleSelectRow(SelectedRow ?? -1, true);
+        }
+
+        public override void Dispose()
+        {
+            RowData.UnsubscribeAll();
+            Headers.UnsubscribeAll();
+            BodyContextMenu = null;
+            CellChanging = null;
+            CellChanged = null;
+            base.Dispose();
         }
     }
 }
