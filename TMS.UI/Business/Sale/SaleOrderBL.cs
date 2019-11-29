@@ -1,5 +1,6 @@
 ﻿using Components;
 using Components.Forms;
+using MVVM;
 using TMS.API.Models;
 
 namespace TMS.UI.Business.Sale
@@ -34,6 +35,11 @@ namespace TMS.UI.Business.Sale
             {
                 var customer = FindComponent<SearchEntry>(nameof(Order.CustomerId));
                 customer.ValueChanged += (e) => FindComponent<GridView>(nameof(Order.OrderDetail)).ReloadData();
+                var orderDetailGrid = FindComponent<GridView>(nameof(Order.OrderDetail));
+                //orderDetailGrid.CellChanged += (ObservableArgs e, Header<object> header, object obj) =>
+                //{
+
+                //};
             };
             AddChild(soForm);
         }

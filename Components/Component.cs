@@ -97,7 +97,7 @@ namespace Components
 
         public IEnumerable<T> FindComponent<T>() where T : class
         {
-            var result = new List<T>();
+            var result = new HashSet<T>();
             var type = typeof(T);
             if (Children.Nothing()) return Enumerable.Empty<T>();
             foreach (var child in Children)
@@ -105,7 +105,7 @@ namespace Components
                 if (child.GetType().IsAssignableFrom(type)) result.Add(child as T);
                 if (child.Children.Nothing()) continue;
                 var res = child.FindComponent<T>();
-                if (res != null) result.AddRange(res);
+                res.ForEach(x => result.Add(x));
             }
             return result;
         }

@@ -57,7 +57,8 @@ namespace Components.Forms
                 if (data != null)
                 {
                     Toast.Success($"Update {typeof(T).Name} succeeded");
-                    RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
+                    var grids = RootComponent.FindComponent<GridView>();
+                    grids.ForEach(x => x.ReloadData());
                 }
                 else
                 {

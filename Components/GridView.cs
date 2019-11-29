@@ -5,6 +5,7 @@ using Components.Extensions;
 using Components.Forms;
 using MVVM;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -21,6 +22,7 @@ namespace Components
         private HTMLElement _paginator;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
+        public Action<ObservableArgs, Header<object>, object> CellChanged { get; set; }
 
         public GridView(UserInterface ui)
         {
@@ -68,6 +70,7 @@ namespace Components
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
             _table.Render();
+            this.CellChanged = _table.CellChanged;
         }
 
         private void BindingEvents(TableParam<object> tableParams)

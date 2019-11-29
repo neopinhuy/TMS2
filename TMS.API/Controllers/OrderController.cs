@@ -25,12 +25,60 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            SetTerminals(order);
+            await CalcOrderDetailPrice(order);
             var res = await base.CreateAsync(order);
+            await CalcOrderPrice(order);
             var coordination = CreateCoordination(order.OrderDetail);
             db.Coordination.AddRange(coordination);
             await db.SaveChangesAsync();
             return res;
+        }
+
+        [HttpPut("api/[Controller]")]
+        public override async Task<ActionResult<Order>> UpdateAsync([FromBody]Order order)
+        {
+            if (order == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                await CalcOrderDetailPrice(order);
+                UpdateChildren<OrderDetail>(order);
+                await base.UpdateAsync(order);
+                await CalcOrderPrice(order);
+                await UpdateCoordination(order);
+                await db.SaveChangesAsync();
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return await db.Order.AsNoTracking().FirstOrDefaultAsync(x => x.Id == order.Id);
+        }
+
+        private async Task CalcOrderDetailPrice(Order order)
+        {
+            SetTerminals(order);
+            await LoadTerminalAndQuotation(order);
+            order.OrderDetail.ForEach(x => x.Order = order).ForEach(CalcDefaultAndPrice);
+        }
+
+        private async Task CalcOrderPrice(Order order)
+        {
+            var details = await db.OrderDetail.Where(x => x.OrderId == order.Id).ToListAsync();
+            order.TotalPriceBeforeDiscount = details.Sum(x => x.TotalPriceBeforeDiscount);
+            order.TotalPriceAfterDiscount = details.Sum(x => x.TotalPriceAfterDiscount);
+            if (order.DiscountPercentage > 0)
+            {
+                order.DiscountMoney = order.TotalPriceAfterDiscount * order.DiscountPercentage / 100;
+            }
+            if (order.DiscountMoney > 0)
+            {
+                order.DiscountPercentage = order.DiscountMoney / order.TotalPriceAfterDiscount * 100;
+                order.TotalPriceAfterDiscount -= order.DiscountMoney;
+            }
+            order.TotalPriceAfterTax = order.TotalPriceAfterDiscount * (100 + order.Vat) / 100;
         }
 
         private static void SetTerminals(Order order)
@@ -40,7 +88,7 @@ namespace TMS.API.Controllers
             order.ToId = firstOrderDetail?.ToId;
         }
 
-        private async Task LoadOrderAdditionalData(Order order)
+        private async Task LoadTerminalAndQuotation(Order order)
         {
             if (order is null || order.OrderDetail.Nothing()) return;
             var terminalIds = order.OrderDetail.Where(x => x.FromId.HasValue).Select(x => x.FromId.Value)
@@ -143,30 +191,6 @@ namespace TMS.API.Controllers
                     Distance = orderDetail.TransportDistance,
                     CommodityTypeId = orderDetail.CommodityTypeId,
                 };
-        }
-
-        [HttpPut("api/[Controller]")]
-        public override async Task<ActionResult<Order>> UpdateAsync([FromBody]Order order)
-        {
-            if (order == null || !ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                SetTerminals(order);
-                await LoadOrderAdditionalData(order);
-                order.OrderDetail.ForEach(x => x.Order = order).ForEach(CalcDefaultAndPrice);
-                UpdateChildren<OrderDetail>(order);
-                await base.UpdateAsync(order);
-                await UpdateCoordination(order);
-                await db.SaveChangesAsync();
-            }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            return NoContent();
         }
 
         private async Task UpdateCoordination(Order order)
