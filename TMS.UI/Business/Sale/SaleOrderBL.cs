@@ -26,11 +26,11 @@ namespace TMS.UI.Business.Sale
             InitSaleOrderForm(saleorder);
         }
 
-        private void InitSaleOrderForm(Order SaleOrder)
+        private void InitSaleOrderForm(Order order)
         {
             var soForm = new PopupEditor<Order>
             {
-                Entity = SaleOrder,
+                Entity = order,
                 Name = "SaleOrder Editor",
                 Title = "Sale order"
             };
@@ -42,6 +42,7 @@ namespace TMS.UI.Business.Sale
                 orderDetailGrid.CellChanged += async (ObservableArgs e, Header<object> header, object obj) =>
                 {
                     var orderDetail = (OrderDetail)obj;
+                    orderDetail.Order = order;
                     if (header.FieldName == nameof(OrderDetail.QuotationId))
                     {
                         if (orderDetail.QuotationId is null)
@@ -55,11 +56,15 @@ namespace TMS.UI.Business.Sale
                             var fromTask = Client<Terminal>.Instance.Get(orderDetail.FromId ?? 0);
                             var toTask = Client<Quotation>.Instance.Get(orderDetail.ToId ?? 0);
                             await Task.WhenAll(quotationTask, fromTask, toTask);
+                            orderDetail.From = fromTask.Result;
+                            orderDetail.Quotation = toTask.Result;
+                            orderDetail.Quotation = quotationTask.Result;
                         }
                         else
                         {
-                            var quotation = await quotationTask;
+                            orderDetail.Quotation = await quotationTask;
                         }
+                        
                         orderDetail.CalcDefaultAndPrice();
                         // Update grid row
                         orderDetailGrid.UpdateRow(orderDetail);

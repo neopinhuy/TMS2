@@ -75,7 +75,7 @@ namespace Components
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
             _table.Render();
-            this.CellChanged = _table.CellChanged;
+            _table.CellChanged += CellChanged;
         }
 
         private void BindingEvents(TableParam<object> tableParams)
@@ -142,7 +142,7 @@ namespace Components
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
         }
 
-        public async Task UpdateRow(object row) => await _table.UpdateRow(row);
+        public void UpdateRow(object row) => _table.UpdateRow(row);
 
         public virtual async Task ReloadData(string dataSource = null)
         {

@@ -43,6 +43,7 @@
     <Compile Include="GroupTable.cs" />
     <Compile Include="NumberInput.cs" />
     <Compile Include="Datepicker.cs" />
+    <Compile Include="Section.cs" />
     <Compile Include="Textbox.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="ColumnFilter.cs" />

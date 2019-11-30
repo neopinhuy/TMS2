@@ -255,7 +255,7 @@ namespace Components
             RenderRowData(headers, emptyRowData);
         }
 
-        public virtual async Task UpdateRow(T rowData)
+        public virtual void UpdateRow(T rowData)
         {
             var index = Array.IndexOf(RowData.Data, rowData);
             var fronzenRows = _frozenTable.TBodies[0].Rows;
@@ -263,17 +263,19 @@ namespace Components
             var mainRows = _mainTable.TBodies[0].Rows;
             mainRows[index].Remove();
 
-            Html.Take(_frozenTable);
+            Html.Take(_frozenTable.TBodies[0]);
             RenderRowData(FrozenHeader, rowData);
-            Html.Take(_mainTable);
+            Html.Take(_mainTable.TBodies[0]);
             RenderRowData(NonFrozenHeader, rowData);
-            fronzenRows[fronzenRows.Length - 1].InsertBefore(fronzenRows.First().ParentNode, fronzenRows[index]);
-            mainRows[mainRows.Length - 1].InsertBefore(mainRows.First().ParentNode, mainRows[index]);
+            _frozenTable.TBodies[0].InsertBefore(fronzenRows[fronzenRows.Length - 1], fronzenRows[index]);
+            _mainTable.TBodies[0].InsertBefore(mainRows[mainRows.Length - 1], mainRows[index]);
         }
 
         protected virtual void RenderRowData(List<Header<T>> headers, T row)
         {
-            Html.Instance.TRow
+            var rowSection = new Section(ElementType.tr) { Entity = row };
+            AddChild(rowSection);
+            Html.Instance
                 .Event(EventType.Click, ToggleSelectRow)
                 .Event(EventType.MouseEnter, HoverRow)
                 .Event(EventType.MouseLeave, LeaveRow);
@@ -287,7 +289,7 @@ namespace Components
             {
                 tr.AddEventListener(EventType.DblClick, _ => _tableParam.RowDblClick(row));
             }
-            Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header));
+            Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header, rowSection));
         }
 
         private void ToggleSelectRow(Event e)
@@ -381,9 +383,10 @@ namespace Components
                 tableRow.ReplaceClass(_hovering, string.Empty);
         }
 
-        private void RenderTableCell(T row, Header<T> header)
+        private void RenderTableCell(T row, Header<T> header, Section rowSection)
         {
-            Html.Instance.TData.Render();
+            var cell = new Section(ElementType.td) { Entity = rowSection.Entity };
+            rowSection.AddChild(cell);
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
             RenderCellButton(row, header);
             if (string.IsNullOrEmpty(header.FieldName)) return;
@@ -403,7 +406,7 @@ namespace Components
                     Html.Instance.Img.Src(cellText).End.Render();
                 else Html.Instance.Text(cellText).End.Render();
             }
-            RenderEditableCell(header);
+            RenderEditableCell(header, cell);
             Html.Instance.EndOf(ElementType.td);
         }
 
@@ -426,7 +429,7 @@ namespace Components
             }
         }
 
-        private void RenderEditableCell(Header<T> header)
+        private void RenderEditableCell(Header<T> header, Section cellSection)
         {
             if (!header.Editable) return;
             var cell = Html.Context as HTMLElement;
@@ -477,7 +480,7 @@ namespace Components
                 }
                 CellChanged?.Invoke(arg, header, rowData);
             };
-            AddChild(editor);
+            cellSection.AddChild(editor);
             editor.InteractiveElement.AddEventListener(EventType.Focus, SelectRow);
         }
 
