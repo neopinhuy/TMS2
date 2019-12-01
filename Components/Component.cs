@@ -123,6 +123,7 @@ namespace Components
         }
         public Action Disposing { get; set; }
         public Action Disposed { get; set; }
+        public System.Action AfterRendered { get; set; }
         public virtual void Dispose()
         {
             Disposing?.Invoke();

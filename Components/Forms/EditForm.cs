@@ -16,7 +16,7 @@ namespace Components.Forms
     {
         public string Title { get; set; }
         public Action<bool> AfterSaved { get; set; }
-        public System.Action AfterRendered { get; set; }
+
         public EditForm()
         {
             Title = $"{typeof(T).Name} Detail";

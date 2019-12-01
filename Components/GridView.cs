@@ -40,7 +40,7 @@ namespace Components
 
         public override void Render()
         {
-            Window.SetTimeout(async() =>
+            Task.Run(async() =>
             {
                 var gridPolicyTask = LoadGridPolicy();
                 var loadDataTask = ReloadData();
@@ -48,6 +48,7 @@ namespace Components
                 Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
                 RenderTable();
                 Pagination();
+                AfterRendered?.Invoke();
             });
         }
 

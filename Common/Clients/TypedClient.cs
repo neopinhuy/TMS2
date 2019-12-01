@@ -60,6 +60,37 @@ namespace Common.Clients
             return tcs.Task;
         }
 
+        public Task<OdataResult<T>> GetListByIds(IEnumerable<int> ids)
+        {
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<OdataResult<T>>();
+            var xhr = new XMLHttpRequest();
+            var filter = $"?filter=id in ({string.Join(",", ids)})";
+            xhr.Open("GET", $"{BaseUrl}/api/{type.Name}{filter}", true);
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var json = JSON.Parse(xhr.ResponseText);
+                    var result = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
+                    result.Odata = new Odata() { Count = (int?)json["@odata.count"] };
+                    tcs.SetResult(result);
+                }
+                else
+                {
+                    tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
+                }
+            };
+            xhr.Send();
+            return tcs.Task;
+        }
+
         public Task<OdataResult<object>> GetListEntity(string entity, string filter = null)
         {
             var refType = Type.GetType("TMS.API.Models." + entity);

@@ -8,19 +8,26 @@ using ElementType = MVVM.ElementType;
 
 namespace Components
 {
+    public class GroupRowData
+    {
+        public object Key { get; set; }
+        public IEnumerable<object> Children { get; set; }
+    }
+
     public class GroupTable : Table<object>
     {
         public GroupTable(TableParam<object> tableParam) : base(tableParam)
         {
         }
 
-        protected override void RenderRowData(List<Header<object>> headers, object row, Section section)
+        protected override void RenderRowData(List<Header<object>> headers, object row, Section tableSection)
         {
-            var table = Html.Context as HTMLTableSectionElement;
+            var groupRow = (GroupRowData)row;
+            var tbody = Html.Context as HTMLTableSectionElement;
             Html.Instance.TRow.ClassName("group-row");
-            section.AddChild(new Section(Html.Context));
+            tableSection.AddChild(new Section(Html.Context));
             var columnExpanded = headers.Any(x => x.StatusBar) ? headers.Count - 1 : headers.Count;
-            if (table.ParentElement.HasClass("frozen"))
+            if (tbody.ParentElement.HasClass("frozen"))
             {
                 var groupText = Utils.FormatWith(_tableParam.GroupFormat, row);
                 Html.Instance.TData.ClassName("status-cell").Icon("mif-pencil").EndOf(ElementType.td)
@@ -33,7 +40,11 @@ namespace Components
                 Html.Instance.TData.ColSpan(columnExpanded).Render();
             }
             Html.Instance.EndOf(ElementType.tr);
-            base.RenderRowData(headers, row, section);
+            groupRow.Children.ForEach(child =>
+            {
+                Html.Take(tbody);
+                base.RenderRowData(headers, child, tableSection);
+            });
         }
 
         private void ToggleGroupRow(Event e)

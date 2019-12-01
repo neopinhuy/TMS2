@@ -40,7 +40,8 @@ namespace TMS.API.Controllers
         {
             options.Validate(new ODataValidationSettings()
             {
-                AllowedQueryOptions = AllowedQueryOptions.All
+                AllowedQueryOptions = AllowedQueryOptions.All,
+                MaxExpansionDepth = 3
             });
 
             var results = options.ApplyTo(query);
