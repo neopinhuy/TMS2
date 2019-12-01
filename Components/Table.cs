@@ -23,7 +23,7 @@ namespace Components
         public string GroupFormat { get; set; }
     }
 
-    public class Table<T> : Component where T : class
+    public class Table<T> : Component where T : class, new()
     {
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
@@ -37,6 +37,8 @@ namespace Components
         private IEnumerable<IEnumerable<object>> _refData;
         protected HTMLTableElement _frozenTable;
         protected HTMLTableElement _mainTable;
+        protected Section _frozenSection;
+        protected Section _mainSection;
         private int? timeOut = null;
         private bool _isFocusCell;
 
@@ -76,8 +78,12 @@ namespace Components
             RootHtmlElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;
+            _frozenSection = new Section(_frozenTable);
+            AddChild(_frozenSection);
             Html.Instance.End.Div.ClassName("non-frozen").Table.ClassName("table");
             _mainTable = Html.Context as HTMLTableElement;
+            _mainSection = new Section(_mainTable);
+            AddChild(_mainSection);
             Rerender();
             Html.Instance.EndOf(".table-wrapper");
             Headers.Subscribe(x =>
@@ -108,11 +114,11 @@ namespace Components
 
                 Html.Take(_frozenTable).Clear();
                 RenderTableHeader(frozen);
-                RenderTableContent(frozen);
+                RenderTableContent(frozen, _frozenSection);
 
                 Html.Take(_mainTable).Clear();
                 RenderTableHeader(nonFrozen);
-                RenderTableContent(nonFrozen);
+                RenderTableContent(nonFrozen, _mainSection);
 
                 if (Editable)
                 {
@@ -127,13 +133,12 @@ namespace Components
         private void AddNewEmptyRow(List<Header<T>> frozen, List<Header<T>> nonFrozen)
         {
             var emptyRowData = (T)Activator.CreateInstance(typeof(T));
-            emptyRowData[Id] = -1; // Not to add this row into the submitted list
+            emptyRowData[Id] = -Math.Abs(emptyRowData.GetHashCode()); // Not to add this row into the submitted list
             emptyRowData[_emptyFlag] = true;
             Html.Take(_frozenTable.TBodies[0]);
-            RenderEmptyRow(frozen, emptyRowData);
-
+            RenderEmptyRow(frozen, emptyRowData,_frozenSection);
             Html.Take(_mainTable.TBodies[0]);
-            RenderEmptyRow(nonFrozen, emptyRowData);
+            RenderEmptyRow(nonFrozen, emptyRowData, _mainSection);
         }
 
         private void SortHeaderByGroupName()
@@ -242,39 +247,33 @@ namespace Components
             Html.Instance.EndOf(ElementType.thead);
         }
 
-        private void RenderTableContent(List<Header<T>> headers)
+        private void RenderTableContent(List<Header<T>> headers, Section section)
         {
             Html.Instance.TBody.ForEach(RowData.Data, (row, index) =>
             {
-                RenderRowData(headers, row);
+                RenderRowData(headers, row, section);
             });
         }
 
-        private void RenderEmptyRow(List<Header<T>> headers, T emptyRowData)
+        private void RenderEmptyRow(List<Header<T>> headers, T emptyRowData, Section section)
         {
-            RenderRowData(headers, emptyRowData);
+            RenderRowData(headers, emptyRowData, section);
         }
 
         public virtual void UpdateRow(T rowData)
         {
-            var index = Array.IndexOf(RowData.Data, rowData);
-            var fronzenRows = _frozenTable.TBodies[0].Rows;
-            fronzenRows[index].Remove();
-            var mainRows = _mainTable.TBodies[0].Rows;
-            mainRows[index].Remove();
-
-            Html.Take(_frozenTable.TBodies[0]);
-            RenderRowData(FrozenHeader, rowData);
-            Html.Take(_mainTable.TBodies[0]);
-            RenderRowData(NonFrozenHeader, rowData);
-            _frozenTable.TBodies[0].InsertBefore(fronzenRows[fronzenRows.Length - 1], fronzenRows[index]);
-            _mainTable.TBodies[0].InsertBefore(mainRows[mainRows.Length - 1], mainRows[index]);
+            var id = (int)rowData[Id];
+            var rowById = RowData.Data.FirstOrDefault(x => (int)x[Id] == id);
+            var index = Array.IndexOf(RowData.Data, rowById);
+            rowById.CopyPropFrom(rowData);
+            _frozenSection.Children[index]?.Update();
+            _mainSection.Children[index]?.Update();
         }
 
-        protected virtual void RenderRowData(List<Header<T>> headers, T row)
+        protected virtual void RenderRowData(List<Header<T>> headers, T row, Section section)
         {
             var rowSection = new Section(ElementType.tr) { Entity = row };
-            AddChild(rowSection);
+            section.AddChild(rowSection);
             Html.Instance
                 .Event(EventType.Click, ToggleSelectRow)
                 .Event(EventType.MouseEnter, HoverRow)
@@ -390,23 +389,12 @@ namespace Components
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
             RenderCellButton(row, header);
             if (string.IsNullOrEmpty(header.FieldName)) return;
-            var cellData = row.GetComplexPropValue(header.FieldName);
-            var cellText = GetCellText(header, cellData, row);
-            header.TextAlign = CalcTextAlign(header, cellData);
-            Html.Instance.TextAlign(header.TextAlign);
-            if (cellData is bool cellBool)
+            if (!header.Editable)
             {
-                // Render checkbox instead of simple true false
-                Html.Instance.Padding(Direction.bottom, 0).SmallCheckbox(string.Empty, cellBool).Disabled(true).End.Render();
+                var cellText = new CellText(header as Header<object>, _refData) { Entity = row };
+                cell.AddChild(cellText);
             }
-            else
-            {
-                Html.Instance.Span.ClassName("cell-text");
-                if (header.Component == "Image")
-                    Html.Instance.Img.Src(cellText).End.Render();
-                else Html.Instance.Text(cellText).End.Render();
-            }
-            RenderEditableCell(header, cell);
+            else RenderEditableCell(header, cell);
             Html.Instance.EndOf(ElementType.td);
         }
 
@@ -433,7 +421,6 @@ namespace Components
         {
             if (!header.Editable) return;
             var cell = Html.Context as HTMLElement;
-            cell.FirstElementChild.Remove();
             var row = cell.ParentElement as HTMLElement;
             var rowData = (T)row[_rowData];
             var ui = new UserInterface
@@ -474,7 +461,6 @@ namespace Components
                 {
                     RowData.Add(rowData);
                     rowData[_emptyFlag] = false;
-                    rowData[Id] = 0;
                     AddNewEmptyRow(Headers.Data.Where(x => x.Frozen).ToList(),
                         Headers.Data.Where(x => !x.Frozen).ToList());
                 }

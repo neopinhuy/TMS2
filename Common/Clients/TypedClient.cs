@@ -8,6 +8,14 @@ using TMS.API.Models;
 
 namespace Common.Clients
 {
+    public static class ClientConst
+    {
+        public static readonly JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
+    }
+
     public class Client<T> where T : class
     {
         public string BaseUrl { get; set; }
@@ -65,6 +73,11 @@ namespace Common.Clients
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
+            if (id <= 0)
+            {
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
             var xhr = new XMLHttpRequest();
             xhr.Open("GET", $"{BaseUrl}/api/{type.Name}/{id}", true);
             xhr.OnReadyStateChange = () =>
@@ -119,7 +132,7 @@ namespace Common.Clients
                     Toast.Warning(xhr.ResponseText);
                 }
             };
-            xhr.Send(JsonConvert.SerializeObject(value));
+            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
             return tcs.Task;
         }
 
@@ -189,7 +202,7 @@ namespace Common.Clients
                     Toast.Warning(xhr.ResponseText);
                 }
             };
-            xhr.Send(JsonConvert.SerializeObject(value));
+            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
             return tcs.Task;
         }
     }

@@ -14,10 +14,11 @@ namespace Components
         {
         }
 
-        protected override void RenderRowData(List<Header<object>> headers, object row)
+        protected override void RenderRowData(List<Header<object>> headers, object row, Section section)
         {
             var table = Html.Context as HTMLTableSectionElement;
             Html.Instance.TRow.ClassName("group-row");
+            section.AddChild(new Section(Html.Context));
             var columnExpanded = headers.Any(x => x.StatusBar) ? headers.Count - 1 : headers.Count;
             if (table.ParentElement.HasClass("frozen"))
             {
@@ -32,7 +33,7 @@ namespace Components
                 Html.Instance.TData.ColSpan(columnExpanded).Render();
             }
             Html.Instance.EndOf(ElementType.tr);
-            base.RenderRowData(headers, row);
+            base.RenderRowData(headers, row, section);
         }
 
         private void ToggleGroupRow(Event e)

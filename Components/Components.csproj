@@ -64,6 +64,7 @@
     <Compile Include="Renderer.cs" />
     <Compile Include="FloatingTable.cs" />
     <Compile Include="Table.cs" />
+    <Compile Include="CellText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

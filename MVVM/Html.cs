@@ -418,6 +418,7 @@ namespace MVVM
 
         public Html Clear()
         {
+            Context.TextContent = string.Empty;
             Context.InnerHTML = string.Empty;
             return this;
         }

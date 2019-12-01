@@ -19,10 +19,11 @@ namespace Common.Extensions
             if ((detail.TransportDistance is null || detail.TransportDistance <= 0)
                 && detail.From != null && detail.To != null)
             {
-                var from = new LatLng(detail.From.Lat, detail.From.Long);
-                var to = new LatLng(detail.To.Lat, detail.To.Long);
-                var distance = geometry.spherical.computeDistanceBetween(from, to);
-                detail.TransportDistance = (decimal)distance;
+                // Not to calc distance right now as google map is not free
+                //var from = new LatLng(detail.From.Lat, detail.From.Long);
+                //var to = new LatLng(detail.To.Lat, detail.To.Long);
+                //var distance = geometry.spherical.computeDistanceBetween(from, to);
+                //detail.TransportDistance = (decimal)distance;
             }
             CalcOrderDetailPrice(detail);
         }

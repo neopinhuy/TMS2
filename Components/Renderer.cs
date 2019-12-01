@@ -2,6 +2,7 @@
 using MVVM;
 using System;
 using System.Globalization;
+using ElementType = MVVM.ElementType;
 
 namespace Components
 {
@@ -270,7 +271,7 @@ namespace Components
         /// <param name="rowData">Row data</param>
         /// <typeparam name="Data">Generic type of the data row</typeparam>
         /// <returns></returns>
-        public static Html Table<Data>(this Html html, TableParam<Data> tableParam) where Data : class
+        public static Html Table<Data>(this Html html, TableParam<Data> tableParam) where Data : class, new()
         {
             var table = new Table<Data>(tableParam);
             table.Render();

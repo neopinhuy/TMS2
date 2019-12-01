@@ -38,6 +38,7 @@ namespace Components.Forms
             if (Entity != null && Entity[Id].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
+                SetDeafaultId();
                 var data = await client.CreateAsync((T)Entity);
                 if (data != null)
                 {
@@ -53,6 +54,7 @@ namespace Components.Forms
             }
             else
             {
+                SetDeafaultId();
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
@@ -66,6 +68,21 @@ namespace Components.Forms
                 }
                 AfterSaved?.Invoke(data != null);
             }
+        }
+
+        private void SetDeafaultId()
+        {
+            var grids = FindComponent<GridView>();
+            grids.ForEach(x =>
+            {
+                x.RowData.Data.ForEach(row =>
+                {
+                    if ((int)row[Id] < 0)
+                    {
+                        row[Id] = 0;
+                    }
+                });
+            });
         }
 
         private List<ComponentGroup> BuildTree(IEnumerable<ComponentGroup> componentGroup)

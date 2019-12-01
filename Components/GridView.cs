@@ -74,8 +74,8 @@ namespace Components
             _table.Entity = Entity;
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
+            _table.CellChanged = (arg, header, data) => CellChanged?.Invoke(arg, header, data);
             _table.Render();
-            _table.CellChanged += CellChanged;
         }
 
         private void BindingEvents(TableParam<object> tableParams)

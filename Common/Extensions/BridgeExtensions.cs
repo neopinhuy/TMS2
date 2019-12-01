@@ -62,5 +62,31 @@ namespace Common.Extensions
             if (leaf == null) return;
             leaf[hierarchy[hierarchy.Length - 1]] = value;
         }
+
+        public static T SafeCast<T>(this object obj) where T: class, new()
+        {
+            var res = new T();
+            try
+            {
+                res = (T)obj;
+            }
+            catch (Exception)
+            {
+                foreach (var prop in GetOwnPropertyNames(obj))
+                {
+                    res[prop] = obj[prop];
+                }
+            }
+            return res;
+        }
+
+        public static void CopyPropFrom(this object obj, object source)
+        {
+            if (obj is null || source is null) return;
+            foreach (var prop in GetOwnPropertyNames(source))
+            {
+                obj[prop] = source[prop];
+            }
+        }
     }
 }

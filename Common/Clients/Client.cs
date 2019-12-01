@@ -126,7 +126,7 @@ namespace Common.Clients
                     Toast.Warning(xhr.ResponseText);
                 }
             };
-            xhr.Send(JsonConvert.SerializeObject(value));
+            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
             return tcs.Task;
         }
 
@@ -191,7 +191,7 @@ namespace Common.Clients
                     Toast.Warning(xhr.ResponseText);
                 }
             };
-            xhr.Send(JsonConvert.SerializeObject(value));
+            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
             return tcs.Task;
         }
 

@@ -116,6 +116,11 @@ namespace Components
         }
 
         public abstract void Render();
+        public virtual void Update()
+        {
+            if (Children.Nothing()) return;
+            Children.ForEach(x => x.Update());
+        }
         public Action Disposing { get; set; }
         public Action Disposed { get; set; }
         public virtual void Dispose()
