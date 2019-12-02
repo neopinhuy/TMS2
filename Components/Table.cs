@@ -162,11 +162,16 @@ namespace Components
             _refData = refData.Select(x => x?.Value);
         }
 
+        protected virtual List<object> GetUnderlayingRowData()
+        {
+            return RowData.Data.Cast<object>().ToList();
+        }
+
         private Header<T> FormatDataSource(Header<T> header)
         {
             var formattedDataSource = header.DataSource.HasAnyChar()
                 ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
-            var entityIds = RowData.Data.Select(x => (int?)x.GetComplexPropValue(header.FieldName))
+            var entityIds = GetUnderlayingRowData().Select(x => (int?)x.GetComplexPropValue(header.FieldName))
                 .Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
             var filterIndex = formattedDataSource.IndexOf("?$filter");

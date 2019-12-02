@@ -2,6 +2,7 @@
 using Common.Extensions;
 using Components.Extensions;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ElementType = MVVM.ElementType;
@@ -18,6 +19,24 @@ namespace Components
     {
         public GroupTable(TableParam<object> tableParam) : base(tableParam)
         {
+        }
+
+        public override void Render()
+        {
+            base.Render();
+            Html.Take(RootHtmlElement).ClassName("group-table").End.Render();
+        }
+
+        protected override List<object> GetUnderlayingRowData()
+        {
+            try
+            {
+                return RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToList();
+            }
+            catch (InvalidCastException)
+            {
+                return RowData.Data.ToList();
+            }
         }
 
         protected override void RenderRowData(List<Header<object>> headers, object row, Section tableSection)

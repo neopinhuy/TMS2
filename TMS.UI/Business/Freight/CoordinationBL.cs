@@ -12,6 +12,7 @@ namespace TMS.UI.Business.Freight
 {
     public class CoordinationBL : TabEditor<Coordination>
     {
+        private static bool _notifySelf = false;
         public CoordinationBL()
         {
             Name = "CoordinationManagement";
@@ -24,7 +25,16 @@ namespace TMS.UI.Business.Freight
             AfterRendered += () =>
             {
                 var grid = FindComponent<GridView>(nameof(Coordination));
-                grid.AfterRendered += async () => await ComputeTree(grid);
+                grid.RowData.Subscribe(async (arg) =>
+                {
+                    if (_notifySelf)
+                    {
+                        _notifySelf = false;
+                        return;
+                    }
+                    _notifySelf = true;
+                    await ComputeTree(grid);
+                });
             };
         }
 
