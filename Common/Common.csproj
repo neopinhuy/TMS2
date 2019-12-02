@@ -192,6 +192,9 @@
     <Compile Include="..\TMS.API\Models\SurchargeType.cs">
       <Link>Models\SurchargeType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\TaskState.cs">
+      <Link>Models\TaskState.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Terminal.cs">
       <Link>Models\Terminal.cs</Link>
     </Compile>

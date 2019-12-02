@@ -115,6 +115,7 @@ namespace TMS.API
             builder.EntitySet<StatePolicy>(nameof(StatePolicy));
             builder.EntitySet<Surcharge>(nameof(Surcharge));
             builder.EntitySet<SurchargeType>(nameof(SurchargeType));
+            builder.EntitySet<TaskState>(nameof(TaskState));
             builder.EntitySet<Terminal>(nameof(Terminal));
             builder.EntitySet<TicketState>(nameof(TicketState));
             builder.EntitySet<Timebox>(nameof(Timebox));

@@ -62,6 +62,7 @@ namespace TMS.API.Models
         public virtual DbSet<StateType> StateType { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
         public virtual DbSet<SurchargeType> SurchargeType { get; set; }
+        public virtual DbSet<TaskState> TaskState { get; set; }
         public virtual DbSet<Terminal> Terminal { get; set; }
         public virtual DbSet<TicketState> TicketState { get; set; }
         public virtual DbSet<Timebox> Timebox { get; set; }
@@ -451,6 +452,11 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_UserInserted");
+
+                entity.HasOne(d => d.TaskState)
+                    .WithMany(p => p.Coordination)
+                    .HasForeignKey(d => d.TaskStateId)
+                    .HasConstraintName("FK_Coordination_TaskState");
 
                 entity.HasOne(d => d.Timebox)
                     .WithMany(p => p.Coordination)
@@ -1596,6 +1602,28 @@ namespace TMS.API.Models
                     .WithMany(p => p.SurchargeTypeUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_SurchargeType_UserUpdated");
+            });
+
+            modelBuilder.Entity<TaskState>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.TaskStateInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TaskState_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.TaskStateUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_TaskState_UserUpdated");
             });
 
             modelBuilder.Entity<Terminal>(entity =>

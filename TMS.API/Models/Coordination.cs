@@ -26,6 +26,7 @@ namespace TMS.API.Models
         public decimal? Distance { get; set; }
         public int? TimeboxId { get; set; }
         public int? FreightStateId { get; set; }
+        public int? TaskStateId { get; set; }
         public int? ContainerTypeId { get; set; }
         public string Note { get; set; }
         public bool Active { get; set; }
@@ -41,6 +42,7 @@ namespace TMS.API.Models
         public virtual FreightState FreightState { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
+        public virtual TaskState TaskState { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
         public virtual TruckType TruckType { get; set; }

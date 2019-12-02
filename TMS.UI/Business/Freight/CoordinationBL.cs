@@ -208,13 +208,19 @@ namespace TMS.UI.Business.Freight
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
-        public void EditCoordination(Coordination coordination)
+        public async Task EditCoordination(Coordination coordination)
         {
             var popup = new PopupEditor<Coordination>()
             {
                 Entity = coordination,
             };
             popup.Render();
+
+            if (coordination.TaskStateId == (int)TaskStateEnum.Unread)
+            {
+                coordination.TaskStateId = (int)TaskStateEnum.Read;
+                await Client<Coordination>.Instance.UpdateAsync(coordination);
+            }
         }
     }
 }

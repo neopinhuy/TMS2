@@ -93,6 +93,8 @@ namespace TMS.API.Models
             SurchargeTypeInsertedByNavigation = new HashSet<SurchargeType>();
             SurchargeTypeUpdatedByNavigation = new HashSet<SurchargeType>();
             SurchargeUpdatedByNavigation = new HashSet<Surcharge>();
+            TaskStateInsertedByNavigation = new HashSet<TaskState>();
+            TaskStateUpdatedByNavigation = new HashSet<TaskState>();
             TerminalUpdatedByNavigation = new HashSet<Terminal>();
             TicketStateInsertedByNavigation = new HashSet<TicketState>();
             TicketStateUpdatedByNavigation = new HashSet<TicketState>();
@@ -246,6 +248,8 @@ namespace TMS.API.Models
         public virtual ICollection<SurchargeType> SurchargeTypeInsertedByNavigation { get; set; }
         public virtual ICollection<SurchargeType> SurchargeTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Surcharge> SurchargeUpdatedByNavigation { get; set; }
+        public virtual ICollection<TaskState> TaskStateInsertedByNavigation { get; set; }
+        public virtual ICollection<TaskState> TaskStateUpdatedByNavigation { get; set; }
         public virtual ICollection<Terminal> TerminalUpdatedByNavigation { get; set; }
         public virtual ICollection<TicketState> TicketStateInsertedByNavigation { get; set; }
         public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }
