@@ -63,7 +63,7 @@ namespace TMS.UI.Business.Freight
                     var fromTerminal = terminals.TryGet(order.FromId ?? 0);
                     var toTerminal = terminals.TryGet(order.ToId ?? 0);
                     var code = string.Format("SO{0:000000}", order.Id);
-                    var key = $"{code} from {fromTerminal.ShortName} - to {toTerminal.ShortName}";
+                    var key = $"{code} from {fromTerminal?.ShortName ?? "N/A"} - to {toTerminal?.ShortName ?? "N/A"}";
                     if (x.Orders.Count > 1)
                     {
                         key += ",...";
