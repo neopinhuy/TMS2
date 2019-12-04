@@ -12,7 +12,7 @@ namespace TMS.UI.Business.Freight
     {
         public DriverBL()
         {
-            Title = "Driver";
+            Title = "Transit";
             Name = "Driver tasks";
         }
     }

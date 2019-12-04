@@ -210,20 +210,29 @@ td {
     display: flex;
     flex-flow: row nowrap;
 
-    &.group-table {
-        tr td:nth-child(2) {
-            padding-left: 40px;
+    .button {
+        height: 22px;
+        margin-top: 1px;
+        span {
+            transform: translateY(-1px);
         }
+    }
 
-        .group-row {
-            td {
-                text-align: left;
+    &.group-table {
+        .frozen {
+            tr td:nth-child(2) {
+                padding-left: 3rem;
             }
-            td:nth-child(2) {
-                padding-left:5px;
-                span {
-                    margin-right: 5px;
-                    cursor: pointer;
+            .group-row {
+                td {
+                    text-align: left;
+                }
+                td:nth-child(2) {
+                    padding-left: 5px;
+                    span {
+                        margin-right: 5px;
+                        cursor: pointer;
+                    }
                 }
             }
         }

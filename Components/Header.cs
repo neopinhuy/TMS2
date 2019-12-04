@@ -30,7 +30,8 @@ namespace Components
         public string MinWidth { get; set; }
         public string MaxWidth { get; set; }
         public TextAlign? TextAlign { get; set; }
-        public Func<T, Task> EditEvent { get; set; }
-        public Func<T, Task> DeleteEvent { get; set; }
+        public Action<T> ButtonEvent { get; set; }
+        public string ButtonClass { get; set; }
+        public string ButtonIcon { get; set; }
     }
 }

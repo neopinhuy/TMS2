@@ -145,17 +145,15 @@ namespace Components
         {
             Headers.NewValue = Headers.Data
                 .OrderByDescending(x => x.Frozen).ThenBy(x => x.Order)
-                .GroupBy(x => x.GroupName)
-                .Select(x => x.OrderBy(header => header.Order))
-                .SelectMany(x => x).ToArray();
+                .ThenBy(x => x.GroupName).ToArray();
         }
 
         private async Task LoadMasterData()
         {
             var refEntities = Headers.Data.Where(x => x.Reference.HasAnyChar());
-            var dataTask = refEntities.Select(FormatDataSource)
-                .GroupBy(x => new { x.Reference, x.DataSourceOptimized })
-                .Select(x => x.First())
+            var dataTask = refEntities
+                .DistinctBy(x => x.Reference)
+                .Select(FormatDataSource)
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSourceOptimized));
 
             var refData = await Task.WhenAll(dataTask);
@@ -171,8 +169,8 @@ namespace Components
         {
             var formattedDataSource = header.DataSource.HasAnyChar()
                 ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
-            var entityIds = GetUnderlayingRowData().Select(x => (int?)x.GetComplexPropValue(header.FieldName))
-                .Distinct().Where(x => x != null);
+            var entityIds = Headers.Data.Where(x => x.Reference == header.Reference)
+                .SelectMany(GetEntityIds).Distinct().Where(x => x != null);
             var strIds = string.Join(",", entityIds);
             var filterIndex = formattedDataSource.IndexOf("?$filter");
             if (filterIndex == -1) filterIndex = formattedDataSource.IndexOf("$filter");
@@ -190,6 +188,12 @@ namespace Components
             return header;
         }
 
+        private EnumerableInstance<int?> GetEntityIds(Header<T> header)
+        {
+            return GetUnderlayingRowData()
+                .Select(x => (int?)x.GetComplexPropValue(header.FieldName));
+        }
+
         private void RenderTableHeader(List<Header<T>> headers)
         {
             bool hasGroup = headers.Any(x => !string.IsNullOrEmpty(x.GroupName));
@@ -205,7 +209,7 @@ namespace Components
                     return;
                 }
                 Html.Instance.Th.DataAttr("grid-id", header.Id.ToString()).Width(header.Width)
-                    .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}").Render();
+                    .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}");
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
                     Html.Instance.RowSpan(2);
@@ -215,7 +219,7 @@ namespace Components
                     Html.Instance.ClassName("header-group");
                 }
                 if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("fa fa-edit").End.Render();
-                if (header.EditEvent != null || header.DeleteEvent != null)
+                if (header.ButtonEvent != null)
                 {
                     Html.Instance.TextAlign(TextAlign.center).Icon("mif-folder-open").Margin(Direction.right, 0).End.Render();
                 }
@@ -245,7 +249,10 @@ namespace Components
                 {
                     if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                     {
-                        Html.Instance.Th.Span.Text(header.HeaderText).EndOf(ElementType.th);
+                        Html.Instance.Th
+                            .DataAttr("grid-id", header.Id.ToString()).Width(header.Width)
+                            .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}")
+                            .Span.Text(header.HeaderText).EndOf(ElementType.th);
                     }
                 });
             }
@@ -392,7 +399,11 @@ namespace Components
             var cell = new Section(ElementType.td) { Entity = rowSection.Entity };
             rowSection.AddChild(cell);
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
-            RenderCellButton(row, header);
+            if (header.ButtonEvent != null)
+            {
+                RenderCellButton(row, header);
+                return;
+            }
             if (string.IsNullOrEmpty(header.FieldName)) return;
             if (!header.Editable)
             {
@@ -405,21 +416,9 @@ namespace Components
 
         private static void RenderCellButton(T row, Header<T> header)
         {
-            if (header.EditEvent != null)
-            {
-                Html.Instance.Button.ClassName("button small warning")
-                    .Event(EventType.Click, async (data) =>
-                    {
-                        await header.EditEvent(data);
-                    }, row)
-                    .Span.ClassName("fa fa-edit").EndOf(ElementType.button);
-            }
-            if (header.DeleteEvent != null)
-            {
-                Html.Instance.Button.ClassName("button small secondary").Margin(Direction.left, 4)
-                    .AsyncEvent(EventType.Click, header.DeleteEvent, row)
-                    .Span.ClassName("fa fa-trash").EndOf(ElementType.button);
-            }
+            Html.Instance.Button.ClassName(header.ButtonClass)
+                .Event(EventType.Click, header.ButtonEvent, row)
+                .Span.ClassName(header.ButtonIcon).EndOf(ElementType.button);
         }
 
         private void RenderEditableCell(Header<T> header, Section cellSection)

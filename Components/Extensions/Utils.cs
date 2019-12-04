@@ -1,6 +1,7 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Components.Extensions
@@ -39,7 +40,8 @@ namespace Components.Extensions
         {
             try
             {
-                obj[eventName].As<Action>().Invoke(obj, arguments);
+                var action = obj[eventName] as Delegate;
+                action.Call(obj, arguments);
             }
             catch (Exception ex)
             {

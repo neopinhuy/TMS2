@@ -89,11 +89,7 @@ namespace Components
                 Html.Instance.DataAttr("dblclick", dblClick);
                 tableParams.RowDblClick = row =>
                 {
-                    var parent = Parent;
-                    while (parent != null && parent[dblClick] == null)
-                    {
-                        parent = parent.Parent;
-                    }
+                    var parent = FindEvent(dblClick);
                     parent.ExecuteEvent(dblClick, row, RowData, Header);
                 };
             }
@@ -124,8 +120,17 @@ namespace Components
                 Width = column.Width,
                 MinWidth = column.MinWidth,
                 MaxWidth = column.MaxWidth,
+                ButtonClass = column.ButtonClass,
+                ButtonIcon = column.ButtonIcon,
             };
-            var parsed = System.Enum.TryParse(column.TextAlign, out TextAlign textAlign);
+            if (column.ButtonEvent.HasAnyChar())
+            {
+                header.ButtonEvent = (row) => {
+                    var parent = FindEvent(column.ButtonEvent);
+                    parent.ExecuteEvent(column.ButtonEvent, row);
+                };
+            }
+            var parsed = Enum.TryParse(column.TextAlign, out TextAlign textAlign);
             if (parsed) header.TextAlign = textAlign;
             return header;
         }

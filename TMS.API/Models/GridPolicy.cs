@@ -24,8 +24,9 @@ namespace TMS.API.Models
         public string TextAlign { get; set; }
         public bool Frozen { get; set; }
         public bool Hidden { get; set; }
-        public string EditEvent { get; set; }
-        public string DeleteEvent { get; set; }
+        public string ButtonEvent { get; set; }
+        public string ButtonClass { get; set; }
+        public string ButtonIcon { get; set; }
         public int? Order { get; set; }
         public bool HasFilter { get; set; }
         public bool Editable { get; set; }

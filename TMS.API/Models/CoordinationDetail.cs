@@ -10,9 +10,14 @@ namespace TMS.API.Models
         public int? DriverId { get; set; }
         public int? ContainerId { get; set; }
         public int? CoordinationId { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EstimatedEndDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public int? PackageId { get; set; }
         public int? FreightStateId { get; set; }
+        public string Note { get; set; }
         public bool Active { get; set; }
-        public DateTime InsertedDate { get; set; }
+        public DateTime? InsertedDate { get; set; }
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
@@ -21,6 +26,7 @@ namespace TMS.API.Models
         public virtual Coordination Coordination { get; set; }
         public virtual User Driver { get; set; }
         public virtual FreightState FreightState { get; set; }
+        public virtual OrderDetail Package { get; set; }
         public virtual Truck Truck { get; set; }
     }
 }

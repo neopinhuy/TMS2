@@ -453,6 +453,11 @@ namespace TMS.API.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_UserInserted");
 
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.Coordination)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_Coordination_Order");
+
                 entity.HasOne(d => d.TaskState)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.TaskStateId)
@@ -481,6 +486,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<CoordinationDetail>(entity =>
             {
+                entity.Property(e => e.Note).HasMaxLength(2000);
+
                 entity.HasOne(d => d.Container)
                     .WithMany(p => p.CoordinationDetail)
                     .HasForeignKey(d => d.ContainerId)
@@ -500,6 +507,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.CoordinationDetail)
                     .HasForeignKey(d => d.FreightStateId)
                     .HasConstraintName("FK_CoordinationDetail_FreightState");
+
+                entity.HasOne(d => d.Package)
+                    .WithMany(p => p.CoordinationDetail)
+                    .HasForeignKey(d => d.PackageId)
+                    .HasConstraintName("FK_CoordinationDetail_OrderDetail");
 
                 entity.HasOne(d => d.Truck)
                     .WithMany(p => p.CoordinationDetail)
@@ -847,13 +859,13 @@ namespace TMS.API.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DeleteEvent)
+                entity.Property(e => e.ButtonClass)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Description).HasMaxLength(150);
 
-                entity.Property(e => e.EditEvent)
+                entity.Property(e => e.ButtonEvent)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

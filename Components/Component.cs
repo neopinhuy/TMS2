@@ -142,5 +142,16 @@ namespace Components
         {
             RootHtmlElement.Remove();
         }
+
+        protected Component FindEvent(string eventName)
+        {
+            var parent = Parent;
+            while (parent != null && parent[eventName] == null)
+            {
+                parent = parent.Parent;
+            }
+
+            return parent;
+        }
     }
 }

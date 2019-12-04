@@ -210,6 +210,7 @@ namespace TMS.UI.Business.Freight
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public async Task EditCoordination(Coordination coordination)
         {
+            coordination.OrderComposition = null;
             var popup = new PopupEditor<Coordination>()
             {
                 Entity = coordination,
