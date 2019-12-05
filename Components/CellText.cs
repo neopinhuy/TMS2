@@ -54,7 +54,8 @@ namespace Components
 
         private string GetCellText(Header<object> header, object cellData, object row)
         {
-            if (cellData == null) return string.Empty;
+            if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
+            else if (cellData == null) return string.Empty;
             else if (header.FieldName == Id && (int)cellData <= 0) return string.Empty;
             else if (cellData is DateTime)
             {
@@ -76,7 +77,6 @@ namespace Components
                 }
             }
             else if (header.FormatCell.HasAnyChar()) return string.Format(header.FormatCell, cellData);
-            else if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
             else return cellData.ToString();
         }
 

@@ -32,7 +32,7 @@ namespace Components.Forms
             AddChild(popup);
         }
 
-        public virtual async Task Save()
+        public virtual async Task<bool> Save(bool customeMessage = false)
         {
             var client = new Client<T>();
             if (Entity != null && Entity[Id].As<int>() == 0)
@@ -43,10 +43,12 @@ namespace Components.Forms
                 if (data != null)
                 {
                     Entity[Id] = data[Id];
-                    Toast.Success($"Create {typeof(T).Name} succeeded");
+                    if (!customeMessage)
+                        Toast.Success($"Create {typeof(T).Name} succeeded");
                     RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
+                    return true;
                 }
-                else
+                else if (!customeMessage)
                 {
                     Toast.Warning($"Create {typeof(T).Name} failed");
                 }
@@ -58,16 +60,19 @@ namespace Components.Forms
                 var data = await client.UpdateAsync((T)Entity);
                 if (data != null)
                 {
-                    Toast.Success($"Update {typeof(T).Name} succeeded");
+                    if (!customeMessage)
+                        Toast.Success($"Update {typeof(T).Name} succeeded");
                     var grids = RootComponent.FindComponent<GridView>();
                     grids.ForEach(x => x.ReloadData());
+                    return true;
                 }
-                else
+                else if (!customeMessage)
                 {
                     Toast.Warning($"Update {typeof(T).Name} failed");
                 }
                 AfterSaved?.Invoke(data != null);
             }
+            return false;
         }
 
         private void SetDeafaultId()

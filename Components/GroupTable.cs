@@ -17,25 +17,43 @@ namespace Components
 
     public class GroupTable : Table<object>
     {
+        private const string groupKey = "__groupkey__";
         public GroupTable(TableParam<object> tableParam) : base(tableParam)
         {
         }
 
         public override void Render()
         {
+            BuildGroupRowData();
             base.Render();
             Html.Take(RootHtmlElement).ClassName("group-table").End.Render();
         }
 
-        protected override List<object> GetUnderlayingRowData()
+        private void BuildGroupRowData()
+        {
+            if (_tableParam.GroupBy.IsNullOrEmpty()) return;
+            var keys = _tableParam.GroupBy.Split(",");
+            RowData.Data.ForEach(x =>
+            {
+                x[groupKey] = string.Join(" ", keys.Select(key => x.GetComplexPropValue(key)?.ToString()));
+            });
+            RowData.NewValue = RowData.Data.GroupBy(x => (string)x[groupKey])
+                .Select(x => new GroupRowData
+                {
+                    Key = x.Key,
+                    Children = x.ToList()
+                }).Cast<object>().ToArray();
+        }
+
+        protected override object[] GetUnderlayingRowData()
         {
             try
             {
-                return RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToList();
+                return RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToArray();
             }
             catch (InvalidCastException)
             {
-                return RowData.Data.ToList();
+                return RowData.Data;
             }
         }
 
@@ -48,7 +66,7 @@ namespace Components
             var columnExpanded = headers.Any(x => x.StatusBar) ? headers.Count - 1 : headers.Count;
             if (tbody.ParentElement.HasClass("frozen"))
             {
-                var groupText = Utils.FormatWith(_tableParam.GroupFormat, row);
+                var groupText = Utils.FormatWith(_tableParam.GroupFormat, groupRow.Children.FirstOrDefault());
                 Html.Instance.TData.ClassName("status-cell").Icon("mif-pencil").EndOf(ElementType.td)
                     .TData.ColSpan(columnExpanded)
                         .Icon("fa fa-chevron-right").Event(EventType.Click, ToggleGroupRow).End

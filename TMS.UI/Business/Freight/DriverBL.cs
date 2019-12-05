@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common.Enums;
+using Common.Extensions;
 using Components;
 using Components.Forms;
 using System;
@@ -18,15 +19,16 @@ namespace TMS.UI.Business.Freight
 
         public Task SaveCoorDetail()
         {
-            var grid = FindComponent<GridView>("Surcharge");
+            var grid = FindComponent<GridView>(nameof(CoordinationDetail.Surcharge));
             if (grid is null) return null;
-            var coorDetail = grid.Parent.Entity as CoordinationDetail;
+            var popup = grid.Parent.As<PopupEditor<CoordinationDetail>>();
+            var coorDetail = popup.Entity as CoordinationDetail;
             coorDetail.Surcharge.ForEach(x => {
                 if (x.Id < 0) x.Id = 0;
                 x.OrderId = coorDetail.Coordination.OrderId;
                 x.OrderDetailId = coorDetail.PackageId;
             });
-            return grid.Parent.As<PopupEditor<CoordinationDetail>>().Save();
+            return popup.Save();
         }
 
         public void Transit(CoordinationDetail coordinationDetail)
@@ -38,6 +40,23 @@ namespace TMS.UI.Business.Freight
                 Title = "Prepare for Transit"
             };
             AddChild(popup);
+        }
+        
+        public async Task SubmitToTransit()
+        {
+            var popup = FindComponent<PopupEditor<CoordinationDetail>>().FirstOrDefault();
+            if (popup is null) return;
+            var entity = popup.Entity as CoordinationDetail;
+            entity.FreightStateId = (int)FreightStateEnum.Moving;
+            var res = await popup.Save(true);
+            if (res)
+            {
+                Toast.Success("Submit succeeded!");
+            }
+            else
+            {
+                Toast.Success("Submit failed!");
+            }
         }
     }
 }

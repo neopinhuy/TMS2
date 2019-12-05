@@ -160,9 +160,9 @@ namespace Components
             _refData = refData.Select(x => x?.Value);
         }
 
-        protected virtual List<object> GetUnderlayingRowData()
+        protected virtual object[] GetUnderlayingRowData()
         {
-            return RowData.Data.Cast<object>().ToList();
+            return RowData.Data.Cast<object>().ToArray();
         }
 
         private Header<T> FormatDataSource(Header<T> header)

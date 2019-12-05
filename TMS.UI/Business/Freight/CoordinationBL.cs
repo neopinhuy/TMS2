@@ -68,6 +68,7 @@ namespace TMS.UI.Business.Freight
                     {
                         key += ",...";
                     }
+                    x.Value.ForEach(row => row["__grouptext__"] = key);
                     return new GroupRowData { Key = key, Children = x.Value };
                 });
             grid.RowData.Data = tree.Cast<object>().ToArray();
