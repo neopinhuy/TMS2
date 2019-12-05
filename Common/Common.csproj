@@ -263,6 +263,7 @@
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\InvalidOperationException.cs" />
+    <Compile Include="Extensions\OdataExtensions.cs" />
     <Compile Include="Extensions\OrderDetailExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtension.cs" />

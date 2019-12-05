@@ -851,6 +851,18 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<GridPolicy>(entity =>
             {
+                entity.Property(e => e.ButtonClass)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ButtonEvent)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ButtonIcon)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Component)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -859,26 +871,18 @@ namespace TMS.API.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ButtonClass)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Description).HasMaxLength(150);
-
-                entity.Property(e => e.ButtonEvent)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
 
                 entity.Property(e => e.FieldName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FormatCell)
-                    .HasMaxLength(100)
+                    .HasMaxLength(150)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FormatRow)
-                    .HasMaxLength(100)
+                    .HasMaxLength(150)
                     .IsUnicode(false);
 
                 entity.Property(e => e.GroupName).HasMaxLength(50);
@@ -1550,6 +1554,11 @@ namespace TMS.API.Models
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
+
+                entity.HasOne(d => d.CoordinationDetail)
+                    .WithMany(p => p.Surcharge)
+                    .HasForeignKey(d => d.CoordinationDetailId)
+                    .HasConstraintName("FK_Surcharge_CoordinationDetail");
 
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Surcharge)

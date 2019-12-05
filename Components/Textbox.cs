@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Components.Extensions;
 using MVVM;
 using System;
 using TMS.API.Models;
@@ -16,7 +17,8 @@ namespace Components
 
         public override void Render()
         {
-            var value = new Observable<string>(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString());
+            var text = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
+            var value = new Observable<string>(text);
             if (_ui.FieldName.HasAnyChar())
             {
                 value.Subscribe(arg =>

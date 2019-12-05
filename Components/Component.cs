@@ -95,7 +95,7 @@ namespace Components
             return null;
         }
 
-        public IEnumerable<T> FindComponent<T>() where T : class
+        public IEnumerable<T> FindComponent<T>() where T : Component
         {
             var result = new HashSet<T>();
             var type = typeof(T);
@@ -107,7 +107,7 @@ namespace Components
                 var res = child.FindComponent<T>();
                 res.ForEach(x => result.Add(x));
             }
-            return result;
+            return result.DistinctBy(x => x.Name);
         }
 
         public T FindComponent<T>(string name) where T : class

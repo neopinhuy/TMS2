@@ -87,23 +87,10 @@ namespace Components
             }
             Task.Run(async () =>
             {
-                var ids = new List<int> { _value.Data.Value };
-                var strIds = string.Join(",", ids);
+                var ids = new List<int?> { _value.Data };
                 var formattedDataSource = FormatDataSource();
-                var filterIndex = formattedDataSource.IndexOf("?$filter");
-                if (filterIndex == -1)
-                    filterIndex = formattedDataSource.IndexOf("$filter");
-                var endFilterIndex = formattedDataSource.Substring(filterIndex).IndexOf("&");
-                endFilterIndex = endFilterIndex == -1 ? formattedDataSource.Length : endFilterIndex + filterIndex;
-
-                var noFilterQuery = formattedDataSource.Substring(0, filterIndex) +
-                    formattedDataSource.Substring(endFilterIndex);
-                var query = !noFilterQuery.Contains("?$")
-                    ? noFilterQuery + "?"
-                    : noFilterQuery;
-                query += noFilterQuery.Contains("$filter")
-                    ? $" and Id in ({strIds})"
-                    : $"$filter=Id in ({strIds})";
+                var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
+                var query = OdataExtensions.FilterByIds(noFilterQuery, ids);
                 var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
                 Matched = source?.Value?.FirstOrDefault();
                 SetMatchedValue();

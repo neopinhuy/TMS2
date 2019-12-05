@@ -8,6 +8,7 @@ namespace TMS.API.Models
         public int Id { get; set; }
         public int OrderId { get; set; }
         public int? OrderDetailId { get; set; }
+        public int? CoordinationDetailId { get; set; }
         public int? SurchargeTypeId { get; set; }
         public int? PriceTypeId { get; set; }
         public decimal? UnitPrice { get; set; }
@@ -22,6 +23,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual CoordinationDetail CoordinationDetail { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }

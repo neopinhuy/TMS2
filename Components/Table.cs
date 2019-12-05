@@ -167,24 +167,12 @@ namespace Components
 
         private Header<T> FormatDataSource(Header<T> header)
         {
-            var formattedDataSource = header.DataSource.HasAnyChar()
-                ? Utils.FormatWith(header.DataSource, Entity) : string.Empty;
-            var entityIds = Headers.Data.Where(x => x.Reference == header.Reference)
-                .SelectMany(GetEntityIds).Distinct().Where(x => x != null);
-            var strIds = string.Join(",", entityIds);
-            var filterIndex = formattedDataSource.IndexOf("?$filter");
-            if (filterIndex == -1) filterIndex = formattedDataSource.IndexOf("$filter");
-            var endFilterIndex = formattedDataSource.Substring(filterIndex).IndexOf("&");
-            endFilterIndex = endFilterIndex == -1 ? formattedDataSource.Length : endFilterIndex + filterIndex;
-
-            var noFilterQuery = formattedDataSource.Substring(0, filterIndex) +
-                formattedDataSource.Substring(endFilterIndex);
-            header.DataSourceOptimized = !noFilterQuery.Contains("?$")
-                ? noFilterQuery + "?"
-                : noFilterQuery;
-            header.DataSourceOptimized += noFilterQuery.Contains("$filter")
-                ? $" and Id in ({strIds})"
-                : $"$filter=Id in ({strIds})";
+            var formattedDataSource = Utils.FormatWith(header.DataSource, Entity);
+            var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
+            var entityIds = Headers.Data
+                .Where(x => x.Reference == header.Reference).SelectMany(GetEntityIds);
+            var filterByIds = OdataExtensions.FilterByIds(noFilterQuery, entityIds);
+            header.DataSourceOptimized = filterByIds;
             return header;
         }
 

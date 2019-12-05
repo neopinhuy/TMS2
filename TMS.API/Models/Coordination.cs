@@ -13,7 +13,7 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public int? OrderId { get; set; }
+        public int OrderId { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
         public int? EmptyContFromId { get; set; }

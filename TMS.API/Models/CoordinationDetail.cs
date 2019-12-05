@@ -5,6 +5,11 @@ namespace TMS.API.Models
 {
     public partial class CoordinationDetail
     {
+        public CoordinationDetail()
+        {
+            Surcharge = new HashSet<Surcharge>();
+        }
+
         public int Id { get; set; }
         public int? TruckId { get; set; }
         public int? DriverId { get; set; }
@@ -28,5 +33,6 @@ namespace TMS.API.Models
         public virtual FreightState FreightState { get; set; }
         public virtual OrderDetail Package { get; set; }
         public virtual Truck Truck { get; set; }
+        public virtual ICollection<Surcharge> Surcharge { get; set; }
     }
 }
