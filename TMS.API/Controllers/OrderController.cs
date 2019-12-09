@@ -71,7 +71,6 @@ namespace TMS.API.Controllers
                 where orderDetail.IsContainer && vendor.IsSelf
                 select new Coordination
                 {
-                    OrderId = orderDetail.OrderId,
                     ContainerTypeId = orderDetail.ContainerTypeId,
                     EmptyContFromId = orderDetail.EmptyContFromId,
                     EmptyContToId = orderDetail.EmptyContToId,

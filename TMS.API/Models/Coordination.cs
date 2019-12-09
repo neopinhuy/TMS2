@@ -13,7 +13,6 @@ namespace TMS.API.Models
         }
 
         public int Id { get; set; }
-        public int OrderId { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
         public int? EmptyContFromId { get; set; }
@@ -43,7 +42,6 @@ namespace TMS.API.Models
         public virtual FreightState FreightState { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual Order Order { get; set; }
         public virtual TaskState TaskState { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }

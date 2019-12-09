@@ -32,7 +32,7 @@ namespace Components.Forms
             AddChild(popup);
         }
 
-        public virtual async Task<bool> Save(bool customeMessage = false)
+        public virtual async Task<bool> Save(bool defaultMessage = false)
         {
             var client = new Client<T>();
             if (Entity != null && Entity[Id].As<int>() == 0)
@@ -40,39 +40,33 @@ namespace Components.Forms
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 SetDeafaultId();
                 var data = await client.CreateAsync((T)Entity);
-                if (data != null)
-                {
-                    Entity[Id] = data[Id];
-                    if (!customeMessage)
-                        Toast.Success($"Create {typeof(T).Name} succeeded");
-                    RootComponent.FindComponent<GridView>().ForEach(x => x.ReloadData());
-                    return true;
-                }
-                else if (!customeMessage)
-                {
-                    Toast.Warning($"Create {typeof(T).Name} failed");
-                }
+                ReloadAndShowMessage(defaultMessage, data, false);
                 AfterSaved?.Invoke(data != null);
             }
             else
             {
                 SetDeafaultId();
                 var data = await client.UpdateAsync((T)Entity);
-                if (data != null)
-                {
-                    if (!customeMessage)
-                        Toast.Success($"Update {typeof(T).Name} succeeded");
-                    var grids = RootComponent.FindComponent<GridView>();
-                    grids.ForEach(x => x.ReloadData());
-                    return true;
-                }
-                else if (!customeMessage)
-                {
-                    Toast.Warning($"Update {typeof(T).Name} failed");
-                }
+                ReloadAndShowMessage(defaultMessage, data, false);
                 AfterSaved?.Invoke(data != null);
             }
             return false;
+        }
+
+        private void ReloadAndShowMessage(bool defaultMessage, T data, bool updating)
+        {
+            var prefix = updating ? "Creating" : "Updating";
+            if (data != null)
+            {
+                if (defaultMessage)
+                    Toast.Success($"{prefix} succeeded");
+                var grids = RootComponent.FindComponent<GridView>();
+                grids.ForEach(x => x.ReloadData());
+            }
+            else if (defaultMessage)
+            {
+                Toast.Warning($"{prefix} failed");
+            }
         }
 
         private void SetDeafaultId()

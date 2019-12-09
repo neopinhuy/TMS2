@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Order()
         {
-            Coordination = new HashSet<Coordination>();
             OrderDetail = new HashSet<OrderDetail>();
             Surcharge = new HashSet<Surcharge>();
         }
@@ -51,7 +50,6 @@ namespace TMS.API.Models
         public virtual FreightState FreightState { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
     }

@@ -25,7 +25,6 @@ namespace TMS.UI.Business.Freight
             var coorDetail = popup.Entity as CoordinationDetail;
             coorDetail.Surcharge.ForEach(x => {
                 if (x.Id < 0) x.Id = 0;
-                x.OrderId = coorDetail.Coordination.OrderId;
                 x.OrderDetailId = coorDetail.PackageId;
             });
             return popup.Save();
