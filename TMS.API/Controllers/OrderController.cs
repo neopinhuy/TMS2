@@ -1,5 +1,4 @@
 ﻿using Common.Enums;
-using Common.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;

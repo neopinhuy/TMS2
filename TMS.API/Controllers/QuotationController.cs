@@ -26,16 +26,7 @@ namespace TMS.API.Controllers
                 where customer.Id == customerId
                 select quo;
 
-            var appliedQuery = options.ApplyTo(query) as IQueryable<Quotation>;
-            var result = await appliedQuery.ToListAsync();
-            return Ok(new OdataResult<Quotation>
-            {
-                Value = result,
-                Odata = new Odata
-                {
-                    Count = options.Count?.Value == true ? query.Count() : 0
-                }
-            });
+            return await ApplyCustomeQuery(options, query);
         }
     }
 }

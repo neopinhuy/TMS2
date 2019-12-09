@@ -59,15 +59,13 @@ namespace TMS.UI.Business.Freight
                 .Where(x => x.Orders.Count > 0)
                 .Select(x =>
                 {
-                    var order = x.Orders.First();
-                    var fromTerminal = terminals.TryGet(order.FromId ?? 0);
-                    var toTerminal = terminals.TryGet(order.ToId ?? 0);
-                    var code = string.Format("SO{0:000000}", order.Id);
-                    var key = $"{code} from {fromTerminal?.ShortName ?? "N/A"} - to {toTerminal?.ShortName ?? "N/A"}";
-                    if (x.Orders.Count > 1)
+                    var code = x.Orders.Select(order =>
                     {
-                        key += ",...";
-                    }
+                        var fromTerminal = terminals.TryGet(order.FromId ?? 0);
+                        var toTerminal = terminals.TryGet(order.ToId ?? 0);
+                        return string.Format("SO{0:000000} {1} - {2}", order.Id, fromTerminal?.ShortName, toTerminal?.ShortName);
+                    });
+                    var key = string.Join(", ", code);
                     x.Value.ForEach(row => row["__grouptext__"] = key);
                     return new GroupRowData { Key = key, Children = x.Value };
                 });
@@ -90,14 +88,6 @@ namespace TMS.UI.Business.Freight
             {
                 Toast.Warning("Please select at least one order to composite.");
                 return;
-            }
-            for (int i = 0; i < selected.Count - 1; i++)
-            {
-                if (selected.Count > 1 && !CanComposite(selected[i], selected[i + 1]))
-                {
-                    Toast.Warning("Cannot composite selected order because there are miss matched condition!");
-                    return;
-                }
             }
             var orderDetail = selected.First();
 
@@ -132,12 +122,6 @@ namespace TMS.UI.Business.Freight
                 Toast.Success("Create order composition succeeded!");
                 FindComponent<GridView>().ForEach(x => x.ReloadData());
             }
-        }
-
-        private bool CanComposite(OrderDetail first, OrderDetail second)
-        {
-            return first.FromId == second.FromId && first.ToId == second.ToId
-                && first.TimeboxId == second.TimeboxId;
         }
 
         public async Task EditSaleOrder(OrderDetail orderDetail)

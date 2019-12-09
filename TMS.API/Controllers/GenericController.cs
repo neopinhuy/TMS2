@@ -48,6 +48,26 @@ namespace TMS.API.Controllers
             return Ok(results);
         }
 
+        protected async Task<IActionResult> ApplyCustomeQuery(ODataQueryOptions<T> options, IQueryable<T> query)
+        {
+            options.Validate(new ODataValidationSettings()
+            {
+                AllowedQueryOptions = AllowedQueryOptions.All,
+                MaxExpansionDepth = 3
+            });
+
+            var appliedQuery = options.ApplyTo(query) as IQueryable<T>;
+            var result = await appliedQuery.ToListAsync();
+            return Ok(new OdataResult<T>
+            {
+                Value = result,
+                Odata = new Odata
+                {
+                    Count = options.Count?.Value == true ? query.Count() : 0
+                }
+            });
+        }
+
         [HttpPost("api/[Controller]")]
         public virtual async Task<ActionResult<T>> CreateAsync([FromBody]T entity)
         {

@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Common.Enums;
+using Common.Extensions;
+using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Nest;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Nest;
-using TMS.API.Models;
 using TMS.API.Extensions;
-using System;
-using Common.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Common.Enums;
+using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
@@ -36,6 +36,18 @@ namespace TMS.API.Controllers
             await db.SaveChangesAsync();
             db.RemoveEmptyCoordination();
             return await base.Delete(ids);
+        }
+
+        [HttpGet("api/[Controller]/FindByCoorId/{coorId}")]
+        public async Task<IActionResult> FindByCoorId(int coorId, ODataQueryOptions<OrderDetail> options)
+        {
+            var query = 
+                from com in db.OrderComposition
+                join od in db.OrderDetail on com.OrderDetailId equals od.Id
+                where com.CoordinationId == coorId
+                select od;
+
+            return await ApplyCustomeQuery(options, query);
         }
     }
 }
