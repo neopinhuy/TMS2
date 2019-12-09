@@ -153,7 +153,7 @@ namespace Components.Forms
                 Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("group_" + group.Id)
                     .ClassName("group").ClassName(group.ClassName)
                     .ClassName(group.IsTab ? "tab" : string.Empty).Display(!group.Hidden)
-                    .Width(group.Width).Style(group.Style ?? string.Empty);
+                    .Style(group.Style ?? string.Empty).Width(group.Width);
                 if (group.InverseParent != null && group.InverseParent.Any())
                 {
                     RenderGroup(group.InverseParent.ToList());
@@ -178,6 +178,9 @@ namespace Components.Forms
                         .Style("padding-left: 0;").Render();
                 Html.Instance.DataAttr("com-id", ui.Id.ToString());
                 if (ui.Style.HasAnyChar()) Html.Instance.Style(ui.Style);
+                if (ui.Width.HasAnyChar()) Html.Instance.Width(ui.Width);
+                if (ui.MinWidth.HasAnyChar()) Html.Instance.Style($"min-width: {ui.MinWidth}");
+                if (ui.MaxWidth.HasAnyChar()) Html.Instance.Style($"max-width: {ui.MaxWidth}");
                 var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
                 AddChild(childComponent);
                 childComponent.Name = ui.FieldName;

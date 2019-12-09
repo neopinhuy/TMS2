@@ -666,6 +666,26 @@ namespace MVVM
             return this;
         }
 
+        public Html ForEach<T>(IEnumerable<T> list, Action<T> renderer)
+        {
+            if (list == null)
+                throw new ArgumentNullException(nameof(list));
+            var element = Context;
+
+            var length = list.Count();
+            var index = -1;
+            var enumerator = list.GetEnumerator();
+
+            while (++index < length)
+            {
+                Context = element;
+                enumerator.MoveNext();
+                renderer.Call(element, enumerator.Current, index);
+            }
+            Context = element;
+            return this;
+        }
+
         public Html ForEach<T>(ObservableArray<T> observableArray, Action<T, int> renderer)
         {
             if (observableArray == null)

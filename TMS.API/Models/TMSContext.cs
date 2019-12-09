@@ -456,6 +456,7 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.Coordination)
                     .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Coordination_Order");
 
                 entity.HasOne(d => d.TaskState)

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TMS.API.Controllers
 {
-    
+    [Route("api/[Controller]")]
     public class FileController : Controller
     {
         private readonly IHostingEnvironment _host;

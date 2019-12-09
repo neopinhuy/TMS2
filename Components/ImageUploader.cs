@@ -2,6 +2,8 @@
 using Common.Clients;
 using Common.Extensions;
 using MVVM;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using ElementType = MVVM.ElementType;
@@ -13,7 +15,7 @@ namespace Components
         private Observable<string> _path;
         private readonly UserInterface _ui;
         private const string _defaultImg = "image/truck.webp";
-        private HTMLImageElement _img;
+        private const string pathSeparator = "    ";
         private HTMLFormElement _form;
         public ImageUploader(UserInterface ui)
         {
@@ -22,20 +24,29 @@ namespace Components
 
         public override void Render()
         {
-            _path = new Observable<string>(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString());
+            var isMultiple = _ui.Precision == 0;
+            var strPaths = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
+            var paths = strPaths?.Split(pathSeparator);
+            _path = new Observable<string>(strPaths);
             _path.Subscribe(arg => { if (Entity != null) Entity[_ui.FieldName] = arg.NewData; });
 
-            Html.Take(RootHtmlElement).ClassName("uploader").HeightRem(_ui.Row ?? 12).ColSpan(2)
-                .Label.Attr("for", $"id_{GetHashCode()}")
-                .Img.ClassName("thumb").Src(_path.Data ?? _ui.Label ?? _defaultImg).Render();
-
-            _img = Html.Context as HTMLImageElement;
-            Html.Instance.End
+            Html.Take(RootHtmlElement).ClassName("uploader").ColSpan(2)
+                .Label.Attr("for", $"id_{GetHashCode()}");
+            InteractiveElement = Html.Context;
+            Html.Instance.Img.ClassName("thumb")
+                    .Style(_ui.Style)
+                    .Src(paths.HasElement() ? paths.ElementAt(0) : _ui.Label ?? _defaultImg)
+                .EndOf(ElementType.img);
+            if (paths.HasElement() && paths.Length > 1) RenderImages(paths.Skip(1));
+            Html.Instance
                 .Img.ClassName("icon").Src("image/icon_camera.png").EndOf(ElementType.label)
                 .Form.Attr("method", "POST").Attr("enctype", "multipart/form-data").Render();
             _form = Html.Context as HTMLFormElement;
             Html.Instance.Input.Id($"id_{GetHashCode()}").Attr("name", "files").Type("file");
-            InteractiveElement = Html.Context;
+            if (isMultiple)
+            {
+                Html.Instance.Attr("multiple", "multiple");
+            }
             Html.Instance.AsyncEvent(EventType.Change, RenderImage).End.Render();
             _path.Subscribe(arg =>
             {
@@ -46,24 +57,40 @@ namespace Components
             });
         }
 
+        private void RenderImages(IEnumerable<string> paths)
+        {
+            if (paths.Nothing()) return;
+            Html.Instance.ForEach(paths, RenderImage);
+        }
+
+        private void RenderImage(string path)
+        {
+            Html.Take(InteractiveElement)
+                .Img.ClassName("thumb")
+                .Style(_ui.Style)
+                .Src(path ?? _ui.Label ?? _defaultImg).Render();
+        }
+
         private async Task RenderImage(Event e)
         {
             var files = e.Target["files"] as FileList;
-            var file = files[0];
-            if (file == null) return;
-            var reader = new FileReader();
-            reader.AddEventListener(EventType.Load, (f) =>
+            if (files.Nothing()) return;
+            files.ForEach(file =>
             {
-                _img.Src = f.Target["result"]?.ToString();
+                var reader = new FileReader();
+                reader.AddEventListener(EventType.Load, (f) =>
+                {
+                    RenderImage(f.Target["result"]?.ToString());
+                });
+                reader.ReadAsDataURL(file);
             });
-            reader.ReadAsDataURL(file);
 
             // Upload to the server
             var form = new FormData(_form);
             var xhr = new XMLHttpRequest();
-            var client = new Client<File>();
+            var client = new Client("file");
             var path = await client.PostFilesAsync(form);
-            _path.Data = path[0];
+            _path.Data = string.Join(pathSeparator, path);
         }
     }
 }

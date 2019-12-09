@@ -24,12 +24,13 @@ namespace Components
 
         public override void Render()
         {
-            BuildGroupRowData();
             base.Render();
             Html.Take(RootHtmlElement).ClassName("group-table").End.Render();
+            BuildGroupRowData(null);
+            RowData.Subscribe(BuildGroupRowData);
         }
 
-        private void BuildGroupRowData()
+        private void BuildGroupRowData(ObservableArgs arg)
         {
             if (_tableParam.GroupBy.IsNullOrEmpty()) return;
             var keys = _tableParam.GroupBy.Split(",");
