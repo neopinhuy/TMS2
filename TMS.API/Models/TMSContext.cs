@@ -489,6 +489,10 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Note).HasMaxLength(2000);
 
+                entity.Property(e => e.PackageImages).IsUnicode(false);
+
+                entity.Property(e => e.SurchargeImages).IsUnicode(false);
+
                 entity.HasOne(d => d.Container)
                     .WithMany(p => p.CoordinationDetail)
                     .HasForeignKey(d => d.ContainerId)

@@ -22,6 +22,7 @@ namespace TMS.API.Models
         public int? FreightStateId { get; set; }
         public string Note { get; set; }
         public string SurchargeImages { get; set; }
+        public string PackageImages { get; set; }
         public bool Active { get; set; }
         public DateTime? InsertedDate { get; set; }
         public int InsertedBy { get; set; }
