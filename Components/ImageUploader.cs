@@ -2,6 +2,7 @@
 using Common.Clients;
 using Common.Extensions;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,8 +15,10 @@ namespace Components
         private Observable<string> _path;
         private readonly UserInterface _ui;
         private const string _defaultImg = "image/truck.webp";
+        private const string _iconImg = "image/icon_camera.png";
         private const string pathSeparator = "    ";
         private HTMLFormElement _form;
+        private bool _isRemoving;
         public ImageUploader(UserInterface ui)
         {
             _ui = ui;
@@ -24,9 +27,6 @@ namespace Components
         public override void Render()
         {
             var strPaths = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
-            var paths = strPaths?.Split(pathSeparator);
-            RenderUploadForm();
-            RenderImagesAndIcon(paths);
             _path = new Observable<string>(strPaths);
             _path.Subscribe(arg =>
             {
@@ -35,10 +35,15 @@ namespace Components
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
+            var paths = strPaths?.Split(pathSeparator).ToList();
+            RenderUploadForm();
+            RenderImagesAndIcon(paths);
         }
 
-        private void RenderImagesAndIcon(IEnumerable<string> paths)
+        private void RenderImagesAndIcon(List<string> paths)
         {
+            var index = paths.HasElement() ? Array.IndexOf(paths.ToArray(), _iconImg) : -1;
+            if (index > 0) paths.RemoveAt(index);
             Html.Take(InteractiveElement).Clear();
             if (paths.HasElement()) paths.ForEach(RenderImage);
             else RenderImage(string.Empty);
@@ -57,7 +62,10 @@ namespace Components
             {
                 Html.Instance.Attr("multiple", "multiple");
             }
-            Html.Instance.End.Label.Attr("for", $"id_{GetHashCode()}");
+            Html.Instance.End.Label.Attr("for", $"id_{GetHashCode()}").Event(EventType.Click, (e) =>
+            {
+                if (_isRemoving) e.PreventDefault();
+            });
             InteractiveElement = Html.Context;
             _form = InteractiveElement.ParentElement as HTMLFormElement;
             RenderIcon();
@@ -65,19 +73,34 @@ namespace Components
 
         private void RenderIcon()
         {
-            Html.Take(InteractiveElement).Img.ClassName("icon").Src("image/icon_camera.png").End.Render();
+            Html.Take(InteractiveElement).Img.ClassName("icon").Src(_iconImg).End.Render();
         }
 
         private void RenderImage(string path)
         {
             Html.Take(InteractiveElement)
-                .Img.ClassName("thumb")
-                .Style(_ui.Style)
-                .Src(path.HasAnyChar() ? path : _ui.Label ?? _defaultImg).Render();
+                .Div.ClassName("thumb-wrapper")
+                    .Icon("fa fa-times").AsyncEvent(EventType.Click, RemoveImage, path).End
+                    .Img.ClassName("thumb").Style(_ui.Style)
+                    .Src(path.HasAnyChar() ? path : _ui.Label ?? _defaultImg).Render();
+        }
+
+        private async Task RemoveImage(string removedPath)
+        {
+            _isRemoving = true;
+            var path = _path.Data.Replace(removedPath, string.Empty)
+                .Split(pathSeparator).Where(x => x.HasAnyChar()).Distinct().ToList();
+            RenderImagesAndIcon(path);
+            _path.Data = string.Join(pathSeparator, path);
         }
 
         private async Task UploadImages(Event e)
         {
+            if (_isRemoving)
+            {
+                _isRemoving = false;
+                return;
+            }
             var files = e.Target["files"] as FileList;
             if (files.Nothing()) return;
             

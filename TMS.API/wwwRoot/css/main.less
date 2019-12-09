@@ -639,18 +639,35 @@ td {
 .uploader {
     text-align: left !important;
     position: relative;
+
     input {
         visibility: hidden;
         position: absolute;
         top: 0;
     }
+
     img.icon {
         position: absolute;
         right: 15px;
         top: 4px;
     }
+
     label {
         cursor: pointer;
+
+        .thumb-wrapper {
+            float: left;
+            .fa.fa-times {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.01);
+                color: #fff;
+                font-size: 1.2rem;
+                width: 2rem;
+                height: 2rem;
+                background: linear-gradient(310deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.03));
+            }
+        }
+
         img.thumb {
             width: auto
         }
