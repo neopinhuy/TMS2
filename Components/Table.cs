@@ -179,7 +179,13 @@ namespace Components
         private EnumerableInstance<int?> GetEntityIds(Header<T> header)
         {
             return GetUnderlayingRowData()
-                .Select(x => (int?)x.GetComplexPropValue(header.FieldName));
+                .Select(x => {
+                    var val = x.GetComplexPropValue(header.FieldName)?.ToString();
+                    if (val.IsNullOrEmpty()) return null;
+                    var parsed = int.TryParse(val, out int res);
+                    return parsed ? res : (int?)null;
+                })
+                .Where(x => x != null);
         }
 
         private void RenderTableHeader(List<Header<T>> headers)

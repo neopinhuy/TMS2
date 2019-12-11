@@ -13,6 +13,10 @@ namespace TMS.API.Models
             ActionPolicyInsertedByNavigation = new HashSet<ActionPolicy>();
             ActionPolicyUpdatedByNavigation = new HashSet<ActionPolicy>();
             ActionUpdatedByNavigation = new HashSet<Action>();
+            BankBranchInsertedByNavigation = new HashSet<BankBranch>();
+            BankBranchUpdatedByNavigation = new HashSet<BankBranch>();
+            BankInsertedByNavigation = new HashSet<Bank>();
+            BankUpdatedByNavigation = new HashSet<Bank>();
             BranchInsertedByNavigation = new HashSet<Branch>();
             BranchTypeInsertedByNavigation = new HashSet<BranchType>();
             BranchTypeUpdatedByNavigation = new HashSet<BranchType>();
@@ -168,6 +172,10 @@ namespace TMS.API.Models
         public virtual ICollection<ActionPolicy> ActionPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<ActionPolicy> ActionPolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<Action> ActionUpdatedByNavigation { get; set; }
+        public virtual ICollection<BankBranch> BankBranchInsertedByNavigation { get; set; }
+        public virtual ICollection<BankBranch> BankBranchUpdatedByNavigation { get; set; }
+        public virtual ICollection<Bank> BankInsertedByNavigation { get; set; }
+        public virtual ICollection<Bank> BankUpdatedByNavigation { get; set; }
         public virtual ICollection<Branch> BranchInsertedByNavigation { get; set; }
         public virtual ICollection<BranchType> BranchTypeInsertedByNavigation { get; set; }
         public virtual ICollection<BranchType> BranchTypeUpdatedByNavigation { get; set; }

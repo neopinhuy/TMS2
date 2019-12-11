@@ -72,6 +72,8 @@ namespace TMS.API
             builder.EntitySet<Accessory>(nameof(Accessory));
             builder.EntitySet<Models.Action>(nameof(Models.Action));
             builder.EntitySet<ActionPolicy>(nameof(ActionPolicy));
+            builder.EntitySet<Bank>(nameof(Bank));
+            builder.EntitySet<BankBranch>(nameof(BankBranch));
             builder.EntitySet<Branch>(nameof(Branch));
             builder.EntitySet<BranchType>(nameof(BranchType));
             builder.EntitySet<CommodityType>(nameof(CommodityType));
@@ -101,7 +103,6 @@ namespace TMS.API
             builder.EntitySet<Ledger>(nameof(Ledger));
             builder.EntitySet<MaintenanceTicket>(nameof(MaintenanceTicket));
             builder.EntitySet<Nationality>(nameof(Nationality));
-            builder.EntitySet<Objective>(nameof(Objective));
             builder.EntitySet<OperationType>(nameof(OperationType));
             builder.EntitySet<Order>(nameof(Order));
             builder.EntitySet<OrderComposition>(nameof(OrderComposition));

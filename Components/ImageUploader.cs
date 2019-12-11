@@ -108,8 +108,11 @@ namespace Components
             var xhr = new XMLHttpRequest();
             var client = new Client("file");
             var pathList = await client.PostFilesAsync(form);
-            var paths = _path.Data + pathSeparator + string.Join(pathSeparator, pathList);
-            pathList = paths.Trim().Split(pathSeparator).Distinct().ToList();
+            if (_ui.Precision == 0)
+            {
+                var paths = _path.Data + pathSeparator + string.Join(pathSeparator, pathList);
+                pathList = paths.Trim().Split(pathSeparator).Distinct().ToList();
+            }
             _path.Data = string.Join(pathSeparator, pathList);
             RenderImagesAndIcon(pathList);
         }

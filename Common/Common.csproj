@@ -45,6 +45,12 @@
     <Compile Include="..\TMS.API\Models\ActionPolicy.cs">
       <Link>Models\ActionPolicy.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Bank.cs">
+      <Link>Models\Bank.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\BankBranch.cs">
+      <Link>Models\BankBranch.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Branch.cs">
       <Link>Models\Branch.cs</Link>
     </Compile>
@@ -108,9 +114,6 @@
     <Compile Include="..\TMS.API\Models\FeaturePolicy.cs">
       <Link>Models\FeaturePolicy.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\FreightBalance.cs">
-      <Link>Models\FreightBalance.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\FreightHistory.cs">
       <Link>Models\FreightHistory.cs</Link>
     </Compile>
@@ -140,9 +143,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\Nationality.cs">
       <Link>Models\Nationality.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\Objective.cs">
-      <Link>Models\Objective.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\OdataResult.cs">
       <Link>Models\OdataResult.cs</Link>
@@ -233,9 +233,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\User.cs">
       <Link>Models\User.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\UserBalance.cs">
-      <Link>Models\UserBalance.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\UserInterface.cs">
       <Link>Models\UserInterface.cs</Link>

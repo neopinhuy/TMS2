@@ -9,6 +9,7 @@ namespace TMS.API.Models
         public int? FeatureId { get; set; }
         public int EntityId { get; set; }
         public string FieldName { get; set; }
+        public int? Order { get; set; }
         public string ShortDesc { get; set; }
         public string Description { get; set; }
         public int? ReferenceId { get; set; }
@@ -27,7 +28,6 @@ namespace TMS.API.Models
         public string ButtonEvent { get; set; }
         public string ButtonClass { get; set; }
         public string ButtonIcon { get; set; }
-        public int? Order { get; set; }
         public bool HasFilter { get; set; }
         public bool Editable { get; set; }
         public bool Disabled { get; set; }

@@ -137,30 +137,6 @@ namespace TMS.UI.Business.Freight
             AddChild(_saleOrderForm);
         }
 
-        public async Task DecompositeOrderDetail()
-        {
-            var grid = FindComponent("OrderDeCompositionGrid") as GridView;
-            var selected = grid.RowData.Data
-                .Where(x => (bool?)x["__selected__"] == true)
-                .Cast<OrderDetail>().ToList();
-            if (selected.Nothing())
-            {
-                Toast.Warning("Please select at least one order to decomposite!");
-                return;
-            }
-            var deleted = await new Client(nameof(OrderComposition))
-                .Delete(selected.Select(x => x.OrderComposition.Id).ToList());
-            if (deleted)
-            {
-                Toast.Success("Decomposite order succeeded!");
-                FindComponent<GridView>().ForEach(x => x.ReloadData());
-            }
-            else
-            {
-                Toast.Warning("Decomposite order failed!");
-            }
-        }
-
         public async Task DecompositeCoordination()
         {
             var grid = FindComponent("Coordination") as GridView;

@@ -213,6 +213,7 @@ td {
     .button {
         height: 22px;
         margin-top: 1px;
+
         span {
             transform: translateY(-1px);
         }
@@ -223,12 +224,15 @@ td {
             tr td:nth-child(2) {
                 padding-left: 3rem;
             }
+
             .group-row {
                 td {
                     text-align: left;
                 }
+
                 td:nth-child(2) {
                     padding-left: 5px;
+
                     span {
                         margin-right: 5px;
                         cursor: pointer;
@@ -246,6 +250,14 @@ td {
         }
     }
 
+    .cell-text {
+        img {
+            height: 23px;
+            width: auto;
+            border-radius: 20%;
+        }
+    }
+
     .frozen {
         .status-cell {
             background-color: @theadBg;
@@ -257,14 +269,6 @@ td {
 
             .mif-pencil {
                 visibility: hidden;
-            }
-        }
-
-        .cell-text {
-            img {
-                height: 23px;
-                width: auto;
-                border-radius: 20%;
             }
         }
 
@@ -383,6 +387,12 @@ td {
 
             &:last-child {
                 border-right: 0;
+            }
+
+            .checkbox {
+                span {
+                    left: 5px;
+                }
             }
         }
     }

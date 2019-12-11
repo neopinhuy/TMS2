@@ -59,6 +59,11 @@ namespace Common.Extensions
             return obj.GetType().GetProperty(propName).GetValue(obj);
         }
 
+        public static T GetPropValue<T>(this object obj, string propName) where T: class
+        {
+            return obj.GetType().GetProperty(propName).GetValue(obj) as T;
+        }
+
         public static void SetPropValue(this object obj, string propName, object value)
         {
             obj.GetType().GetProperty(propName).SetValue(obj, value);
