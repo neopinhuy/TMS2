@@ -23,11 +23,23 @@ namespace Components.Forms
             Name = Title;
         }
 
+        public void Create()
+        {
+            var popup = new PopupEditor<T>()
+            {
+                Name = $"Edit{typeof(T).Name}",
+                Title = "Ledger",
+            };
+            AddChild(popup);
+        }
+
         public virtual async Task Edit(T entity)
         {
             var popup = new PopupEditor<T>
             {
-                Entity = entity
+                Entity = entity,
+                Name = $"Edit{typeof(T).Name}",
+                Title = "Ledger",
             };
             AddChild(popup);
         }

@@ -2,6 +2,7 @@
 using Common.Clients;
 using Common.Extensions;
 using Components;
+using Components.Forms;
 using MVVM;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace TMS.UI.Business
         {
             Task.Run(async () =>
             {
-                var feature = await Client<Feature>.Instance.GetList();
+                var feature = await Client<Feature>.Instance.GetList("?$expand=Entity($select=Name)&$filter=Active eq true");
                 _feature = feature.Value;
                 BuildFeatureTree();
                 Html.Take(".sidebar-wrapper");
@@ -90,13 +91,19 @@ namespace TMS.UI.Business
             }
             string className = li.ParentElement.ClassName + " active";
             li.ParentElement.ClassName = className.Trim();
+            Type type;
             if (menu.ViewClass != null)
             {
-                var type = Type.GetType(menu.ViewClass);
-                var instance = Activator.CreateInstance(type) as Component;
-                instance.Render();
-                instance["Focus"].As<System.Action>().Invoke(instance);
+                type = Type.GetType(menu.ViewClass);
             }
+            else
+            {
+                var entityType = Type.GetType("TMS.API.Models." + menu.Entity.Name);
+                type = typeof(TabEditor<>).MakeGenericType(new Type[] { entityType });
+            }
+            var instance = Activator.CreateInstance(type) as Component;
+            instance.Render();
+            instance["Focus"].As<System.Action>().Invoke(instance);
         }
     }
 }

@@ -741,6 +741,11 @@ namespace TMS.API.Models
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
+                entity.HasOne(d => d.Entity)
+                    .WithMany(p => p.Feature)
+                    .HasForeignKey(d => d.EntityId)
+                    .HasConstraintName("FK_Feature_Entity");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.Feature)
                     .HasForeignKey(d => d.InsertedBy)

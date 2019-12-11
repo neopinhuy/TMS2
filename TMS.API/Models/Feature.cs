@@ -22,6 +22,7 @@ namespace TMS.API.Models
         public bool IsGroup { get; set; }
         public bool IsMenu { get; set; }
         public string ViewClass { get; set; }
+        public int? EntityId { get; set; }
         public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
@@ -29,6 +30,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Feature Parent { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }

@@ -13,7 +13,7 @@ namespace Components
         private bool focus;
 
         protected const string Id = "Id";
-        protected string ClassId => "feature_" + GetType().Name;
+        protected string ClassId => "feature_" + (GetType().GetGenericArguments()?.FirstOrDefault()?.Name ?? GetType().Name);
         public virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
