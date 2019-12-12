@@ -674,6 +674,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Entity>(entity =>
             {
+                entity.Property(e => e.Description)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -1045,6 +1049,8 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.InvoiceImage).HasMaxLength(1500);
 
+                entity.Property(e => e.InvoiceNo).HasMaxLength(20);
+
                 entity.Property(e => e.Note).HasMaxLength(1500);
 
                 entity.Property(e => e.ReceivedAccount)
@@ -1170,9 +1176,31 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<OperationType>(entity =>
             {
+                entity.Property(e => e.AccountNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(50);
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.OperationTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OperationType_UserInserted");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_OperationType_Hierarchy");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.OperationTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_OperationType_UserUpdated");
             });
 
             modelBuilder.Entity<Order>(entity =>

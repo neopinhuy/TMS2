@@ -42,7 +42,8 @@ namespace Components.Extensions
                     Console.WriteLine($"Component type {componentType} of {ui.Id}_{ui.FieldName} not supported");
                     break;
             }
-
+            childComponent.Id = ui.Id;
+            childComponent.Name = ui.FieldName;
             return childComponent;
         }
     }

@@ -32,7 +32,7 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteTruck()
         {
-            var truckGrid = FindComponent("TruckGrid") as GridView;
+            var truckGrid = FindComponentByName("TruckGrid") as GridView;
             truckGrid.DeleteSelected();
         }
 
@@ -47,7 +47,7 @@ namespace TMS.UI.Business.Asset
             {
                 Entity = new Accessory()
                 {
-                    TruckId = (int)_truckForm.Entity[Id]
+                    TruckId = (int)_truckForm.Entity[IdField]
                 }
             };
             AddAccessoryForm();
@@ -71,7 +71,7 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteAccessory()
         {
-            var accessoryGrid = _truckForm.FindComponent("Accessory") as GridView;
+            var accessoryGrid = _truckForm.FindComponentByName("Accessory") as GridView;
             accessoryGrid.DeleteSelected();
         }
 
@@ -112,7 +112,7 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteMaintenance()
         {
-            var maintenanceGrid = _truckForm.FindComponent("MaintenanceGrid") as GridView;
+            var maintenanceGrid = _truckForm.FindComponentByName("MaintenanceGrid") as GridView;
             maintenanceGrid.DeleteSelected();
         }
 

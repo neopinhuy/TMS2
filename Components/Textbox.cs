@@ -1,6 +1,8 @@
-﻿using Common.Extensions;
+﻿using Bridge.Html5;
+using Common.Extensions;
 using Components.Extensions;
 using MVVM;
+using Newtonsoft.Json;
 using System;
 using TMS.API.Models;
 
@@ -27,6 +29,7 @@ namespace Components
                     if (res == false) return;
                     if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                     ValueChanged?.Invoke(arg);
+                    this.DispatchEvent(_ui.Events, EventType.Change, arg);
                 });
             }
             if (MultipleLine)

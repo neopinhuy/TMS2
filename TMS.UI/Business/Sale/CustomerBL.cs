@@ -31,7 +31,7 @@ namespace TMS.UI.Business.Sale
 
         public void DeleteCustomer()
         {
-            var CustomerGrid = FindComponent("CustomerGrid") as GridView;
+            var CustomerGrid = FindComponentByName("CustomerGrid") as GridView;
             CustomerGrid.DeleteSelected();
         }
 

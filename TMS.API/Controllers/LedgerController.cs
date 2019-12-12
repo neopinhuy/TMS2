@@ -4,16 +4,13 @@ using Nest;
 using TMS.API.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Enums;
+using Common.Consts;
 
 namespace TMS.API.Controllers
 {
     [Route("api/[Controller]")]
     public class LedgerController : GenericController<Ledger>
     {
-        private readonly string USER = LedgerEntityEnum.User.ToString();
-        private readonly string CUSTOMER = LedgerEntityEnum.Customer.ToString();
-        private readonly string VENDOR = LedgerEntityEnum.Vendor.ToString();
         public LedgerController(TMSContext context, IElasticClient client) : base(context, client)
         {
         }
@@ -24,9 +21,9 @@ namespace TMS.API.Controllers
             var query =
                 from le in db.Ledger
                 join entity in db.Entity on le.EntityId equals entity.Id
-                from vendor in db.Vendor.Where(x => x.Id == le.TargetId && entity.Name == VENDOR).DefaultIfEmpty()
-                from user in db.User.Where(x => x.Id == le.TargetId && entity.Name == USER).DefaultIfEmpty()
-                from customer in db.Customer.Where(x => x.Id == le.TargetId && entity.Name == CUSTOMER).DefaultIfEmpty()
+                from vendor in db.Vendor.Where(x => x.Id == le.TargetId && entity.Name == TargetConsts.VENDOR).DefaultIfEmpty()
+                from user in db.User.Where(x => x.Id == le.TargetId && entity.Name == TargetConsts.USER).DefaultIfEmpty()
+                from customer in db.Customer.Where(x => x.Id == le.TargetId && entity.Name == TargetConsts.CUSTOMER).DefaultIfEmpty()
                 from user2 in db.User.Where(x => x.Id == customer.Id).DefaultIfEmpty()
                 select new Ledger
                 {
@@ -48,7 +45,7 @@ namespace TMS.API.Controllers
                     ReceivedAccount = le.ReceivedAccount,
                     ReceiverBankId = le.ReceiverBankId,
                     ReceiverBankBranchId = le.ReceiverBankBranchId,
-                    ReceiverFullName = entity.Name == USER ? user.FullName : (entity.Name == VENDOR ? vendor.Name : user2.FullName),
+                    ReceiverFullName = entity.Name == TargetConsts.USER ? user.FullName : (entity.Name == TargetConsts.VENDOR ? vendor.Name : user2.FullName),
                     TargetId = le.TargetId,
                     UpdatedBy = le.UpdatedBy,
                     UpdatedDate = le.UpdatedDate,

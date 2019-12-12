@@ -18,7 +18,7 @@ namespace Components
         private IEnumerable<GridPolicy> GridPolicy;
         private readonly UserInterface _ui;
         public string DataSourceFilter { get; set; }
-        public ObservableArray<object> Source { get; set; }
+        public ObservableArray<object> Source { get; private set; }
         public object Matched { get; set; }
 
         public SearchEntry(UserInterface ui)
@@ -38,6 +38,11 @@ namespace Components
                 FindMatchItem();
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
+                this.DispatchEvent(_ui.Events, EventType.Change, arg);
+                if (_ui.CascadeDropdownId is null) return;
+                var com = RootComponent.FindComponentById<SearchEntry>(_ui.CascadeDropdownId.Value);
+                if (com is null) return;
+                com.Source.NewValue = new object[] { };
             });
             Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty)
                 .Attr("data-role", "input").ClassName("input-small")
@@ -74,14 +79,14 @@ namespace Components
                 _input.Value = string.Empty;
                 return;
             }
-            if (Matched != null && (int?)Matched[Id] == _value.Data)
+            if (Matched != null && (int?)Matched[IdField] == _value.Data)
             {
                 SetMatchedValue();
                 return;
             }
             if (Source != null && Source.Data.HasElement())
             {
-                Matched = Source.Data.FirstOrDefault(x => (int)x[Id] == _value.Data.Value);
+                Matched = Source.Data.FirstOrDefault(x => (int)x[IdField] == _value.Data.Value);
                 SetMatchedValue();
                 return;
             }
@@ -159,7 +164,7 @@ namespace Components
         private void Select(object rowData)
         {
             if (rowData is null) return;
-            _value.Data = (int)rowData[Id];
+            _value.Data = (int)rowData[IdField];
             DisposeSearchTable();
         }
 

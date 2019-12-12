@@ -133,7 +133,7 @@ namespace Components
         private void AddNewEmptyRow(List<Header<T>> frozen, List<Header<T>> nonFrozen)
         {
             var emptyRowData = (T)Activator.CreateInstance(typeof(T));
-            emptyRowData[Id] = -Math.Abs(emptyRowData.GetHashCode()); // Not to add this row into the submitted list
+            emptyRowData[IdField] = -Math.Abs(emptyRowData.GetHashCode()); // Not to add this row into the submitted list
             emptyRowData[_emptyFlag] = true;
             Html.Take(_frozenTable.TBodies[0]);
             RenderEmptyRow(frozen, emptyRowData,_frozenSection);
@@ -268,8 +268,8 @@ namespace Components
 
         public virtual void UpdateRow(T rowData)
         {
-            var id = (int)rowData[Id];
-            var rowById = RowData.Data.FirstOrDefault(x => (int)x[Id] == id);
+            var id = (int)rowData[IdField];
+            var rowById = RowData.Data.FirstOrDefault(x => (int)x[IdField] == id);
             var index = Array.IndexOf(RowData.Data, rowById);
             rowById.CopyPropFrom(rowData);
             _frozenSection.Children[index]?.Update();
@@ -439,7 +439,7 @@ namespace Components
             {
                 case "Dropdown":
                     var source = _refData.GetSourceByTypeName(header.Reference);
-                    var matched = source.FirstOrDefault(x => (int)x[Id] == (int?)rowData?.GetComplexPropValue(ui.FieldName));
+                    var matched = source.FirstOrDefault(x => (int)x[IdField] == (int?)rowData?.GetComplexPropValue(ui.FieldName));
                     editor = new SearchEntry(ui)
                     {
                         RootHtmlElement = Html.Context,
@@ -487,7 +487,7 @@ namespace Components
         private string GetCellText(Header<T> header, object cellData, T row)
         {
             if (cellData == null) return string.Empty;
-            else if (header.FieldName == Id && (int)cellData == -1) return string.Empty;
+            else if (header.FieldName == IdField && (int)cellData == -1) return string.Empty;
             else if (cellData is DateTime)
             {
                 return string.Format(header.FormatCell ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
@@ -495,7 +495,7 @@ namespace Components
             else if (header.Reference != null)
             {
                 var source = _refData.GetSourceByTypeName(header.Reference);
-                var found = source.FirstOrDefault(x => (int)x[Id] == (int)cellData);
+                var found = source.FirstOrDefault(x => (int)x[IdField] == (int)cellData);
                 if (found == null) return string.Empty;
                 if (header.FormatCell.HasAnyChar())
                 {

@@ -36,9 +36,9 @@ namespace TMS.UI.Business.Sale
             };
             soForm.AfterRendered += () =>
             {
-                var customer = FindComponent<SearchEntry>(nameof(Order.CustomerId));
-                customer.ValueChanged += (e) => FindComponent<GridView>(nameof(Order.OrderDetail)).ReloadData();
-                var orderDetailGrid = FindComponent<GridView>(nameof(Order.OrderDetail));
+                var customer = FindComponentByName<SearchEntry>(nameof(Order.CustomerId));
+                customer.ValueChanged += (e) => FindComponentByName<GridView>(nameof(Order.OrderDetail)).ReloadData();
+                var orderDetailGrid = FindComponentByName<GridView>(nameof(Order.OrderDetail));
                 orderDetailGrid.CellChanged += async (ObservableArgs e, Header<object> header, object obj) =>
                 {
                     var orderDetail = obj.SafeCast<OrderDetail>();
@@ -81,7 +81,7 @@ namespace TMS.UI.Business.Sale
 
         public void DeleteSaleOrder()
         {
-            var SaleOrderGrid = FindComponent("SaleOrderGrid") as GridView;
+            var SaleOrderGrid = FindComponentByName("SaleOrderGrid") as GridView;
             SaleOrderGrid.DeleteSelected();
         }
     }

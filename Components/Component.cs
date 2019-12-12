@@ -4,6 +4,8 @@ using MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMS.API.Models;
+using Action = System.Action;
 
 namespace Components
 {
@@ -12,8 +14,9 @@ namespace Components
         private bool disabled;
         private bool focus;
 
-        protected const string Id = "Id";
+        protected const string IdField = "Id";
         protected string ClassId => "feature_" + (GetType().GetGenericArguments()?.FirstOrDefault()?.Name ?? GetType().Name);
+        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
@@ -80,7 +83,22 @@ namespace Components
             Children.Remove(child);
         }
 
-        public Component FindComponent(string name)
+        public Component FindComponentById(int id)
+        {
+            if (Children.Nothing()) return null;
+            foreach (var child in Children)
+            {
+                if (child.Id == id) return child;
+                else if (child.Children != null && child.Children.Any())
+                {
+                    var res = child.FindComponentById(id);
+                    if (res != null) return res;
+                }
+            }
+            return null;
+        }
+
+        public Component FindComponentByName(string name)
         {
             if (Children.Nothing()) return null;
             foreach (var child in Children)
@@ -88,7 +106,7 @@ namespace Components
                 if (child.Name == name) return child;
                 else if (child.Children != null && child.Children.Any())
                 {
-                    var res = child.FindComponent(name);
+                    var res = child.FindComponentByName(name);
                     if (res != null) return res;
                 }
             }
@@ -110,9 +128,14 @@ namespace Components
             return result.DistinctBy(x => x.Name);
         }
 
-        public T FindComponent<T>(string name) where T : class
+        public T FindComponentByName<T>(string name) where T : class
         {
-            return FindComponent(name) as T;
+            return FindComponentByName(name) as T;
+        }
+
+        public T FindComponentById<T>(int id) where T : class
+        {
+            return FindComponentById(id) as T;
         }
 
         public abstract void Render();
@@ -135,6 +158,7 @@ namespace Components
                 }
             }
             RemoveDOM();
+            Children = null;
             Disposed?.Invoke();
         }
 
@@ -143,7 +167,7 @@ namespace Components
             RootHtmlElement.Remove();
         }
 
-        protected Component FindEvent(string eventName)
+        public Component FindComponentEvent(string eventName)
         {
             var parent = Parent;
             while (parent != null && parent[eventName] == null)

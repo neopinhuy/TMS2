@@ -39,7 +39,7 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteContainer()
         {
-            var ContainerGrid = FindComponent("ContainerGrid") as GridView;
+            var ContainerGrid = FindComponentByName("ContainerGrid") as GridView;
             ContainerGrid.DeleteSelected();
         }
 

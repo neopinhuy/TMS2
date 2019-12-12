@@ -11,6 +11,7 @@ namespace TMS.API.Models
         public int? CurrencyId { get; set; }
         public bool Cash { get; set; }
         public bool HasInvoice { get; set; }
+        public string InvoiceNo { get; set; }
         public string InvoiceImage { get; set; }
         public int? OperationTypeId { get; set; }
         public int? EntityId { get; set; }

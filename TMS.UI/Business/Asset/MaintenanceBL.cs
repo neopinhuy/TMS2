@@ -22,10 +22,10 @@ namespace TMS.UI.Business.Asset
             };
             maintenaceForm.AfterRendered += () =>
             {
-                var truck = maintenaceForm.FindComponent("TruckId") as SearchEntry;
+                var truck = maintenaceForm.FindComponentByName("TruckId") as SearchEntry;
                 truck.DataSourceFilter = "?$filter=Active eq true";
                 truck.Disabled = false;
-                var detailGrid = maintenaceForm.FindComponent("TruckMaintenanceDetail") as GridView;
+                var detailGrid = maintenaceForm.FindComponentByName("TruckMaintenanceDetail") as GridView;
                 truck.ValueChanged += arg =>
                 {
                     detailGrid.ReloadData();
@@ -47,7 +47,7 @@ namespace TMS.UI.Business.Asset
 
         public void DeleteAccessory()
         {
-            var accessoryGrid = FindComponent("Accessory") as GridView;
+            var accessoryGrid = FindComponentByName("Accessory") as GridView;
             accessoryGrid.DeleteSelected();
         }
     }

@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public int Id { get; set; }
         public string FieldName { get; set; }
+        public int? Order { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
         public string ComponentType { get; set; }
@@ -34,7 +35,7 @@ namespace TMS.API.Models
         public string Width { get; set; }
         public string MinWidth { get; set; }
         public string MaxWidth { get; set; }
-        public int? Order { get; set; }
+        public int? CascadeDropdownId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

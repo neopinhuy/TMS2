@@ -56,7 +56,7 @@ namespace Components
         {
             if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
             else if (cellData == null) return string.Empty;
-            else if (header.FieldName == Id && (int)cellData <= 0) return string.Empty;
+            else if (header.FieldName == IdField && (int)cellData <= 0) return string.Empty;
             else if (cellData is DateTime)
             {
                 return string.Format(header.FormatCell ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
@@ -64,7 +64,7 @@ namespace Components
             else if (header.Reference != null)
             {
                 var source = _refData.GetSourceByTypeName(header.Reference);
-                var found = source.FirstOrDefault(x => (int)x[Id] == (int)cellData);
+                var found = source.FirstOrDefault(x => (int)x[IdField] == (int)cellData);
                 if (found == null) return string.Empty;
                 if (header.FormatCell.HasAnyChar())
                 {

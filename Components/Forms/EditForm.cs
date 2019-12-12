@@ -47,7 +47,7 @@ namespace Components.Forms
         public virtual async Task<bool> Save(bool defaultMessage = false)
         {
             var client = new Client<T>();
-            if (Entity != null && Entity[Id].As<int>() == 0)
+            if (Entity != null && Entity[IdField].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 SetDeafaultId();
@@ -88,9 +88,9 @@ namespace Components.Forms
             {
                 x.RowData.Data.ForEach(row =>
                 {
-                    if ((int)row[Id] < 0)
+                    if ((int)row[IdField] < 0)
                     {
-                        row[Id] = 0;
+                        row[IdField] = 0;
                     }
                 });
             });
@@ -189,7 +189,6 @@ namespace Components.Forms
                 if (ui.MaxWidth.HasAnyChar()) Html.Instance.Style($"max-width: {ui.MaxWidth}");
                 var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
                 AddChild(childComponent);
-                childComponent.Name = ui.FieldName;
                 childComponent.Disabled = ui.Disabled;
                 childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);

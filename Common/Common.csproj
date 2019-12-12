@@ -253,6 +253,7 @@
       <Link>Models\Workflow.cs</Link>
     </Compile>
     <Compile Include="Clients\Client.cs" />
+    <Compile Include="Consts\TargetConsts.cs" />
     <Compile Include="Enums\FreightStateEnum.cs" />
     <Compile Include="Enums\PriceTypeEnum.cs" />
     <Compile Include="Extensions\BridgeExtensions.cs" />

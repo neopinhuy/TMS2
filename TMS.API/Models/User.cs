@@ -76,6 +76,8 @@ namespace TMS.API.Models
             MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
             NationalityUpdatedByNavigation = new HashSet<Nationality>();
+            OperationTypeInsertedByNavigation = new HashSet<OperationType>();
+            OperationTypeUpdatedByNavigation = new HashSet<OperationType>();
             OrderAccountableUser = new HashSet<Order>();
             OrderCompositionInsertedByNavigation = new HashSet<OrderComposition>();
             OrderCompositionUpdatedByNavigation = new HashSet<OrderComposition>();
@@ -235,6 +237,8 @@ namespace TMS.API.Models
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
         public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
+        public virtual ICollection<OperationType> OperationTypeInsertedByNavigation { get; set; }
+        public virtual ICollection<OperationType> OperationTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Order> OrderAccountableUser { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionInsertedByNavigation { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionUpdatedByNavigation { get; set; }

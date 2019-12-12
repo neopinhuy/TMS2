@@ -19,7 +19,7 @@ namespace TMS.UI.Business.Freight
 
         public Task SaveCoorDetail()
         {
-            var grid = FindComponent<GridView>(nameof(CoordinationDetail.Surcharge));
+            var grid = FindComponentByName<GridView>(nameof(CoordinationDetail.Surcharge));
             if (grid is null) return null;
             var popup = grid.Parent.As<PopupEditor<CoordinationDetail>>();
             var coorDetail = popup.Entity as CoordinationDetail;

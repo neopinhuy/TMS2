@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Checkbox.cs" />
+    <Compile Include="Extensions\ComponentExtensions.cs" />
     <Compile Include="Extensions\ComponentFactory.cs" />
     <Compile Include="Extensions\Paginator.cs" />
     <Compile Include="Forms\ConfirmDialog.cs" />

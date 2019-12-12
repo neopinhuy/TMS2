@@ -31,7 +31,7 @@ namespace TMS.UI.Business.Sale
 
         public void DeleteQuotation()
         {
-            var grid = FindComponent("QuotationGrid") as GridView;
+            var grid = FindComponentByName("QuotationGrid") as GridView;
             grid.DeleteSelected();
         }
 

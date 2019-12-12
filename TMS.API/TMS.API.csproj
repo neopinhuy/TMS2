@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Common\Consts\TargetConsts.cs" Link="Consts\TargetConsts.cs" />
     <Compile Include="..\Common\Enums\FreightStateEnum.cs" Link="Enums\FreightStateEnum.cs" />
     <Compile Include="..\Common\Enums\PriceTypeEnum.cs" Link="Enums\PriceTypeEnum.cs" />
     <Compile Include="..\Common\Extensions\DictionaryExtensions.cs" Link="Extensions\DictionaryExtensions.cs" />
@@ -140,6 +141,10 @@
     <Content Update="wwwroot\css\webfonts\fa-solid-900.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Consts\" />
   </ItemGroup>
 
 </Project>

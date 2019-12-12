@@ -24,7 +24,7 @@ namespace TMS.UI.Business.Freight
             base.Render();
             AfterRendered += () =>
             {
-                var grid = FindComponent<GridView>(nameof(Coordination));
+                var grid = FindComponentByName<GridView>(nameof(Coordination));
                 grid.RowData.Subscribe(async (arg) =>
                 {
                     if (_notifySelf)
@@ -79,7 +79,7 @@ namespace TMS.UI.Business.Freight
 
         public async Task Composite()
         {
-            var grid = FindComponent("OrderCompositionGrid") as GridView;
+            var grid = FindComponentByName("OrderCompositionGrid") as GridView;
             var selected = grid.RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Cast<OrderDetail>().ToList();
@@ -139,7 +139,7 @@ namespace TMS.UI.Business.Freight
 
         public async Task DecompositeCoordination()
         {
-            var grid = FindComponent("Coordination") as GridView;
+            var grid = FindComponentByName("Coordination") as GridView;
             var selected = grid.RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Cast<Coordination>().ToList();

@@ -26,7 +26,8 @@ namespace Components
 
         public GridView(UserInterface ui)
         {
-            _ui = ui;
+            _ui = ui ?? throw new ArgumentNullException(nameof(ui));
+            Id = ui.Id;
             Name = ui.FieldName;
             Header = new ObservableArray<Header<object>>();
             RowData = new ObservableArray<object>();
@@ -89,7 +90,7 @@ namespace Components
                 Html.Instance.DataAttr("dblclick", dblClick);
                 tableParams.RowDblClick = row =>
                 {
-                    var parent = FindEvent(dblClick);
+                    var parent = FindComponentEvent(dblClick);
                     parent.ExecuteEvent(dblClick, row, RowData, Header);
                 };
             }
@@ -126,7 +127,7 @@ namespace Components
             if (column.ButtonEvent.HasAnyChar())
             {
                 header.ButtonEvent = (row) => {
-                    var parent = FindEvent(column.ButtonEvent);
+                    var parent = FindComponentEvent(column.ButtonEvent);
                     parent.ExecuteEvent(column.ButtonEvent, row);
                 };
             }
@@ -204,7 +205,7 @@ namespace Components
             var entity = _ui.Reference.Name;
             var ids = RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
-                .Select(x => (int)x[Id]).ToList();
+                .Select(x => (int)x[IdField]).ToList();
             var client = new Client(entity);
             var success = await client.Delete(ids);
             if (success)
