@@ -103,7 +103,7 @@ namespace TMS.API
             builder.EntitySet<Ledger>(nameof(Ledger));
             builder.EntitySet<MaintenanceTicket>(nameof(MaintenanceTicket));
             builder.EntitySet<Nationality>(nameof(Nationality));
-            builder.EntitySet<OperationType>(nameof(OperationType));
+            builder.EntitySet<AccountType>(nameof(AccountType));
             builder.EntitySet<Order>(nameof(Order));
             builder.EntitySet<OrderComposition>(nameof(OrderComposition));
             builder.EntitySet<OrderDetail>(nameof(OrderDetail));

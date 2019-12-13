@@ -28,12 +28,7 @@ namespace Components
                 .Attr("data-event", _ui.Events)
                 .Event(EventType.Click, () =>
                 {
-                    var parent = Parent;
-                    while (parent != null && parent[_ui.Events] == null)
-                    {
-                        parent = parent.Parent;
-                    }
-                    parent.ExecuteEvent(_ui.Events, Entity);
+                    this.DispatchEvent(_ui.Events, EventType.Click, Entity);
                 });
             InteractiveElement = Html.Context;
         }

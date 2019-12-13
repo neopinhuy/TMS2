@@ -16,6 +16,7 @@ namespace Components
         private HTMLInputElement _input;
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
+        private bool _isShowing;
         private readonly UserInterface _ui;
         public string DataSourceFilter { get; set; }
         public ObservableArray<object> Source { get; private set; }
@@ -46,17 +47,16 @@ namespace Components
             });
             Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty)
                 .Attr("data-role", "input").ClassName("input-small")
-                .Event(EventType.Focus, async() => await RenderSuggestion())
-                .Event(EventType.Blur, DestroySuggestion)
                 .Event(EventType.KeyDown, (Event e) =>
                 {
-                    if (_table != null)
+                    var code = int.Parse(e["keyCode"].ToString());
+                    if (_isShowing)
                     {
-                        if (e["keyCode"].ToString() == "38") _table.MoveUp();
-                        if (e["keyCode"].ToString() == "40") _table.MoveDown();
-                        if (e["keyCode"].ToString() == "13") Select(Source.Data[_table.SelectedRow ?? 0]);
+                        if (code == 38) _table.MoveUp();
+                        if (code == 40) _table.MoveDown();
+                        if (code == 13) Select(Source.Data[_table.SelectedRow ?? 0]);
                     }
-                    else if (e["keyCode"].ToString() == "13") RenderSuggestion();
+                    else if (code == 13) RenderSuggestion();
                 })
                 .Event(EventType.Input, () =>
                 {
@@ -68,6 +68,9 @@ namespace Components
                 });
             InteractiveElement = Html.Context;
             _input = InteractiveElement as HTMLInputElement;
+            Html.Take(InteractiveElement.ParentElement).TabIndex(-1)
+                    .Event(EventType.FocusIn, async () => await RenderSuggestion())
+                    .Event(EventType.FocusOut, HideTable);
             FindMatchItem();
         }
 
@@ -152,34 +155,40 @@ namespace Components
                 RowData = Source,
                 Headers = new ObservableArray<Header<object>>(headers)
             };
-            _table = new FloatingTable<object>(tableParam)
+            ToggleTable(position, tableParam);
+        }
+
+        private void ToggleTable(ClientRect position, TableParam<object> tableParam)
+        {
+            if (_table is null)
             {
-                Top = position.Bottom,
-                Left = position.Left - 1
-            };
-            Html.Take(Document.Body);
-            _table.Render();
+                _table = new FloatingTable<object>(tableParam)
+                {
+                    Top = position.Bottom,
+                    Left = position.Left - 1
+                };
+                Html.Take(InteractiveElement.ParentElement);
+                AddChild(_table);
+            }
+            else
+            {
+                Html.Take(_table.RootHtmlElement).Display(true);
+            }
+            _isShowing = true;
         }
 
         private void Select(object rowData)
         {
             if (rowData is null) return;
             _value.Data = (int)rowData[IdField];
-            DisposeSearchTable();
+            HideTable();
         }
 
-        private void DisposeSearchTable()
+        private void HideTable()
         {
-            if (_table != null)
-            {
-                _table.Dispose();
-                _table = null;
-            }
-        }
-
-        public void DestroySuggestion()
-        {
-            Window.SetTimeout(DisposeSearchTable, 100);
+            if (_table == null) return;
+            Html.Take(_table.RootHtmlElement).Display(false);
+            _isShowing = false;
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Components.Forms
                 ReloadAndShowMessage(defaultMessage, data, false);
                 AfterSaved?.Invoke(data != null);
             }
-            return false;
+            return true;
         }
 
         private void ReloadAndShowMessage(bool defaultMessage, T data, bool updating)
@@ -192,7 +192,12 @@ namespace Components.Forms
                 childComponent.Disabled = ui.Disabled;
                 childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);
-                column += ui.Column ?? 0;
+                if (ui.Offset.HasValue)
+                {
+                    Html.Instance.TData.ColSpan(ui.Offset.Value).End.Render();
+                    column += ui.Offset.Value;
+                }
+                column += colSpan;
                 if (column == group.Column)
                 {
                     column = 0;

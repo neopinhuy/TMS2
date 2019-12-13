@@ -339,7 +339,9 @@ namespace MVVM
 
         public Html Closest(ElementType type)
         {
-            return Closest(type.ToString());
+            var func = Context["closest"] as Func<string, Element>;
+            Context = (Element)func.Call(Context, type.ToString());
+            return this;
         }
 
         public Html Closest(string selector)
@@ -347,7 +349,9 @@ namespace MVVM
             var result = Context;
             while (result != null)
             {
-                if (result.ParentElement != null && result.ParentElement.QuerySelector(selector) != null)
+                var parent = result.ParentElement;
+                if (parent is null) return null;
+                if (parent != null && parent.QuerySelectorAll(selector).Indexof(result) >= 0)
                 {
                     break;
                 }

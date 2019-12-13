@@ -3,12 +3,13 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class OperationType
+    public partial class AccountType
     {
-        public OperationType()
+        public AccountType()
         {
-            InverseParent = new HashSet<OperationType>();
-            Ledger = new HashSet<Ledger>();
+            InverseParent = new HashSet<AccountType>();
+            LedgerCreditAccount = new HashSet<Ledger>();
+            LedgerDebitAccount = new HashSet<Ledger>();
         }
 
         public int Id { get; set; }
@@ -23,9 +24,10 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
-        public virtual OperationType Parent { get; set; }
+        public virtual AccountType Parent { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<OperationType> InverseParent { get; set; }
-        public virtual ICollection<Ledger> Ledger { get; set; }
+        public virtual ICollection<AccountType> InverseParent { get; set; }
+        public virtual ICollection<Ledger> LedgerCreditAccount { get; set; }
+        public virtual ICollection<Ledger> LedgerDebitAccount { get; set; }
     }
 }

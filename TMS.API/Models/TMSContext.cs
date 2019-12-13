@@ -16,6 +16,7 @@ namespace TMS.API.Models
         }
 
         public virtual DbSet<Accessory> Accessory { get; set; }
+        public virtual DbSet<AccountType> AccountType { get; set; }
         public virtual DbSet<Action> Action { get; set; }
         public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
         public virtual DbSet<Bank> Bank { get; set; }
@@ -49,7 +50,6 @@ namespace TMS.API.Models
         public virtual DbSet<Ledger> Ledger { get; set; }
         public virtual DbSet<MaintenanceTicket> MaintenanceTicket { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
-        public virtual DbSet<OperationType> OperationType { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderComposition> OrderComposition { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
@@ -135,6 +135,35 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.VendorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Accessary_Vendor");
+            });
+
+            modelBuilder.Entity<AccountType>(entity =>
+            {
+                entity.Property(e => e.AccountNo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.AccountTypeInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OperationType_UserInserted");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_OperationType_Hierarchy");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.AccountTypeUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_OperationType_UserUpdated");
             });
 
             modelBuilder.Entity<Action>(entity =>
@@ -1047,6 +1076,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Ledger>(entity =>
             {
+                entity.Property(e => e.ExchangeRate).HasColumnType("decimal(20, 5)");
+
                 entity.Property(e => e.InvoiceImage).HasMaxLength(1500);
 
                 entity.Property(e => e.InvoiceNo).HasMaxLength(20);
@@ -1064,10 +1095,20 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.ApproverId)
                     .HasConstraintName("FK_Ledger_UserApprover");
 
+                entity.HasOne(d => d.CreditAccount)
+                    .WithMany(p => p.LedgerCreditAccount)
+                    .HasForeignKey(d => d.CreditAccountId)
+                    .HasConstraintName("FK_Ledger_CreditAccount");
+
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Ledger)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Ledger_Currency");
+
+                entity.HasOne(d => d.DebitAccount)
+                    .WithMany(p => p.LedgerDebitAccount)
+                    .HasForeignKey(d => d.DebitAccountId)
+                    .HasConstraintName("FK_Ledger_DebitAccount");
 
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.Ledger)
@@ -1078,11 +1119,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.LedgerInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
                     .HasConstraintName("FK_Ledger_UserInserted");
-
-                entity.HasOne(d => d.OperationType)
-                    .WithMany(p => p.Ledger)
-                    .HasForeignKey(d => d.OperationTypeId)
-                    .HasConstraintName("FK_Ledger_OperationType");
 
                 entity.HasOne(d => d.ReceiverBankBranch)
                     .WithMany(p => p.Ledger)
@@ -1172,35 +1208,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.NationalityUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Nationality_UserUpdated");
-            });
-
-            modelBuilder.Entity<OperationType>(entity =>
-            {
-                entity.Property(e => e.AccountNo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.OperationTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OperationType_UserInserted");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK_OperationType_Hierarchy");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.OperationTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_OperationType_UserUpdated");
             });
 
             modelBuilder.Entity<Order>(entity =>

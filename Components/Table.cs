@@ -288,11 +288,14 @@ namespace Components
             tr[_rowData] = row;
             if (_tableParam.RowClick != null)
             {
-                tr.AddEventListener(EventType.Click, _ => _tableParam.RowClick(row));
+                tr.AddEventListener(EventType.Click, () =>
+                {
+                    _tableParam.RowClick(row);
+                });
             }
             if (_tableParam.RowDblClick != null)
             {
-                tr.AddEventListener(EventType.DblClick, _ => _tableParam.RowDblClick(row));
+                tr.AddEventListener(EventType.DblClick, () => _tableParam.RowDblClick(row));
             }
             Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header, rowSection));
         }
@@ -471,8 +474,10 @@ namespace Components
         private void SelectRow(Event e)
         {
             _isFocusCell = true;
-            var row = Html.Take(e.Target as HTMLElement).Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
-            var index = Array.IndexOf((row.ParentElement as HTMLTableSectionElement).Rows.ToArray(), row);
+            var row = Html.Take(e.Target as HTMLElement)
+                .Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
+            var tbody = row.ParentElement as HTMLTableSectionElement;
+            var index = Array.IndexOf(tbody.Rows.ToArray(), row);
             _mainTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
             _frozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
             _mainTable.TBodies[0].Rows[index].AddClass(_selectedClass);
@@ -482,44 +487,6 @@ namespace Components
             {
                 rowData[_selectedFlag] = true;
             }
-        }
-
-        private string GetCellText(Header<T> header, object cellData, T row)
-        {
-            if (cellData == null) return string.Empty;
-            else if (header.FieldName == IdField && (int)cellData == -1) return string.Empty;
-            else if (cellData is DateTime)
-            {
-                return string.Format(header.FormatCell ?? "{0:dd/MM/yyyy}", cellData as DateTime?);
-            }
-            else if (header.Reference != null)
-            {
-                var source = _refData.GetSourceByTypeName(header.Reference);
-                var found = source.FirstOrDefault(x => (int)x[IdField] == (int)cellData);
-                if (found == null) return string.Empty;
-                if (header.FormatCell.HasAnyChar())
-                {
-                    return Utils.FormatWith(header.FormatCell, found);
-                }
-                else
-                {
-                    Console.WriteLine($"Format of {header.FieldName} is null");
-                    throw new InvalidOperationException($"Format of {header.FieldName} is null");
-                }
-            }
-            else if (header.FormatCell.HasAnyChar()) return string.Format(header.FormatCell, cellData);
-            else if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
-            else return cellData.ToString();
-        }
-
-        private static TextAlign? CalcTextAlign(Header<T> header, object cellData)
-        {
-            var textAlign = header.TextAlign;
-            if (textAlign != null || cellData is null) return textAlign;
-            if (header.Reference.HasAnyChar() || cellData is string) return TextAlign.left;
-            if (cellData.GetType().IsNumber()) return TextAlign.right;
-            if (cellData is bool || cellData is bool?) return TextAlign.center;
-            return TextAlign.center;
         }
 
         public void MoveUp()

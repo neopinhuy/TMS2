@@ -27,7 +27,7 @@ namespace TMS.UI.Business.Freight
                 if (x.Id < 0) x.Id = 0;
                 x.OrderDetailId = coorDetail.PackageId;
             });
-            return popup.Save();
+            return popup.Save(true);
         }
 
         public void Transit(CoordinationDetail coordinationDetail)

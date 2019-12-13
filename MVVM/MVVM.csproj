@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ElementType.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Html.cs" />
     <Compile Include="Observable.cs" />
     <Compile Include="ObservableArray.cs" />

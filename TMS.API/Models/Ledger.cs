@@ -12,8 +12,11 @@ namespace TMS.API.Models
         public bool Cash { get; set; }
         public bool HasInvoice { get; set; }
         public string InvoiceNo { get; set; }
+        public DateTime? InvoiceDate { get; set; }
         public string InvoiceImage { get; set; }
-        public int? OperationTypeId { get; set; }
+        public int? DebitAccountId { get; set; }
+        public int? CreditAccountId { get; set; }
+        public decimal? ExchangeRate { get; set; }
         public int? EntityId { get; set; }
         public int? TargetId { get; set; }
         public bool? Approved { get; set; }
@@ -30,10 +33,11 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User Approver { get; set; }
+        public virtual AccountType CreditAccount { get; set; }
         public virtual Currency Currency { get; set; }
+        public virtual AccountType DebitAccount { get; set; }
         public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual OperationType OperationType { get; set; }
         public virtual Bank ReceiverBank { get; set; }
         public virtual BankBranch ReceiverBankBranch { get; set; }
         public virtual User UpdatedByNavigation { get; set; }

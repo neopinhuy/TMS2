@@ -25,5 +25,10 @@ namespace Components.Forms
         {
             RootHtmlElement.ParentElement.ParentElement.Remove();
         }
+
+        public void Cancel()
+        {
+            Dispose();
+        }
     }
 }

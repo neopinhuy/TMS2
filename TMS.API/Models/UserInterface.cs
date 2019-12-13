@@ -16,6 +16,7 @@ namespace TMS.API.Models
         public int? ReferenceId { get; set; }
         public string Format { get; set; }
         public int? Column { get; set; }
+        public int? Offset { get; set; }
         public int? Row { get; set; }
         public int? Precision { get; set; }
         public string GroupBy { get; set; }

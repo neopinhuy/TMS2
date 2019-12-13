@@ -1,5 +1,6 @@
 ﻿using Bridge;
 using System;
+using System.Collections;
 
 namespace Common.Extensions
 {

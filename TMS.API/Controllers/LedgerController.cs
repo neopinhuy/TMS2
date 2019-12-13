@@ -8,14 +8,13 @@ using Common.Consts;
 
 namespace TMS.API.Controllers
 {
-    [Route("api/[Controller]")]
     public class LedgerController : GenericController<Ledger>
     {
         public LedgerController(TMSContext context, IElasticClient client) : base(context, client)
         {
         }
 
-        [HttpGet("Custom")]
+        [HttpGet("api/[Controller]/Custom")]
         public new async Task<IActionResult> Get(ODataQueryOptions<Ledger> options)
         {
             var query =
@@ -41,7 +40,8 @@ namespace TMS.API.Controllers
                     InsertedDate = le.InsertedDate,
                     InvoiceImage = le.InvoiceImage,
                     Note = le.Note,
-                    OperationTypeId = le.OperationTypeId,
+                    DebitAccountId = le.DebitAccountId,
+                    CreditAccountId = le.CreditAccountId,
                     ReceivedAccount = le.ReceivedAccount,
                     ReceiverBankId = le.ReceiverBankId,
                     ReceiverBankBranchId = le.ReceiverBankBranchId,

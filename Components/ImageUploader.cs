@@ -53,19 +53,25 @@ namespace Components
         private void RenderUploadForm()
         {
             var isMultiple = _ui.Precision == 0;
+            var hashCode = Math.Abs(GetHashCode());
             Html.Take(RootHtmlElement)
                 .ClassName("uploader").ColSpan(2)
                 .Form.Attr("method", "POST").Attr("enctype", "multipart/form-data")
-                .Input.Id($"id_{GetHashCode()}").Attr("name", "files").Type("file")
+                .Input.Id($"id_{hashCode}").Attr("name", "files").Type("file")
                 .AsyncEvent(EventType.Change, UploadImages).Render();
             if (isMultiple)
             {
                 Html.Instance.Attr("multiple", "multiple");
             }
-            Html.Instance.End.Label.Attr("for", $"id_{GetHashCode()}").Event(EventType.Click, (e) =>
-            {
-                if (_isRemoving) e.PreventDefault();
-            });
+            Html.Instance.End.Label.Attr("for", $"id_{hashCode}")
+                .Event(EventType.Click, (e) =>
+                {
+                    if (_isRemoving)
+                    {
+                        _isRemoving = false;
+                        e.PreventDefault();
+                    }
+                });
             InteractiveElement = Html.Context;
             _form = InteractiveElement.ParentElement as HTMLFormElement;
             RenderIcon();
@@ -96,11 +102,6 @@ namespace Components
 
         private async Task UploadImages(Event e)
         {
-            if (_isRemoving)
-            {
-                _isRemoving = false;
-                return;
-            }
             var files = e.Target["files"] as FileList;
             if (files.Nothing()) return;
             

@@ -282,18 +282,6 @@ td {
         }
     }
 
-    &.floating {
-        position: fixed;
-        background-color: @white;
-        margin: 0;
-        border-left: 1px solid @grayDark;
-        z-index: 9999;
-
-        th {
-            line-height: 0.8;
-        }
-    }
-
     .non-frozen {
         width: 100%;
         overflow: hidden;
@@ -403,6 +391,22 @@ td {
 
     [colspan] {
         text-align: center;
+    }
+
+    &.floating {
+        position: fixed;
+        background-color: @white;
+        margin: 0;
+        border-left: 1px solid @grayDark;
+        z-index: 9999;
+
+        table {
+            width: auto;
+        }
+
+        th {
+            line-height: 0.8;
+        }
     }
 }
 
@@ -664,6 +668,10 @@ td {
 
     label {
         cursor: pointer;
+        > div {
+            display: flex;
+            flex-flow: row wrap;
+        }
 
         .thumb-wrapper {
             float: left;
