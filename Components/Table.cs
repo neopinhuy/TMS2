@@ -399,6 +399,7 @@ namespace Components
         {
             var cell = new Section(ElementType.td) { Entity = rowSection.Entity };
             rowSection.AddChild(cell);
+            Html.Instance.Style($"width: {header.Width}; min-width: {header.MinWidth}; max-width: {header.MaxWidth};");
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
             if (header.ButtonEvent != null)
             {

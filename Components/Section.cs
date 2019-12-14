@@ -5,16 +5,15 @@ namespace Components
 {
     public class Section : Component
     {
-        public Element Context { get; set; }
         public Section(MVVM.ElementType elementType)
         {
             Html.Instance.Add(elementType);
-            Context = Html.Context;
+            RootHtmlElement = Html.Context;
         }
 
         public Section(Element existingElement)
         {
-            Context = existingElement;
+            RootHtmlElement = existingElement;
         }
 
         public override void Render()
