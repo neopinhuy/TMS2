@@ -278,7 +278,7 @@ namespace Components
 
         protected virtual void RenderRowData(List<Header<T>> headers, T row, Section section)
         {
-            var rowSection = new Section(ElementType.tr) { Entity = row };
+            var rowSection = new TableRow(ElementType.tr) { Entity = row };
             section.AddChild(rowSection);
             Html.Instance
                 .Event(EventType.Click, ToggleSelectRow)
@@ -339,6 +339,7 @@ namespace Components
         private static void ToggleSelectRow(bool forceSelect, int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
+            if (tableRow is null) return;
             var rowData = tableRow[_rowData];
             if (forceSelect)
             {
@@ -379,8 +380,11 @@ namespace Components
         {
             var tableRow = Html.Take(e.Target as HTMLElement)
                 .Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
-            var tbody = tableRow.ParentElement as HTMLTableSectionElement;
-            var index = Array.IndexOf(tbody.Rows.ToArray(), tableRow);
+            var index = Array.IndexOf(_frozenTable.TBodies[0].Rows.ToArray(), tableRow);
+            if (index < 0)
+            {
+                index = Array.IndexOf(_mainTable.TBodies[0].Rows.ToArray(), tableRow);
+            }
             return index;
         }
 
@@ -432,6 +436,8 @@ namespace Components
                 FieldName = header.FieldName,
                 Precision = header.Precision,
                 Validation = header.Validation,
+                PopulateField = header.PopulateField,
+                CascadeField = header.CascadeField,
             };
             if (rowData.GetBool(_emptyFlag))
             {

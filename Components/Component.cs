@@ -133,6 +133,17 @@ namespace Components
             return FindComponentByName(name) as T;
         }
 
+        public T Closest<T>() where T : class
+        {
+            var com = this;
+            while (com.GetType() != typeof(T))
+            {
+                if (com.Parent is null) return null;
+                com = com.Parent;
+            }
+            return com as T;
+        }
+
         public T FindComponentById<T>(int id) where T : class
         {
             return FindComponentById(id) as T;

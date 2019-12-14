@@ -38,6 +38,8 @@ namespace Components
             var paths = strPaths?.Split(pathSeparator).ToList();
             RenderUploadForm();
             RenderImagesAndIcon(paths);
+            var label = InteractiveElement as HTMLElement;
+            label.Style.MaxHeight = (label.QuerySelector("img") as HTMLElement).Style.Height;
         }
 
         private void RenderImagesAndIcon(List<string> paths)
@@ -86,14 +88,15 @@ namespace Components
         {
             Html.Take(InteractiveElement)
                 .Div.ClassName("thumb-wrapper")
-                    .Icon("fa fa-times").AsyncEvent(EventType.Click, RemoveImage, path).End
+                    .Div.ClassName("overlay").Icon("fa fa-times").Event(EventType.Click, RemoveImage, path).End.End
                     .Img.ClassName("thumb").Style(_ui.Style)
                     .Src(path.HasAnyChar() ? path : _ui.Label ?? _defaultImg).Render();
         }
 
-        private async Task RemoveImage(string removedPath)
+        private void RemoveImage(string removedPath)
         {
             _isRemoving = true;
+            if (removedPath.IsNullOrEmpty()) return;
             var path = _path.Data.Replace(removedPath, string.Empty)
                 .Split(pathSeparator).Where(x => x.HasAnyChar()).Distinct().ToList();
             RenderImagesAndIcon(path);

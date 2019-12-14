@@ -36,7 +36,8 @@ namespace TMS.API.Models
         public string Width { get; set; }
         public string MinWidth { get; set; }
         public string MaxWidth { get; set; }
-        public int? CascadeDropdownId { get; set; }
+        public string PopulateField { get; set; }
+        public string CascadeField { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

@@ -40,8 +40,10 @@ namespace Components
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
                 this.DispatchEvent(_ui.Events, EventType.Change, arg);
-                if (_ui.CascadeDropdownId is null) return;
-                var com = RootComponent.FindComponentById<SearchEntry>(_ui.CascadeDropdownId.Value);
+                if (_ui.CascadeField.IsNullOrEmpty()) return;
+                var gridRow = Closest<TableRow>();
+                var root = gridRow ?? RootComponent;
+                var com = root.FindComponentByName<SearchEntry>(_ui.CascadeField);
                 if (com is null) return;
                 com.Source.NewValue = new object[] { };
             });

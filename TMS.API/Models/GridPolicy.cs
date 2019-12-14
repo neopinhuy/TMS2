@@ -34,6 +34,8 @@ namespace TMS.API.Models
         public string Component { get; set; }
         public int? PolicyId { get; set; }
         public int? StateId { get; set; }
+        public string PopulateField { get; set; }
+        public string CascadeField { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

@@ -949,6 +949,10 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CascadeField)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Component)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -979,6 +983,10 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.MinWidth)
                     .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PopulateField)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ShortDesc)
@@ -2181,6 +2189,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<UserInterface>(entity =>
             {
+                entity.Property(e => e.CascadeField)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ClassName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -2228,6 +2240,10 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.MinWidth)
                     .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PopulateField)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Renderer)

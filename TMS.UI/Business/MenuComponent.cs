@@ -64,9 +64,15 @@ namespace TMS.UI.Business
                 }
                 else
                 {
-                    Html.Instance.Li.DataAttr("feature", item.Id.ToString()).Anchor.Attr("data-role", "ripple")
+                    var iconClass = item.Icon.Contains("mif") || item.Icon.Contains("fa-");
+                    Html.Instance.Li.DataAttr("feature", item.Id.ToString())
+                    .Anchor.Attr("data-role", "ripple")
                     .Event(EventType.Click, MenuItemClick, item)
-                    .Span.ClassName("icon " + item.Icon).End
+                    .Span.ClassName("icon")
+                        .If(iconClass,
+                            () => Html.Instance.ClassName(item.Icon).Render(),
+                            () => Html.Instance.Style($"background-image: url({item.Icon});").Render())
+                    .End
                     .Text(item.Label).EndOf(MVVM.ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
                     {
@@ -91,6 +97,7 @@ namespace TMS.UI.Business
             }
             string className = li.ParentElement.ClassName + " active";
             li.ParentElement.ClassName = className.Trim();
+            if (menu.ViewClass is null && menu.Entity is null) return;
             Type type;
             if (menu.ViewClass != null)
             {

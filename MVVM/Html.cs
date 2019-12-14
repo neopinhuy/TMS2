@@ -344,27 +344,6 @@ namespace MVVM
             return this;
         }
 
-        public Html Closest(string selector)
-        {
-            var result = Context;
-            while (result != null)
-            {
-                var parent = result.ParentElement;
-                if (parent is null) return null;
-                if (parent != null && parent.QuerySelectorAll(selector).Indexof(result) >= 0)
-                {
-                    break;
-                }
-                else
-                {
-                    result = result.ParentElement;
-                }
-            }
-
-            Context = result ?? throw new InvalidOperationException("Cannot find the element of selector " + selector);
-            return this;
-        }
-
         public void Render(string html)
         {
             Context.InnerHTML = html;
@@ -400,6 +379,7 @@ namespace MVVM
         {
             var oldStyle = Context["style"]["cssText"] as string;
             if (oldStyle[oldStyle.Length - 1] != ';') oldStyle += ';';
+            if (style[style.Length - 1] != ';') style += ';';
             var styleComputed = oldStyle + style.Trim();
             var distinctStyle = styleComputed.Trim().Split(";").Select(x =>
             {
@@ -424,6 +404,13 @@ namespace MVVM
         {
             Context.TextContent = string.Empty;
             Context.InnerHTML = string.Empty;
+            return this;
+        }
+
+        public Html If(bool condition, Action doif, Action doelse = null)
+        {
+            if (condition) doif();
+            else doelse();
             return this;
         }
 
