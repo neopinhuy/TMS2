@@ -2,7 +2,6 @@
 using Common.Extensions;
 using Components.Extensions;
 using MVVM;
-using Newtonsoft.Json;
 using System;
 using TMS.API.Models;
 
@@ -12,6 +11,7 @@ namespace Components
     {
         private readonly UserInterface _ui;
         public bool MultipleLine { get; set; }
+        public Observable<string> Value { get; private set; }
         public Textbox(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
@@ -20,10 +20,10 @@ namespace Components
         public override void Render()
         {
             var text = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
-            var value = new Observable<string>(text);
+            Value = new Observable<string>(text);
             if (_ui.FieldName.HasAnyChar())
             {
-                value.Subscribe(arg =>
+                Value.Subscribe(arg =>
                 {
                     var res = ValueChanging?.Invoke(arg);
                     if (res == false) return;
@@ -34,14 +34,14 @@ namespace Components
             }
             if (MultipleLine)
             {
-                Html.Instance.TextArea.Attr("data-role", "textarea").Value(value);
+                Html.Instance.TextArea.Attr("data-role", "textarea").Value(Value);
                 if (_ui.Row > 0) Html.Instance.Attr("rows", _ui.Row ?? 1);
             }
             else
             {
                 Html.Instance.Input
                     .Attr("data-role", "input")
-                    .ClassName("input-small").Value(value);
+                    .ClassName("input-small").Value(Value);
             }
             InteractiveElement = Html.Context;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);

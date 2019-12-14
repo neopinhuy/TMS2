@@ -10,6 +10,7 @@ namespace Components
     public class NumberInput : Component
     {
         private readonly UserInterface _ui;
+        public Observable<decimal?> Value { get; private set; }
 
         public NumberInput(UserInterface ui)
         {
@@ -25,14 +26,14 @@ namespace Components
                 Html.Instance.EndOf(ElementType.td);
                 return;
             }
-            var value = new Observable<decimal?>(parsedVal);
-            value.Subscribe(arg => {
+            Value = new Observable<decimal?>(parsedVal);
+            Value.Subscribe(arg => {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
-            Html.Instance.MaskMoney(value, new Options
+            Html.Instance.MaskMoney(Value, new Options
             {
                 thousands = isDecimal ? "," : string.Empty,
                 @decimal = ".",

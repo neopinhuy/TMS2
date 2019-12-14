@@ -12,7 +12,7 @@ namespace Components
 {
     public class SearchEntry : Component
     {
-        private Observable<int?> _value;
+        public Observable<int?> value;
         private HTMLInputElement _input;
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
@@ -31,21 +31,19 @@ namespace Components
 
         public override void Render()
         {
-            _value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
-            _value.Subscribe(arg =>
+            value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
+            value.Subscribe(arg =>
             {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
-                FindMatchItem();
+                SetMatchText();
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
                 this.DispatchEvent(_ui.Events, EventType.Change, arg);
-                if (_ui.CascadeField.IsNullOrEmpty()) return;
                 var gridRow = Closest<TableRow>();
                 var root = gridRow ?? RootComponent;
-                var com = root.FindComponentByName<SearchEntry>(_ui.CascadeField);
-                if (com is null) return;
-                com.Source.NewValue = new object[] { };
+                CascadeField(root);
+                PopulateFields(root);
             });
             Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty)
                 .Attr("data-role", "input").ClassName("input-small")
@@ -64,7 +62,7 @@ namespace Components
                 {
                     if (_input.Value.IsNullOrEmpty())
                     {
-                        _value.Data = null;
+                        value.Data = null;
                     }
                     // Searching here
                 });
@@ -73,31 +71,64 @@ namespace Components
             Html.Take(InteractiveElement.ParentElement).TabIndex(-1)
                     .Event(EventType.FocusIn, async () => await RenderSuggestion())
                     .Event(EventType.FocusOut, HideTable);
-            FindMatchItem();
+            SetMatchText();
         }
 
-        private void FindMatchItem()
+        private void PopulateFields(Component root)
         {
-            if (_value is null || _value.Data is null)
+            if (_ui.PopulateField.IsNullOrEmpty()) return;
+            _ui.PopulateField.Split(",").Where(x => x.HasAnyChar())
+                .Select(x => x.Trim()).ForEach(field =>
+                {
+                    var value = Matched.GetComplexPropValue(field);
+                    var com = root.FindComponentByName(field);
+                    if (com is null) return;
+                    switch (com)
+                    {
+                        case SearchEntry searchEntry:
+                            searchEntry.value.Data = (int?)value;
+                            break;
+                        case Textbox textbox:
+                            textbox.Value.Data = (string)value;
+                            break;
+                        case NumberInput number:
+                            number.Value.Data = (decimal?)value;
+                            break;
+                    }
+                });
+        }
+
+        private void CascadeField(Component root)
+        {
+            if (_ui.CascadeField.IsNullOrEmpty()) return;
+            var com = root.FindComponentByName<SearchEntry>(_ui.CascadeField);
+            if (com is null) return;
+            com.value.Data = null;
+            com.Source.NewValue = new object[] { };
+        }
+
+        public void SetMatchText()
+        {
+            if (value is null || value.Data is null)
             {
                 Matched = null;
                 _input.Value = string.Empty;
                 return;
             }
-            if (Matched != null && (int?)Matched[IdField] == _value.Data)
+            if (Matched != null && (int?)Matched[IdField] == value.Data)
             {
                 SetMatchedValue();
                 return;
             }
             if (Source != null && Source.Data.HasElement())
             {
-                Matched = Source.Data.FirstOrDefault(x => (int)x[IdField] == _value.Data.Value);
+                Matched = Source.Data.FirstOrDefault(x => (int)x[IdField] == value.Data.Value);
                 SetMatchedValue();
                 return;
             }
             Task.Run(async () =>
             {
-                var ids = new List<int?> { _value.Data };
+                var ids = new List<int?> { value.Data };
                 var formattedDataSource = FormatDataSource();
                 var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
                 var query = OdataExtensions.FilterByIds(noFilterQuery, ids);
@@ -182,7 +213,7 @@ namespace Components
         private void Select(object rowData)
         {
             if (rowData is null) return;
-            _value.Data = (int)rowData[IdField];
+            value.Data = (int)rowData[IdField];
             HideTable();
         }
 

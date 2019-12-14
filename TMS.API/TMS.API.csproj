@@ -114,9 +114,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\css\font-awesome.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\css\metro-all.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

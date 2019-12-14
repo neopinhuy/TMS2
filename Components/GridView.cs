@@ -41,7 +41,7 @@ namespace Components
 
         public override void Render()
         {
-            Task.Run(async() =>
+            Task.Run(async () =>
             {
                 var gridPolicyTask = LoadGridPolicy();
                 var loadDataTask = ReloadData();
@@ -64,10 +64,12 @@ namespace Components
 
         public void RenderTable()
         {
-            var tableParams = new TableParam<object> 
+            var tableParams = new TableParam<object>
             {
-                Headers = Header, RowData = RowData,
-                GroupBy = _ui.GroupBy, GroupFormat = _ui.GroupFormat,
+                Headers = Header,
+                RowData = RowData,
+                GroupBy = _ui.GroupBy,
+                GroupFormat = _ui.GroupFormat,
             };
             BindingEvents(tableParams);
             _table = _ui.GroupFormat.HasAnyChar()
@@ -123,10 +125,13 @@ namespace Components
                 MaxWidth = column.MaxWidth,
                 ButtonClass = column.ButtonClass,
                 ButtonIcon = column.ButtonIcon,
+                PopulateField = column.PopulateField,
+                CascadeField = column.CascadeField,
             };
             if (column.ButtonEvent.HasAnyChar())
             {
-                header.ButtonEvent = (row) => {
+                header.ButtonEvent = (row) =>
+                {
                     var parent = FindComponentEvent(column.ButtonEvent);
                     parent.ExecuteEvent(column.ButtonEvent, row);
                 };
@@ -175,7 +180,6 @@ namespace Components
         private void Pagination()
         {
             if (_ui.Row is null || _ui.Row == 0) return;
-            // Render paginator here
             if (_paginator is null)
             {
                 Html.Take(RootHtmlElement).Ul.ClassName("pagination");

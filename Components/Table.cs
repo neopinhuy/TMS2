@@ -459,6 +459,8 @@ namespace Components
                     editor = ComponentFactory.GetComponent(ui, header.Component);
                     break;
             }
+            editor.Id = header.Id;
+            editor.Name = header.FieldName;
             editor.Entity = rowData;
             editor.ValueChanged += (arg) =>
             {

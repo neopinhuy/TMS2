@@ -19,15 +19,24 @@ namespace TMS.UI.Business.Freight
 
         public Task SaveCoorDetail()
         {
+            var popup = PreparedataForSave();
+            return popup.Save(true);
+        }
+
+        private PopupEditor<CoordinationDetail> PreparedataForSave()
+        {
             var grid = FindComponentByName<GridView>(nameof(CoordinationDetail.Surcharge));
             if (grid is null) return null;
             var popup = grid.Parent.As<PopupEditor<CoordinationDetail>>();
+
             var coorDetail = popup.Entity as CoordinationDetail;
-            coorDetail.Surcharge.ForEach(x => {
+            coorDetail.Surcharge.ForEach(x =>
+            {
                 if (x.Id < 0) x.Id = 0;
+                x.OrderId = coorDetail.Package?.OrderId ?? 0;
                 x.OrderDetailId = coorDetail.PackageId;
             });
-            return popup.Save(true);
+            return popup;
         }
 
         public void Transit(CoordinationDetail coordinationDetail)
@@ -43,10 +52,8 @@ namespace TMS.UI.Business.Freight
         
         public async Task SubmitToTransit()
         {
-            var popup = FindComponent<PopupEditor<CoordinationDetail>>().FirstOrDefault();
-            if (popup is null) return;
-            var entity = popup.Entity as CoordinationDetail;
-            entity.FreightStateId = (int)FreightStateEnum.Moving;
+            var popup = PreparedataForSave();
+            popup.Entity.As<CoordinationDetail>().FreightStateId = (int)FreightStateEnum.InTransit;
             var res = await popup.Save(true);
             if (res)
             {
