@@ -48,7 +48,6 @@ namespace Components
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
                 Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
                 RenderTable();
-                Pagination();
                 AfterRendered?.Invoke();
             });
         }
@@ -164,7 +163,7 @@ namespace Components
             var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name,
                 _ui.Row > 0 ? pagingQuery : dataSource);
             if (result == null) return;
-            _total = result.Odata?.Count ?? 0;
+            _total = result.odata?.count ?? 0;
             UpdatePagination();
             RowData.Data = result.Value?.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
@@ -173,18 +172,15 @@ namespace Components
         private void UpdatePagination()
         {
             if (_ui.Row is null || _ui.Row == 0) return;
-            if (_paginator is null) return;
-            Html.Take(_paginator).Pagination("updateItems", _total);
+            if (_paginator is null) RenderPagination();
+            else Html.Take(_paginator).Pagination("updateItems", _total);
         }
 
-        private void Pagination()
+        private void RenderPagination()
         {
-            if (_ui.Row is null || _ui.Row == 0) return;
-            if (_paginator is null)
-            {
-                Html.Take(RootHtmlElement).Ul.ClassName("pagination");
-                _paginator = Html.Context as HTMLElement;
-            }
+            if (_ui.Row is null || _ui.Row == 0 || _total < _ui.Row) return;
+            Html.Take(RootHtmlElement).Ul.ClassName("pagination");
+            _paginator = Html.Context as HTMLElement;
             Html.Take(_paginator).Pagination(_total, _ui.Row ?? 0, (page, e) =>
             {
                 (e["preventDefault"] as System.Action)();

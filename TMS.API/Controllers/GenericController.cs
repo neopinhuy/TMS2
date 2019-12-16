@@ -61,9 +61,10 @@ namespace TMS.API.Controllers
             return Ok(new OdataResult<T>
             {
                 Value = result,
-                Odata = new Odata
+                odata = new Odata
                 {
-                    Count = options.Count?.Value == true ? query.Count() : 0
+                    count = options.Count?.Value == true ? query.Count() : 0,
+                    Context = options.Context.ToString()
                 }
             });
         }

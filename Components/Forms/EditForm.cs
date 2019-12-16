@@ -23,7 +23,7 @@ namespace Components.Forms
             Name = Title;
         }
 
-        public void Create()
+        public virtual void Create()
         {
             var popup = new PopupEditor<T>()
             {
@@ -33,7 +33,7 @@ namespace Components.Forms
             AddChild(popup);
         }
 
-        public virtual async Task Edit(T entity)
+        public virtual void Edit(T entity)
         {
             var popup = new PopupEditor<T>
             {

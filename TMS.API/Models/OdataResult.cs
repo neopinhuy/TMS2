@@ -4,13 +4,15 @@ namespace TMS.API.Models
 {
     public class Odata
     {
-        public int? Count { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+        public int? count { get; set; }
         public string Context { get; set; }
     }
 
     public class OdataResult<T>
     {
-        public Odata Odata { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+        public Odata odata { get; set; }
         public List<T> Value { get; set; }
     }
 }

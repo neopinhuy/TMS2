@@ -15,7 +15,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpGet("api/[Controller]/Custom")]
-        public new async Task<IActionResult> Get(ODataQueryOptions<Ledger> options)
+        public Task<IActionResult> GetLedger(ODataQueryOptions<Ledger> options)
         {
             var query =
                 from le in db.Ledger
@@ -51,7 +51,7 @@ namespace TMS.API.Controllers
                     UpdatedDate = le.UpdatedDate,
                 };
 
-            return await ApplyCustomeQuery(options, query);
+            return ApplyCustomeQuery(options, query);
         }
     }
 }

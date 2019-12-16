@@ -47,7 +47,7 @@ namespace Common.Clients
                 {
                     var json = JSON.Parse(xhr.ResponseText);
                     var result = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
-                    result.Odata = new Odata() { Count = (int?)json["@odata.count"] };
+                    result.odata = new Odata() { count = result?.odata?.count ?? (int?)json["@odata.count"] };
                     tcs.SetResult(result);
                 }
                 else
@@ -78,7 +78,7 @@ namespace Common.Clients
                 {
                     var json = JSON.Parse(xhr.ResponseText);
                     var result = JsonConvert.DeserializeObject<OdataResult<T>>(xhr.ResponseText);
-                    result.Odata = new Odata() { Count = (int?)json["@odata.count"] };
+                    result.odata = new Odata() { count = (int?)json["@odata.count"] };
                     tcs.SetResult(result);
                 }
                 else
