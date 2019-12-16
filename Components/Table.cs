@@ -202,7 +202,8 @@ namespace Components
                     Html.Instance.Text(header.GroupName).Render();
                     return;
                 }
-                Html.Instance.Th.DataAttr("grid-id", header.Id.ToString()).Width(header.Width)
+                Html.Instance.Th.DataAttr("grid-id", header.Id.ToString())
+                    .DataAttr("field", header.FieldName).Width(header.Width)
                     .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}");
                 if (hasGroup && string.IsNullOrEmpty(header.GroupName))
                 {
@@ -244,6 +245,7 @@ namespace Components
                     if (hasGroup && !string.IsNullOrEmpty(header.GroupName))
                     {
                         Html.Instance.Th
+                            .DataAttr("field", header.FieldName)
                             .DataAttr("grid-id", header.Id.ToString()).Width(header.Width)
                             .Style($"min-width: {header.MinWidth}; max-width: {header.MaxWidth}")
                             .Span.Text(header.HeaderText).EndOf(ElementType.th);

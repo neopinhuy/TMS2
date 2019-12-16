@@ -46,7 +46,14 @@ namespace Components
                 var gridPolicyTask = LoadGridPolicy();
                 var loadDataTask = ReloadData();
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
-                Header.AddRange(gridPolicyTask.Result.Value.Select(MapToHeader).ToArray());
+                if (gridPolicyTask is null || gridPolicyTask.Result is null)
+                {
+                    Toast.Warning("Can not load header for the GridView");
+                    return;
+                }
+                var headers = gridPolicyTask.Result.Value
+                    .Where(x => !x.Hidden).Select(MapToHeader).ToArray();
+                Header.AddRange(headers);
                 RenderTable();
                 Pagination();
                 AfterRendered?.Invoke();

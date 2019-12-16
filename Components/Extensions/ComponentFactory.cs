@@ -20,7 +20,10 @@ namespace Components.Extensions
                     childComponent = new SearchEntry(ui);
                     break;
                 case "Datepicker":
-                    childComponent = new Datepicker(ui);
+                    childComponent = new DatePicker(ui);
+                    break;
+                case "MonthYearPicker":
+                    childComponent = new MonthYearPicker(ui);
                     break;
                 case "Checkbox":
                     childComponent = new Checkbox(ui);

@@ -5,11 +5,11 @@ using TMS.API.Models;
 
 namespace Components
 {
-    public class DatePicker : Component
+    public class MonthYearPicker : Component
     {
         private readonly UserInterface _ui;
 
-        public DatePicker(UserInterface ui)
+        public MonthYearPicker(UserInterface ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }
@@ -23,8 +23,7 @@ namespace Components
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
-            Html.Instance
-                .SmallDatePicker(value);
+            Html.Instance.SmallMonthYearPicker(value);
             InteractiveElement = Html.Context;
         }
     }

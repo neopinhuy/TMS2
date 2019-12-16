@@ -44,6 +44,17 @@ namespace Components
             return html;
         }
 
+        public static Html SmallMonthYearPicker(this Html html, Observable<DateTime?> value)
+        {
+            html.Input.ClassName("input-small").Value(value.Data?.ToString())
+                .Attr("data-role", "datepicker")
+                .Attr("data-day", "false")
+                .Attr("data-format", "%mm-%Y")
+                .Value(value.Data?.ToString())
+                .Event(EventType.Change, (e) => ParseDate(value, e));
+            return html;
+        }
+
         public static Html SmallDatePicker(this Html html, Observable<DateTime?> value)
         {
             html.Input.ClassName("input-small").Value(value.Data?.ToString())

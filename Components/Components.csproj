@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MonthYearPicker.cs" />
     <Compile Include="Checkbox.cs" />
     <Compile Include="Extensions\ComponentExtensions.cs" />
     <Compile Include="Extensions\ComponentFactory.cs" />
@@ -43,7 +44,7 @@
     <Compile Include="Forms\ConfirmDialog.cs" />
     <Compile Include="GroupTable.cs" />
     <Compile Include="NumberInput.cs" />
-    <Compile Include="Datepicker.cs" />
+    <Compile Include="DatePicker.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="TableRow.cs" />
     <Compile Include="Textbox.cs" />

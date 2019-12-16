@@ -6,8 +6,13 @@ namespace TMS.API.Models
     public partial class Ledger
     {
         public int Id { get; set; }
-        public double? Debit { get; set; }
-        public double? Credit { get; set; }
+        public decimal? OriginOpeningMoney { get; set; }
+        public decimal? OpeningDebit { get; set; }
+        public decimal? OpeningCredit { get; set; }
+        public decimal? OriginMoney { get; set; }
+        public decimal? Debit { get; set; }
+        public decimal? Credit { get; set; }
+        public decimal? ExchangeRate { get; set; }
         public int? CurrencyId { get; set; }
         public bool Cash { get; set; }
         public bool HasInvoice { get; set; }
@@ -16,7 +21,6 @@ namespace TMS.API.Models
         public string InvoiceImage { get; set; }
         public int? DebitAccountId { get; set; }
         public int? CreditAccountId { get; set; }
-        public decimal? ExchangeRate { get; set; }
         public int? EntityId { get; set; }
         public int? TargetId { get; set; }
         public bool? Approved { get; set; }

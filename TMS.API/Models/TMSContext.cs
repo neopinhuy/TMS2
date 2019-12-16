@@ -1084,6 +1084,10 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Ledger>(entity =>
             {
+                entity.Property(e => e.Credit).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Debit).HasColumnType("decimal(20, 5)");
+
                 entity.Property(e => e.ExchangeRate).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.InvoiceImage).HasMaxLength(1500);
@@ -1091,6 +1095,14 @@ namespace TMS.API.Models
                 entity.Property(e => e.InvoiceNo).HasMaxLength(20);
 
                 entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.Property(e => e.OpeningCredit).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OpeningDebit).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OriginMoney).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OriginOpeningMoney).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.ReceivedAccount)
                     .HasMaxLength(50)

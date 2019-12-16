@@ -205,5 +205,14 @@ namespace Components.Forms
                 }
             }
         }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            if (Parent != null && Parent.Children.Contains(this))
+            {
+                Parent.Children.Remove(this);
+            }
+        }
     }
 }
