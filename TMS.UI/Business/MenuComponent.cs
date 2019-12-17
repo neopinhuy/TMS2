@@ -42,7 +42,7 @@ namespace TMS.UI.Business
             Task.Run(async () =>
             {
                 var feature = await Client<Feature>.Instance.GetList("?$expand=Entity($select=Name)&$filter=Active eq true");
-                _feature = feature.Value;
+                _feature = feature.value;
                 BuildFeatureTree();
                 Html.Take(".sidebar-wrapper");
                 RenderMenuItems(_feature);

@@ -1084,9 +1084,13 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Ledger>(entity =>
             {
-                entity.Property(e => e.Credit).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.Credit)
+                    .HasColumnType("decimal(38, 7)")
+                    .HasComputedColumnSql("([OriginCredit]*[ExchangeRate])");
 
-                entity.Property(e => e.Debit).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.Debit)
+                    .HasColumnType("decimal(38, 7)")
+                    .HasComputedColumnSql("([OriginDebit]*[ExchangeRate])");
 
                 entity.Property(e => e.ExchangeRate).HasColumnType("decimal(20, 5)");
 
@@ -1096,11 +1100,23 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.Note).HasMaxLength(1500);
 
-                entity.Property(e => e.OpeningCredit).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.OpeningCredit)
+                    .HasColumnType("decimal(38, 7)")
+                    .HasComputedColumnSql("([OriginOpeningCredit]*[ExchangeRate])");
 
-                entity.Property(e => e.OpeningDebit).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.OpeningDebit)
+                    .HasColumnType("decimal(38, 7)")
+                    .HasComputedColumnSql("([OriginOpeningDebit]*[ExchangeRate])");
+
+                entity.Property(e => e.OriginCredit).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OriginDebit).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.OriginMoney).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OriginOpeningCredit).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.OriginOpeningDebit).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.OriginOpeningMoney).HasColumnType("decimal(20, 5)");
 

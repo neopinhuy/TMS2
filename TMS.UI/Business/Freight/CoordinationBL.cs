@@ -45,7 +45,7 @@ namespace TMS.UI.Business.Freight
                 .Select(x => x.OrderDetail.Order).DistinctBy(x => x.Id).ToDictionary(x => x.Id);
             var terminalIds = orders.Values.Select(x => x.FromId).Union(orders.Values.Select(x => x.ToId))
                 .Where(x => x != null).Select(x => (int)x);
-            var terminals = (await Client<Terminal>.Instance.GetListByIds(terminalIds)).Value.ToDictionary(x => x.Id);
+            var terminals = (await Client<Terminal>.Instance.GetListByIds(terminalIds)).value.ToDictionary(x => x.Id);
 
             // Rebuild the tree again
             var treeDic = rows.Select(coor => { coor["__groupkey__"] = CombineOrderId(coor); return coor; });

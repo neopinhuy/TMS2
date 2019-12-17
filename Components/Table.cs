@@ -157,7 +157,7 @@ namespace Components
                 .Select(x => Client<object>.Instance.GetListEntity(x.Reference, x.DataSourceOptimized));
 
             var refData = await Task.WhenAll(dataTask);
-            _refData = refData.Select(x => x?.Value);
+            _refData = refData.Select(x => x?.value);
         }
 
         protected virtual object[] GetUnderlayingRowData()

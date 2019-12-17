@@ -60,7 +60,7 @@ namespace TMS.API.Controllers
             var result = await appliedQuery.ToListAsync();
             return Ok(new OdataResult<T>
             {
-                Value = result,
+                value = result,
                 odata = new Odata
                 {
                     count = options.Count?.Value == true ? query.Count() : 0,

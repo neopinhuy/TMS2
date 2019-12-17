@@ -6,12 +6,16 @@ namespace TMS.API.Models
     public partial class Ledger
     {
         public int Id { get; set; }
-        public decimal? OriginOpeningMoney { get; set; }
         public decimal? OpeningDebit { get; set; }
         public decimal? OpeningCredit { get; set; }
-        public decimal? OriginMoney { get; set; }
+        public decimal? OriginOpeningDebit { get; set; }
+        public decimal? OriginOpeningCredit { get; set; }
+        public decimal? OriginOpeningMoney { get; set; }
         public decimal? Debit { get; set; }
         public decimal? Credit { get; set; }
+        public decimal? OriginDebit { get; set; }
+        public decimal? OriginCredit { get; set; }
+        public decimal? OriginMoney { get; set; }
         public decimal? ExchangeRate { get; set; }
         public int? CurrencyId { get; set; }
         public bool Cash { get; set; }

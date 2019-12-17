@@ -133,7 +133,7 @@ namespace Components
                 var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
                 var query = OdataExtensions.FilterByIds(noFilterQuery, ids);
                 var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
-                Matched = source?.Value?.FirstOrDefault();
+                Matched = source?.value?.FirstOrDefault();
                 SetMatchedValue();
             });
         }
@@ -147,7 +147,7 @@ namespace Components
         {
             var dataSource = FormatDataSource();
             var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
-            return source?.Value?.ToArray();
+            return source?.value?.ToArray();
         }
 
         private string FormatDataSource()
@@ -164,7 +164,7 @@ namespace Components
                 var policies = await Client<GridPolicy>.Instance.GetList(
                         $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
                         $"FeatureId eq null and Entity/Name eq '{_ui.Reference.Name}'");
-                GridPolicy = policies.Value.OrderBy(x => x.Order);
+                GridPolicy = policies.value.OrderBy(x => x.Order);
             }
             var position = InteractiveElement.GetBoundingClientRect();
             var headers = GridPolicy.Select(column => new Header<object>()

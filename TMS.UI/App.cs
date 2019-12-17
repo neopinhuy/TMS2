@@ -1,6 +1,5 @@
 ﻿using TMS.UI.Business;
 using TMS.UI.Business.Dashboard;
-using TMS.UI.Business.Freight;
 
 namespace TMS.UI
 {
@@ -13,11 +12,9 @@ namespace TMS.UI
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
-            var orderComp = new CoordinationBL();
-            orderComp.Render();
-            var driver = new DriverBL();
-            driver.Render();
-            driver.Focus();
+            var ledger = new LedgerBL();
+            ledger.Render();
+            ledger.Focus();
         }
     }
 }

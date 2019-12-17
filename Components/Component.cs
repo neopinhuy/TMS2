@@ -43,8 +43,15 @@ namespace Components
             {
                 disabled = value;
                 if (InteractiveElement is null) return;
-                if (value) InteractiveElement.SetAttribute("disabled", "disabled");
-                else InteractiveElement.RemoveAttribute("disabled");
+                if (value)
+                {
+                    InteractiveElement.SetAttribute("disabled", "disabled");
+                }
+                else
+                {
+                    InteractiveElement.RemoveAttribute("disabled");
+                }
+                if (Children.HasElement()) Children.ForEach(x => x.Disabled = value);
             }
         }
         public virtual bool ShouldFocus

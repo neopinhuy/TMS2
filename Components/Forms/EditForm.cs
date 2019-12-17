@@ -129,7 +129,7 @@ namespace Components.Forms
             {
                 var componentGroup = await Client<ComponentGroup>.Instance
                     .GetList($"?$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Name}'");
-                var groupTree = BuildTree(componentGroup.Value);
+                var groupTree = BuildTree(componentGroup.value);
                 Html.Take(RootHtmlElement);
                 RenderGroup(groupTree);
                 AfterRendered?.Invoke();
@@ -160,6 +160,7 @@ namespace Components.Forms
                     .ClassName("group").ClassName(group.ClassName)
                     .ClassName(group.IsTab ? "tab" : string.Empty).Display(!group.Hidden)
                     .Style(group.Style ?? string.Empty).Width(group.Width);
+                AddChild(new Section(Html.Context) { Name = group.Name });
                 if (group.InverseParent != null && group.InverseParent.Any())
                 {
                     RenderGroup(group.InverseParent.ToList());

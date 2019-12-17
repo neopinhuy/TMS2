@@ -1,4 +1,5 @@
-﻿using Components.Forms;
+﻿using Components;
+using Components.Forms;
 using System;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -15,8 +16,28 @@ namespace TMS.UI.Business
             Title = "Ledger";
             Entity = new LedgerVM
             {
-                FromMonth = DateTime.Now.AddDays(-DateTime.Now.Day + 1)
+                FromMonth = DateTime.Now.AddDays(-DateTime.Now.Day + 1),
             };
+        }
+
+        public override void Render()
+        {
+            base.Render();
+            AfterRendered += () =>
+            {
+                var grid = FindComponentByName<GridView>("LedgerGrid");
+                grid.RowData.Subscribe(x =>
+                {
+                    var rows = x.Array as Ledger[];
+                    rows.ForEach(SetOriginMoney);
+                });
+            };
+        }
+
+        private static void SetOriginMoney(Ledger le)
+        {
+            le.OriginMoney = le.OriginCredit ?? le.OriginDebit;
+            le.OriginOpeningMoney = le.OriginOpeningCredit ?? le.OriginOpeningDebit;
         }
 
         public override void Create()
@@ -25,13 +46,13 @@ namespace TMS.UI.Business
             {
                 Name = _editorName,
                 Title = "New ledger",
+                Entity = new Ledger() { ExchangeRate = 1 }
             };
             AddChild(popup);
         }
 
         public void EditLedger(Ledger entity)
         {
-            CalcOriginMoney(entity);
             var popup = new PopupEditor<Ledger>()
             {
                 Name = _editorName,
@@ -39,36 +60,19 @@ namespace TMS.UI.Business
                 Entity = entity,
             };
             AddChild(popup);
-            popup.Disposed += () => {
-                CalcExchangeMoney(entity);
-            };
-        }
-
-        private static void CalcOriginMoney(Ledger entity)
-        {
-            entity.Debit /= entity.ExchangeRate;
-            entity.Credit /= entity.ExchangeRate;
-            entity.OpeningDebit /= entity.ExchangeRate;
-            entity.OpeningCredit /= entity.ExchangeRate;
+            popup.Disabled = true;
         }
 
         public async Task SaveLedger()
         {
             var popup = FindComponentByName<PopupEditor<Ledger>>(_editorName);
             var entity = popup.Entity as Ledger;
-            CalcExchangeMoney(entity);
+            entity.Debit = null;
+            entity.Credit = null;
+            entity.OpeningCredit = null;
+            entity.OpeningDebit = null;
+            SetOriginMoney(entity);
             await popup.Save(true);
-        }
-
-        private static void CalcExchangeMoney(Ledger entity)
-        {
-            entity.OriginMoney = entity.Debit ?? entity.Credit;
-            entity.Debit *= entity.ExchangeRate;
-            entity.Credit *= entity.ExchangeRate;
-
-            entity.OriginOpeningMoney = entity.OpeningDebit ?? entity.OpeningCredit;
-            entity.OpeningDebit *= entity.ExchangeRate;
-            entity.OpeningCredit *= entity.ExchangeRate;
         }
 
         public async Task Search()

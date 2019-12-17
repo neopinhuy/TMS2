@@ -13,6 +13,8 @@ namespace TMS.API.Models
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
         public Odata odata { get; set; }
-        public List<T> Value { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>")]
+        public List<T> value { get; set; }
     }
 }

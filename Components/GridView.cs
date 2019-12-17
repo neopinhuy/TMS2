@@ -51,7 +51,7 @@ namespace Components
                     Toast.Warning("Can not load header for the GridView");
                     return;
                 }
-                var headers = gridPolicyTask.Result.Value
+                var headers = gridPolicyTask.Result.value
                     .Where(x => !x.Hidden).Select(MapToHeader).ToArray();
                 Header.AddRange(headers);
                 RenderTable();
@@ -173,7 +173,7 @@ namespace Components
             if (result == null) return;
             _total = result.odata?.count ?? 0;
             UpdatePagination();
-            RowData.Data = result.Value?.ToArray();
+            RowData.Data = result.value?.ToArray();
             if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
         }
 
