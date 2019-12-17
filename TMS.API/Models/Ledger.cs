@@ -23,7 +23,7 @@ namespace TMS.API.Models
         public string InvoiceNo { get; set; }
         public DateTime? InvoiceDate { get; set; }
         public string InvoiceImage { get; set; }
-        public int? DebitAccountId { get; set; }
+        public int? AccountTypeId { get; set; }
         public int? CreditAccountId { get; set; }
         public int? EntityId { get; set; }
         public int? TargetId { get; set; }
@@ -35,8 +35,8 @@ namespace TMS.API.Models
         public int? ReceiverBankBranchId { get; set; }
         public string Note { get; set; }
         public bool Active { get; set; }
-        public DateTime? InsertedDate { get; set; }
-        public int? InsertedBy { get; set; }
+        public DateTime InsertedDate { get; set; }
+        public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 

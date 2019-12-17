@@ -28,7 +28,8 @@ namespace Components.Extensions
                 var propertyGroup = m.Groups["property"];
                 var formatGroup = m.Groups["format"];
                 var endGroup = m.Groups["end"];
-                values.Add(propertyGroup.Value == "0" ? source : source.GetComplexPropValue(propertyGroup.Value));
+                var value = source.GetComplexPropValue(propertyGroup.Value);
+                values.Add(propertyGroup.Value == "0" ? source : value is null ? "null" : value);
                 return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value
                   + new string('}', endGroup.Captures.Count);
             });

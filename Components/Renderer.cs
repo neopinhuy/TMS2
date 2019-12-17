@@ -2,6 +2,7 @@
 using MVVM;
 using System;
 using System.Globalization;
+using static Retyped.jquery;
 using ElementType = MVVM.ElementType;
 
 namespace Components
@@ -49,9 +50,9 @@ namespace Components
             html.Input.ClassName("input-small").Value(value.Data?.ToString())
                 .Attr("data-role", "datepicker")
                 .Attr("data-day", "false")
-                .Attr("data-format", "%mm-%Y")
-                .Value(value.Data?.ToString())
-                .Event(EventType.Change, (e) => ParseDate(value, e));
+                .Attr("data-format", "%d/%m/%Y")
+                .Value(value.Data?.ToString());
+            Html.Context.AddEventListener("set", (e) => ParseDate(value, e));
             return html;
         }
 

@@ -1143,7 +1143,7 @@ namespace TMS.API.Models
 
                 entity.HasOne(d => d.DebitAccount)
                     .WithMany(p => p.LedgerDebitAccount)
-                    .HasForeignKey(d => d.DebitAccountId)
+                    .HasForeignKey(d => d.AccountTypeId)
                     .HasConstraintName("FK_Ledger_DebitAccount");
 
                 entity.HasOne(d => d.Entity)

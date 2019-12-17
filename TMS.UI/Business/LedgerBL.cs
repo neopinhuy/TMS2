@@ -1,6 +1,7 @@
 ﻿using Components;
 using Components.Forms;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using TMS.UI.ViewModels;
@@ -9,12 +10,13 @@ namespace TMS.UI.Business
 {
     public class LedgerBL : TabEditor<LedgerVM>
     {
+        private readonly LedgerVM _vm;
         private readonly string _editorName = $"Edit{typeof(Ledger).Name}";
         public LedgerBL()
         {
             Name = "Ledger List";
             Title = "Ledger";
-            Entity = new LedgerVM
+            Entity = _vm = new LedgerVM
             {
                 FromMonth = DateTime.Now.AddDays(-DateTime.Now.Day + 1),
             };
@@ -77,7 +79,8 @@ namespace TMS.UI.Business
 
         public async Task Search()
         {
-
+            var grid = FindComponent<GridView>().FirstOrDefault();
+            grid?.ReloadData();
         }
     }
 }
