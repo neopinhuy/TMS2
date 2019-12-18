@@ -36,6 +36,8 @@ namespace TMS.API.Models
         public int? StateId { get; set; }
         public string PopulateField { get; set; }
         public string CascadeField { get; set; }
+        public string Summary { get; set; }
+        public int? SummaryColSpan { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int InsertedBy { get; set; }

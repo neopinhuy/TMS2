@@ -40,10 +40,10 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual AccountType AccountType { get; set; }
         public virtual User Approver { get; set; }
         public virtual AccountType CreditAccount { get; set; }
         public virtual Currency Currency { get; set; }
-        public virtual AccountType DebitAccount { get; set; }
         public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Bank ReceiverBank { get; set; }

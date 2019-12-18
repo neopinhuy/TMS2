@@ -48,7 +48,7 @@ namespace TMS.API.Controllers
             return Ok(results);
         }
 
-        protected async Task<IActionResult> ApplyCustomeQuery(ODataQueryOptions<T> options, IQueryable<T> query)
+        public async Task<IActionResult> ApplyCustomeQuery(ODataQueryOptions<T> options, IQueryable<T> query)
         {
             options.Validate(new ODataValidationSettings()
             {

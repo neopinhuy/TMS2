@@ -44,6 +44,7 @@
     <Compile Include="..\Common\Extensions\IEnumerableExtensions.cs" Link="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="..\Common\Extensions\ReflectionExtension.cs" Link="Extensions\ReflectionExtension.cs" />
     <Compile Include="..\Common\Extensions\StringExtensions.cs" Link="Extensions\StringExtensions.cs" />
+    <Compile Include="..\TMS.UI\ViewModels\LedgerVM.cs" Link="ViewModels\LedgerVM.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -142,6 +143,7 @@
 
   <ItemGroup>
     <Folder Include="Consts\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

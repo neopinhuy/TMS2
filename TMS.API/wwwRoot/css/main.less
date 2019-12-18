@@ -366,11 +366,11 @@ td {
             line-height: 1rem;
 
             &:nth-child(odd) {
-                background-color: @light !important;
+                background-color: @light;
             }
 
             &.selected-row, &.hovering {
-                background-color: @tableSelected !important;
+                background-color: @tableSelected;
                 cursor: pointer;
 
                 .mif-pencil {
@@ -379,7 +379,27 @@ td {
             }
 
             &.hovering {
-                background-color: @tableHover !important;
+                background-color: @tableHover;
+            }
+
+            &.summary {
+                background-color: @theadBg;
+                color: @theadColor;
+                border-top: 1px solid @grayNormal;
+                font-weight: 700;
+                font-size: 0.9rem;
+
+                td:not(.status-cell) {
+                    border: 0;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                }
+            }
+
+            .summary-header {
+                text-align: right !important;
+                font-weight: 700 !important;
+                font-size: 0.9rem !important;
             }
         }
 
@@ -403,8 +423,10 @@ td {
         }
     }
 
-    tr:last-child td {
-        border-bottom: 0;
+    tr {
+        &:last-child td {
+            border-bottom: 0;
+        }
     }
 
     [colspan] {

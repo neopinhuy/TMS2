@@ -36,7 +36,7 @@ namespace Components
         protected readonly TableParam<T> _tableParam;
         private IEnumerable<IEnumerable<object>> _refData;
         protected HTMLTableElement _frozenTable;
-        protected HTMLTableElement _mainTable;
+        protected HTMLTableElement _nonFrozenTable;
         protected Section _frozenSection;
         protected Section _mainSection;
         private int? timeOut = null;
@@ -81,8 +81,8 @@ namespace Components
             _frozenSection = new Section(_frozenTable);
             AddChild(_frozenSection);
             Html.Instance.End.Div.ClassName("non-frozen").Table.ClassName("table");
-            _mainTable = Html.Context as HTMLTableElement;
-            _mainSection = new Section(_mainTable);
+            _nonFrozenTable = Html.Context as HTMLTableElement;
+            _mainSection = new Section(_nonFrozenTable);
             AddChild(_mainSection);
             Rerender();
             Html.Instance.EndOf(".table-wrapper");
@@ -113,21 +113,55 @@ namespace Components
                 var nonFrozen = NonFrozenHeader;
 
                 Html.Take(_frozenTable).Clear();
-                RenderTableHeader(frozen);
+                RenderTableHeader(FrozenHeader);
                 RenderTableContent(frozen, _frozenSection);
 
-                Html.Take(_mainTable).Clear();
-                RenderTableHeader(nonFrozen);
-                RenderTableContent(nonFrozen, _mainSection);
+                Html.Take(_nonFrozenTable).Clear();
+                RenderTableHeader(NonFrozenHeader);
+                RenderTableContent(NonFrozenHeader, _mainSection);
 
                 if (Editable)
                 {
                     AddNewEmptyRow(frozen, nonFrozen);
                 }
 
+                RenderSummary(frozen, nonFrozen);
+
                 _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
-                _mainTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                AfterRendered?.Invoke();
             });
+        }
+
+        private void RenderSummary(List<Header<T>> frozen, List<Header<T>> nonFrozen)
+        {
+            if (Headers.Data.All(x => x.Summary.IsNullOrEmpty())) return;
+            var sums = Headers.Data.Where(x => x.Summary.HasAnyChar())
+                .DistinctBy(x => x.Summary);
+            sums.ForEach(header =>
+            {
+                AddNewEmptyRow(frozen, nonFrozen);
+                ColSpan(header, frozen, _frozenTable);
+                ColSpan(header, nonFrozen, _nonFrozenTable);
+            });
+        }
+
+        private void ColSpan(Header<T> sum, List<Header<T>> headers, HTMLTableElement table)
+        {
+            var tr = table.TBodies[0].LastElementChild as HTMLTableRowElement;
+            tr.AddClass("summary");
+            if (!headers.Contains(sum)) return;
+            var colSpan = sum.SummaryColSpan;
+            if (colSpan < 0) return;
+            for (var i = 0; i < colSpan - 1; i++)
+            {
+                tr.Cells[1].Remove();
+            }
+            var cell = tr.Cells[1];
+            if (cell is null) return;
+            cell.ColSpan = (uint)sum.SummaryColSpan;
+            cell.TextContent = sum.Summary;
+            cell.AddClass("summary-header");
         }
 
         private void AddNewEmptyRow(List<Header<T>> frozen, List<Header<T>> nonFrozen)
@@ -136,8 +170,8 @@ namespace Components
             emptyRowData[IdField] = -Math.Abs(emptyRowData.GetHashCode()); // Not to add this row into the submitted list
             emptyRowData[_emptyFlag] = true;
             Html.Take(_frozenTable.TBodies[0]);
-            RenderEmptyRow(frozen, emptyRowData,_frozenSection);
-            Html.Take(_mainTable.TBodies[0]);
+            RenderEmptyRow(frozen, emptyRowData, _frozenSection);
+            Html.Take(_nonFrozenTable.TBodies[0]);
             RenderEmptyRow(nonFrozen, emptyRowData, _mainSection);
         }
 
@@ -282,22 +316,24 @@ namespace Components
         {
             var rowSection = new TableRow(ElementType.tr) { Entity = row };
             section.AddChild(rowSection);
-            Html.Instance
-                .Event(EventType.Click, ToggleSelectRow)
-                .Event(EventType.MouseEnter, HoverRow)
-                .Event(EventType.MouseLeave, LeaveRow);
             var tr = Html.Context as HTMLTableRowElement;
             tr[_rowData] = row;
-            if (_tableParam.RowClick != null)
+            if (!row.GetBool(_emptyFlag))
             {
-                tr.AddEventListener(EventType.Click, () =>
+                tr.AddEventListener(EventType.Click, ToggleSelectRow);
+                tr.AddEventListener(EventType.MouseEnter, HoverRow);
+                tr.AddEventListener(EventType.MouseLeave, LeaveRow);
+                if (_tableParam.RowClick != null)
                 {
-                    _tableParam.RowClick(row);
-                });
-            }
-            if (_tableParam.RowDblClick != null)
-            {
-                tr.AddEventListener(EventType.DblClick, () => _tableParam.RowDblClick(row));
+                    tr.AddEventListener(EventType.Click, () =>
+                    {
+                        _tableParam.RowClick(row);
+                    });
+                }
+                if (_tableParam.RowDblClick != null)
+                {
+                    tr.AddEventListener(EventType.DblClick, () => _tableParam.RowDblClick(row));
+                }
             }
             Html.Instance.ForEach(headers, (Header<T> header, int headerIndex) => RenderTableCell(row, header, rowSection));
         }
@@ -311,13 +347,13 @@ namespace Components
             }
             var index = GetIndex(e);
             ToggleSelectRow(index, _frozenTable.TBodies[0]);
-            ToggleSelectRow(index, _mainTable.TBodies[0]);
+            ToggleSelectRow(index, _nonFrozenTable.TBodies[0]);
         }
 
         private void ToggleSelectRow(int index, bool forceSelect = false)
         {
             ToggleSelectRow(forceSelect, index, _frozenTable.TBodies[0]);
-            ToggleSelectRow(forceSelect, index, _mainTable.TBodies[0]);
+            ToggleSelectRow(forceSelect, index, _nonFrozenTable.TBodies[0]);
         }
 
         private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
@@ -361,7 +397,7 @@ namespace Components
         {
             var index = GetIndex(e);
             HoverRow(index, _frozenTable.TBodies[0]);
-            HoverRow(index, _mainTable.TBodies[0]);
+            HoverRow(index, _nonFrozenTable.TBodies[0]);
         }
 
         private static void HoverRow(int index, HTMLTableSectionElement body)
@@ -375,7 +411,7 @@ namespace Components
         {
             var index = GetIndex(e);
             LeaveRow(index, _frozenTable.TBodies[0]);
-            LeaveRow(index, _mainTable.TBodies[0]);
+            LeaveRow(index, _nonFrozenTable.TBodies[0]);
         }
 
         protected int GetIndex(Event e)
@@ -385,7 +421,7 @@ namespace Components
             var index = Array.IndexOf(_frozenTable.TBodies[0].Rows.ToArray(), tableRow);
             if (index < 0)
             {
-                index = Array.IndexOf(_mainTable.TBodies[0].Rows.ToArray(), tableRow);
+                index = Array.IndexOf(_nonFrozenTable.TBodies[0].Rows.ToArray(), tableRow);
             }
             return index;
         }
@@ -399,7 +435,11 @@ namespace Components
 
         private void RenderTableCell(T row, Header<T> header, Section rowSection)
         {
-            var cell = new Section(ElementType.td) { Entity = rowSection.Entity };
+            var cell = new Section(ElementType.td) 
+            {
+                Name = header.FieldName,
+                Entity = rowSection.Entity
+            };
             rowSection.AddChild(cell);
             Html.Instance.Style($"width: {header.Width}; min-width: {header.MinWidth}; max-width: {header.MaxWidth};");
             if (header.StatusBar) Html.Instance.ClassName("status-cell").Icon("mif-pencil").End.Render();
@@ -489,9 +529,9 @@ namespace Components
                 .Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
             var tbody = row.ParentElement as HTMLTableSectionElement;
             var index = Array.IndexOf(tbody.Rows.ToArray(), row);
-            _mainTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
+            _nonFrozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
             _frozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
-            _mainTable.TBodies[0].Rows[index].AddClass(_selectedClass);
+            _nonFrozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
             _frozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
             var rowData = row[_rowData];
             if (rowData != null)

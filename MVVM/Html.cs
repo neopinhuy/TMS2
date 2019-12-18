@@ -544,6 +544,16 @@ namespace MVVM
             return this;
         }
 
+        public Html RemoveEvent(EventType type, Action action)
+        {
+            Context.AddEventListener(type, (e) =>
+            {
+                FocusEle = e.Target as Element;
+                action();
+            });
+            return this;
+        }
+
         public Html Event(EventType type, Action action)
         {
             Context.AddEventListener(type, (e) =>

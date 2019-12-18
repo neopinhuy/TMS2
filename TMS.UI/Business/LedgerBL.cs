@@ -1,5 +1,8 @@
-﻿using Components;
+﻿using Common.Clients;
+using Components;
+using Components.Extensions;
 using Components.Forms;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +21,7 @@ namespace TMS.UI.Business
             Title = "Ledger";
             Entity = _vm = new LedgerVM
             {
-                FromMonth = DateTime.Now.AddDays(-DateTime.Now.Day + 1),
+                FromDate = DateTime.Now.AddDays(-DateTime.Now.Day + 1),
             };
         }
 
@@ -33,6 +36,18 @@ namespace TMS.UI.Business
                     var rows = x.Array as Ledger[];
                     rows.ForEach(SetOriginMoney);
                 });
+                grid.AfterRendered += async () =>
+                {
+                    var tr = grid.RootHtmlElement.QuerySelector(".summary");
+                    var openingDebit = tr.QuerySelector("td:nth-child(3)");
+                    var filter = Entity as LedgerVM;
+                    var summary = await Client<Ledger>.Instance
+                        .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}&TargetTypeId={filter.TargetTypeId}");
+                    Console.WriteLine(summary);
+                    openingDebit.TextContent = "Open debit";
+                    var openingCredit = tr.QuerySelector("td:nth-child(4)");
+                    openingCredit.TextContent = "Open credit";
+                };
             };
         }
 

@@ -8,8 +8,8 @@ namespace TMS.API.Models
         public AccountType()
         {
             InverseParent = new HashSet<AccountType>();
+            LedgerAccountType = new HashSet<Ledger>();
             LedgerCreditAccount = new HashSet<Ledger>();
-            LedgerDebitAccount = new HashSet<Ledger>();
         }
 
         public int Id { get; set; }
@@ -27,7 +27,7 @@ namespace TMS.API.Models
         public virtual AccountType Parent { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<AccountType> InverseParent { get; set; }
+        public virtual ICollection<Ledger> LedgerAccountType { get; set; }
         public virtual ICollection<Ledger> LedgerCreditAccount { get; set; }
-        public virtual ICollection<Ledger> LedgerDebitAccount { get; set; }
     }
 }

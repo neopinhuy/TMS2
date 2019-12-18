@@ -90,7 +90,7 @@ namespace Components
             if (!(e.Target is HTMLElement target)) return;
             var index = GetIndex(e);
             var frozenGroupRow = _frozenTable.TBodies[0].Rows[index];
-            var nonfrozenGroupRow = _mainTable.TBodies[0].Rows[index];
+            var nonfrozenGroupRow = _nonFrozenTable.TBodies[0].Rows[index];
             if (target.HasClass("fa-chevron-right"))
             {
                 target.ReplaceClass("fa-chevron-right", "fa-chevron-down");

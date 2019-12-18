@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Common.Consts;
 using System;
 using Microsoft.EntityFrameworkCore;
+using TMS.UI.ViewModels;
 
 namespace TMS.API.Controllers
 {
@@ -82,6 +83,32 @@ namespace TMS.API.Controllers
                 };
 
             return await ApplyCustomeQuery(options, query);
+        }
+
+        [HttpGet("api/[Controller]/summary")]
+        public async Task<IActionResult> GetLedgerSummary(LedgerVM filter)
+        {
+            var fromDate = new DateTime(filter.FromDate.Year, filter.FromDate.Month, 1, 0, 0, 0);
+            var toDate = new DateTime(filter.ToDate.Year, filter.ToDate.Month, filter.ToDate.Day, 23, 59, 59, 999);
+            var firstOpening = await GetLedgerRange(fromDate, toDate).FirstOrDefaultAsync();
+            var lastOpening = await GetLedgerRange(fromDate, toDate).LastOrDefaultAsync();
+            if (firstOpening is null)
+            {
+                firstOpening = await db.Ledger.Where(x => x.InsertedDate >= filter.FromDate)
+                    .OrderBy(x => x.InsertedDate).FirstOrDefaultAsync();
+                if (firstOpening is null) return NoContent();
+                fromDate = firstOpening.InsertedDate;
+            }
+
+            if (lastOpening is null)
+            {
+                lastOpening = await db.Ledger.Where(x => x.InsertedDate <= toDate)
+                    .OrderBy(x => x.InsertedDate).LastOrDefaultAsync();
+                if (lastOpening is null) return NoContent();
+                toDate = lastOpening.InsertedDate;
+            }
+
+            return Ok();
         }
 
         private IQueryable<Ledger> GetLedgerRange(DateTime fromMonth, DateTime toMonth)

@@ -15,7 +15,7 @@ namespace Components
 {
     public class GridView : Component
     {
-        private readonly UserInterface _ui;
+        public readonly UserInterface UI;
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
@@ -26,7 +26,7 @@ namespace Components
 
         public GridView(UserInterface ui)
         {
-            _ui = ui ?? throw new ArgumentNullException(nameof(ui));
+            UI = ui ?? throw new ArgumentNullException(nameof(ui));
             Id = ui.Id;
             Name = ui.FieldName;
             Header = new ObservableArray<Header<object>>();
@@ -56,7 +56,6 @@ namespace Components
                 Header.AddRange(headers);
                 RenderTable();
                 Pagination();
-                AfterRendered?.Invoke();
             });
         }
 
@@ -65,8 +64,8 @@ namespace Components
             return Client<GridPolicy>.Instance
                     .GetList("?$expand=Reference($select=Name)" +
                     "&orderby=Order" +
-                    $"&$filter=Active eq true and Entity/Name eq '{_ui.Reference.Name}' " +
-                    $"and FeatureId eq {_ui.ComponentGroup.FeatureId}");
+                    $"&$filter=Active eq true and Entity/Name eq '{UI.Reference.Name}' " +
+                    $"and FeatureId eq {UI.ComponentGroup.FeatureId}");
         }
 
         public void RenderTable()
@@ -75,24 +74,25 @@ namespace Components
             {
                 Headers = Header,
                 RowData = RowData,
-                GroupBy = _ui.GroupBy,
-                GroupFormat = _ui.GroupFormat,
+                GroupBy = UI.GroupBy,
+                GroupFormat = UI.GroupFormat,
             };
             BindingEvents(tableParams);
-            _table = _ui.GroupFormat.HasAnyChar()
+            _table = UI.GroupFormat.HasAnyChar()
                 ? new GroupTable(tableParams)
                 : new Table<object>(tableParams);
             _table.Entity = Entity;
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
             _table.CellChanged = (arg, header, data) => CellChanged?.Invoke(arg, header, data);
-            _table.Render();
+            AddChild(_table);
+            _table.AfterRendered += () => AfterRendered?.Invoke();
         }
 
         private void BindingEvents(TableParam<object> tableParams)
         {
-            if (!_ui.Events.HasAnyChar()) return;
-            var events = JsonConvert.DeserializeObject<object>(_ui.Events);
+            if (!UI.Events.HasAnyChar()) return;
+            var events = JsonConvert.DeserializeObject<object>(UI.Events);
             var dblClick = events[EventType.DblClick.ToString()]?.ToString();
             if (dblClick.HasAnyChar())
             {
@@ -134,6 +134,8 @@ namespace Components
                 ButtonIcon = column.ButtonIcon,
                 PopulateField = column.PopulateField,
                 CascadeField = column.CascadeField,
+                Summary = column.Summary,
+                SummaryColSpan = column.SummaryColSpan,
             };
             if (column.ButtonEvent.HasAnyChar())
             {
@@ -165,34 +167,34 @@ namespace Components
 
         public virtual async Task ReloadData(string dataSource = null)
         {
-            var formatted = Utils.FormatWith(_ui.DataSourceFilter, Entity);
+            var formatted = Utils.FormatWith(UI.DataSourceFilter, Entity);
             dataSource = dataSource ?? formatted;
-            var pagingQuery = dataSource + $"&$skip={_pageIndex * _ui.Row}&$top={_ui.Row}&$count=true";
-            var result = await Client<object>.Instance.GetListEntity(_ui.Reference.Name,
-                _ui.Row > 0 ? pagingQuery : dataSource);
+            var pagingQuery = dataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
+            var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,
+                UI.Row > 0 ? pagingQuery : dataSource);
             if (result == null) return;
             _total = result.odata?.count ?? 0;
             UpdatePagination();
             RowData.Data = result.value?.ToArray();
-            if (Entity != null) Entity[_ui.FieldName] = RowData.Data;
+            if (Entity != null) Entity[UI.FieldName] = RowData.Data;
         }
 
         private void UpdatePagination()
         {
-            if (_ui.Row is null || _ui.Row == 0) return;
+            if (UI.Row is null || UI.Row == 0) return;
             if (_paginator is null) return;
             Html.Take(_paginator).Pagination("updateItems", _total);
         }
 
         private void Pagination()
         {
-            if (_ui.Row is null || _ui.Row == 0) return;
+            if (UI.Row is null || UI.Row == 0) return;
             if (_paginator is null)
             {
                 Html.Take(RootHtmlElement).Ul.ClassName("pagination");
                 _paginator = Html.Context as HTMLElement;
             }
-            Html.Take(_paginator).Pagination(_total, _ui.Row ?? 0, (page, e) =>
+            Html.Take(_paginator).Pagination(_total, UI.Row ?? 0, (page, e) =>
             {
                 (e["preventDefault"] as System.Action)();
                 _pageIndex = page - 1;
@@ -213,7 +215,7 @@ namespace Components
 
         public virtual async Task Delete()
         {
-            var entity = _ui.Reference.Name;
+            var entity = UI.Reference.Name;
             var ids = RowData.Data
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Select(x => (int)x[IdField]).ToList();

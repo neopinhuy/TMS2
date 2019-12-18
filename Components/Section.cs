@@ -16,6 +16,18 @@ namespace Components
             RootHtmlElement = existingElement;
         }
 
+        public string TextContent
+        {
+            get 
+            {
+                return RootHtmlElement.TextContent;
+            }
+            set
+            {
+                RootHtmlElement.TextContent = value;
+            }
+        }
+
         public override void Render()
         {
             // Do nothing here

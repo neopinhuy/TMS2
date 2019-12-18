@@ -35,5 +35,7 @@ namespace Components
         public Action<T> ButtonEvent { get; set; }
         public string ButtonClass { get; set; }
         public string ButtonIcon { get; set; }
+        public string Summary { get; internal set; }
+        public int? SummaryColSpan { get; internal set; }
     }
 }

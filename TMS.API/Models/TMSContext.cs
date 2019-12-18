@@ -993,6 +993,8 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Summary).HasMaxLength(50);
+
                 entity.Property(e => e.TextAlign)
                     .HasMaxLength(10)
                     .IsUnicode(false);
@@ -1126,6 +1128,11 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.ReceiverFullName).HasMaxLength(100);
 
+                entity.HasOne(d => d.AccountType)
+                    .WithMany(p => p.LedgerAccountType)
+                    .HasForeignKey(d => d.AccountTypeId)
+                    .HasConstraintName("FK_Ledger_DebitAccount");
+
                 entity.HasOne(d => d.Approver)
                     .WithMany(p => p.LedgerApprover)
                     .HasForeignKey(d => d.ApproverId)
@@ -1141,11 +1148,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Ledger_Currency");
 
-                entity.HasOne(d => d.DebitAccount)
-                    .WithMany(p => p.LedgerDebitAccount)
-                    .HasForeignKey(d => d.AccountTypeId)
-                    .HasConstraintName("FK_Ledger_DebitAccount");
-
                 entity.HasOne(d => d.Entity)
                     .WithMany(p => p.Ledger)
                     .HasForeignKey(d => d.EntityId)
@@ -1154,6 +1156,7 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.LedgerInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ledger_UserInserted");
 
                 entity.HasOne(d => d.ReceiverBankBranch)
