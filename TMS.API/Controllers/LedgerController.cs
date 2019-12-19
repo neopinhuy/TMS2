@@ -85,8 +85,8 @@ namespace TMS.API.Controllers
                 opening,
                 new Ledger 
                 {
-                    OpeningDebit = query.Sum(x => x.Debit ?? 0) + (opening.OpeningDebit ?? 0), 
-                    OpeningCredit = query.Sum(x => x.Credit ?? 0) + (opening.OpeningCredit ?? 0)
+                    OpeningDebit = await query.SumAsync(x => x.Debit ?? 0) + (opening.OpeningDebit ?? 0),
+                    OpeningCredit = await query.SumAsync(x => x.Credit ?? 0) + (opening.OpeningCredit ?? 0)
                 }
             };
             return Ok(new OdataResult<Ledger>
@@ -103,14 +103,18 @@ namespace TMS.API.Controllers
             var lastOpening = await GetOpeningRange(filter).OrderByDescending(x => x.InsertedDate).FirstOrDefaultAsync();
             if (firstOpening is null)
             {
-                firstOpening = await db.Ledger.Where(x => x.InsertedDate >= filter.FromDate)
+                firstOpening = await db.Ledger.Where(le => le.InsertedDate >= filter.FromDate
+                    && (filter.AccountTypeId == null || le.AccountTypeId == filter.AccountTypeId)
+                    && (filter.TargetId == null || le.TargetId == filter.TargetId && le.EntityId == filter.TargetTypeId))
                     .OrderBy(x => x.InsertedDate).FirstOrDefaultAsync();
                 fromDate = firstOpening?.InsertedDate ?? filter.FromDate;
             }
 
             if (lastOpening is null)
             {
-                lastOpening = await db.Ledger.Where(x => x.InsertedDate <= toDate)
+                lastOpening = await db.Ledger.Where(le => le.InsertedDate <= toDate
+                    && (filter.AccountTypeId == null || le.AccountTypeId == filter.AccountTypeId)
+                    && (filter.TargetId == null || le.TargetId == filter.TargetId && le.EntityId == filter.TargetTypeId))
                     .OrderBy(x => x.InsertedDate).LastOrDefaultAsync();
                 toDate = lastOpening?.InsertedDate ?? filter.ToDate;
             }
