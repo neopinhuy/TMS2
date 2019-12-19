@@ -8,6 +8,7 @@ using Common.Consts;
 using System;
 using Microsoft.EntityFrameworkCore;
 using TMS.UI.ViewModels;
+using System.Collections.Generic;
 
 namespace TMS.API.Controllers
 {
@@ -17,29 +18,10 @@ namespace TMS.API.Controllers
         {
         }
 
-        [HttpGet("api/[Controller]/{fromMonth}/{toMonth}")]
-        public async Task<IActionResult> GetLedger(DateTime fromMonth, DateTime toMonth, ODataQueryOptions<Ledger> options)
+        [HttpGet("api/[Controller]/Custom")]
+        public async Task<IActionResult> GetLedger(LedgerVM filter, ODataQueryOptions<Ledger> options)
         {
-            var fromDate = new DateTime(fromMonth.Year, fromMonth.Month, 1, 0, 0, 0);
-            var toDate = new DateTime(toMonth.Year, toMonth.Month, toMonth.Day, 23, 59, 59, 999);
-            var firstOpening = await GetLedgerRange(fromDate, toDate).FirstOrDefaultAsync();
-            var lastOpening = await GetLedgerRange(fromDate, toDate).LastOrDefaultAsync();
-            if (firstOpening is null)
-            {
-                firstOpening = await db.Ledger.Where(x => x.InsertedDate >= fromMonth)
-                    .OrderBy(x => x.InsertedDate).FirstOrDefaultAsync();
-                if (firstOpening is null) return NoContent();
-                fromDate = firstOpening.InsertedDate;
-            }
-
-            if (lastOpening is null)
-            {
-                lastOpening = await db.Ledger.Where(x => x.InsertedDate <= toDate)
-                    .OrderBy(x => x.InsertedDate).LastOrDefaultAsync();
-                if (lastOpening is null) return NoContent();
-                toDate = lastOpening.InsertedDate;
-            }
-
+            var (opening, last) = await CalcDateRange(filter);
             var query =
                 from le in db.Ledger
                 join entity in db.Entity on le.EntityId equals entity.Id
@@ -47,7 +29,10 @@ namespace TMS.API.Controllers
                 from user in db.User.Where(x => x.Id == le.TargetId && entity.Name == TargetConsts.USER).DefaultIfEmpty()
                 from customer in db.Customer.Where(x => x.Id == le.TargetId && entity.Name == TargetConsts.CUSTOMER).DefaultIfEmpty()
                 from user2 in db.User.Where(x => x.Id == customer.Id).DefaultIfEmpty()
-                where le.InsertedDate >= fromDate && le.InsertedDate <= toDate
+                where le.InsertedDate >= opening.InsertedDate && le.InsertedDate <= last.InsertedDate
+                    && (filter.AccountTypeId == null || le.AccountTypeId == filter.AccountTypeId)
+                    && (filter.TargetId == null || le.TargetId == filter.TargetId && le.EntityId == filter.TargetTypeId)
+                orderby le.InsertedDate
                 select new Ledger
                 {
                     Id = le.Id,
@@ -88,43 +73,57 @@ namespace TMS.API.Controllers
         [HttpGet("api/[Controller]/summary")]
         public async Task<IActionResult> GetLedgerSummary(LedgerVM filter)
         {
-            var fromDate = new DateTime(filter.FromDate.Year, filter.FromDate.Month, 1, 0, 0, 0);
-            var toDate = new DateTime(filter.ToDate.Year, filter.ToDate.Month, filter.ToDate.Day, 23, 59, 59, 999);
-            var firstOpening = await GetLedgerRange(fromDate, toDate).FirstOrDefaultAsync();
-            var lastOpening = await GetLedgerRange(fromDate, toDate).LastOrDefaultAsync();
+            var (opening, last) = await CalcDateRange(filter);
+            var query =
+               from le in db.Ledger
+               where le.InsertedDate >= opening.InsertedDate && le.InsertedDate <= last.InsertedDate
+                    && (filter.AccountTypeId == null || le.AccountTypeId == filter.AccountTypeId)
+                    && (filter.TargetId == null || le.TargetId == filter.TargetId && le.EntityId == filter.TargetTypeId)
+               select le;
+            var ledgers = new List<Ledger> 
+            {
+                opening,
+                new Ledger 
+                {
+                    OpeningDebit = query.Sum(x => x.Debit ?? 0) + (opening.OpeningDebit ?? 0), 
+                    OpeningCredit = query.Sum(x => x.Credit ?? 0) + (opening.OpeningCredit ?? 0)
+                }
+            };
+            return Ok(new OdataResult<Ledger>
+            {
+                value = ledgers,
+            });
+        }
+
+        private async Task<(Ledger, Ledger)> CalcDateRange(LedgerVM filter)
+        {
+            var fromDate = (DateTime?)new DateTime(filter.FromDate.Year, filter.FromDate.Month, 1, 0, 0, 0);
+            var toDate = (DateTime?)new DateTime(filter.ToDate.Year, filter.ToDate.Month, filter.ToDate.Day, 23, 59, 59, 999);
+            var firstOpening = await GetOpeningRange(filter).OrderBy(x => x.InsertedDate).FirstOrDefaultAsync();
+            var lastOpening = await GetOpeningRange(filter).OrderByDescending(x => x.InsertedDate).FirstOrDefaultAsync();
             if (firstOpening is null)
             {
                 firstOpening = await db.Ledger.Where(x => x.InsertedDate >= filter.FromDate)
                     .OrderBy(x => x.InsertedDate).FirstOrDefaultAsync();
-                if (firstOpening is null) return NoContent();
-                fromDate = firstOpening.InsertedDate;
+                fromDate = firstOpening?.InsertedDate ?? filter.FromDate;
             }
 
             if (lastOpening is null)
             {
                 lastOpening = await db.Ledger.Where(x => x.InsertedDate <= toDate)
                     .OrderBy(x => x.InsertedDate).LastOrDefaultAsync();
-                if (lastOpening is null) return NoContent();
-                toDate = lastOpening.InsertedDate;
+                toDate = lastOpening?.InsertedDate ?? filter.ToDate;
             }
-
-            return Ok();
+            return (firstOpening, lastOpening);
         }
 
-        private IQueryable<Ledger> GetLedgerRange(DateTime fromMonth, DateTime toMonth)
+        private IQueryable<Ledger> GetOpeningRange(LedgerVM filter)
         {
             return db.Ledger
-                .Where(x => x.InsertedDate <= toMonth && x.InsertedDate >= fromMonth
-                    && (x.OriginDebit != null || x.OriginCredit != null))
-                .OrderBy(x => x.InsertedDate);
-        }
-
-        public Task<Ledger> FindFirstOpening(DateTime? fromMonth)
-        {
-            return db.Ledger
-                .Where(x => fromMonth == null || x.InsertedDate >= fromMonth)
-                .OrderByDescending(x => x.InsertedDate)
-                .FirstOrDefaultAsync(x => x.OriginDebit != null || x.OriginCredit != null);
+                .Where(le => le.InsertedDate >= filter.FromDate && le.InsertedDate <= filter.ToDate 
+                    && (le.OpeningCredit != null || le.OpeningDebit != null)
+                    && (filter.AccountTypeId == null || le.AccountTypeId == filter.AccountTypeId)
+                    && (filter.TargetId == null || le.TargetId == filter.TargetId && le.EntityId == filter.TargetTypeId));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Common.Clients;
+﻿using Bridge.Html5;
+using Common.Clients;
 using Components;
 using Components.Extensions;
 using Components.Forms;
@@ -38,15 +39,21 @@ namespace TMS.UI.Business
                 });
                 grid.AfterRendered += async () =>
                 {
-                    var tr = grid.RootHtmlElement.QuerySelector(".summary");
-                    var openingDebit = tr.QuerySelector("td:nth-child(3)");
                     var filter = Entity as LedgerVM;
                     var summary = await Client<Ledger>.Instance
-                        .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}&TargetTypeId={filter.TargetTypeId}");
-                    Console.WriteLine(summary);
-                    openingDebit.TextContent = "Open debit";
-                    var openingCredit = tr.QuerySelector("td:nth-child(4)");
-                    openingCredit.TextContent = "Open credit";
+                        .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}" +
+                        $"&TargetTypeId={filter.TargetTypeId}&TargetId={filter.TargetId}");
+                    var opening = summary.value.FirstOrDefault();
+                    var closing = summary.value.LastOrDefault();
+                    if (opening is null || closing is null) return;
+
+                    var tr = grid.RootHtmlElement.QuerySelector(".summary") as HTMLTableRowElement;
+                    tr.Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
+                    tr.Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
+
+                    tr = tr.NextElementSibling as HTMLTableRowElement;
+                    tr.Cells[2].TextContent = string.Format("{0:n}", closing.OpeningDebit);
+                    tr.Cells[3].TextContent = string.Format("{0:n}", closing.OpeningCredit);
                 };
             };
         }
