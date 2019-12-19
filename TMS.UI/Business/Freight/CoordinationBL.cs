@@ -24,7 +24,7 @@ namespace TMS.UI.Business.Freight
             base.Render();
             AfterRendered += () =>
             {
-                var grid = FindComponentByName<GridView>(nameof(Coordination));
+                var grid = FindComponentByName<GridView>("CoordinationGrid");
                 grid.RowData.Subscribe(async (arg) =>
                 {
                     if (_notifySelf)

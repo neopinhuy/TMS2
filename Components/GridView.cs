@@ -78,7 +78,7 @@ namespace Components
                 GroupFormat = UI.GroupFormat,
             };
             BindingEvents(tableParams);
-            _table = UI.GroupFormat.HasAnyChar()
+            _table = UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar()
                 ? new GroupTable(tableParams)
                 : new Table<object>(tableParams);
             _table.Entity = Entity;

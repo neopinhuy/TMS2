@@ -18,6 +18,7 @@ namespace Components
     public class GroupTable : Table<object>
     {
         private const string groupKey = "__groupkey__";
+        private bool _hasBuilt = false;
         public GroupTable(TableParam<object> tableParam) : base(tableParam)
         {
         }
@@ -32,7 +33,8 @@ namespace Components
 
         private void BuildGroupRowData(ObservableArgs arg)
         {
-            if (_tableParam.GroupBy.IsNullOrEmpty()) return;
+            if (_hasBuilt || _tableParam.GroupBy.IsNullOrEmpty()) return;
+            _hasBuilt = true;
             var keys = _tableParam.GroupBy.Split(",");
             RowData.Data.ForEach(x =>
             {
