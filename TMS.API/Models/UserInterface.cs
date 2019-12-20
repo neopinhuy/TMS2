@@ -31,6 +31,7 @@ namespace TMS.API.Models
         public string Events { get; set; }
         public bool Disabled { get; set; }
         public bool Visibility { get; set; }
+        public bool Hidden { get; set; }
         public string Validation { get; set; }
         public bool Focus { get; set; }
         public string Width { get; set; }

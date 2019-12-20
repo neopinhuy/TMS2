@@ -53,11 +53,6 @@ namespace TMS.API.Models
             Feature = new HashSet<Feature>();
             FeaturePolicyInsertedByNavigation = new HashSet<FeaturePolicy>();
             FeaturePolicyUpdatedByNavigation = new HashSet<FeaturePolicy>();
-            FreightHistoryActor = new HashSet<FreightHistory>();
-            FreightHistoryInsertedByNavigation = new HashSet<FreightHistory>();
-            FreightHistoryUpdatedByNavigation = new HashSet<FreightHistory>();
-            FreightProofInsertedByNavigation = new HashSet<FreightProof>();
-            FreightProofUpdatedByNavigation = new HashSet<FreightProof>();
             FreightStateInsertedByNavigation = new HashSet<FreightState>();
             FreightStateUpdatedByNavigation = new HashSet<FreightState>();
             FuelTypeInsertedByNavigation = new HashSet<FuelType>();
@@ -214,11 +209,6 @@ namespace TMS.API.Models
         public virtual ICollection<Feature> Feature { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyUpdatedByNavigation { get; set; }
-        public virtual ICollection<FreightHistory> FreightHistoryActor { get; set; }
-        public virtual ICollection<FreightHistory> FreightHistoryInsertedByNavigation { get; set; }
-        public virtual ICollection<FreightHistory> FreightHistoryUpdatedByNavigation { get; set; }
-        public virtual ICollection<FreightProof> FreightProofInsertedByNavigation { get; set; }
-        public virtual ICollection<FreightProof> FreightProofUpdatedByNavigation { get; set; }
         public virtual ICollection<FreightState> FreightStateInsertedByNavigation { get; set; }
         public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
         public virtual ICollection<FuelType> FuelTypeInsertedByNavigation { get; set; }

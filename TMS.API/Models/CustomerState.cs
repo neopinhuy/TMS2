@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class Action
+    public partial class CustomerState
     {
-        public Action()
+        public CustomerState()
         {
-            ActionPolicy = new HashSet<ActionPolicy>();
-            TransitionAction = new HashSet<TransitionAction>();
+            Customer = new HashSet<Customer>();
         }
 
         public int Id { get; set; }
@@ -20,9 +19,6 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual User InsertedByNavigation { get; set; }
-        public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<ActionPolicy> ActionPolicy { get; set; }
-        public virtual ICollection<TransitionAction> TransitionAction { get; set; }
+        public virtual ICollection<Customer> Customer { get; set; }
     }
 }

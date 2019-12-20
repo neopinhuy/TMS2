@@ -1,5 +1,6 @@
 ﻿using TMS.UI.Business;
 using TMS.UI.Business.Dashboard;
+using TMS.UI.Business.Sale;
 
 namespace TMS.UI
 {
@@ -12,7 +13,7 @@ namespace TMS.UI
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
-            var ledger = new LedgerBL();
+            var ledger = new CustomerBL();
             ledger.Render();
             ledger.Focus();
         }

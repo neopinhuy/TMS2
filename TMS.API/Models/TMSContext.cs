@@ -34,14 +34,13 @@ namespace TMS.API.Models
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
+        public virtual DbSet<CustomerState> CustomerState { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<DistanceRange> DistanceRange { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
         public virtual DbSet<EntityPolicy> EntityPolicy { get; set; }
         public virtual DbSet<Feature> Feature { get; set; }
         public virtual DbSet<FeaturePolicy> FeaturePolicy { get; set; }
-        public virtual DbSet<FreightHistory> FreightHistory { get; set; }
-        public virtual DbSet<FreightProof> FreightProof { get; set; }
         public virtual DbSet<FreightState> FreightState { get; set; }
         public virtual DbSet<FuelType> FuelType { get; set; }
         public virtual DbSet<GridPolicy> GridPolicy { get; set; }
@@ -629,10 +628,17 @@ namespace TMS.API.Models
                     .HasName("IX_Customer")
                     .IsUnique();
 
+                entity.Property(e => e.Note).HasMaxLength(200);
+
                 entity.HasOne(d => d.CustomerGroup)
                     .WithMany(p => p.Customer)
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Customer_CustomerGroup");
+
+                entity.HasOne(d => d.CustomerState)
+                    .WithMany(p => p.Customer)
+                    .HasForeignKey(d => d.CustomerStateId)
+                    .HasConstraintName("FK_Customer_CustomerState");
 
                 entity.HasOne(d => d.User)
                     .WithOne(p => p.Customer)
@@ -648,6 +654,15 @@ namespace TMS.API.Models
                     .HasMaxLength(200);
 
                 entity.Property(e => e.GroupName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<CustomerState>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
             });
@@ -815,74 +830,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.FeaturePolicyUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_FeaturePolicy_UserUpdated");
-            });
-
-            modelBuilder.Entity<FreightHistory>(entity =>
-            {
-                entity.Property(e => e.Comment)
-                    .IsRequired()
-                    .HasMaxLength(1500);
-
-                entity.HasOne(d => d.Action)
-                    .WithMany(p => p.FreightHistory)
-                    .HasForeignKey(d => d.ActionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightHistory_Action");
-
-                entity.HasOne(d => d.Actor)
-                    .WithMany(p => p.FreightHistoryActor)
-                    .HasForeignKey(d => d.ActorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightHistory_UserActor");
-
-                entity.HasOne(d => d.Coordinator)
-                    .WithMany(p => p.FreightHistory)
-                    .HasForeignKey(d => d.CoordinatorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightHistory_Coordination");
-
-                entity.HasOne(d => d.FreightState)
-                    .WithMany(p => p.FreightHistory)
-                    .HasForeignKey(d => d.FreightStateId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightHistory_FreightState");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FreightHistoryInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightHistory_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FreightHistoryUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_FreightHistory_UserUpdated");
-            });
-
-            modelBuilder.Entity<FreightProof>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Image)
-                    .IsRequired()
-                    .HasMaxLength(1000);
-
-                entity.HasOne(d => d.FreightHistory)
-                    .WithMany(p => p.FreightProof)
-                    .HasForeignKey(d => d.FreightHistoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightProof_FreightHistory");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FreightProofInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightProof_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FreightProofUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_FreightProof_UserUpdated");
             });
 
             modelBuilder.Entity<FreightState>(entity =>

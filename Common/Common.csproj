@@ -99,6 +99,9 @@
     <Compile Include="..\TMS.API\Models\CustomerGroup.cs">
       <Link>Models\CustomerGroup.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\CustomerState.cs">
+      <Link>Models\CustomerState.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\Department.cs">
       <Link>Models\Department.cs</Link>
     </Compile>

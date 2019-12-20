@@ -177,6 +177,7 @@ namespace Components.Forms
             var column = 0;
             foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
             {
+                if (ui.Hidden) continue;
                 var colSpan = ui.Column ?? 2;
                 ui.Label = ui.Label ?? string.Empty;
                 if (ui.ShowLabel) Html.Instance.TData.Visibility(ui.Visibility).Label.Text(ui.Label)

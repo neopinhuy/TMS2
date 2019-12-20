@@ -99,7 +99,7 @@ namespace TMS.UI.Business
             await popup.Save(true);
         }
 
-        public async Task Search()
+        public void Search()
         {
             var grid = FindComponent<GridView>().FirstOrDefault();
             grid?.ReloadData();
