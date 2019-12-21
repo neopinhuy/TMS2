@@ -13,6 +13,7 @@ namespace Components
     public class SearchEntry : Component
     {
         public Observable<int?> value;
+        public string Text { get { return _input.Value; } set { _input.Value = value; } }
         private HTMLInputElement _input;
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;

@@ -112,23 +112,33 @@ namespace Components
                 var frozen = FrozenHeader;
                 var nonFrozen = NonFrozenHeader;
 
-                Html.Take(_frozenTable).Clear();
-                RenderTableHeader(FrozenHeader);
-                RenderTableContent(frozen, _frozenSection);
-
-                Html.Take(_nonFrozenTable).Clear();
-                RenderTableHeader(NonFrozenHeader);
-                RenderTableContent(NonFrozenHeader, _mainSection);
-
-                if (Editable)
+                if (RowData.Data.HasElement())
                 {
-                    AddNewEmptyRow(frozen, nonFrozen);
+                    Html.Take(_frozenTable).Clear();
+                    RenderTableHeader(FrozenHeader);
+                    RenderTableContent(frozen, _frozenSection);
+
+                    Html.Take(_nonFrozenTable).Clear();
+                    RenderTableHeader(NonFrozenHeader);
+                    RenderTableContent(NonFrozenHeader, _mainSection);
+
+                    if (Editable)
+                    {
+                        AddNewEmptyRow(frozen, nonFrozen);
+                    }
+                    _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                    _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                }
+                else
+                {
+                    Html.Take(_frozenTable).Clear();
+                    Html.Take(_nonFrozenTable).Clear();
+                    _frozenSection.Children.ForEach(x => x.Dispose());
+                    _mainSection.Children.ForEach(x => x.Dispose());
+                    Html.Take(_mainSection.RootHtmlElement).P.ClassName("no-records").Text("No records found");
                 }
 
                 RenderSummary(frozen, nonFrozen);
-
-                _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
-                _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
                 AfterRendered?.Invoke();
             });
         }

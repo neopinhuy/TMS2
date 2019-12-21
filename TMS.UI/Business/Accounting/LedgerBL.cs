@@ -1,9 +1,7 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
 using Components;
-using Components.Extensions;
 using Components.Forms;
-using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +32,7 @@ namespace TMS.UI.Business.Accounting
                 var grid = FindComponentByName<GridView>("LedgerGrid");
                 grid.RowData.Subscribe(x =>
                 {
+                    if (x.Array is null) return;
                     var rows = x.Array as Ledger[];
                     rows.ForEach(SetOriginMoney);
                 });
@@ -96,6 +95,7 @@ namespace TMS.UI.Business.Accounting
             entity.OpeningCredit = null;
             entity.OpeningDebit = null;
             SetOriginMoney(entity);
+            entity.ReceiverFullName = popup.FindComponentByName<SearchEntry>(nameof(Ledger.TargetId))?.Text;
             await popup.Save(true);
         }
 
