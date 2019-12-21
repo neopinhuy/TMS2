@@ -13,7 +13,7 @@ namespace TMS.UI
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
-            var ledger = new CustomerBL();
+            var ledger = new CustomerCareBL();
             ledger.Render();
             ledger.Focus();
         }

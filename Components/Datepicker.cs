@@ -7,9 +7,9 @@ namespace Components
 {
     public class DatePicker : Component
     {
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
 
-        public DatePicker(UserInterface ui)
+        public DatePicker(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }

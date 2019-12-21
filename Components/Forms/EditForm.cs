@@ -114,8 +114,8 @@ namespace Components.Forms
             }
             foreach (var item in componentGroup)
             {
-                if (item.UserInterface == null || !item.UserInterface.Any()) continue;
-                foreach (var ui in item.UserInterface)
+                if (item.Component == null || !item.Component.Any()) continue;
+                foreach (var ui in item.Component)
                 {
                     ui.ComponentGroup = item;
                 }
@@ -128,7 +128,7 @@ namespace Components.Forms
             Task.Run(async () =>
             {
                 var componentGroup = await Client<ComponentGroup>.Instance
-                    .GetList($"?$expand=UserInterface($expand=Reference)&$filter=Feature/Name eq '{Name}'");
+                    .GetList($"?$expand=Component($expand=Reference)&$filter=Feature/Name eq '{Name}'");
                 var groupTree = BuildTree(componentGroup.value);
                 Html.Take(RootHtmlElement);
                 RenderGroup(groupTree);
@@ -172,10 +172,10 @@ namespace Components.Forms
 
         private void RenderComponent(ComponentGroup group)
         {
-            if (group.UserInterface.Nothing()) return;
+            if (group.Component.Nothing()) return;
             Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
             var column = 0;
-            foreach (var ui in group.UserInterface.OrderBy(x => x.Order))
+            foreach (var ui in group.Component.OrderBy(x => x.Order))
             {
                 if (ui.Hidden) continue;
                 var colSpan = ui.Column ?? 2;

@@ -7,12 +7,12 @@ namespace TMS.API.Models
     {
         public Entity()
         {
+            Component = new HashSet<Component>();
             EntityPolicy = new HashSet<EntityPolicy>();
             Feature = new HashSet<Feature>();
             GridPolicyEntity = new HashSet<GridPolicy>();
             GridPolicyReference = new HashSet<GridPolicy>();
             Ledger = new HashSet<Ledger>();
-            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -26,11 +26,11 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
         public virtual ICollection<Feature> Feature { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyEntity { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyReference { get; set; }
         public virtual ICollection<Ledger> Ledger { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TMS.API.Models
 {
-    public partial class UserInterface
+    public partial class Component
     {
         public int Id { get; set; }
         public string FieldName { get; set; }

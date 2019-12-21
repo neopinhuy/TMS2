@@ -7,6 +7,7 @@ namespace TMS.API.Models
     {
         public FreightState()
         {
+            Component = new HashSet<Component>();
             ComponentGroup = new HashSet<ComponentGroup>();
             Container = new HashSet<Container>();
             Coordination = new HashSet<Coordination>();
@@ -16,7 +17,6 @@ namespace TMS.API.Models
             StatePolicy = new HashSet<StatePolicy>();
             TransitionCurrentState = new HashSet<Transition>();
             TransitionNextState = new HashSet<Transition>();
-            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -34,6 +34,7 @@ namespace TMS.API.Models
         public virtual StateType StateType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Workflow Workflow { get; set; }
+        public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
@@ -43,6 +44,5 @@ namespace TMS.API.Models
         public virtual ICollection<StatePolicy> StatePolicy { get; set; }
         public virtual ICollection<Transition> TransitionCurrentState { get; set; }
         public virtual ICollection<Transition> TransitionNextState { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

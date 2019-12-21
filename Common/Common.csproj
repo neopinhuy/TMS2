@@ -63,6 +63,9 @@
     <Compile Include="..\TMS.API\Models\CommodityType.cs">
       <Link>Models\CommodityType.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\Component.cs">
+      <Link>Models\Component.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\ComponentGroup.cs">
       <Link>Models\ComponentGroup.cs</Link>
     </Compile>
@@ -236,9 +239,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\User.cs">
       <Link>Models\User.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\UserInterface.cs">
-      <Link>Models\UserInterface.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Vendor.cs">
       <Link>Models\Vendor.cs</Link>

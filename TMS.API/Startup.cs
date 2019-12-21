@@ -87,6 +87,7 @@ namespace TMS.API
             builder.EntitySet<Currency>(nameof(Currency));
             builder.EntitySet<Customer>(nameof(Customer));
             builder.EntitySet<CustomerGroup>(nameof(CustomerGroup));
+            builder.EntitySet<CustomerState>(nameof(CustomerState));
             builder.EntitySet<Department>(nameof(Department));
             builder.EntitySet<DistanceRange>(nameof(DistanceRange));
             builder.EntitySet<Entity>(nameof(Entity));
@@ -130,7 +131,7 @@ namespace TMS.API
             builder.EntitySet<UoM>(nameof(UoM));
             builder.EntitySet<UomType>(nameof(UomType));
             builder.EntitySet<User>(nameof(User));
-            builder.EntitySet<UserInterface>(nameof(UserInterface));
+            builder.EntitySet<Component>(nameof(Component));
             builder.EntitySet<Vendor>(nameof(Vendor));
             builder.EntitySet<VendorType>(nameof(VendorType));
             builder.EntitySet<VolumeRange>(nameof(VolumeRange));

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using TMS.API.Models;
 using TMS.UI.ViewModels;
 
-namespace TMS.UI.Business
+namespace TMS.UI.Business.Accounting
 {
     public class LedgerBL : TabEditor<LedgerVM>
     {

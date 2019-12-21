@@ -27,6 +27,8 @@ namespace TMS.API.Models
             CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
             ComponentGroupUpdatedByNavigation = new HashSet<ComponentGroup>();
+            ComponentInsertedByNavigation = new HashSet<Component>();
+            ComponentUpdatedByNavigation = new HashSet<Component>();
             ContainerInsertedByNavigation = new HashSet<Container>();
             ContainerRangeInsertedByNavigation = new HashSet<ContainerRange>();
             ContainerRangeUpdatedByNavigation = new HashSet<ContainerRange>();
@@ -118,8 +120,6 @@ namespace TMS.API.Models
             UoMUpdatedByNavigation = new HashSet<UoM>();
             UomTypeInsertedByNavigation = new HashSet<UomType>();
             UomTypeUpdatedByNavigation = new HashSet<UomType>();
-            UserInterfaceInsertedByNavigation = new HashSet<UserInterface>();
-            UserInterfaceUpdatedByNavigation = new HashSet<UserInterface>();
             VendorTypeInsertedByNavigation = new HashSet<VendorType>();
             VendorTypeUpdatedByNavigation = new HashSet<VendorType>();
             VolumeRangeInsertedByNavigation = new HashSet<VolumeRange>();
@@ -183,6 +183,8 @@ namespace TMS.API.Models
         public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupUpdatedByNavigation { get; set; }
+        public virtual ICollection<Component> ComponentInsertedByNavigation { get; set; }
+        public virtual ICollection<Component> ComponentUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerRange> ContainerRangeInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerRange> ContainerRangeUpdatedByNavigation { get; set; }
@@ -274,8 +276,6 @@ namespace TMS.API.Models
         public virtual ICollection<UoM> UoMUpdatedByNavigation { get; set; }
         public virtual ICollection<UomType> UomTypeInsertedByNavigation { get; set; }
         public virtual ICollection<UomType> UomTypeUpdatedByNavigation { get; set; }
-        public virtual ICollection<UserInterface> UserInterfaceInsertedByNavigation { get; set; }
-        public virtual ICollection<UserInterface> UserInterfaceUpdatedByNavigation { get; set; }
         public virtual ICollection<VendorType> VendorTypeInsertedByNavigation { get; set; }
         public virtual ICollection<VendorType> VendorTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<VolumeRange> VolumeRangeInsertedByNavigation { get; set; }

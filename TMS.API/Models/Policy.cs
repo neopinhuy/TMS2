@@ -8,6 +8,7 @@ namespace TMS.API.Models
         public Policy()
         {
             ActionPolicy = new HashSet<ActionPolicy>();
+            Component = new HashSet<Component>();
             ComponentGroup = new HashSet<ComponentGroup>();
             EntityPolicy = new HashSet<EntityPolicy>();
             FeaturePolicy = new HashSet<FeaturePolicy>();
@@ -15,7 +16,6 @@ namespace TMS.API.Models
             PaymentPolicy = new HashSet<PaymentPolicy>();
             StatePolicy = new HashSet<StatePolicy>();
             TruckMonitorConfig = new HashSet<TruckMonitorConfig>();
-            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -33,6 +33,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual ICollection<ActionPolicy> ActionPolicy { get; set; }
+        public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<EntityPolicy> EntityPolicy { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicy { get; set; }
@@ -40,6 +41,5 @@ namespace TMS.API.Models
         public virtual ICollection<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual ICollection<StatePolicy> StatePolicy { get; set; }
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfig { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

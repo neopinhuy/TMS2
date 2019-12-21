@@ -9,10 +9,10 @@ namespace Components
 {
     public class NumberInput : Component
     {
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
         public Observable<decimal?> Value { get; private set; }
 
-        public NumberInput(UserInterface ui)
+        public NumberInput(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }

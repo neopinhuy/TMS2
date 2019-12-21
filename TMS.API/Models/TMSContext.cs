@@ -24,6 +24,7 @@ namespace TMS.API.Models
         public virtual DbSet<Branch> Branch { get; set; }
         public virtual DbSet<BranchType> BranchType { get; set; }
         public virtual DbSet<CommodityType> CommodityType { get; set; }
+        public virtual DbSet<Component> Component { get; set; }
         public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         public virtual DbSet<ContainerRange> ContainerRange { get; set; }
@@ -76,7 +77,6 @@ namespace TMS.API.Models
         public virtual DbSet<UoM> UoM { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserInterface> UserInterface { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<VendorType> VendorType { get; set; }
         public virtual DbSet<VolumeRange> VolumeRange { get; set; }
@@ -325,6 +325,111 @@ namespace TMS.API.Models
                     .WithMany(p => p.CommodityTypeUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_CommodityType_UserUpdated");
+            });
+
+            modelBuilder.Entity<Component>(entity =>
+            {
+                entity.Property(e => e.CascadeField)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ClassName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ComponentType)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.DataSourceFilter)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Events)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FieldName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Format)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupBy)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GroupFormat).HasMaxLength(500);
+
+                entity.Property(e => e.HotKey)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Icon)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Label).HasMaxLength(50);
+
+                entity.Property(e => e.MaxWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MinWidth)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PopulateField)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Renderer)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Style)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Validation).HasMaxLength(1000);
+
+                entity.Property(e => e.Width)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ComponentGroup)
+                    .WithMany(p => p.Component)
+                    .HasForeignKey(d => d.ComponentGroupId)
+                    .HasConstraintName("FK_Component_ComponentGroup");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.ComponentInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Component_UserInserted");
+
+                entity.HasOne(d => d.Policy)
+                    .WithMany(p => p.Component)
+                    .HasForeignKey(d => d.PolicyId)
+                    .HasConstraintName("FK_Component_Policy");
+
+                entity.HasOne(d => d.Reference)
+                    .WithMany(p => p.Component)
+                    .HasForeignKey(d => d.ReferenceId)
+                    .HasConstraintName("FK_Component_Entity");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.Component)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_Component_FreightState");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.ComponentUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_Component_UserUpdated");
             });
 
             modelBuilder.Entity<ComponentGroup>(entity =>
@@ -628,7 +733,17 @@ namespace TMS.API.Models
                     .HasName("IX_Customer")
                     .IsUnique();
 
+                entity.Property(e => e.Email).HasMaxLength(100);
+
                 entity.Property(e => e.Note).HasMaxLength(200);
+
+                entity.Property(e => e.OtherContact).HasMaxLength(100);
+
+                entity.Property(e => e.Skype).HasMaxLength(100);
+
+                entity.Property(e => e.Viber).HasMaxLength(100);
+
+                entity.Property(e => e.Zalo).HasMaxLength(100);
 
                 entity.HasOne(d => d.CustomerGroup)
                     .WithMany(p => p.Customer)
@@ -2163,111 +2278,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.InverseUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_User_UserUpdated");
-            });
-
-            modelBuilder.Entity<UserInterface>(entity =>
-            {
-                entity.Property(e => e.CascadeField)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ClassName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ComponentType)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DataSourceFilter)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Events)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.FieldName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Format)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GroupBy)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.GroupFormat).HasMaxLength(500);
-
-                entity.Property(e => e.HotKey)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Icon)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Label).HasMaxLength(50);
-
-                entity.Property(e => e.MaxWidth)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.MinWidth)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PopulateField)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Renderer)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Style)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Validation).HasMaxLength(1000);
-
-                entity.Property(e => e.Width)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ComponentGroup)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.ComponentGroupId)
-                    .HasConstraintName("FK_UserInterface_ComponentGroup");
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.UserInterfaceInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UserInterface_UserInserted");
-
-                entity.HasOne(d => d.Policy)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.PolicyId)
-                    .HasConstraintName("FK_UserInterface_Policy");
-
-                entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.ReferenceId)
-                    .HasConstraintName("FK_UserInterface_Entity");
-
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.UserInterface)
-                    .HasForeignKey(d => d.StateId)
-                    .HasConstraintName("FK_UserInterface_FreightState");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.UserInterfaceUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_UserInterface_UserUpdated");
             });
 
             modelBuilder.Entity<Vendor>(entity =>

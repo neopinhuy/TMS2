@@ -471,7 +471,7 @@ namespace Components
             var cell = Html.Context as HTMLElement;
             var row = cell.ParentElement as HTMLElement;
             var rowData = (T)row[_rowData];
-            var ui = new UserInterface
+            var ui = new TMS.API.Models.Component
             {
                 Reference = new Entity { Name = header.Reference },
                 Format = header.FormatCell,

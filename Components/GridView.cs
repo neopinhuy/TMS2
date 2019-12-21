@@ -6,6 +6,7 @@ using Components.Forms;
 using MVVM;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -15,7 +16,7 @@ namespace Components
 {
     public class GridView : Component
     {
-        public readonly UserInterface UI;
+        public readonly TMS.API.Models.Component UI;
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
@@ -24,7 +25,7 @@ namespace Components
         public ObservableArray<object> RowData { get; set; }
         public Action<ObservableArgs, Header<object>, object> CellChanged { get; set; }
 
-        public GridView(UserInterface ui)
+        public GridView(TMS.API.Models.Component ui)
         {
             UI = ui ?? throw new ArgumentNullException(nameof(ui));
             Id = ui.Id;
@@ -211,6 +212,12 @@ namespace Components
                 confirm.Dispose();
                 await Delete();
             };
+        }
+
+        public IEnumerable<object> GetSelectedRow()
+        {
+            return RowData.Data
+                .Where(x => (bool?)x["__selected__"] == true);
         }
 
         public virtual async Task Delete()

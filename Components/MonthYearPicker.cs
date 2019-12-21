@@ -7,9 +7,9 @@ namespace Components
 {
     public class MonthYearPicker : Component
     {
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
 
-        public MonthYearPicker(UserInterface ui)
+        public MonthYearPicker(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }

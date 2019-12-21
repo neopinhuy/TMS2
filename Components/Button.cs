@@ -8,9 +8,9 @@ namespace Components
 {
     public class Button: Component
     {
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
         
-        public Button(UserInterface ui)
+        public Button(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }

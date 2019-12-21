@@ -9,10 +9,10 @@ namespace Components
 {
     public class Textbox : Component
     {
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
         public bool MultipleLine { get; set; }
         public Observable<string> Value { get; private set; }
-        public Textbox(UserInterface ui)
+        public Textbox(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));
         }

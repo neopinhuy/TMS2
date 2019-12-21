@@ -5,7 +5,7 @@ namespace Components.Extensions
 {
     public static class ComponentFactory
     {
-        public static Component GetComponent(UserInterface ui, string componentType)
+        public static Component GetComponent(TMS.API.Models.Component ui, string componentType)
         {
             Component childComponent = null;
             switch (componentType)

@@ -13,13 +13,13 @@ namespace Components
     public class ImageUploader : Component
     {
         private Observable<string> _path;
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
         private const string _defaultImg = "image/truck.webp";
         private const string _iconImg = "image/icon_camera.png";
         private const string pathSeparator = "    ";
         private HTMLFormElement _form;
         private bool _isRemoving;
-        public ImageUploader(UserInterface ui)
+        public ImageUploader(TMS.API.Models.Component ui)
         {
             _ui = ui;
         }

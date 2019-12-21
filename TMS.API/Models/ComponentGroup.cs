@@ -7,8 +7,8 @@ namespace TMS.API.Models
     {
         public ComponentGroup()
         {
+            Component = new HashSet<Component>();
             InverseParent = new HashSet<ComponentGroup>();
-            UserInterface = new HashSet<UserInterface>();
         }
 
         public int Id { get; set; }
@@ -38,7 +38,7 @@ namespace TMS.API.Models
         public virtual Policy Policy { get; set; }
         public virtual FreightState State { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ComponentGroup> InverseParent { get; set; }
-        public virtual ICollection<UserInterface> UserInterface { get; set; }
     }
 }

@@ -1,40 +1,11 @@
-﻿using Components;
-using Components.Forms;
-using TMS.API.Models;
-
-namespace TMS.UI.Business.Sale
+﻿namespace TMS.UI.Business.Sale
 {
-    public class CustomerBL : TabEditor<Customer>
+    public class CustomerBL : CustomerCareBL
     {
-        #region Customer
-
-        public void CreateCustomer()
+        public CustomerBL()
         {
-            InitCustomerForm(new Customer() { User = new User()});
+            Name = "Customer List";
+            Title = Name;
         }
-
-        public void EditCustomer(Customer Customer)
-        {
-            InitCustomerForm(Customer);
-        }
-
-        private void InitCustomerForm(Customer customer)
-        {
-            var customerForm = new PopupEditor<Customer>
-            {
-                Entity = customer,
-                Name = "Customer Detail",
-                Title = "Customer"
-            };
-            AddChild(customerForm);
-        }
-
-        public void DeleteCustomer()
-        {
-            var CustomerGrid = FindComponentByName("CustomerGrid") as GridView;
-            CustomerGrid.DeleteSelected();
-        }
-
-        #endregion Customer
     }
 }

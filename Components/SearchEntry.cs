@@ -17,12 +17,12 @@ namespace Components
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
         private bool _isShowing;
-        private readonly UserInterface _ui;
+        private readonly TMS.API.Models.Component _ui;
         public string DataSourceFilter { get; set; }
         public ObservableArray<object> Source { get; private set; }
         public object Matched { get; set; }
 
-        public SearchEntry(UserInterface ui)
+        public SearchEntry(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new System.ArgumentNullException(nameof(ui));
             DataSourceFilter = ui.DataSourceFilter;
