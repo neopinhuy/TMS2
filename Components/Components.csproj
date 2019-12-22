@@ -60,7 +60,6 @@
     <Compile Include="GridView.cs" />
     <Compile Include="ImageUploader.cs" />
     <Compile Include="SearchEntry.cs" />
-    <Compile Include="TabComponent.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

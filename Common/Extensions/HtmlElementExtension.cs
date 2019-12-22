@@ -21,15 +21,21 @@ namespace Common.Extensions
 
         public static void AddClass(this Node node, string className)
         {
-            if (string.IsNullOrEmpty(className)) return;
+            if (node is null || string.IsNullOrEmpty(className)) return;
             var element = node as Element;
             element.ClassName = (element.ClassName + " " + className).Trim();
         }
 
         public static void RemoveClass(this Node node, string className)
         {
-            if (string.IsNullOrEmpty(className)) return;
+            if (node is null || string.IsNullOrEmpty(className)) return;
             node.ReplaceClass(className, string.Empty);
+        }
+
+        public static void ToggleClass(this Node node, bool shouldAdd, string className)
+        {
+            if (shouldAdd) AddClass(node, className);
+            else RemoveClass(node, className);
         }
     }
 }

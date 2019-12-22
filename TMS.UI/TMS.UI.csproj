@@ -45,7 +45,6 @@
     <Compile Include="Business\Sale\CustomerBL.cs" />
     <Compile Include="Business\Sale\QuotationBL.cs" />
     <Compile Include="Business\Sale\CustomerCareBL.cs" />
-    <Compile Include="Business\Dashboard\Dashboard.cs" />
     <Compile Include="Business\MenuComponent.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Business\Asset\ContainerBL.cs" />
@@ -56,7 +55,6 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="bridge.json" />
-    <Compile Include="Business\Dashboard\Dashboard.View.cs" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

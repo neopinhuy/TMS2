@@ -1,5 +1,4 @@
 ﻿using TMS.UI.Business;
-using TMS.UI.Business.Dashboard;
 using TMS.UI.Business.Sale;
 
 namespace TMS.UI
@@ -8,8 +7,6 @@ namespace TMS.UI
     {
         public static void Main()
         {
-            var dashboard = new Dashboard();
-            dashboard.Render();
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
