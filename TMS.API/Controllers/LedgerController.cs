@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.OData.Query;
+﻿using Common.ViewModels;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
-using TMS.UI.ViewModels;
 
 namespace TMS.API.Controllers
 {

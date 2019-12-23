@@ -1,12 +1,12 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
+using Common.ViewModels;
 using Components;
 using Components.Forms;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
-using TMS.UI.ViewModels;
 
 namespace TMS.UI.Business.Accounting
 {

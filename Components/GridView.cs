@@ -207,7 +207,7 @@ namespace Components
         {
             var confirm = new ConfirmDialog();
             confirm.Render();
-            confirm.DeleteConfirmed += async () =>
+            confirm.YesConfirmed += async () =>
             {
                 confirm.Dispose();
                 await Delete();

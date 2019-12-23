@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bridge.Html5;
 using Common.Extensions;
+using Common.ViewModels;
 using Newtonsoft.Json;
 using TMS.API.Models;
 
@@ -88,6 +89,39 @@ namespace Common.Clients
                 }
             };
             xhr.Send();
+            return tcs.Task;
+        }
+
+        public Task<bool> SendMail(EmailVM email)
+        {
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<bool>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("POST", $"{BaseUrl}/api/{type.Name}/Email", true);
+            xhr.SetRequestHeader("Content-type", "application/json");
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200)
+                {
+                    var parsed = JsonConvert.DeserializeObject<bool>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else if (xhr.Status == 204)
+                {
+                    tcs.SetResult(true);
+                }
+                else
+                {
+                    tcs.SetResult(false);
+                    Toast.Warning(xhr.ResponseText);
+                }
+            };
+            xhr.Send(JsonConvert.SerializeObject(email, ClientConst.settings));
             return tcs.Task;
         }
 
@@ -230,6 +264,44 @@ namespace Common.Clients
                 else
                 {
                     tcs.SetResult(null);
+                    Toast.Warning(xhr.ResponseText);
+                }
+            };
+            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// Update entity
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Task<bool> BulkUpdateAsync(List<T> value)
+        {
+            var type = typeof(T);
+            var tcs = new TaskCompletionSource<bool>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("PUT", $"{BaseUrl}/api/{type.Name}/BulkUpdate", true);
+            xhr.SetRequestHeader("Content-type", "application/json");
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+
+                if (xhr.Status == 200)
+                {
+                    var parsed = JsonConvert.DeserializeObject<bool>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else if (xhr.Status == 204)
+                {
+                    tcs.SetResult(true);
+                }
+                else
+                {
+                    tcs.SetResult(false);
                     Toast.Warning(xhr.ResponseText);
                 }
             };

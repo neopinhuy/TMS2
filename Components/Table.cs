@@ -133,8 +133,8 @@ namespace Components
                 {
                     Html.Take(_frozenTable).Clear();
                     Html.Take(_nonFrozenTable).Clear();
-                    _frozenSection.Children.ForEach(x => x.Dispose());
-                    _mainSection.Children.ForEach(x => x.Dispose());
+                    _frozenSection.Children?.ForEach(x => x.Dispose());
+                    _mainSection.Children?.ForEach(x => x.Dispose());
                     Html.Take(_mainSection.RootHtmlElement).P.ClassName("no-records").Text("No records found");
                 }
 

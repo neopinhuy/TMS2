@@ -95,6 +95,18 @@ namespace TMS.API.Controllers
             return entity;
         }
 
+        [HttpPut("api/[Controller]/BulkUpdate")]
+        public async Task<ActionResult<bool>> BulkUpdateAsync([FromBody]List<T> entities)
+        {
+            entities.ForEach(x =>
+            {
+                db.Set<T>().Attach(x);
+                db.Entry(x).State = EntityState.Modified;
+            });
+            await db.SaveChangesAsync();
+            return Ok(true);
+        }
+
         [HttpPost("api/[Controller]/Delete")]
         public virtual async Task<ActionResult<bool>> Delete([FromBody]List<int> ids)
         {

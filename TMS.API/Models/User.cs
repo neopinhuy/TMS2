@@ -43,6 +43,9 @@ namespace TMS.API.Models
             CoordinationUpdatedByNavigation = new HashSet<Coordination>();
             CurrencyInsertedByNavigation = new HashSet<Currency>();
             CurrencyUpdatedByNavigation = new HashSet<Currency>();
+            CustomerCareAssignedUser = new HashSet<CustomerCare>();
+            CustomerCareInsertedByNavigation = new HashSet<CustomerCare>();
+            CustomerCareUpdatedByNavigation = new HashSet<CustomerCare>();
             DepartmentInsertedByNavigation = new HashSet<Department>();
             DepartmentLeader = new HashSet<Department>();
             DepartmentUpdatedByNavigation = new HashSet<Department>();
@@ -199,6 +202,9 @@ namespace TMS.API.Models
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
         public virtual ICollection<Currency> CurrencyInsertedByNavigation { get; set; }
         public virtual ICollection<Currency> CurrencyUpdatedByNavigation { get; set; }
+        public virtual ICollection<CustomerCare> CustomerCareAssignedUser { get; set; }
+        public virtual ICollection<CustomerCare> CustomerCareInsertedByNavigation { get; set; }
+        public virtual ICollection<CustomerCare> CustomerCareUpdatedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentLeader { get; set; }
         public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }

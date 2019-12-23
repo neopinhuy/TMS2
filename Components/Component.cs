@@ -135,6 +135,23 @@ namespace Components
             return result.DistinctBy(x => x.Name);
         }
 
+        public IEnumerable<T> FindActiveComponent<T>() where T : Component
+        {
+            var result = new HashSet<T>();
+            var type = typeof(T);
+            if (Children.Nothing()) return Enumerable.Empty<T>();
+            foreach (var child in Children)
+            {
+                if (child.GetType().IsAssignableFrom(type)
+                    && child.RootHtmlElement != null
+                    && !child.RootHtmlElement.Hidden()) result.Add(child as T);
+                if (child.Children.Nothing()) continue;
+                var res = child.FindActiveComponent<T>();
+                res.ForEach(x => result.Add(x));
+            }
+            return result.DistinctBy(x => x.Name);
+        }
+
         public T FindComponentByName<T>(string name) where T : class
         {
             return FindComponentByName(name) as T;

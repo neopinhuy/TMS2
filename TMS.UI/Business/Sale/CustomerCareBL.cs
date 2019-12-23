@@ -1,32 +1,52 @@
-﻿using Components;
+﻿using Bridge.Html5;
+using Common.Clients;
+using Common.Enums;
+using Common.Extensions;
+using Common.ViewModels;
+using Components;
 using Components.Forms;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using TMS.API.Models;
 
 namespace TMS.UI.Business.Sale
 {
-    public class CustomerCareBL : TabEditor<Customer>
+    public class CustomerCareBL : TabEditor<CustomerCare>
     {
         public CustomerCareBL()
         {
             Name = "Customer care";
             Title = Name;
+            Document.Head.AppendChild(new HTMLScriptElement()
+            {
+                Src = "./js/SkypeBootstrap.min.js",
+                Async = false
+            });
+            Document.Head.AppendChild(new HTMLScriptElement()
+            {
+                Src = "./js/skype.js",
+                Async = false
+            });
         }
-        #region Customer
 
         public void CreateCustomer()
         {
-            InitCustomerForm(new Customer() { User = new User()});
+            var customerCare = new CustomerCare()
+            {
+                Customer = new Customer() { User = new User() }
+            };
+            InitCustomerCareForm(customerCare);
         }
 
-        public void EditCustomer(Customer Customer)
+        public void EditCustomer(CustomerCare customerCare)
         {
-            InitCustomerForm(Customer);
+            InitCustomerCareForm(customerCare);
         }
 
-        private void InitCustomerForm(Customer customer)
+        private void InitCustomerCareForm(CustomerCare customer)
         {
-            var customerForm = new PopupEditor<Customer>
+            var customerForm = new PopupEditor<CustomerCare>
             {
                 Entity = customer,
                 Name = "Customer Detail",
@@ -35,13 +55,40 @@ namespace TMS.UI.Business.Sale
             AddChild(customerForm);
         }
 
-        public void Email()
+        public void Call()
         {
-            var customers = FindComponent<GridView>();
-            var selected = customers.Where(x => x.Name.Contains("CustomerGrid"))
-                .SelectMany(x => x.GetSelectedRow());
+            var dialog = new ConfirmDialog()
+            {
+                Content = "Mark selected customer(s) as initial contact?",
+                YesConfirmed = async() =>
+                {
+                    var customers = FindActiveComponent<GridView>();
+                    var selected = customers.SelectMany(x => x.GetSelectedRow()).Cast<CustomerCare>();
+                    selected.ForEach(x =>
+                    {
+                        x.Customer.LastCall = DateTime.Now;
+                        if (x.Customer.CustomerStateId <= (int)CustomerStateEnum.InitContact)
+                            x.Customer.CustomerStateId = (int)CustomerStateEnum.InitContact;
+                    });
+                    var res = await Client<Customer>.Instance.BulkUpdateAsync(selected.Select(x => x.Customer).ToList());
+                    if (res)
+                    {
+                        Toast.Success("Update success");
+                        FindComponent<GridView>().ForEach(x => x.ReloadData());
+                    }
+                }
+            };
+            AddChild(dialog);
         }
 
-        #endregion Customer
+        public async Task Email()
+        {
+            var customers = FindActiveComponent<GridView>();
+            var selected = customers.SelectMany(x => x.GetSelectedRow()).Cast<CustomerCare>();
+            var res = await Client<CustomerCare>.Instance.SendMail(new EmailVM
+            {
+                ToAddresses = selected.Select(x => x.Customer.Email).ToList()
+            });
+        }
     }
 }

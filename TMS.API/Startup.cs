@@ -86,6 +86,7 @@ namespace TMS.API
             builder.EntitySet<CoordinationDetail>(nameof(CoordinationDetail));
             builder.EntitySet<Currency>(nameof(Currency));
             builder.EntitySet<Customer>(nameof(Customer));
+            builder.EntitySet<CustomerCare>(nameof(CustomerCare));
             builder.EntitySet<CustomerGroup>(nameof(CustomerGroup));
             builder.EntitySet<CustomerState>(nameof(CustomerState));
             builder.EntitySet<Department>(nameof(Department));

@@ -32,10 +32,19 @@ namespace Common.Extensions
             node.ReplaceClass(className, string.Empty);
         }
 
-        public static void ToggleClass(this Node node, bool shouldAdd, string className)
+        public static void ToggleClass(this Node node, string className)
         {
-            if (shouldAdd) AddClass(node, className);
-            else RemoveClass(node, className);
+            if (node is null || string.IsNullOrEmpty(className)) return;
+            var hasClass = (node as HTMLElement).ClassName.Contains(className);
+            if (hasClass) RemoveClass(node, className);
+            else AddClass(node, className);
+        }
+
+        public static bool Hidden(this Element node)
+        {
+            if (node is null) throw new InvalidOperationException($"{nameof(node)} is null");
+            var x = node.GetBoundingClientRect();
+            return x.Bottom == 0 && x.Top == 0 && x.Width == 0 && x.Height == 0;
         }
     }
 }

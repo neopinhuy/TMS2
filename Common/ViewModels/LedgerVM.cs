@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TMS.API.Models;
 
-namespace TMS.UI.ViewModels
+namespace Common.ViewModels
 {
     public class LedgerVM
     {

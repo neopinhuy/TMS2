@@ -34,6 +34,7 @@ namespace TMS.API.Models
         public virtual DbSet<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<CustomerCare> CustomerCare { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
         public virtual DbSet<CustomerState> CustomerState { get; set; }
         public virtual DbSet<Department> Department { get; set; }
@@ -760,6 +761,34 @@ namespace TMS.API.Models
                     .HasForeignKey<Customer>(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Customer_User");
+            });
+
+            modelBuilder.Entity<CustomerCare>(entity =>
+            {
+                entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.HasOne(d => d.AssignedUser)
+                    .WithMany(p => p.CustomerCareAssignedUser)
+                    .HasForeignKey(d => d.AssignedUserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCare_User");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.CustomerCare)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCare_Customer");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.CustomerCareInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCare_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.CustomerCareUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_CustomerCare_UserUpdated");
             });
 
             modelBuilder.Entity<CustomerGroup>(entity =>

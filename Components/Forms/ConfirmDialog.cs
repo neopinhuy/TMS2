@@ -23,8 +23,12 @@ namespace Components.Forms
                 .Div.ClassName("popup-body");
 
             Html.Instance.P.Text(Content).End.Div.MarginRem(Direction.top, 1)
-                .Button("Delete", "button secondary small", "fa fa-trash")
-                    .Event(EventType.Click, () => { DeleteConfirmed(); }).End
+                .Button("Yes", "button secondary small", "fa fa-trash")
+                    .Event(EventType.Click, () =>
+                    {
+                        Dispose();
+                        YesConfirmed?.Invoke();
+                    }).End
                 .Button("No", "button info small", "mif-exit")
                     .MarginRem(Direction.left, 1)
                     .Event(EventType.Click, Dispose).End
@@ -35,7 +39,7 @@ namespace Components.Forms
                 .EndOf(".backdrop");
         }
 
-        public Action DeleteConfirmed { get; set; }
+        public Action YesConfirmed { get; set; }
 
         protected override void RemoveDOM()
         {

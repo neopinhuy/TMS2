@@ -16,4 +16,13 @@
         Processing = 3,
         Done = 4
     }
+
+    public enum CustomerStateEnum
+    {
+        Leads = 1,
+        InitContact = 2,
+        Negotiation = 3,
+        Order = 4,
+        Payment = 5,
+    }
 }

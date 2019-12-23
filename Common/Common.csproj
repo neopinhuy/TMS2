@@ -99,6 +99,9 @@
     <Compile Include="..\TMS.API\Models\Customer.cs">
       <Link>Models\Customer.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\CustomerCare.cs">
+      <Link>Models\CustomerCare.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\CustomerGroup.cs">
       <Link>Models\CustomerGroup.cs</Link>
     </Compile>
@@ -272,6 +275,8 @@
     <Compile Include="Extensions\Toast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleLeaderBoardDataPoint.cs" />
+    <Compile Include="ViewModels\EmailVM.cs" />
+    <Compile Include="ViewModels\LedgerVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
