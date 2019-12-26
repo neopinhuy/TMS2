@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Nest;
 using System;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using TMS.API.Models;
 using SmtpClient = System.Net.Mail.SmtpClient;
 
@@ -18,6 +19,14 @@ namespace TMS.API.Controllers
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
         }
+
+        public override Task<ActionResult<CustomerCare>> UpdateAsync([FromBody] CustomerCare entity)
+        {
+            db.Customer.Update(entity.Customer);
+            UpdateChildren<CustomerCareLog>(entity);
+            return base.UpdateAsync(entity);
+        }
+
 
         [HttpPost("api/[Controller]/Email")]
         public ActionResult<bool> SendMail([FromBody]EmailVM email)

@@ -38,6 +38,10 @@ namespace Components
                 Html.Instance.Span.ClassName("cell-text");
                 if (_header.Component == "Image")
                     Html.Instance.Img.Src(cellText).End.Render();
+                else if (_header.Component == "Link")
+                {
+                    AddChild(new EditableLink(_header.MapToComponent(Entity)));
+                }
                 else Html.Instance.Text(cellText).End.Render();
             }
         }

@@ -45,6 +45,8 @@ namespace TMS.API.Models
             CurrencyUpdatedByNavigation = new HashSet<Currency>();
             CustomerCareAssignedUser = new HashSet<CustomerCare>();
             CustomerCareInsertedByNavigation = new HashSet<CustomerCare>();
+            CustomerCareLogInsertedByNavigation = new HashSet<CustomerCareLog>();
+            CustomerCareLogUpdatedByNavigation = new HashSet<CustomerCareLog>();
             CustomerCareUpdatedByNavigation = new HashSet<CustomerCare>();
             DepartmentInsertedByNavigation = new HashSet<Department>();
             DepartmentLeader = new HashSet<Department>();
@@ -77,6 +79,8 @@ namespace TMS.API.Models
             MaintenanceTicketAssignee = new HashSet<MaintenanceTicket>();
             MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
+            MasterDataInsertedByNavigation = new HashSet<MasterData>();
+            MasterDataUpdatedByNavigation = new HashSet<MasterData>();
             NationalityUpdatedByNavigation = new HashSet<Nationality>();
             OrderAccountableUser = new HashSet<Order>();
             OrderCompositionInsertedByNavigation = new HashSet<OrderComposition>();
@@ -204,6 +208,8 @@ namespace TMS.API.Models
         public virtual ICollection<Currency> CurrencyUpdatedByNavigation { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareAssignedUser { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareInsertedByNavigation { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogInsertedByNavigation { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogUpdatedByNavigation { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareUpdatedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
         public virtual ICollection<Department> DepartmentLeader { get; set; }
@@ -236,6 +242,8 @@ namespace TMS.API.Models
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
+        public virtual ICollection<MasterData> MasterDataInsertedByNavigation { get; set; }
+        public virtual ICollection<MasterData> MasterDataUpdatedByNavigation { get; set; }
         public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
         public virtual ICollection<Order> OrderAccountableUser { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionInsertedByNavigation { get; set; }

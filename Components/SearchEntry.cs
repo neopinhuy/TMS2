@@ -141,7 +141,7 @@ namespace Components
 
         private void SetMatchedValue()
         {
-            _input.Value = Matched != null ? Utils.FormatWith(_ui.Format, Matched) : string.Empty;
+            _input.Value = Matched != null ? Utils.FormatWith(_ui.FormatData, Matched) : string.Empty;
         }
 
         private async Task<object[]> GetDataSource()

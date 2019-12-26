@@ -112,24 +112,21 @@ namespace Components
                 var frozen = FrozenHeader;
                 var nonFrozen = NonFrozenHeader;
 
-                if (RowData.Data.HasElement())
+                Html.Take(_frozenTable).Clear();
+                RenderTableHeader(FrozenHeader);
+                RenderTableContent(frozen, _frozenSection);
+
+                Html.Take(_nonFrozenTable).Clear();
+                RenderTableHeader(NonFrozenHeader);
+                RenderTableContent(NonFrozenHeader, _mainSection);
+
+                if (Editable)
                 {
-                    Html.Take(_frozenTable).Clear();
-                    RenderTableHeader(FrozenHeader);
-                    RenderTableContent(frozen, _frozenSection);
-
-                    Html.Take(_nonFrozenTable).Clear();
-                    RenderTableHeader(NonFrozenHeader);
-                    RenderTableContent(NonFrozenHeader, _mainSection);
-
-                    if (Editable)
-                    {
-                        AddNewEmptyRow(frozen, nonFrozen);
-                    }
-                    _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
-                    _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                    AddNewEmptyRow(frozen, nonFrozen);
                 }
-                else
+                _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                if (RowData.Data.Nothing() && !Editable)
                 {
                     Html.Take(_frozenTable).Clear();
                     Html.Take(_nonFrozenTable).Clear();
@@ -481,17 +478,7 @@ namespace Components
             var cell = Html.Context as HTMLElement;
             var row = cell.ParentElement as HTMLElement;
             var rowData = (T)row[_rowData];
-            var ui = new TMS.API.Models.Component
-            {
-                Reference = new Entity { Name = header.Reference },
-                Format = header.FormatCell,
-                DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
-                FieldName = header.FieldName,
-                Precision = header.Precision,
-                Validation = header.Validation,
-                PopulateField = header.PopulateField,
-                CascadeField = header.CascadeField,
-            };
+            var ui = header.MapToComponent(Entity);
             if (rowData.GetBool(_emptyFlag))
             {
                 ui.Label = header.HeaderText;

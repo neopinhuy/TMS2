@@ -88,7 +88,7 @@ namespace Components.Forms
             {
                 x.RowData.Data.ForEach(row =>
                 {
-                    if ((int)row[IdField] < 0)
+                    if (row[IdField] != null && (int)row[IdField] < 0)
                     {
                         row[IdField] = 0;
                     }

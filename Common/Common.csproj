@@ -102,11 +102,11 @@
     <Compile Include="..\TMS.API\Models\CustomerCare.cs">
       <Link>Models\CustomerCare.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\CustomerCareLog.cs">
+      <Link>Models\CustomerCareLog.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\CustomerGroup.cs">
       <Link>Models\CustomerGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\CustomerState.cs">
-      <Link>Models\CustomerState.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Department.cs">
       <Link>Models\Department.cs</Link>
@@ -152,6 +152,9 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\MaintenanceTicket.cs">
       <Link>Models\MaintenanceTicket.cs</Link>
+    </Compile>
+    <Compile Include="..\TMS.API\Models\MasterData.cs">
+      <Link>Models\MasterData.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\Nationality.cs">
       <Link>Models\Nationality.cs</Link>

@@ -87,8 +87,9 @@ namespace TMS.API
             builder.EntitySet<Currency>(nameof(Currency));
             builder.EntitySet<Customer>(nameof(Customer));
             builder.EntitySet<CustomerCare>(nameof(CustomerCare));
+            builder.EntitySet<CustomerCareLog>(nameof(CustomerCareLog));
             builder.EntitySet<CustomerGroup>(nameof(CustomerGroup));
-            builder.EntitySet<CustomerState>(nameof(CustomerState));
+            builder.EntitySet<MasterData>(nameof(MasterData));
             builder.EntitySet<Department>(nameof(Department));
             builder.EntitySet<DistanceRange>(nameof(DistanceRange));
             builder.EntitySet<Entity>(nameof(Entity));

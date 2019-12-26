@@ -49,8 +49,7 @@ namespace Components
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
                 if (gridPolicyTask is null || gridPolicyTask.Result is null)
                 {
-                    Toast.Warning("Can not load header for the GridView");
-                    return;
+                    throw new System.InvalidOperationException($"Can not load header for the GridView {UI.Reference.Name}");
                 }
                 var headers = gridPolicyTask.Result.value
                     .Where(x => !x.Hidden).Select(MapToHeader).ToArray();
@@ -173,7 +172,10 @@ namespace Components
             var pagingQuery = dataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
             var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,
                 UI.Row > 0 ? pagingQuery : dataSource);
-            if (result == null) return;
+            if (result == null)
+            {
+                throw new System.InvalidOperationException($"Cannot load data for the GridView {UI.Reference.Name}");
+            }
             _total = result.odata?.count ?? 0;
             UpdatePagination();
             RowData.Data = result.value?.ToArray();

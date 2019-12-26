@@ -35,8 +35,8 @@ namespace TMS.API.Models
         public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerCare> CustomerCare { get; set; }
+        public virtual DbSet<CustomerCareLog> CustomerCareLog { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
-        public virtual DbSet<CustomerState> CustomerState { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<DistanceRange> DistanceRange { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
@@ -50,6 +50,7 @@ namespace TMS.API.Models
         public virtual DbSet<GroupRole> GroupRole { get; set; }
         public virtual DbSet<Ledger> Ledger { get; set; }
         public virtual DbSet<MaintenanceTicket> MaintenanceTicket { get; set; }
+        public virtual DbSet<MasterData> MasterData { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderComposition> OrderComposition { get; set; }
@@ -355,7 +356,11 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Format)
+                entity.Property(e => e.FormatData)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormatEntity)
                     .HasMaxLength(200)
                     .IsUnicode(false);
 
@@ -791,6 +796,38 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_CustomerCare_UserUpdated");
             });
 
+            modelBuilder.Entity<CustomerCareLog>(entity =>
+            {
+                entity.Property(e => e.ContactDate)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasComputedColumnSql("(CONVERT([varchar](10),[InsertedDate],(111)))");
+
+                entity.Property(e => e.ContactNumber).HasMaxLength(50);
+
+                entity.HasOne(d => d.ContactType)
+                    .WithMany(p => p.CustomerCareLog)
+                    .HasForeignKey(d => d.ContactTypeId)
+                    .HasConstraintName("FK_CustomerCareLog_ContactType");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.CustomerCareLog)
+                    .HasForeignKey(d => d.CustomerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCareLog_Customer");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.CustomerCareLogInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCareLog_UserInserted");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.CustomerCareLogUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_CustomerCareLog_UserUpdated");
+            });
+
             modelBuilder.Entity<CustomerGroup>(entity =>
             {
                 entity.Property(e => e.Description)
@@ -798,15 +835,6 @@ namespace TMS.API.Models
                     .HasMaxLength(200);
 
                 entity.Property(e => e.GroupName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<CustomerState>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
             });
@@ -1316,6 +1344,31 @@ namespace TMS.API.Models
                     .WithMany(p => p.MaintenanceTicketUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_MaintenanceTicket_UserUpdated");
+            });
+
+            modelBuilder.Entity<MasterData>(entity =>
+            {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.MasterDataInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MasterData_UserInserted");
+
+                entity.HasOne(d => d.Parent)
+                    .WithMany(p => p.InverseParent)
+                    .HasForeignKey(d => d.ParentId)
+                    .HasConstraintName("FK_MasterData_MasterData");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.MasterDataUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_MasterData_UserUpdated");
             });
 
             modelBuilder.Entity<Nationality>(entity =>

@@ -14,5 +14,21 @@ namespace Components.Extensions
             if (changeEvent.IsNullOrEmpty()) return;
             com.FindComponentEvent(changeEvent)?.ExecuteEvent(changeEvent, parameters);
         }
+
+        public static TMS.API.Models.Component MapToComponent<T>(this Header<T> header, object Entity)
+        {
+            return new TMS.API.Models.Component
+            {
+                Reference = new TMS.API.Models.Entity { Name = header.Reference },
+                FormatData = header.FormatCell,
+                FormatEntity = header.FormatRow,
+                DataSourceFilter = Utils.FormatWith(header.DataSource, Entity),
+                FieldName = header.FieldName,
+                Precision = header.Precision,
+                Validation = header.Validation,
+                PopulateField = header.PopulateField,
+                CascadeField = header.CascadeField,
+            };
+        }
     }
 }

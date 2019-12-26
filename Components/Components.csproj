@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="EditableLink.cs" />
     <Compile Include="MonthYearPicker.cs" />
     <Compile Include="Checkbox.cs" />
     <Compile Include="Extensions\ComponentExtensions.cs" />

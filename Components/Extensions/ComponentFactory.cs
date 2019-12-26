@@ -10,6 +10,9 @@ namespace Components.Extensions
             Component childComponent = null;
             switch (componentType)
             {
+                case "Link":
+                    childComponent = new EditableLink(ui);
+                    break;
                 case "Input":
                     childComponent = new Textbox(ui);
                     break;

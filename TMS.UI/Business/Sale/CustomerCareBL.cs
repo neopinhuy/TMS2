@@ -1,11 +1,7 @@
-﻿using Bridge.Html5;
-using Common.Clients;
-using Common.Enums;
-using Common.Extensions;
+﻿using Common.Clients;
 using Common.ViewModels;
 using Components;
 using Components.Forms;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -18,16 +14,6 @@ namespace TMS.UI.Business.Sale
         {
             Name = "Customer care";
             Title = Name;
-            Document.Head.AppendChild(new HTMLScriptElement()
-            {
-                Src = "./js/SkypeBootstrap.min.js",
-                Async = false
-            });
-            Document.Head.AppendChild(new HTMLScriptElement()
-            {
-                Src = "./js/skype.js",
-                Async = false
-            });
         }
 
         public void CreateCustomer()
@@ -49,7 +35,7 @@ namespace TMS.UI.Business.Sale
             var customerForm = new PopupEditor<CustomerCare>
             {
                 Entity = customer,
-                Name = "Customer Detail",
+                Name = "CustomerCare Detail",
                 Title = "Customer"
             };
             AddChild(customerForm);
@@ -57,28 +43,7 @@ namespace TMS.UI.Business.Sale
 
         public void Call()
         {
-            var dialog = new ConfirmDialog()
-            {
-                Content = "Mark selected customer(s) as initial contact?",
-                YesConfirmed = async() =>
-                {
-                    var customers = FindActiveComponent<GridView>();
-                    var selected = customers.SelectMany(x => x.GetSelectedRow()).Cast<CustomerCare>();
-                    selected.ForEach(x =>
-                    {
-                        x.Customer.LastCall = DateTime.Now;
-                        if (x.Customer.CustomerStateId <= (int)CustomerStateEnum.InitContact)
-                            x.Customer.CustomerStateId = (int)CustomerStateEnum.InitContact;
-                    });
-                    var res = await Client<Customer>.Instance.BulkUpdateAsync(selected.Select(x => x.Customer).ToList());
-                    if (res)
-                    {
-                        Toast.Success("Update success");
-                        FindComponent<GridView>().ForEach(x => x.ReloadData());
-                    }
-                }
-            };
-            AddChild(dialog);
+            
         }
 
         public async Task Email()

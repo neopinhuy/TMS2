@@ -14,7 +14,8 @@ namespace TMS.API.Models
         public int? ComponentGroupId { get; set; }
         public string DataSourceFilter { get; set; }
         public int? ReferenceId { get; set; }
-        public string Format { get; set; }
+        public string FormatData { get; set; }
+        public string FormatEntity { get; set; }
         public int? Column { get; set; }
         public int? Offset { get; set; }
         public int? Row { get; set; }
