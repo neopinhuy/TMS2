@@ -18,7 +18,6 @@ namespace Components
     public class GroupTable : Table<object>
     {
         private const string groupKey = "__groupkey__";
-        private bool _hasBuilt = false;
         public GroupTable(TableParam<object> tableParam) : base(tableParam)
         {
         }
@@ -31,10 +30,11 @@ namespace Components
             RowData.Subscribe(BuildGroupRowData);
         }
 
-        private void BuildGroupRowData(ObservableArgs arg)
+        private void BuildGroupRowData(ObservableArrayArgs<object> arg)
         {
-            if (_hasBuilt || _tableParam.GroupBy.IsNullOrEmpty()) return;
-            _hasBuilt = true;
+            var first = RowData.Data.FirstOrDefault();
+            if (first?[nameof(GroupRowData.Key)] != null && first?[nameof(GroupRowData.Children)] != null) return;
+            if (_tableParam.GroupBy.IsNullOrEmpty()) return;
             var keys = _tableParam.GroupBy.Split(",");
             RowData.Data.ForEach(x =>
             {
@@ -62,6 +62,11 @@ namespace Components
 
         protected override void RenderRowData(List<Header<object>> headers, object row, Section tableSection)
         {
+            if (row.GetBool(_emptyFlag))
+            {
+                base.RenderRowData(headers, row, tableSection);
+                return;
+            }
             var groupRow = (GroupRowData)row;
             var tbody = Html.Context as HTMLTableSectionElement;
             Html.Instance.TRow.ClassName("group-row");
