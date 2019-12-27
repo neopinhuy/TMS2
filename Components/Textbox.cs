@@ -3,7 +3,6 @@ using Common.Extensions;
 using Components.Extensions;
 using MVVM;
 using System;
-using TMS.API.Models;
 
 namespace Components
 {
@@ -20,6 +19,8 @@ namespace Components
         public override void Render()
         {
             var text = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
+            if (_ui.FormatData.HasAnyChar()) text = Utils.FormatWith(_ui.FormatData, Entity?.GetComplexPropValue(_ui.FieldName));
+            if (_ui.FormatEntity.HasAnyChar()) text = Utils.FormatWith(_ui.FormatEntity, Entity);
             Value = new Observable<string>(text);
             if (_ui.FieldName.HasAnyChar())
             {
