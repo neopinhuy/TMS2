@@ -20,14 +20,14 @@ namespace TMS.API.Controllers
         [HttpPost("api/[Controller]")]
         public override Task<ActionResult<Coordination>> CreateAsync([FromBody] Coordination entity)
         {
-            UpdateChildren<CoordinationDetail>(entity, AssignState);
+            UpdateChildren(entity.CoordinationDetail, AssignState);
             return base.CreateAsync(entity);
         }
 
         [HttpPut("api/[Controller]")]
         public override Task<ActionResult<Coordination>> UpdateAsync([FromBody] Coordination entity)
         {
-            UpdateChildren<CoordinationDetail>(entity, AssignState);
+            UpdateChildren(entity.CoordinationDetail, AssignState);
             return base.UpdateAsync(entity);
         }
 

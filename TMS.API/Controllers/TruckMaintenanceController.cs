@@ -19,7 +19,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            UpdateChildren<TruckMaintenanceDetail>(maintenance);
+            UpdateChildren(maintenance.TruckMaintenanceDetail);
             return await base.UpdateAsync(maintenance);
         }
     }

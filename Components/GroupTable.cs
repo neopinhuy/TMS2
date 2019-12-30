@@ -32,23 +32,21 @@ namespace Components
 
         private void BuildGroupRowData(ObservableArrayArgs<object> arg)
         {
-            var first = RowData.Data.FirstOrDefault();
-            if (first?[nameof(GroupRowData.Key)] != null && first?[nameof(GroupRowData.Children)] != null) return;
             if (_tableParam.GroupBy.IsNullOrEmpty()) return;
             var keys = _tableParam.GroupBy.Split(",");
-            RowData.Data.ForEach(x =>
+            var rows = GetUnderlayingRowData();
+            rows.ForEach(x =>
             {
                 x[groupKey] = string.Join(" ", keys.Select(key => x.GetComplexPropValue(key)?.ToString()));
             });
-            RowData.NewValue = RowData.Data.GroupBy(x => (string)x[groupKey])
-                .Select(x => new GroupRowData
-                {
-                    Key = x.Key,
-                    Children = x.ToList()
-                }).Cast<object>().ToArray();
+            RowData.NewValue = rows.GroupBy(x => (string)x[groupKey]).Select(x => new GroupRowData
+            {
+                Key = x.Key,
+                Children = x.ToList()
+            }).Cast<object>().ToArray();
         }
 
-        protected override object[] GetUnderlayingRowData()
+        public override object[] GetUnderlayingRowData()
         {
             try
             {

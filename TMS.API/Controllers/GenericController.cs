@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -88,7 +89,6 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
             await db.SaveChangesAsync();
@@ -116,11 +116,10 @@ namespace TMS.API.Controllers
             return true;
         }
 
-        protected void UpdateChildren<Child>(T entity, Action<Child> add = null, Action<Child> update = null) where Child : class
+        protected void UpdateChildren<Child>(IEnumerable<Child> entities, Action<Child> add = null, Action<Child> update = null) where Child : class
         {
-            var childProp = typeof(T).GetProperty(typeof(Child).Name);
-            var childValue = childProp.GetValue(entity) as ICollection<Child>;
-            foreach (var detail in childValue)
+            if (entities.Nothing()) return;
+            foreach (var detail in entities)
             {
                 var id = (int)detail.GetPropValue("Id");
                 if (id == 0)

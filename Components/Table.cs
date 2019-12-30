@@ -201,7 +201,7 @@ namespace Components
             _refData = refData.Select(x => x?.value);
         }
 
-        protected virtual object[] GetUnderlayingRowData()
+        public virtual object[] GetUnderlayingRowData()
         {
             return RowData.Data.Cast<object>().ToArray();
         }
@@ -366,6 +366,7 @@ namespace Components
         private static void ToggleSelectRow(int index, HTMLTableSectionElement body)
         {
             var tableRow = body.Rows[index];
+            if (tableRow is null) return;
             var rowData = tableRow[_rowData];
             if (!tableRow.ClassName.Contains(_selectedClass))
             {

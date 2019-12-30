@@ -42,7 +42,7 @@ namespace TMS.API.Controllers
             try
             {
                 SetTerminals(order);
-                UpdateChildren<OrderDetail>(order);
+                UpdateChildren(order.OrderDetail);
                 await base.UpdateAsync(order);
                 await UpdateCoordination(order);
                 await db.SaveChangesAsync();

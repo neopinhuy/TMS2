@@ -39,12 +39,12 @@ namespace TMS.UI.Business.Sale
                 var customer = FindComponentByName<SearchEntry>(nameof(Order.CustomerId));
                 customer.ValueChanged += (e) => FindComponentByName<GridView>(nameof(Order.OrderDetail)).ReloadData();
                 var orderDetailGrid = FindComponentByName<GridView>(nameof(Order.OrderDetail));
-                orderDetailGrid.CellChanged += async (ObservableArgs e, Header<object> header, object obj) =>
+                orderDetailGrid.CellChanged += async (CellChangeEvent e) =>
                 {
-                    var orderDetail = obj.SafeCast<OrderDetail>();
-                    foreach (var prop in GetOwnPropertyNames(obj))
+                    var orderDetail = e.Row.SafeCast<OrderDetail>();
+                    foreach (var prop in GetOwnPropertyNames(e.Row))
                     {
-                        orderDetail[prop] = obj[prop];
+                        orderDetail[prop] = e.Row[prop];
                     }
                     orderDetail.Order = order;
                     if (orderDetail.QuotationId is null)

@@ -14,6 +14,15 @@ using ElementType = MVVM.ElementType;
 
 namespace Components
 {
+    public class CellChangeEvent
+    {
+        public ObservableArgs Args;
+        public Header<object> Header;
+        public object Row;
+        public object[] FlatternRowData;
+        public ObservableArray<object> ObservableRowData;
+    }
+
     public class GridView : Component
     {
         public readonly TMS.API.Models.Component UI;
@@ -23,7 +32,7 @@ namespace Components
         private HTMLElement _paginator;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
-        public Action<ObservableArgs, Header<object>, object> CellChanged { get; set; }
+        public Action<CellChangeEvent> CellChanged { get; set; }
 
         public GridView(TMS.API.Models.Component ui)
         {
@@ -78,21 +87,37 @@ namespace Components
                 GroupFormat = UI.GroupFormat,
             };
             BindingEvents(tableParams);
-            _table = UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar()
-                ? new GroupTable(tableParams)
-                : new Table<object>(tableParams);
+            _table = IsGroupTable ? new GroupTable(tableParams) : new Table<object>(tableParams);
             _table.Entity = Entity;
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
-            _table.CellChanged = (arg, header, data) => CellChanged?.Invoke(arg, header, data);
+            _table.CellChanged = (arg, header, data) =>
+            {
+                var rows = _table.GetUnderlayingRowData();
+                if (IsGroupTable) {
+                    Entity.SetComplexPropValue(UI.FieldName, rows);
+                }
+                var e = new CellChangeEvent { Args = arg, Header = header, Row = data, FlatternRowData = rows, ObservableRowData = RowData };
+                var events = JsonConvert.DeserializeObject<object>(UI.Events);
+                var cellChanged = events["cellChanged"]?.ToString();
+                if (cellChanged.HasAnyChar())
+                {
+                    var parent = FindComponentEvent(cellChanged);
+                    parent.ExecuteEvent(cellChanged, e);
+                }
+                CellChanged?.Invoke(e);
+            };
             AddChild(_table);
             _table.AfterRendered += () => AfterRendered?.Invoke();
         }
+
+        private bool IsGroupTable => UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar();
 
         private void BindingEvents(TableParam<object> tableParams)
         {
             if (!UI.Events.HasAnyChar()) return;
             var events = JsonConvert.DeserializeObject<object>(UI.Events);
+            Html.Instance.DataAttr("events", UI.Events);
             var dblClick = events[EventType.DblClick.ToString()]?.ToString();
             if (dblClick.HasAnyChar())
             {
@@ -179,7 +204,7 @@ namespace Components
             _total = result.odata?.count ?? 0;
             UpdatePagination();
             RowData.Data = result.value?.ToArray();
-            if (Entity != null) Entity[UI.FieldName] = RowData.Data;
+            if (Entity != null) Entity.SetComplexPropValue(UI.FieldName, RowData.Data);
         }
 
         private void UpdatePagination()

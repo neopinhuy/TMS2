@@ -23,7 +23,7 @@ namespace TMS.API.Controllers
         public override Task<ActionResult<CustomerCare>> UpdateAsync([FromBody] CustomerCare entity)
         {
             db.Customer.Update(entity.Customer);
-            UpdateChildren<CustomerCareLog>(entity);
+            UpdateChildren(entity.Customer?.CustomerCareLog);
             return base.UpdateAsync(entity);
         }
 

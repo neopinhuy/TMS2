@@ -14,7 +14,7 @@ namespace TMS.API.Controllers
 
         public override async Task<ActionResult<CoordinationDetail>> UpdateAsync([FromBody] CoordinationDetail entity)
         {
-            UpdateChildren<Surcharge>(entity);
+            UpdateChildren(entity.Surcharge);
             await base.UpdateAsync(entity);
             await db.UpdateCoorState(entity.CoordinationId);
             return Ok(entity);

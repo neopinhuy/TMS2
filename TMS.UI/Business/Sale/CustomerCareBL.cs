@@ -1,7 +1,10 @@
 ﻿using Common.Clients;
+using Common.Extensions;
 using Common.ViewModels;
 using Components;
 using Components.Forms;
+using MVVM;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
@@ -44,6 +47,14 @@ namespace TMS.UI.Business.Sale
         public void Call()
         {
             
+        }
+        
+        public void CustomerCareLog_CellChanged(CellChangeEvent e)
+        {
+            var customerCareLog = e.Row?.SafeCast<CustomerCareLog>();
+            if (customerCareLog is null || customerCareLog.Id > 0) return;
+            customerCareLog.InsertedDate = DateTime.Now;
+            e.ObservableRowData.NotifyChange();
         }
 
         public async Task Email()
