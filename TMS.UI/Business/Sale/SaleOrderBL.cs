@@ -84,5 +84,16 @@ namespace TMS.UI.Business.Sale
             var SaleOrderGrid = FindComponentByName("SaleOrderGrid") as GridView;
             SaleOrderGrid.DeleteSelected();
         }
+
+        public void Preview(Order order)
+        {
+            var preview = new PopupEditor<Order>
+            {
+                Entity = order,
+                Name = "SaleOrder Preview",
+                Title = "Sale order preview"
+            };
+            AddChild(preview);
+        }
     }
 }
