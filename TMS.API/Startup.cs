@@ -34,7 +34,7 @@ namespace TMS.API
 
             services.AddDbContext<TMSContext>(options =>
             {
-                options.UseSqlServer(_configuration.GetConnectionString("TMS"));
+                options.UseSqlServer(_configuration.GetConnectionString("Default"));
             });
             services.AddResponseCompression();
             services.AddOData();
