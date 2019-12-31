@@ -1,4 +1,5 @@
-﻿using Common.Clients;
+﻿using Bridge.Html5;
+using Common.Clients;
 using Common.Extensions;
 using Components;
 using Components.Forms;
@@ -94,6 +95,25 @@ namespace TMS.UI.Business.Sale
                 Title = "Sale order preview"
             };
             AddChild(preview);
+        }
+
+        public void PrintOrder()
+        {
+            var print = Window.Open("", "_blank");
+            var shtml = "<html>";
+            shtml += "<link rel='stylesheet' type='text/css' href='./css/main.css' />";
+            shtml += "<link href='./css/font-awesome.css' rel='stylesheet' />";
+            shtml += "<link href='./css/metro-all.css' rel='stylesheet' />";
+            shtml += "<link href='./css/main.css' rel='stylesheet' />";
+            shtml += "<link href='./css/LineIcons.css' rel='stylesheet' />";
+            shtml += "<body onload=\"window.print();window.close();\">";
+            shtml += "<div style='padding:7px'>";
+            shtml += Document.GetElementById("group_1166").InnerHTML;
+            shtml += "</div>";
+            shtml += "</body>";
+            shtml += "</html>";
+            print.Document.Write(shtml);
+            print.Document.Close();
         }
     }
 }

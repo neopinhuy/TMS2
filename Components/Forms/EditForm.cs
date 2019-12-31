@@ -120,7 +120,12 @@ namespace Components.Forms
                     ui.ComponentGroup = item;
                 }
             }
-            return componentGroup.Where(x => x.ParentId == null).ToList();
+            componentGroup = componentGroup.Where(x => x.ParentId == null);
+            if (componentGroup.Nothing())
+            {
+                Console.WriteLine("No component group is root component");
+            }
+            return componentGroup.ToList();
         }
 
         public override void Render()
