@@ -86,7 +86,7 @@ namespace Components.Forms
             var grids = FindComponent<GridView>();
             grids.ForEach(x =>
             {
-                x.RowData.Data.ForEach(row =>
+                x.FlatternRowData.ForEach(row =>
                 {
                     if (row[IdField] != null && (int)row[IdField] < 0)
                     {

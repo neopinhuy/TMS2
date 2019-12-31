@@ -7,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Models;
 using ElementType = MVVM.ElementType;
-using InvalidOperationException = Common.Extensions.InvalidOperationException;
 
 namespace Components
 {
@@ -27,6 +25,7 @@ namespace Components
     {
         public ObservableArray<Header<T>> Headers { get; set; }
         public ObservableArray<T> RowData { get; set; }
+        public T[] FlatternRowData { get; set; }
         public int? SelectedRow { get; set; }
         public Action<Event> BodyContextMenu { get; set; }
         public bool Editable { get; private set; }
@@ -99,7 +98,7 @@ namespace Components
             });
         }
 
-        private void Rerender()
+        protected void Rerender()
         {
             if (timeOut != null)
             {
@@ -201,9 +200,10 @@ namespace Components
             _refData = refData.Select(x => x?.value);
         }
 
-        public virtual object[] GetUnderlayingRowData()
+        public virtual T[] GetFlatternRowData()
         {
-            return RowData.Data.Cast<object>().ToArray();
+            FlatternRowData = RowData.Data;
+            return FlatternRowData;
         }
 
         private Header<T> FormatDataSource(Header<T> header)
@@ -219,7 +219,7 @@ namespace Components
 
         private EnumerableInstance<int?> GetEntityIds(Header<T> header)
         {
-            return GetUnderlayingRowData()
+            return GetFlatternRowData()
                 .Select(x => {
                     var val = x.GetComplexPropValue(header.FieldName)?.ToString();
                     if (val.IsNullOrEmpty()) return null;
@@ -509,7 +509,15 @@ namespace Components
                 if (res == false) return;
                 if (rowData.GetBool(_emptyFlag))
                 {
-                    RowData.Add(rowData);
+                    var rows = GetFlatternRowData();
+                    rows.Push(rowData);
+                    RowData.NotifyArrayChanged(new ObservableArrayArgs<T>
+                    {
+                        Action = ObservableAction.Add,
+                        Array = rows,
+                        Index = rows.Length - 1,
+                        Item = rowData
+                    });
                     rowData[_emptyFlag] = false;
                     AddNewEmptyRow(Headers.Data.Where(x => x.Frozen).ToList(),
                         Headers.Data.Where(x => !x.Frozen).ToList());
@@ -527,10 +535,10 @@ namespace Components
                 .Closest(ElementType.tr).GetContext() as HTMLTableRowElement;
             var tbody = row.ParentElement as HTMLTableSectionElement;
             var index = Array.IndexOf(tbody.Rows.ToArray(), row);
-            _nonFrozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
-            _frozenTable.TBodies[0].Rows.ForEach(x => x.RemoveClass(_selectedClass));
-            _nonFrozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
-            _frozenTable.TBodies[0].Rows[index].AddClass(_selectedClass);
+            _nonFrozenTable.TBodies[0]?.Rows.ForEach(x => x.RemoveClass(_selectedClass));
+            _frozenTable.TBodies[0]?.Rows.ForEach(x => x.RemoveClass(_selectedClass));
+            _nonFrozenTable.TBodies[0]?.Rows[index].AddClass(_selectedClass);
+            _frozenTable.TBodies[0]?.Rows[index].AddClass(_selectedClass);
             var rowData = row[_rowData];
             if (rowData != null)
             {

@@ -23,6 +23,7 @@ namespace Common.Extensions
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
+            if (source.Nothing() || action is null) return source;
             foreach (var item in source)
             {
                 action(item);

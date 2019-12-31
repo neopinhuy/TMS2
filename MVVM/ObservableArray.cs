@@ -48,7 +48,7 @@ namespace MVVM
             });
         }
 
-        private void NotifyArrayChanged(ObservableArrayArgs<T> arg)
+        public void NotifyArrayChanged(ObservableArrayArgs<T> arg)
         {
             var isBeingExecuted = _exeStack.Contains(this);
             if (isBeingExecuted)

@@ -19,7 +19,7 @@ namespace Components
         public ObservableArgs Args;
         public Header<object> Header;
         public object Row;
-        public object[] FlatternRowData;
+        public IEnumerable<object> FlatternRowData;
         public ObservableArray<object> ObservableRowData;
     }
 
@@ -93,7 +93,7 @@ namespace Components
             Html.Take(RootHtmlElement).Clear();
             _table.CellChanged = (arg, header, data) =>
             {
-                var rows = _table.GetUnderlayingRowData();
+                var rows = _table.GetFlatternRowData();
                 if (IsGroupTable) {
                     Entity.SetComplexPropValue(UI.FieldName, rows);
                 }
@@ -110,6 +110,8 @@ namespace Components
             AddChild(_table);
             _table.AfterRendered += () => AfterRendered?.Invoke();
         }
+
+        public virtual object[] FlatternRowData => _table.GetFlatternRowData();
 
         private bool IsGroupTable => UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar();
 

@@ -34,7 +34,7 @@ namespace Components
         {
             if (_tableParam.GroupBy.IsNullOrEmpty()) return;
             var keys = _tableParam.GroupBy.Split(",");
-            var rows = GetUnderlayingRowData();
+            var rows = GetFlatternRowData();
             rows.ForEach(x =>
             {
                 x[groupKey] = string.Join(" ", keys.Select(key => x.GetComplexPropValue(key)?.ToString()));
@@ -46,16 +46,20 @@ namespace Components
             }).Cast<object>().ToArray();
         }
 
-        public override object[] GetUnderlayingRowData()
+        public override object[] GetFlatternRowData()
         {
-            try
+            if (FlatternRowData != null) return FlatternRowData;
+            var first = RowData.Data?.FirstOrDefault();
+            if (first.HasOwnProperty(nameof(GroupRowData.Key))
+                && first.HasOwnProperty(nameof(GroupRowData.Children)))
             {
-                return RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToArray();
+                FlatternRowData = RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToArray();
             }
-            catch (InvalidCastException)
+            else
             {
-                return RowData.Data;
+                FlatternRowData = RowData.Data;
             }
+            return FlatternRowData;
         }
 
         protected override void RenderRowData(List<Header<object>> headers, object row, Section tableSection)
