@@ -99,7 +99,7 @@ namespace Components
                 }
                 var e = new CellChangeEvent { Args = arg, Header = header, Row = data, FlatternRowData = rows, ObservableRowData = RowData };
                 var events = JsonConvert.DeserializeObject<object>(UI.Events);
-                var cellChanged = events["cellChanged"]?.ToString();
+                var cellChanged = events?["cellChanged"]?.ToString();
                 if (cellChanged.HasAnyChar())
                 {
                     var parent = FindComponentEvent(cellChanged);
@@ -111,7 +111,7 @@ namespace Components
             _table.AfterRendered += () => AfterRendered?.Invoke();
         }
 
-        public virtual object[] FlatternRowData => _table.GetFlatternRowData();
+        public virtual IEnumerable<object> FlatternRowData => _table.GetFlatternRowData();
 
         private bool IsGroupTable => UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar();
 

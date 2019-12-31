@@ -47,12 +47,17 @@ namespace TMS.UI.Business.Sale
         {
             
         }
-        
-        public void CustomerCareLog_CellChanged(CellChangeEvent e)
+
+        public Task<bool> SaveCustomerCare(bool defaultMessage = false)
         {
-            var customerCareLog = e.Row?.SafeCast<CustomerCareLog>();
-            if (customerCareLog is null || customerCareLog.Id > 0) return;
-            customerCareLog.InsertedDate = DateTime.Now;
+            var grid = FindComponentByName<GridView>($"{nameof(Customer)}.{nameof(CustomerCareLog)}");
+            grid.FlatternRowData.Select(x =>
+            {
+                var log = x.SafeCast<CustomerCareLog>();
+                if (log.Id <= 0) log.InsertedDate = DateTime.Now;
+                return log;
+            });
+            return (grid.Parent as PopupEditor<CustomerCare>).Save(defaultMessage);
         }
 
         public async Task Email()
