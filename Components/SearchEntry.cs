@@ -20,7 +20,7 @@ namespace Components
         private bool _isShowing;
         private readonly TMS.API.Models.Component _ui;
         public string DataSourceFilter { get; set; }
-        public ObservableArray<object> Source { get; private set; }
+        public readonly ObservableArray<object> Source;
         public object Matched { get; set; }
 
         public SearchEntry(TMS.API.Models.Component ui)
@@ -179,7 +179,7 @@ namespace Components
                 Reference = column.Reference?.Name,
                 DataSource = column.DataSource,
             }).ToArray();
-            if (Source == null || Source.Data.Length == 0)
+            if (Source.Data == null || Source.Data.Length == 0)
             {
                 Source.Data = await GetDataSource();
             }

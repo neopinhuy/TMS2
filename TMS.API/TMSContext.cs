@@ -2381,9 +2381,9 @@ namespace TMS.API
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.MasterData)
+                entity.HasOne(d => d.VendorType)
                     .WithMany(p => p.Vendor)
-                    .HasForeignKey(d => d.MasterDataId)
+                    .HasForeignKey(d => d.VendorTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Vendor_VendorType");
             });

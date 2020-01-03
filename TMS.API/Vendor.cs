@@ -17,7 +17,7 @@ namespace TMS.API
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MasterDataId { get; set; }
+        public int VendorTypeId { get; set; }
         public bool IsSelf { get; set; }
         public string Description { get; set; }
         public string PhoneNumber { get; set; }
@@ -30,7 +30,7 @@ namespace TMS.API
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual MasterData MasterData { get; set; }
+        public virtual MasterData VendorType { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
