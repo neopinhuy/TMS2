@@ -21,6 +21,10 @@ namespace TMS.UI.Business.Sale
         {
             InitVendorForm(Vendor);
         }
+        public void CreateVendor(Vendor Vendor)
+        {
+            InitVendorForm(Vendor);
+        }
 
         private void InitVendorForm(Vendor vendor)
         {
@@ -28,7 +32,7 @@ namespace TMS.UI.Business.Sale
             {
                 Entity = vendor,
                 Name = "Vendor Detail",
-                Title = "Vendor"
+                Title = "Vendor Detail"
             };
             AddChild(vendorForm);
         }
