@@ -111,7 +111,7 @@ namespace Components
             _table.AfterRendered += () => AfterRendered?.Invoke();
         }
 
-        public virtual IEnumerable<object> FlatternRowData => _table.GetFlatternRowData();
+        public virtual object[] FlatternRowData => _table.GetFlatternRowData();
 
         private bool IsGroupTable => UI.GroupFormat.HasAnyChar() || UI.GroupBy.HasAnyChar();
 

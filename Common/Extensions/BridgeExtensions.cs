@@ -81,6 +81,15 @@ namespace Common.Extensions
             return res;
         }
 
+        public static void Reset<T>(this T obj)
+        {
+            obj.GetType().GetProperties().ForEach(prop =>
+            {
+                var val = Activator.CreateInstance(prop.GetType());
+                prop.SetValue(obj, val);
+            });
+        }
+
         public static void CopyPropFrom(this object obj, object source)
         {
             if (obj is null || source is null) return;

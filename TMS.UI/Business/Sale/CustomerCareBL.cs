@@ -34,29 +34,42 @@ namespace TMS.UI.Business.Sale
 
         private void InitCustomerCareForm(CustomerCare customer)
         {
-            var customerForm = new PopupEditor<CustomerCare>
+            var vm = customer.SafeCast<CustomerCareVM>();
+            vm.CustomerCareLog = new CustomerCareLog();
+            var customerForm = new PopupEditor<CustomerCareVM>
             {
-                Entity = customer,
+                Entity = vm,
                 Name = "CustomerCare Detail",
                 Title = "Customer"
             };
             AddChild(customerForm);
         }
 
-        public void Call()
+        public async Task AddLog(CustomerCareVM vm)
         {
-            
+            var log = vm.CustomerCareLog;
+            log.CustomerId = vm.CustomerId;
+            // add new entity to db
+            var saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
+
+            // Show message
+            if (saved != null) Toast.Success("Add new log succeeded");
+            else Toast.Warning("Add new log failed");
+
+            // Clear all data of the customer care log
+            log.Reset();
         }
 
         public Task<bool> SaveCustomerCare(bool defaultMessage = false)
         {
             var grid = FindComponentByName<GridView>($"{nameof(Customer)}.{nameof(CustomerCareLog)}");
-            grid.FlatternRowData.Select(x =>
+            var customerCare = grid.Entity as CustomerCare;
+            foreach (var log in customerCare.Customer.CustomerCareLog)
             {
-                var log = x.SafeCast<CustomerCareLog>();
-                if (log.Id <= 0) log.InsertedDate = DateTime.Now;
-                return log;
-            });
+                if (log.Id > 0) continue;
+                log.Id = 0;
+                log.InsertedDate = DateTime.Now;
+            }
             return (grid.Parent as PopupEditor<CustomerCare>).Save(defaultMessage);
         }
 

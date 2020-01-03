@@ -26,7 +26,12 @@ namespace Components
         {
             base.Render();
             Html.Take(RootHtmlElement).ClassName("group-table").End.Render();
-            BuildGroupRowData(null);
+            BuildGroupRowData(new ObservableArrayArgs<object>
+            {
+                Array = RowData.Data,
+                Index = -1,
+                Action = ObservableAction.Render
+            });
             RowData.Subscribe(BuildGroupRowData);
         }
 
@@ -34,12 +39,11 @@ namespace Components
         {
             if (_tableParam.GroupBy.IsNullOrEmpty()) return;
             var keys = _tableParam.GroupBy.Split(",");
-            var rows = GetFlatternRowData();
-            rows.ForEach(x =>
+            RowData.NewValue = arg.Array.Select(x =>
             {
                 x[groupKey] = string.Join(" ", keys.Select(key => x.GetComplexPropValue(key)?.ToString()));
-            });
-            RowData.NewValue = rows.GroupBy(x => (string)x[groupKey]).Select(x => new GroupRowData
+                return x;
+            }).GroupBy(x => (string)x[groupKey]).Select(x => new GroupRowData
             {
                 Key = x.Key,
                 Children = x.ToList()
@@ -49,8 +53,8 @@ namespace Components
         public override object[] GetFlatternRowData()
         {
             if (FlatternRowData != null) return FlatternRowData;
-            var first = RowData.Data?.FirstOrDefault();
-            if (first.HasOwnProperty(nameof(GroupRowData.Key))
+            var first = RowData.Data.FirstOrDefault();
+            if (first != null && first.HasOwnProperty(nameof(GroupRowData.Key))
                 && first.HasOwnProperty(nameof(GroupRowData.Children)))
             {
                 FlatternRowData = RowData.Data.Cast<GroupRowData>().SelectMany(x => x.Children).ToArray();

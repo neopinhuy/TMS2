@@ -90,7 +90,7 @@ namespace Components.Forms
                 {
                     if (row[IdField] != null && (int)row[IdField] < 0)
                     {
-                        row[IdField] = 0;
+                        row.SetPropValue(IdField, 0);
                     }
                 });
             });
