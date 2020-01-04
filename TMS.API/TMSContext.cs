@@ -2098,12 +2098,12 @@ namespace TMS.API
                 entity.Property(e => e.Year).HasColumnType("decimal(4, 0)");
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckBranch)
                     .HasForeignKey(d => d.BranchId)
                     .HasConstraintName("FK_Truck_Branch");
 
                 entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Truck_Currency");
 
