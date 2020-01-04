@@ -8,8 +8,15 @@ namespace TMS.API.Models
         public MasterData()
         {
             Customer = new HashSet<Customer>();
-            CustomerCareLog = new HashSet<CustomerCareLog>();
+            CustomerCareLogCommodityType = new HashSet<CustomerCareLog>();
+            CustomerCareLogContactType = new HashSet<CustomerCareLog>();
+            CustomerCareLogStatus = new HashSet<CustomerCareLog>();
             InverseParent = new HashSet<MasterData>();
+            TruckBranch = new HashSet<Truck>();
+            TruckCurrency = new HashSet<Truck>();
+            TruckFuelType = new HashSet<Truck>();
+            TruckTruckType = new HashSet<Truck>();
+            Vendor = new HashSet<Vendor>();
         }
 
         public int Id { get; set; }
@@ -26,7 +33,14 @@ namespace TMS.API.Models
         public virtual MasterData Parent { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Customer> Customer { get; set; }
-        public virtual ICollection<CustomerCareLog> CustomerCareLog { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogCommodityType { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogStatus { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
+        public virtual ICollection<Truck> TruckBranch { get; set; }
+        public virtual ICollection<Truck> TruckCurrency { get; set; }
+        public virtual ICollection<Truck> TruckFuelType { get; set; }
+        public virtual ICollection<Truck> TruckTruckType { get; set; }
+        public virtual ICollection<Vendor> Vendor { get; set; }
     }
 }

@@ -10,7 +10,6 @@ namespace TMS.API.Models
             Coordination = new HashSet<Coordination>();
             OrderDetail = new HashSet<OrderDetail>();
             Quotation = new HashSet<Quotation>();
-            Truck = new HashSet<Truck>();
         }
 
         public int Id { get; set; }
@@ -27,6 +26,5 @@ namespace TMS.API.Models
         public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
         public virtual ICollection<Quotation> Quotation { get; set; }
-        public virtual ICollection<Truck> Truck { get; set; }
     }
 }

@@ -90,7 +90,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost;Database=TMS;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
             }
         }
 
@@ -356,13 +356,9 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FormatData)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.FormatData).HasMaxLength(250);
 
-                entity.Property(e => e.FormatEntity)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.FormatEntity).HasMaxLength(250);
 
                 entity.Property(e => e.GroupBy)
                     .HasMaxLength(100)
@@ -805,8 +801,21 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.ContactNumber).HasMaxLength(50);
 
+                entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.EstimatedCost).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Volumn).HasColumnType("decimal(20, 5)");
+
+                entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
+
+                entity.HasOne(d => d.CommodityType)
+                    .WithMany(p => p.CustomerCareLogCommodityType)
+                    .HasForeignKey(d => d.CommodityTypeId)
+                    .HasConstraintName("FK_CustomerCareLog_MasterData");
+
                 entity.HasOne(d => d.ContactType)
-                    .WithMany(p => p.CustomerCareLog)
+                    .WithMany(p => p.CustomerCareLogContactType)
                     .HasForeignKey(d => d.ContactTypeId)
                     .HasConstraintName("FK_CustomerCareLog_ContactType");
 
@@ -821,6 +830,16 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CustomerCareLog_UserInserted");
+
+                entity.HasOne(d => d.Quotation)
+                    .WithMany(p => p.CustomerCareLog)
+                    .HasForeignKey(d => d.QuotationId)
+                    .HasConstraintName("FK_CustomerCareLog_Quotation");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.CustomerCareLogStatus)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK_CustomerCareLog_Status");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.CustomerCareLogUpdatedByNavigation)
@@ -2102,22 +2121,22 @@ namespace TMS.API.Models
                 entity.Property(e => e.Year).HasColumnType("decimal(4, 0)");
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckBranch)
                     .HasForeignKey(d => d.BranchId)
                     .HasConstraintName("FK_Truck_Branch");
 
                 entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Truck_Currency");
 
                 entity.HasOne(d => d.FuelType)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckFuelType)
                     .HasForeignKey(d => d.FuelTypeId)
                     .HasConstraintName("FK_Truck_FuelType");
 
                 entity.HasOne(d => d.TruckType)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckTruckType)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Truck_TruckType");
 

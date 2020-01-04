@@ -59,7 +59,6 @@ namespace TMS.UI.Business.Sale
             // Clear all data of the customer care log
             log.ContactTypeId = null;
             log.ContactNumber = null;
-            log.IsResponsed = false;
             log.Message = string.Empty;
             var group = FindComponentByName<Section>("New log");
             group.UpdateView();

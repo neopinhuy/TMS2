@@ -1,4 +1,5 @@
 ﻿using Nest;
+using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {

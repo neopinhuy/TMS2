@@ -51,10 +51,10 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Branch Branch { get; set; }
-        public virtual Currency Currency { get; set; }
-        public virtual FuelType FuelType { get; set; }
-        public virtual TruckType TruckType { get; set; }
+        public virtual MasterData Branch { get; set; }
+        public virtual MasterData Currency { get; set; }
+        public virtual MasterData FuelType { get; set; }
+        public virtual MasterData TruckType { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }

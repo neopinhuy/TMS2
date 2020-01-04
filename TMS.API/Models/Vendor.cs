@@ -30,7 +30,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual VendorType VendorType { get; set; }
+        public virtual MasterData VendorType { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
