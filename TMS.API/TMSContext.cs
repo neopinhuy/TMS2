@@ -2108,12 +2108,12 @@ namespace TMS.API
                     .HasConstraintName("FK_Truck_Currency");
 
                 entity.HasOne(d => d.FuelType)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckFuelType)
                     .HasForeignKey(d => d.FuelTypeId)
                     .HasConstraintName("FK_Truck_FuelType");
 
                 entity.HasOne(d => d.TruckType)
-                    .WithMany(p => p.Truck)
+                    .WithMany(p => p.TruckTruckType)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Truck_TruckType");
 

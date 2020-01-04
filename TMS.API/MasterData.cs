@@ -10,7 +10,8 @@ namespace TMS.API
             Customer = new HashSet<Customer>();
             CustomerCareLog = new HashSet<CustomerCareLog>();
             InverseParent = new HashSet<MasterData>();
-            Truck = new HashSet<Truck>();
+            TruckFuelType = new HashSet<Truck>();
+            TruckTruckType = new HashSet<Truck>();
             Vendor = new HashSet<Vendor>();
         }
 
@@ -30,7 +31,8 @@ namespace TMS.API
         public virtual ICollection<Customer> Customer { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLog { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
-        public virtual ICollection<Truck> Truck { get; set; }
+        public virtual ICollection<Truck> TruckFuelType { get; set; }
+        public virtual ICollection<Truck> TruckTruckType { get; set; }
         public virtual ICollection<Vendor> Vendor { get; set; }
     }
 }
