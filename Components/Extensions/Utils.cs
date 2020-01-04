@@ -1,7 +1,6 @@
 ﻿using Common.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Components.Extensions
@@ -13,6 +12,14 @@ namespace Components.Extensions
             if (!format.HasAnyChar()) return string.Empty;
             if (source is null) return format;
             return FormatWith(format, null, source);
+        }
+
+        public static string GetFormatText(object entity, TMS.API.Models.Component ui)
+        {
+            var text = entity?.GetComplexPropValue(ui.FieldName)?.ToString();
+            if (ui.FormatData.HasAnyChar()) text = FormatWith(ui.FormatData, entity?.GetComplexPropValue(ui.FieldName));
+            if (ui.FormatEntity.HasAnyChar()) text = FormatWith(ui.FormatEntity, entity);
+            return text;
         }
 
         public static string FormatWith(string format, IFormatProvider provider, object source)

@@ -315,8 +315,8 @@ namespace Components
             var rowById = RowData.Data.FirstOrDefault(x => (int)x[IdField] == id);
             var index = Array.IndexOf(RowData.Data, rowById);
             rowById.CopyPropFrom(rowData);
-            _frozenSection.Children[index]?.Update();
-            _mainSection.Children[index]?.Update();
+            _frozenSection.Children[index]?.UpdateView();
+            _mainSection.Children[index]?.UpdateView();
         }
 
         protected virtual void RenderRowData(List<Header<T>> headers, T row, Section section)

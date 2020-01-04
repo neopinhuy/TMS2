@@ -136,12 +136,12 @@ namespace Components.Forms
                     .GetList($"?$expand=Component($expand=Reference)&$filter=Feature/Name eq '{Name}'");
                 var groupTree = BuildTree(componentGroup.value);
                 Html.Take(RootHtmlElement);
-                RenderGroup(groupTree);
+                RenderGroup(groupTree, this);
                 AfterRendered?.Invoke();
             });
         }
 
-        private void RenderGroup(List<ComponentGroup> componentGroup)
+        private void RenderGroup(List<ComponentGroup> componentGroup, Component parent)
         {
             foreach (var group in componentGroup.OrderBy(x => x.Order))
             {
@@ -165,17 +165,18 @@ namespace Components.Forms
                     .ClassName("group").ClassName(group.ClassName)
                     .ClassName(group.IsTab ? "tab" : string.Empty).Display(!group.Hidden)
                     .Style(group.Style ?? string.Empty).Width(group.Width);
-                AddChild(new Section(Html.Context) { Name = group.Name });
+                var section = new Section(Html.Context) { Id = group.Id, Name = group.Name };
+                parent.AddChild(section);
                 if (group.InverseParent != null && group.InverseParent.Any())
                 {
-                    RenderGroup(group.InverseParent.ToList());
+                    RenderGroup(group.InverseParent.ToList(), section);
                 }
-                RenderComponent(group);
+                RenderComponent(group, section);
                 Html.Instance.EndOf("#group_" + group.Id);
             }
         }
 
-        private void RenderComponent(ComponentGroup group)
+        private void RenderComponent(ComponentGroup group, Component parent)
         {
             if (group.Component.Nothing()) return;
             Html.Instance.Table.ClassName("ui-layout").TBody.TRow.Render();
@@ -195,7 +196,7 @@ namespace Components.Forms
                 if (ui.MinWidth.HasAnyChar()) Html.Instance.Style($"min-width: {ui.MinWidth}");
                 if (ui.MaxWidth.HasAnyChar()) Html.Instance.Style($"max-width: {ui.MaxWidth}");
                 var childComponent = ComponentFactory.GetComponent(ui, ui.ComponentType.Trim());
-                AddChild(childComponent);
+                parent.AddChild(childComponent);
                 childComponent.Disabled = ui.Disabled;
                 childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);

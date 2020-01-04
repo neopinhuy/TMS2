@@ -64,7 +64,7 @@ namespace Common.Extensions
             leaf[hierarchy[hierarchy.Length - 1]] = value;
         }
 
-        public static T SafeCast<T>(this object obj) where T: class, new()
+        public static T CopyProperties<T>(this object obj) where T: class, new()
         {
             var res = new T();
             try
@@ -79,15 +79,6 @@ namespace Common.Extensions
                 }
             }
             return res;
-        }
-
-        public static void Reset<T>(this T obj)
-        {
-            obj.GetType().GetProperties().ForEach(prop =>
-            {
-                var val = Activator.CreateInstance(prop.GetType());
-                prop.SetValue(obj, val);
-            });
         }
 
         public static void CopyPropFrom(this object obj, object source)

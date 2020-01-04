@@ -77,6 +77,9 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            entity.SetPropValue("InsertedBy", 1); // hard code for now
+            entity.SetPropValue("InsertedDate", DateTime.Now); // hard code for now
+            entity.SetPropValue("Active", true); // hard code for now
             db.Set<T>().Add(entity);
             await db.SaveChangesAsync();
             return entity;

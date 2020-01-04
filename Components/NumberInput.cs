@@ -10,6 +10,8 @@ namespace Components
     public class NumberInput : Component
     {
         private readonly TMS.API.Models.Component _ui;
+        private bool isDecimal;
+
         public Observable<decimal?> Value { get; private set; }
 
         public NumberInput(TMS.API.Models.Component ui)
@@ -19,15 +21,11 @@ namespace Components
 
         public override void Render()
         {
-            var isDecimal = _ui.Precision != null && _ui.Precision != 0;
-            var parsed = decimal.TryParse(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString(), out decimal parsedVal);
-            if (!parsed)
-            {
-                Html.Instance.EndOf(ElementType.td);
-                return;
-            }
+            var parsed = ParseNumber(out var parsedVal);
+            if (!parsed) return;
             Value = new Observable<decimal?>(parsedVal);
-            Value.Subscribe(arg => {
+            Value.Subscribe(arg =>
+            {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
@@ -40,6 +38,19 @@ namespace Components
                 precision = isDecimal ? _ui.Precision : 0
             });
             InteractiveElement = Html.Context;
+        }
+
+        private bool ParseNumber(out decimal parsedVal)
+        {
+            isDecimal = _ui.Precision != null && _ui.Precision != 0;
+            return decimal.TryParse(Entity?.GetComplexPropValue(_ui.FieldName)?.ToString(), out parsedVal);
+        }
+
+        public override void UpdateView()
+        {
+            var parsed = ParseNumber(out var parsedVal);
+            if (!parsed) return;
+            Value.Data = parsedVal;
         }
     }
 }

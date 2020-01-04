@@ -12,7 +12,7 @@ namespace Components
 {
     public class SearchEntry : Component
     {
-        public Observable<int?> value;
+        public Observable<int?> Value { get; private set; }
         public string Text { get { return _input.Value; } set { _input.Value = value; } }
         private HTMLInputElement _input;
         private FloatingTable<object> _table;
@@ -32,8 +32,8 @@ namespace Components
 
         public override void Render()
         {
-            value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
-            value.Subscribe(arg =>
+            Value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
+            Value.Subscribe(arg =>
             {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
@@ -63,7 +63,7 @@ namespace Components
                 {
                     if (_input.Value.IsNullOrEmpty())
                     {
-                        value.Data = null;
+                        Value.Data = null;
                     }
                     // Searching here
                 });
@@ -87,7 +87,7 @@ namespace Components
                     switch (com)
                     {
                         case SearchEntry searchEntry:
-                            searchEntry.value.Data = (int?)value;
+                            searchEntry.Value.Data = (int?)value;
                             break;
                         case Textbox textbox:
                             textbox.Value.Data = (string)value;
@@ -104,32 +104,32 @@ namespace Components
             if (_ui.CascadeField.IsNullOrEmpty()) return;
             var com = root.FindComponentByName<SearchEntry>(_ui.CascadeField);
             if (com is null) return;
-            com.value.Data = null;
+            com.Value.Data = null;
             com.Source.NewValue = new object[] { };
         }
 
         public void SetMatchText()
         {
-            if (value is null || value.Data is null)
+            if (Value is null || Value.Data is null)
             {
                 Matched = null;
                 _input.Value = string.Empty;
                 return;
             }
-            if (Matched != null && (int?)Matched[IdField] == value.Data)
+            if (Matched != null && (int?)Matched[IdField] == Value.Data)
             {
                 SetMatchedValue();
                 return;
             }
             if (Source != null && Source.Data.HasElement())
             {
-                Matched = Source.Data.FirstOrDefault(x => (int)x[IdField] == value.Data.Value);
+                Matched = Source.Data.FirstOrDefault(x => (int)x[IdField] == Value.Data.Value);
                 SetMatchedValue();
                 return;
             }
             Task.Run(async () =>
             {
-                var ids = new List<int?> { value.Data };
+                var ids = new List<int?> { Value.Data };
                 var formattedDataSource = FormatDataSource();
                 var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
                 var query = OdataExtensions.FilterByIds(noFilterQuery, ids);
@@ -214,7 +214,7 @@ namespace Components
         private void Select(object rowData)
         {
             if (rowData is null) return;
-            value.Data = (int)rowData[IdField];
+            Value.Data = (int)rowData[IdField];
             HideTable();
         }
 
@@ -223,6 +223,13 @@ namespace Components
             if (_table == null) return;
             Html.Take(_table.RootHtmlElement).Display(false);
             _isShowing = false;
+        }
+
+        public override void UpdateView()
+        {
+            Value.Data = (int?)Entity?.GetComplexPropValue(_ui.FieldName);
+            Matched = null;            
+            SetMatchText();
         }
     }
 }

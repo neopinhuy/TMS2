@@ -47,5 +47,13 @@ namespace Components
             InteractiveElement = Html.Context;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);
         }
+
+        public override void UpdateView()
+        {
+            var text = Entity?.GetComplexPropValue(_ui.FieldName)?.ToString();
+            if (_ui.FormatData.HasAnyChar()) text = Utils.FormatWith(_ui.FormatData, Entity?.GetComplexPropValue(_ui.FieldName));
+            if (_ui.FormatEntity.HasAnyChar()) text = Utils.FormatWith(_ui.FormatEntity, Entity);
+            Value.Data = text;
+        }
     }
 }
