@@ -2112,9 +2112,9 @@ namespace TMS.API
                     .HasForeignKey(d => d.FuelTypeId)
                     .HasConstraintName("FK_Truck_FuelType");
 
-                entity.HasOne(d => d.MasterData)
+                entity.HasOne(d => d.TruckType)
                     .WithMany(p => p.Truck)
-                    .HasForeignKey(d => d.MasterDataId)
+                    .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Truck_TruckType");
 
                 entity.HasOne(d => d.Vendor)

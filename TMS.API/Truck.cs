@@ -21,7 +21,7 @@ namespace TMS.API
         public decimal? Year { get; set; }
         public string Color { get; set; }
         public string Vin { get; set; }
-        public int? MasterDataId { get; set; }
+        public int? TruckTypeId { get; set; }
         public int? FuelTypeId { get; set; }
         public double? KmPerLit { get; set; }
         public double? MaxCapacity { get; set; }
@@ -54,7 +54,7 @@ namespace TMS.API
         public virtual Branch Branch { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual FuelType FuelType { get; set; }
-        public virtual MasterData MasterData { get; set; }
+        public virtual MasterData TruckType { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
