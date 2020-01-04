@@ -1,13 +1,14 @@
-﻿using Common.Extensions;
+﻿using Bridge.Html5;
+using Common.Extensions;
 using MVVM;
 using System;
-using TMS.API.Models;
 
 namespace Components
 {
     public class DatePicker : Component
     {
         private readonly TMS.API.Models.Component _ui;
+        public Observable<DateTime?> Value { get; private set; }
 
         public DatePicker(TMS.API.Models.Component ui)
         {
@@ -16,16 +17,24 @@ namespace Components
 
         public override void Render()
         {
-            var value = new Observable<DateTime?>((DateTime?)Entity?.GetComplexPropValue(_ui.FieldName));
-            value.Subscribe(arg => {
+            Value = new Observable<DateTime?>((DateTime?)Entity?.GetComplexPropValue(_ui.FieldName));
+            Value.Subscribe(arg => {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
                 if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
+                var input = InteractiveElement as HTMLInputElement;
+                input.Value = string.Format("{0:dd/MM/yyyy}", arg.NewData);
                 ValueChanged?.Invoke(arg);
             });
             Html.Instance
-                .SmallDatePicker(value);
+                .SmallDatePicker(Value);
             InteractiveElement = Html.Context;
+        }
+
+        public override void UpdateView()
+        {
+            var value = (DateTime?)Entity?.GetComplexPropValue(_ui.FieldName);
+            Value.Data = value;
         }
     }
 }

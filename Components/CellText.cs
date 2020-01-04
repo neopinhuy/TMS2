@@ -83,7 +83,7 @@ namespace Components
             else return cellData.ToString();
         }
 
-        public override void Update()
+        public override void UpdateView()
         {
             var cellData = Entity.GetComplexPropValue(_header.FieldName);
             var cellText = GetCellText(_header, cellData, Entity);

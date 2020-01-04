@@ -19,6 +19,12 @@ namespace TMS.API.Models
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            SetDefaultValues();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
         private void SetDefaultValues()
         {
             foreach (var entry in ChangeTracker.Entries())

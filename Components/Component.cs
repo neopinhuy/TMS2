@@ -174,10 +174,10 @@ namespace Components
         }
 
         public abstract void Render();
-        public virtual void Update()
+        public virtual void UpdateView()
         {
             if (Children.Nothing()) return;
-            Children.ForEach(x => x.Update());
+            Children.ForEach(x => x.UpdateView());
         }
         public Action Disposing { get; set; }
         public Action Disposed { get; set; }

@@ -268,5 +268,10 @@ namespace Components
                 Toast.Warning("Delete failed");
             }
         }
+
+        public override void UpdateView()
+        {
+            ReloadData();
+        }
     }
 }

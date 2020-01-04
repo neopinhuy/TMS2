@@ -10,7 +10,7 @@ using TMS.API.Models;
 
 namespace TMS.UI.Business.Sale
 {
-    public class CustomerCareBL : TabEditor<CustomerCare>
+    public class CustomerCareBL : TabEditor<CustomerCareVM>
     {
         public CustomerCareBL()
         {
@@ -20,21 +20,20 @@ namespace TMS.UI.Business.Sale
 
         public void CreateCustomer()
         {
-            var customerCare = new CustomerCare()
+            var customerCare = new CustomerCareVM()
             {
                 Customer = new Customer() { User = new User() }
             };
             InitCustomerCareForm(customerCare);
         }
 
-        public void EditCustomer(CustomerCare customerCare)
+        public void EditCustomer(CustomerCareVM customerCare)
         {
             InitCustomerCareForm(customerCare);
         }
 
-        private void InitCustomerCareForm(CustomerCare customer)
+        private void InitCustomerCareForm(CustomerCareVM vm)
         {
-            var vm = customer.SafeCast<CustomerCareVM>();
             vm.CustomerCareLog = new CustomerCareLog();
             var customerForm = new PopupEditor<CustomerCareVM>
             {
@@ -49,6 +48,7 @@ namespace TMS.UI.Business.Sale
         {
             var log = vm.CustomerCareLog;
             log.CustomerId = vm.CustomerId;
+            log.InsertedDate = DateTime.Now;
             // add new entity to db
             var saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
 
@@ -57,7 +57,14 @@ namespace TMS.UI.Business.Sale
             else Toast.Warning("Add new log failed");
 
             // Clear all data of the customer care log
-            log.Reset();
+            log.ContactTypeId = null;
+            log.ContactNumber = null;
+            log.IsResponsed = false;
+            log.Message = string.Empty;
+            var group = FindComponentByName<Section>("New log");
+            group.UpdateView();
+            var grid = FindComponentByName<GridView>("Customer.CustomerCareLog");
+            grid?.ReloadData();
         }
 
         public Task<bool> SaveCustomerCare(bool defaultMessage = false)
