@@ -37,8 +37,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual User IdNavigation { get; set; }
-        public virtual Nationality Nationality { get; set; }
+        public virtual MasterData Nationality { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationEmptyContFrom { get; set; }
         public virtual ICollection<Coordination> CoordinationEmptyContTo { get; set; }

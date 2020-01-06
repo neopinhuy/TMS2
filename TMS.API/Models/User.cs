@@ -104,7 +104,7 @@ namespace TMS.API.Models
             SurchargeUpdatedByNavigation = new HashSet<Surcharge>();
             TaskStateInsertedByNavigation = new HashSet<TaskState>();
             TaskStateUpdatedByNavigation = new HashSet<TaskState>();
-            TerminalUpdatedByNavigation = new HashSet<Terminal>();
+            Terminal = new HashSet<Terminal>();
             TicketStateInsertedByNavigation = new HashSet<TicketState>();
             TicketStateUpdatedByNavigation = new HashSet<TicketState>();
             TimeboxInsertedByNavigation = new HashSet<Timebox>();
@@ -166,7 +166,6 @@ namespace TMS.API.Models
         public virtual User Supervisor { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual Terminal TerminalIdNavigation { get; set; }
         public virtual Workflow WorkflowIdNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryInsertedByNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryUpdatedByNavigation { get; set; }
@@ -265,7 +264,7 @@ namespace TMS.API.Models
         public virtual ICollection<Surcharge> SurchargeUpdatedByNavigation { get; set; }
         public virtual ICollection<TaskState> TaskStateInsertedByNavigation { get; set; }
         public virtual ICollection<TaskState> TaskStateUpdatedByNavigation { get; set; }
-        public virtual ICollection<Terminal> TerminalUpdatedByNavigation { get; set; }
+        public virtual ICollection<Terminal> Terminal { get; set; }
         public virtual ICollection<TicketState> TicketStateInsertedByNavigation { get; set; }
         public virtual ICollection<TicketState> TicketStateUpdatedByNavigation { get; set; }
         public virtual ICollection<Timebox> TimeboxInsertedByNavigation { get; set; }

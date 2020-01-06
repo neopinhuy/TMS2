@@ -117,6 +117,8 @@ namespace TMS.UI.Business.Sale
         public async Task SaveCustomerCare()
         {
             var customerCare = customerForm.Entity.CastProp<CustomerCare>();
+            var customer = customerCare.Customer;
+            customer.CustomerCareLog = null;
             var client = new Client<CustomerCare>();
             CustomerCare saved;
             if (customerCare.Id <= 0)
@@ -130,6 +132,7 @@ namespace TMS.UI.Business.Sale
             if (saved != null)
             {
                 Toast.Success("Save customer care succeeded");
+                Parent.UpdateView();
             }
             else
                 Toast.Warning("Save customer care failed");

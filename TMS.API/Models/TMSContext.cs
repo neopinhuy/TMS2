@@ -51,7 +51,6 @@ namespace TMS.API.Models
         public virtual DbSet<Ledger> Ledger { get; set; }
         public virtual DbSet<MaintenanceTicket> MaintenanceTicket { get; set; }
         public virtual DbSet<MasterData> MasterData { get; set; }
-        public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderComposition> OrderComposition { get; set; }
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
@@ -1397,15 +1396,6 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_MasterData_UserUpdated");
             });
 
-            modelBuilder.Entity<Nationality>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
-
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.AdvancedPaid).HasColumnType("decimal(20, 5)");
@@ -1935,8 +1925,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Terminal>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasMaxLength(200);
@@ -1962,20 +1950,14 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.TerminalIdNavigation)
-                    .HasForeignKey<Terminal>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Terminal_UserInserted");
-
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Terminal)
                     .HasForeignKey(d => d.NationalityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Terminal_Nationality");
+                    .HasConstraintName("FK_Terminal_UserInserted");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.TerminalUpdatedByNavigation)
+                    .WithMany(p => p.Terminal)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Terminal_UserUpdated");
             });

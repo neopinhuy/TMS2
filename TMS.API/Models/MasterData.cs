@@ -26,6 +26,7 @@ namespace TMS.API.Models
             QuotationCustomerGroup = new HashSet<Quotation>();
             QuotationPriceType = new HashSet<Quotation>();
             QuotationTruckType = new HashSet<Quotation>();
+            Terminal = new HashSet<Terminal>();
             TruckBranch = new HashSet<Truck>();
             TruckCurrency = new HashSet<Truck>();
             TruckFuelType = new HashSet<Truck>();
@@ -69,6 +70,7 @@ namespace TMS.API.Models
         public virtual ICollection<Quotation> QuotationCustomerGroup { get; set; }
         public virtual ICollection<Quotation> QuotationPriceType { get; set; }
         public virtual ICollection<Quotation> QuotationTruckType { get; set; }
+        public virtual ICollection<Terminal> Terminal { get; set; }
         public virtual ICollection<Truck> TruckBranch { get; set; }
         public virtual ICollection<Truck> TruckCurrency { get; set; }
         public virtual ICollection<Truck> TruckFuelType { get; set; }

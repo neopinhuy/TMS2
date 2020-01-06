@@ -156,9 +156,6 @@
     <Compile Include="..\TMS.API\Models\MasterData.cs">
       <Link>Models\MasterData.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\Nationality.cs">
-      <Link>Models\Nationality.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\OdataResult.cs">
       <Link>Models\OdataResult.cs</Link>
     </Compile>
