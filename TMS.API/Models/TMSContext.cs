@@ -90,7 +90,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
             }
         }
 
@@ -830,6 +830,11 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CustomerCareLog_UserInserted");
+
+                entity.HasOne(d => d.OrderPeriod)
+                    .WithMany(p => p.CustomerCareLogOrderPeriod)
+                    .HasForeignKey(d => d.OrderPeriodId)
+                    .HasConstraintName("CustomerCareLog_OrderPeriod");
 
                 entity.HasOne(d => d.Quotation)
                     .WithMany(p => p.CustomerCareLog)

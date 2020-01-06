@@ -23,11 +23,13 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public int? CommodityTypeId { get; set; }
+        public int? OrderPeriodId { get; set; }
 
         public virtual MasterData CommodityType { get; set; }
         public virtual MasterData ContactType { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual User InsertedByNavigation { get; set; }
+        public virtual MasterData OrderPeriod { get; set; }
         public virtual Quotation Quotation { get; set; }
         public virtual MasterData Status { get; set; }
         public virtual User UpdatedByNavigation { get; set; }

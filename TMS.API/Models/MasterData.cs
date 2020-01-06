@@ -7,9 +7,11 @@ namespace TMS.API.Models
     {
         public MasterData()
         {
+            Accessory = new HashSet<Accessory>();
             Customer = new HashSet<Customer>();
             CustomerCareLogCommodityType = new HashSet<CustomerCareLog>();
             CustomerCareLogContactType = new HashSet<CustomerCareLog>();
+            CustomerCareLogOrderPeriod = new HashSet<CustomerCareLog>();
             CustomerCareLogStatus = new HashSet<CustomerCareLog>();
             InverseParent = new HashSet<MasterData>();
             TruckBranch = new HashSet<Truck>();
@@ -32,9 +34,11 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual MasterData Parent { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<Customer> Customer { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogCommodityType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
+        public virtual ICollection<CustomerCareLog> CustomerCareLogOrderPeriod { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogStatus { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
         public virtual ICollection<Truck> TruckBranch { get; set; }

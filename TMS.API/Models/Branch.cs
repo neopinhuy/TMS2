@@ -5,11 +5,6 @@ namespace TMS.API.Models
 {
     public partial class Branch
     {
-        public Branch()
-        {
-            Accessory = new HashSet<Accessory>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,6 +18,5 @@ namespace TMS.API.Models
         public virtual BranchType BranchType { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Accessory> Accessory { get; set; }
     }
 }

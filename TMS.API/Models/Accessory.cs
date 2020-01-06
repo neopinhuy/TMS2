@@ -31,7 +31,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Branch Branch { get; set; }
+        public virtual MasterData Branch { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Truck Truck { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
