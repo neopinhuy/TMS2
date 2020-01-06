@@ -47,23 +47,51 @@ namespace TMS.UI.Business.Sale
         public async Task AddLog(CustomerCareVM vm)
         {
             var log = vm.CustomerCareLog;
-            log.CustomerId = vm.CustomerId;
-            log.InsertedDate = DateTime.Now;
-            // add new entity to db
-            var saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
+            CustomerCareLog saved;
+            if (log.Id <= 0)
+            {
+                log.CustomerId = vm.CustomerId;
+                log.InsertedDate = DateTime.Now;
+                saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
+            }
+            else
+            {
+                saved = await Client<CustomerCareLog>.Instance.UpdateAsync(log);
+            }
+            if (saved != null) Toast.Success("Add/Update customer care log succeeded!");
+            else Toast.Warning("Failed to add/update customer care log! Please try again!");
 
-            // Show message
-            if (saved != null) Toast.Success("Add new log succeeded");
-            else Toast.Warning("Add new log failed");
-
-            // Clear all data of the customer care log
             log.ContactTypeId = null;
             log.ContactNumber = null;
-            log.Message = string.Empty;
+            log.Message = null;
+            log.CommodityTypeId = null;
+            log.Volume = null;
+            log.Weight = null;
+            log.Distance = null;
+            log.StatusId = null;
+            log.QuotationId = null;
+            log.EstimatedCost = null;
+            log.OrderPeriodId = null;
+            UpdateNewLogForm();
+        }
+
+        private void UpdateNewLogForm()
+        {
             var group = FindComponentByName<Section>("New log");
             group.UpdateView();
             var grid = FindComponentByName<GridView>("Customer.CustomerCareLog");
             grid?.ReloadData();
+            var addButton = group.FindComponentByName<Button>("Add");
+            addButton.Label = "Add";
+        }
+
+        public void EditContactLog(CustomerCareLog log)
+        {
+            var group = FindComponentByName<Section>("New log");
+            var addButton = group.FindComponentByName<Button>("Add");
+            addButton.Label = "Update";
+            group.Entity[nameof(CustomerCareVM.CustomerCareLog)].CopyPropFrom(log);
+            group.UpdateView();
         }
 
         public Task<bool> SaveCustomerCare(bool defaultMessage = false)

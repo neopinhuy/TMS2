@@ -6,10 +6,18 @@ using TMS.API.Models;
 
 namespace Components
 {
-    public class Button: Component
+    public class Button : Component
     {
         private readonly TMS.API.Models.Component _ui;
-        
+        public string Label
+        {
+            get => InteractiveElement.LastChild.TextContent;
+            set
+            {
+                InteractiveElement.LastChild.TextContent = value;
+            }
+        }
+
         public Button(TMS.API.Models.Component ui)
         {
             _ui = ui ?? throw new ArgumentNullException(nameof(ui));

@@ -42,7 +42,7 @@ namespace TMS.UI.Business.Sale
                 var orderDetailGrid = FindComponentByName<GridView>(nameof(Order.OrderDetail));
                 orderDetailGrid.CellChanged += async (CellChangeEvent e) =>
                 {
-                    var orderDetail = e.Row.CopyProperties<OrderDetail>();
+                    var orderDetail = e.Row.CastProp<OrderDetail>();
                     foreach (var prop in GetOwnPropertyNames(e.Row))
                     {
                         orderDetail[prop] = e.Row[prop];

@@ -9,7 +9,6 @@ namespace TMS.API.Models
         {
             Component = new HashSet<Component>();
             ComponentGroup = new HashSet<ComponentGroup>();
-            Container = new HashSet<Container>();
             Coordination = new HashSet<Coordination>();
             CoordinationDetail = new HashSet<CoordinationDetail>();
             GridPolicy = new HashSet<GridPolicy>();
@@ -36,7 +35,6 @@ namespace TMS.API.Models
         public virtual Workflow Workflow { get; set; }
         public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
-        public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<GridPolicy> GridPolicy { get; set; }

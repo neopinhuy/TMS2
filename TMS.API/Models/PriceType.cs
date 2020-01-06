@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public PriceType()
         {
-            Quotation = new HashSet<Quotation>();
             Surcharge = new HashSet<Surcharge>();
             SurchargeType = new HashSet<SurchargeType>();
         }
@@ -23,7 +22,6 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Quotation> Quotation { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
         public virtual ICollection<SurchargeType> SurchargeType { get; set; }
     }

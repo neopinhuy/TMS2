@@ -748,12 +748,12 @@ namespace TMS.API.Models
                 entity.Property(e => e.Zalo).HasMaxLength(100);
 
                 entity.HasOne(d => d.CustomerGroup)
-                    .WithMany(p => p.Customer)
+                    .WithMany(p => p.CustomerCustomerGroup)
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Customer_CustomerGroup");
 
                 entity.HasOne(d => d.CustomerState)
-                    .WithMany(p => p.Customer)
+                    .WithMany(p => p.CustomerCustomerState)
                     .HasForeignKey(d => d.CustomerStateId)
                     .HasConstraintName("FK_Customer_CustomerState");
 
@@ -805,7 +805,7 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.EstimatedCost).HasColumnType("decimal(20, 5)");
 
-                entity.Property(e => e.Volumn).HasColumnType("decimal(20, 5)");
+                entity.Property(e => e.Volume).HasColumnType("decimal(20, 5)");
 
                 entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
 
@@ -1689,7 +1689,7 @@ namespace TMS.API.Models
                     .HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.CommodityType)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationCommodityType)
                     .HasForeignKey(d => d.CommodityTypeId)
                     .HasConstraintName("FK_Quotation_CommodityType");
 
@@ -1699,17 +1699,17 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Quotation_ContainerRange");
 
                 entity.HasOne(d => d.ContainerType)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationContainerType)
                     .HasForeignKey(d => d.ContainerTypeId)
                     .HasConstraintName("FK_Quotation_ContainerType");
 
                 entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Quotation_Currency");
 
                 entity.HasOne(d => d.CustomerGroup)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationCustomerGroup)
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Quotation_CustomerGroup");
 
@@ -1740,7 +1740,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Quotation_UserInserted");
 
                 entity.HasOne(d => d.PriceType)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationPriceType)
                     .HasForeignKey(d => d.PriceTypeId)
                     .HasConstraintName("FK_Quotation_PriceType");
 
@@ -1755,7 +1755,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Quotation_TerminalTo");
 
                 entity.HasOne(d => d.TruckType)
-                    .WithMany(p => p.Quotation)
+                    .WithMany(p => p.QuotationTruckType)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Quotation_TruckType");
 

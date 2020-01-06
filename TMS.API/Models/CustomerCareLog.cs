@@ -9,7 +9,7 @@ namespace TMS.API.Models
         public int CustomerId { get; set; }
         public int? ContactTypeId { get; set; }
         public string ContactNumber { get; set; }
-        public decimal? Volumn { get; set; }
+        public decimal? Volume { get; set; }
         public decimal? Weight { get; set; }
         public decimal? Distance { get; set; }
         public int? StatusId { get; set; }

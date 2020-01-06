@@ -28,7 +28,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual CustomerGroup CustomerGroup { get; set; }
+        public virtual MasterData CustomerGroup { get; set; }
         public virtual MasterData CustomerState { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<CustomerCare> CustomerCare { get; set; }

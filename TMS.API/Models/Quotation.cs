@@ -41,20 +41,20 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual CommodityType CommodityType { get; set; }
+        public virtual MasterData CommodityType { get; set; }
         public virtual ContainerRange ContainerRange { get; set; }
-        public virtual ContainerType ContainerType { get; set; }
-        public virtual Currency Currency { get; set; }
-        public virtual CustomerGroup CustomerGroup { get; set; }
+        public virtual MasterData ContainerType { get; set; }
+        public virtual MasterData Currency { get; set; }
+        public virtual MasterData CustomerGroup { get; set; }
         public virtual DistanceRange DistanceRange { get; set; }
         public virtual Terminal EmptyContFrom { get; set; }
         public virtual Terminal EmptyContTo { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual PriceType PriceType { get; set; }
+        public virtual MasterData PriceType { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
-        public virtual TruckType TruckType { get; set; }
+        public virtual MasterData TruckType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual VolumeRange VolumeRange { get; set; }

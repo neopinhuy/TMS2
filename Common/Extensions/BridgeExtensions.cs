@@ -64,7 +64,7 @@ namespace Common.Extensions
             leaf[hierarchy[hierarchy.Length - 1]] = value;
         }
 
-        public static T CopyProperties<T>(this object obj) where T: class, new()
+        public static T CastProp<T>(this object obj) where T: class, new()
         {
             var res = new T();
             try

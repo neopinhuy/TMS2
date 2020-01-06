@@ -123,11 +123,21 @@ namespace Components
             var dblClick = events[EventType.DblClick.ToString()]?.ToString();
             if (dblClick.HasAnyChar())
             {
-                Html.Instance.DataAttr("dblclick", dblClick);
+                Html.Instance.DataAttr(EventType.DblClick.ToString(), dblClick);
                 tableParams.RowDblClick = row =>
                 {
                     var parent = FindComponentEvent(dblClick);
                     parent.ExecuteEvent(dblClick, row, RowData, Header);
+                };
+            }
+            var click = events[EventType.Click.ToString()]?.ToString();
+            if (click.HasAnyChar())
+            {
+                Html.Instance.DataAttr(EventType.Click.ToString(), click);
+                tableParams.RowClick = row =>
+                {
+                    var parent = FindComponentEvent(click);
+                    parent.ExecuteEvent(click, row, RowData, Header);
                 };
             }
         }
@@ -201,7 +211,7 @@ namespace Components
                 UI.Row > 0 ? pagingQuery : dataSource);
             if (result == null)
             {
-                throw new System.InvalidOperationException($"Cannot load data for the GridView {UI.Reference.Name}");
+                throw new InvalidOperationException($"Cannot load data for the GridView {UI.Reference.Name}");
             }
             _total = result.odata?.count ?? 0;
             UpdatePagination();
