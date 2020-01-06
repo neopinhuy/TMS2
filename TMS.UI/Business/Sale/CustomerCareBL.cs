@@ -1,4 +1,5 @@
 ﻿using Common.Clients;
+using Common.Enums;
 using Common.Extensions;
 using Common.ViewModels;
 using Components;
@@ -12,6 +13,8 @@ namespace TMS.UI.Business.Sale
 {
     public class CustomerCareBL : TabEditor<CustomerCareVM>
     {
+        private PopupEditor<CustomerCareVM> customerForm;
+
         public CustomerCareBL()
         {
             Name = "Customer care";
@@ -35,7 +38,7 @@ namespace TMS.UI.Business.Sale
         private void InitCustomerCareForm(CustomerCareVM vm)
         {
             vm.CustomerCareLog = new CustomerCareLog();
-            var customerForm = new PopupEditor<CustomerCareVM>
+            customerForm = new PopupEditor<CustomerCareVM>
             {
                 Entity = vm,
                 Name = "CustomerCare Detail",
@@ -48,6 +51,7 @@ namespace TMS.UI.Business.Sale
         {
             var log = vm.CustomerCareLog;
             CustomerCareLog saved;
+            await CalcEstimatedCost(log);
             if (log.Id <= 0)
             {
                 log.CustomerId = vm.CustomerId;
@@ -75,6 +79,22 @@ namespace TMS.UI.Business.Sale
             UpdateNewLogForm();
         }
 
+        private static async Task CalcEstimatedCost(CustomerCareLog log)
+        {
+            if (!log.QuotationId.HasValue) return;
+            var client = new Client<Quotation>();
+            var quotation = (await client.GetList($"?$expand=PriceType&$filter=Active eq true and Id eq {log.QuotationId}"))?.value?.FirstOrDefault();
+            if (quotation == null) return;
+            if (quotation.PriceType.Enum == (int)PriceTypeEnum.Volume)
+            {
+                log.EstimatedCost = log.Volume * quotation.Price;
+            }
+            else if (quotation.PriceType.Enum == (int)PriceTypeEnum.Weight)
+            {
+                log.EstimatedCost = log.Weight * quotation.Price;
+            }
+        }
+
         private void UpdateNewLogForm()
         {
             var group = FindComponentByName<Section>("New log");
@@ -94,17 +114,25 @@ namespace TMS.UI.Business.Sale
             group.UpdateView();
         }
 
-        public Task<bool> SaveCustomerCare(bool defaultMessage = false)
+        public async Task SaveCustomerCare()
         {
-            var grid = FindComponentByName<GridView>($"{nameof(Customer)}.{nameof(CustomerCareLog)}");
-            var customerCare = grid.Entity as CustomerCare;
-            foreach (var log in customerCare.Customer.CustomerCareLog)
+            var customerCare = customerForm.Entity.CastProp<CustomerCare>();
+            var client = new Client<CustomerCare>();
+            CustomerCare saved;
+            if (customerCare.Id <= 0)
             {
-                if (log.Id > 0) continue;
-                log.Id = 0;
-                log.InsertedDate = DateTime.Now;
+                saved = await client.CreateAsync(customerCare);
             }
-            return (grid.Parent as PopupEditor<CustomerCare>).Save(defaultMessage);
+            else
+            {
+                saved = await client.UpdateAsync(customerCare);
+            }
+            if (saved != null)
+            {
+                Toast.Success("Save customer care succeeded");
+            }
+            else
+                Toast.Warning("Save customer care failed");
         }
 
         public async Task Email()

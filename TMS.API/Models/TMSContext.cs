@@ -1374,6 +1374,8 @@ namespace TMS.API.Models
             {
                 entity.Property(e => e.Description).HasMaxLength(200);
 
+                entity.Property(e => e.Enum).HasColumnName("enum");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -1397,24 +1399,11 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Nationality>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(100);
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.NationalityIdNavigation)
-                    .HasForeignKey<Nationality>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Nationality_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.NationalityUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_Nationality_UserUpdated");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -1455,7 +1444,7 @@ namespace TMS.API.Models
                 entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.AccountableDepartment)
-                    .WithMany(p => p.Order)
+                    .WithMany(p => p.OrderNavigation)
                     .HasForeignKey(d => d.AccountableDepartmentId)
                     .HasConstraintName("FK_Order_Department_Accountable");
 
@@ -1550,12 +1539,12 @@ namespace TMS.API.Models
                 entity.Property(e => e.Vat).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.CommodityType)
-                    .WithMany(p => p.OrderDetail)
+                    .WithMany(p => p.OrderDetailCommodityType)
                     .HasForeignKey(d => d.CommodityTypeId)
                     .HasConstraintName("FK_OrderDetail_CommodityType");
 
                 entity.HasOne(d => d.ContainerType)
-                    .WithMany(p => p.OrderDetail)
+                    .WithMany(p => p.OrderDetailContainerType)
                     .HasForeignKey(d => d.ContainerTypeId)
                     .HasConstraintName("FK_OrderDetail_ContainerType");
 
@@ -1607,7 +1596,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_OrderDetail_Terminal_To");
 
                 entity.HasOne(d => d.TruckType)
-                    .WithMany(p => p.OrderDetail)
+                    .WithMany(p => p.OrderDetailTruckType)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_OrderDetail_TruckType");
 

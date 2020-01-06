@@ -16,6 +16,10 @@ namespace TMS.API.Models
             CustomerCustomerGroup = new HashSet<Customer>();
             CustomerCustomerState = new HashSet<Customer>();
             InverseParent = new HashSet<MasterData>();
+            OrderDetailCommodityType = new HashSet<OrderDetail>();
+            OrderDetailContainerType = new HashSet<OrderDetail>();
+            OrderDetailTruckType = new HashSet<OrderDetail>();
+            OrderNavigation = new HashSet<Order>();
             QuotationCommodityType = new HashSet<Quotation>();
             QuotationContainerType = new HashSet<Quotation>();
             QuotationCurrency = new HashSet<Quotation>();
@@ -27,6 +31,7 @@ namespace TMS.API.Models
             TruckFuelType = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
             TruckTruckType = new HashSet<Truck>();
+            User = new HashSet<User>();
             Vendor = new HashSet<Vendor>();
         }
 
@@ -39,6 +44,8 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+        public int? Order { get; set; }
+        public int? Enum { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual MasterData Parent { get; set; }
@@ -52,6 +59,10 @@ namespace TMS.API.Models
         public virtual ICollection<Customer> CustomerCustomerGroup { get; set; }
         public virtual ICollection<Customer> CustomerCustomerState { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailCommodityType { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailContainerType { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetailTruckType { get; set; }
+        public virtual ICollection<Order> OrderNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationCommodityType { get; set; }
         public virtual ICollection<Quotation> QuotationContainerType { get; set; }
         public virtual ICollection<Quotation> QuotationCurrency { get; set; }
@@ -63,6 +74,7 @@ namespace TMS.API.Models
         public virtual ICollection<Truck> TruckFuelType { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual ICollection<Truck> TruckTruckType { get; set; }
+        public virtual ICollection<User> User { get; set; }
         public virtual ICollection<Vendor> Vendor { get; set; }
     }
 }

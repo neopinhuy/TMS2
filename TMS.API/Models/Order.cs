@@ -44,7 +44,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual Department AccountableDepartment { get; set; }
+        public virtual MasterData AccountableDepartment { get; set; }
         public virtual User AccountableUser { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual FreightState FreightState { get; set; }

@@ -8,7 +8,6 @@ namespace TMS.API.Models
         public TruckType()
         {
             Coordination = new HashSet<Coordination>();
-            OrderDetail = new HashSet<OrderDetail>();
         }
 
         public int Id { get; set; }
@@ -23,6 +22,5 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Coordination> Coordination { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

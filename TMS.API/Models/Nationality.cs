@@ -8,7 +8,6 @@ namespace TMS.API.Models
         public Nationality()
         {
             Terminal = new HashSet<Terminal>();
-            User = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -20,9 +19,6 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual User IdNavigation { get; set; }
-        public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Terminal> Terminal { get; set; }
-        public virtual ICollection<User> User { get; set; }
     }
 }

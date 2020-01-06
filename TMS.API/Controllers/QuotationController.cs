@@ -19,7 +19,7 @@ namespace TMS.API.Controllers
         {
             var query =
                 from customer in db.Customer
-                join cGroup in db.CustomerGroup on customer.CustomerGroupId equals cGroup.Id
+                join cGroup in db.MasterData on customer.CustomerGroupId equals cGroup.Id
                 from quo in db.Quotation
                     .Where(x => x.CustomerGroupId == cGroup.Id || x.CustomerId == customer.Id)
                     .DefaultIfEmpty()

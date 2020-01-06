@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Department()
         {
-            Order = new HashSet<Order>();
             User = new HashSet<User>();
         }
 
@@ -24,7 +23,6 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual User Leader { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

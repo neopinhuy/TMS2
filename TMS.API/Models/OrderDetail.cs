@@ -54,8 +54,8 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual CommodityType CommodityType { get; set; }
-        public virtual ContainerType ContainerType { get; set; }
+        public virtual MasterData CommodityType { get; set; }
+        public virtual MasterData ContainerType { get; set; }
         public virtual Terminal EmptyContFrom { get; set; }
         public virtual Terminal EmptyContTo { get; set; }
         public virtual Terminal From { get; set; }
@@ -65,7 +65,7 @@ namespace TMS.API.Models
         public virtual StackDirection StackDirection { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
-        public virtual TruckType TruckType { get; set; }
+        public virtual MasterData TruckType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }

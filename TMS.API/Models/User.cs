@@ -81,7 +81,6 @@ namespace TMS.API.Models
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
             MasterDataInsertedByNavigation = new HashSet<MasterData>();
             MasterDataUpdatedByNavigation = new HashSet<MasterData>();
-            NationalityUpdatedByNavigation = new HashSet<Nationality>();
             OrderAccountableUser = new HashSet<Order>();
             OrderCompositionInsertedByNavigation = new HashSet<OrderComposition>();
             OrderCompositionUpdatedByNavigation = new HashSet<OrderComposition>();
@@ -162,12 +161,11 @@ namespace TMS.API.Models
         public virtual Contract Contract { get; set; }
         public virtual Department Department { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual Nationality Nationality { get; set; }
+        public virtual MasterData Nationality { get; set; }
         public virtual Role Role { get; set; }
         public virtual User Supervisor { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual Nationality NationalityIdNavigation { get; set; }
         public virtual Terminal TerminalIdNavigation { get; set; }
         public virtual Workflow WorkflowIdNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryInsertedByNavigation { get; set; }
@@ -244,7 +242,6 @@ namespace TMS.API.Models
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }
         public virtual ICollection<MasterData> MasterDataInsertedByNavigation { get; set; }
         public virtual ICollection<MasterData> MasterDataUpdatedByNavigation { get; set; }
-        public virtual ICollection<Nationality> NationalityUpdatedByNavigation { get; set; }
         public virtual ICollection<Order> OrderAccountableUser { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionInsertedByNavigation { get; set; }
         public virtual ICollection<OrderComposition> OrderCompositionUpdatedByNavigation { get; set; }
