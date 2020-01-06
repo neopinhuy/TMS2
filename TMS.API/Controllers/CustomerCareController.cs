@@ -20,14 +20,6 @@ namespace TMS.API.Controllers
             _config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
-        public override Task<ActionResult<CustomerCare>> UpdateAsync([FromBody] CustomerCare entity)
-        {
-            db.Customer.Update(entity.Customer);
-            UpdateChildren(entity.Customer?.CustomerCareLog);
-            return base.UpdateAsync(entity);
-        }
-
-
         [HttpPost("api/[Controller]/Email")]
         public ActionResult<bool> SendMail([FromBody]EmailVM email)
         {
