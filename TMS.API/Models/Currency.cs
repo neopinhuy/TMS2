@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Currency()
         {
-            Ledger = new HashSet<Ledger>();
             Surcharge = new HashSet<Surcharge>();
         }
 
@@ -23,7 +22,6 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Ledger> Ledger { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
     }
 }

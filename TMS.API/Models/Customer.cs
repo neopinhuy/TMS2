@@ -10,6 +10,7 @@ namespace TMS.API.Models
             CustomerCare = new HashSet<CustomerCare>();
             CustomerCareLog = new HashSet<CustomerCareLog>();
             Order = new HashSet<Order>();
+            Quotation = new HashSet<Quotation>();
         }
 
         public int Id { get; set; }
@@ -34,5 +35,6 @@ namespace TMS.API.Models
         public virtual ICollection<CustomerCare> CustomerCare { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLog { get; set; }
         public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Quotation> Quotation { get; set; }
     }
 }

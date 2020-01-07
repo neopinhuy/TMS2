@@ -1258,7 +1258,7 @@ namespace TMS.API.Models
                 entity.Property(e => e.ReceiverFullName).HasMaxLength(100);
 
                 entity.HasOne(d => d.AccountType)
-                    .WithMany(p => p.Ledger)
+                    .WithMany(p => p.LedgerAccountType)
                     .HasForeignKey(d => d.AccountTypeId)
                     .HasConstraintName("FK_Ledger_AccountType");
 
@@ -1268,7 +1268,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Ledger_UserApprover");
 
                 entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.Ledger)
+                    .WithMany(p => p.LedgerCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Ledger_Currency");
 
@@ -1688,6 +1688,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.QuotationCustomerGroup)
                     .HasForeignKey(d => d.CustomerGroupId)
                     .HasConstraintName("FK_Quotation_CustomerGroup");
+
+                entity.HasOne(d => d.Customer)
+                    .WithMany(p => p.Quotation)
+                    .HasForeignKey(d => d.CustomerId)
+                    .HasConstraintName("FK_Container_Customer");
 
                 entity.HasOne(d => d.DistanceRange)
                     .WithMany(p => p.Quotation)

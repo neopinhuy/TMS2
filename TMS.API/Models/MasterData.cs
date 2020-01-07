@@ -19,7 +19,8 @@ namespace TMS.API.Models
             CustomerCustomerGroup = new HashSet<Customer>();
             CustomerCustomerState = new HashSet<Customer>();
             InverseParent = new HashSet<MasterData>();
-            Ledger = new HashSet<Ledger>();
+            LedgerAccountType = new HashSet<Ledger>();
+            LedgerCurrency = new HashSet<Ledger>();
             OrderAccountableDepartment = new HashSet<Order>();
             OrderCurrency = new HashSet<Order>();
             OrderDetailCommodityType = new HashSet<OrderDetail>();
@@ -68,7 +69,8 @@ namespace TMS.API.Models
         public virtual ICollection<Customer> CustomerCustomerGroup { get; set; }
         public virtual ICollection<Customer> CustomerCustomerState { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
-        public virtual ICollection<Ledger> Ledger { get; set; }
+        public virtual ICollection<Ledger> LedgerAccountType { get; set; }
+        public virtual ICollection<Ledger> LedgerCurrency { get; set; }
         public virtual ICollection<Order> OrderAccountableDepartment { get; set; }
         public virtual ICollection<Order> OrderCurrency { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailCommodityType { get; set; }

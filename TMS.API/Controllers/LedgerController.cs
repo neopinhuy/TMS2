@@ -2,7 +2,6 @@
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -26,18 +25,44 @@ namespace TMS.API.Controllers
             filter.FromDate = opening.InsertedDate;
             filter.ToDate = last.InsertedDate;
             var query = GetFilterQuery(filter);
-            var appliedQuery = (EntityQueryable<Ledger>)options.ApplyTo(query);
+            var appliedQuery = (IQueryable<Ledger>)options.ApplyTo(query);
             var result = await appliedQuery.ToListAsync();
             foreach (var ledger in result)
             {
-                if (ledger.AccountType is null) continue;
-                ledger.AccountType.Ledger = null;
-                ledger.AccountType = new MasterData()
+                if (ledger.AccountType != null)
                 {
-                    Id = ledger.AccountType.Id,
-                    Name = ledger.AccountType.Name,
-                    Description = ledger.AccountType.Description
-                };
+                    ledger.AccountType = new MasterData
+                    {
+                        Id = ledger.AccountType.Id,
+                        Name = ledger.AccountType.Name,
+                        Description = ledger.AccountType.Description
+                    };
+                }
+                if (ledger.Entity != null)
+                {
+                    ledger.Entity = new Entity
+                    {
+                        Id = ledger.Entity.Id,
+                        Name = ledger.Entity.Name
+                    };
+                }
+                if (ledger.Approver != null)
+                {
+                    ledger.Approver = new User
+                    {
+                        Id = ledger.Approver.Id,
+                        FirstName = ledger.Approver.FirstName,
+                        LastName = ledger.Approver.LastName
+                    };
+                    ledger.Currency = new MasterData
+                    {
+                        Id = ledger.Currency.Id,
+                        Name = ledger.Currency.Name,
+                        Description = ledger.Currency.Description
+                    };
+                }
+                ledger.InsertedByNavigation = null;
+                ledger.UpdatedByNavigation = null;
             }
             return Ok(new OdataResult<Ledger>
             {
@@ -103,7 +128,8 @@ namespace TMS.API.Controllers
 
         private IQueryable<Ledger> GetFilterQuery(LedgerVM filter)
         {
-            return from le in db.Ledger.Include(x => x.AccountType)
+            return from le in db.Ledger.Include(x => x.AccountType).Include(x => x.Entity)
+                                       .Include(x => x.Approver).Include(x => x.Currency)
                    join entity in db.Entity on le.EntityId equals entity.Id
                    where
                        le.InsertedDate >= filter.FromDate && le.InsertedDate <= filter.ToDate

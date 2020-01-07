@@ -45,6 +45,7 @@ namespace TMS.API.Models
         public virtual ContainerRange ContainerRange { get; set; }
         public virtual MasterData ContainerType { get; set; }
         public virtual MasterData Currency { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual MasterData CustomerGroup { get; set; }
         public virtual DistanceRange DistanceRange { get; set; }
         public virtual Terminal EmptyContFrom { get; set; }
