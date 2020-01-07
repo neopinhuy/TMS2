@@ -47,7 +47,7 @@ namespace TMS.API.Controllers
                 where com.CoordinationId == coorId
                 select od;
 
-            return await ApplyCustomeQuery(options, query);
+            return await ApplyCustomQuery(options, query);
         }
     }
 }

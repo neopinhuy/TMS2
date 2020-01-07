@@ -9,8 +9,6 @@ namespace TMS.API.Models
         {
             AccessoryInsertedByNavigation = new HashSet<Accessory>();
             AccessoryUpdatedByNavigation = new HashSet<Accessory>();
-            AccountTypeInsertedByNavigation = new HashSet<AccountType>();
-            AccountTypeUpdatedByNavigation = new HashSet<AccountType>();
             ActionInsertedByNavigation = new HashSet<Action>();
             ActionPolicyInsertedByNavigation = new HashSet<ActionPolicy>();
             ActionPolicyUpdatedByNavigation = new HashSet<ActionPolicy>();
@@ -169,8 +167,6 @@ namespace TMS.API.Models
         public virtual Workflow WorkflowIdNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryInsertedByNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryUpdatedByNavigation { get; set; }
-        public virtual ICollection<AccountType> AccountTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<AccountType> AccountTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Action> ActionInsertedByNavigation { get; set; }
         public virtual ICollection<ActionPolicy> ActionPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<ActionPolicy> ActionPolicyUpdatedByNavigation { get; set; }

@@ -39,9 +39,6 @@
     <Compile Include="..\TMS.API\Models\Accessory.cs">
       <Link>Models\Accessory.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\AccountType.cs">
-      <Link>Models\AccountType.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\Action.cs">
       <Link>Models\Action.cs</Link>
     </Compile>

@@ -26,7 +26,7 @@ namespace TMS.API.Controllers
                 where customer.Id == customerId
                 select quo;
 
-            return await ApplyCustomeQuery(options, query);
+            return await ApplyCustomQuery(options, query);
         }
     }
 }

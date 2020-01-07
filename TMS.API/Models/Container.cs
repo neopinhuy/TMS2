@@ -31,6 +31,8 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
+        public virtual MasterData ContainerType { get; set; }
+        public virtual MasterData Currency { get; set; }
         public virtual MasterData FreightState { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }

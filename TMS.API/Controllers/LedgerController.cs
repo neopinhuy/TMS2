@@ -2,6 +2,7 @@
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Nest;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,28 @@ namespace TMS.API.Controllers
             filter.FromDate = opening.InsertedDate;
             filter.ToDate = last.InsertedDate;
             var query = GetFilterQuery(filter);
-            return await ApplyCustomeQuery(options, query);
+            var appliedQuery = (EntityQueryable<Ledger>)options.ApplyTo(query);
+            var result = await appliedQuery.ToListAsync();
+            foreach (var ledger in result)
+            {
+                if (ledger.AccountType is null) continue;
+                ledger.AccountType.Ledger = null;
+                ledger.AccountType = new MasterData()
+                {
+                    Id = ledger.AccountType.Id,
+                    Name = ledger.AccountType.Name,
+                    Description = ledger.AccountType.Description
+                };
+            }
+            return Ok(new OdataResult<Ledger>
+            {
+                value = result,
+                odata = new Odata
+                {
+                    count = options.Count?.Value == true ? query.Count() : 0,
+                    Context = options.Context.ToString()
+                }
+            });
         }
 
         [HttpGet("api/[Controller]/summary")]
@@ -81,7 +103,7 @@ namespace TMS.API.Controllers
 
         private IQueryable<Ledger> GetFilterQuery(LedgerVM filter)
         {
-            return from le in db.Ledger
+            return from le in db.Ledger.Include(x => x.AccountType)
                    join entity in db.Entity on le.EntityId equals entity.Id
                    where
                        le.InsertedDate >= filter.FromDate && le.InsertedDate <= filter.ToDate

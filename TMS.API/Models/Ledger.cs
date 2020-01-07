@@ -24,7 +24,6 @@ namespace TMS.API.Models
         public DateTime? InvoiceDate { get; set; }
         public string InvoiceImage { get; set; }
         public int? AccountTypeId { get; set; }
-        public int? CreditAccountId { get; set; }
         public int? EntityId { get; set; }
         public int? TargetId { get; set; }
         public bool? Approved { get; set; }
@@ -40,9 +39,8 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual AccountType AccountType { get; set; }
+        public virtual MasterData AccountType { get; set; }
         public virtual User Approver { get; set; }
-        public virtual AccountType CreditAccount { get; set; }
         public virtual Currency Currency { get; set; }
         public virtual Entity Entity { get; set; }
         public virtual User InsertedByNavigation { get; set; }

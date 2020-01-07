@@ -2,6 +2,7 @@
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Nest;
 using System;
 using System.Collections;
@@ -49,7 +50,7 @@ namespace TMS.API.Controllers
             return Ok(results);
         }
 
-        public async Task<IActionResult> ApplyCustomeQuery(ODataQueryOptions<T> options, IQueryable<T> query)
+        public async Task<IActionResult> ApplyCustomQuery(ODataQueryOptions<T> options, IQueryable<T> query)
         {
             options.Validate(new ODataValidationSettings()
             {
@@ -57,7 +58,7 @@ namespace TMS.API.Controllers
                 MaxExpansionDepth = 3
             });
 
-            var appliedQuery = options.ApplyTo(query) as IQueryable<T>;
+            var appliedQuery = (EntityQueryable<T>)options.ApplyTo(query);
             var result = await appliedQuery.ToListAsync();
             return Ok(new OdataResult<T>
             {

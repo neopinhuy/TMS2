@@ -105,7 +105,6 @@ namespace TMS.API
             builder.EntitySet<GroupRole>(nameof(GroupRole));
             builder.EntitySet<Ledger>(nameof(Ledger));
             builder.EntitySet<MaintenanceTicket>(nameof(MaintenanceTicket));
-            builder.EntitySet<AccountType>(nameof(AccountType));
             builder.EntitySet<Order>(nameof(Order));
             builder.EntitySet<OrderComposition>(nameof(OrderComposition));
             builder.EntitySet<OrderDetail>(nameof(OrderDetail));

@@ -25,6 +25,7 @@ namespace Components
         {
             var cellData = Entity.GetComplexPropValue(_header.FieldName);
             var cellText = GetCellText(_header, cellData, Entity);
+            if (cellText is null || cellText == "null") cellText = "N/A";
             _header.TextAlign = CalcTextAlign(_header, cellData);
             Html.Instance.TextAlign(_header.TextAlign);
             if (cellData is bool cellBool)

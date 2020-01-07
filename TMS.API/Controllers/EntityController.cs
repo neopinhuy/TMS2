@@ -35,7 +35,7 @@ namespace TMS.API.Controllers
                         ? user.DoB.Value.ToString("dd/MM/yyyy") : user2.DoB.HasValue ? user2.DoB.Value.ToString("dd/MM/yyyy") : ""),
                 };
 
-            return ApplyCustomeQuery(options, query);
+            return ApplyCustomQuery(options, query);
         }
     }
 }

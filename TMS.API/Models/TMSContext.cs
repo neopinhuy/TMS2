@@ -16,7 +16,6 @@ namespace TMS.API.Models
         }
 
         public virtual DbSet<Accessory> Accessory { get; set; }
-        public virtual DbSet<AccountType> AccountType { get; set; }
         public virtual DbSet<Action> Action { get; set; }
         public virtual DbSet<ActionPolicy> ActionPolicy { get; set; }
         public virtual DbSet<Bank> Bank { get; set; }
@@ -141,35 +140,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.VendorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Accessary_Vendor");
-            });
-
-            modelBuilder.Entity<AccountType>(entity =>
-            {
-                entity.Property(e => e.AccountNo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.AccountTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OperationType_UserInserted");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.ParentId)
-                    .HasConstraintName("FK_OperationType_Hierarchy");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.AccountTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_OperationType_UserUpdated");
             });
 
             modelBuilder.Entity<Action>(entity =>
@@ -510,8 +480,19 @@ namespace TMS.API.Models
 
                 entity.Property(e => e.PeriodPayment).HasColumnType("decimal(20, 5)");
 
+                entity.HasOne(d => d.ContainerType)
+                    .WithMany(p => p.ContainerContainerType)
+                    .HasForeignKey(d => d.ContainerTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Container_ContainerType");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.ContainerCurrency)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .HasConstraintName("FK_Container_Currency");
+
                 entity.HasOne(d => d.FreightState)
-                    .WithMany(p => p.Container)
+                    .WithMany(p => p.ContainerFreightState)
                     .HasForeignKey(d => d.FreightStateId)
                     .HasConstraintName("FK_Container_FreightState");
 
@@ -1277,19 +1258,14 @@ namespace TMS.API.Models
                 entity.Property(e => e.ReceiverFullName).HasMaxLength(100);
 
                 entity.HasOne(d => d.AccountType)
-                    .WithMany(p => p.LedgerAccountType)
+                    .WithMany(p => p.Ledger)
                     .HasForeignKey(d => d.AccountTypeId)
-                    .HasConstraintName("FK_Ledger_DebitAccount");
+                    .HasConstraintName("FK_Ledger_AccountType");
 
                 entity.HasOne(d => d.Approver)
                     .WithMany(p => p.LedgerApprover)
                     .HasForeignKey(d => d.ApproverId)
                     .HasConstraintName("FK_Ledger_UserApprover");
-
-                entity.HasOne(d => d.CreditAccount)
-                    .WithMany(p => p.LedgerCreditAccount)
-                    .HasForeignKey(d => d.CreditAccountId)
-                    .HasConstraintName("FK_Ledger_CreditAccount");
 
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.Ledger)
