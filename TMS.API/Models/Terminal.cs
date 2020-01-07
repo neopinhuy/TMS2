@@ -15,6 +15,8 @@ namespace TMS.API.Models
             OrderDetailEmptyContTo = new HashSet<OrderDetail>();
             OrderDetailFrom = new HashSet<OrderDetail>();
             OrderDetailTo = new HashSet<OrderDetail>();
+            OrderFrom = new HashSet<Order>();
+            OrderTo = new HashSet<Order>();
             QuotationEmptyContFrom = new HashSet<Quotation>();
             QuotationEmptyContTo = new HashSet<Quotation>();
             QuotationFrom = new HashSet<Quotation>();
@@ -47,6 +49,8 @@ namespace TMS.API.Models
         public virtual ICollection<OrderDetail> OrderDetailEmptyContTo { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailFrom { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailTo { get; set; }
+        public virtual ICollection<Order> OrderFrom { get; set; }
+        public virtual ICollection<Order> OrderTo { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContFrom { get; set; }
         public virtual ICollection<Quotation> QuotationEmptyContTo { get; set; }
         public virtual ICollection<Quotation> QuotationFrom { get; set; }

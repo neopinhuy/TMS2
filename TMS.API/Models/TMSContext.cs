@@ -110,9 +110,15 @@ namespace TMS.API.Models
                     .HasMaxLength(100);
 
                 entity.HasOne(d => d.Branch)
-                    .WithMany(p => p.Accessory)
+                    .WithMany(p => p.AccessoryBranch)
                     .HasForeignKey(d => d.BranchId)
                     .HasConstraintName("FK_Accessory_Branch");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.AccessoryCurrency)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Accessory_Currency");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.AccessoryInsertedByNavigation)
@@ -1434,7 +1440,7 @@ namespace TMS.API.Models
                 entity.Property(e => e.Vat).HasColumnType("decimal(4, 2)");
 
                 entity.HasOne(d => d.AccountableDepartment)
-                    .WithMany(p => p.OrderNavigation)
+                    .WithMany(p => p.OrderAccountableDepartment)
                     .HasForeignKey(d => d.AccountableDepartmentId)
                     .HasConstraintName("FK_Order_Department_Accountable");
 
@@ -1442,6 +1448,11 @@ namespace TMS.API.Models
                     .WithMany(p => p.OrderAccountableUser)
                     .HasForeignKey(d => d.AccountableUserId)
                     .HasConstraintName("FK_Order_User_Accountable");
+
+                entity.HasOne(d => d.Currency)
+                    .WithMany(p => p.OrderCurrency)
+                    .HasForeignKey(d => d.CurrencyId)
+                    .HasConstraintName("FK_Order_Currency");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Order)
@@ -1453,11 +1464,21 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.FreightStateId)
                     .HasConstraintName("FK_Order_FreightState");
 
+                entity.HasOne(d => d.From)
+                    .WithMany(p => p.OrderFrom)
+                    .HasForeignKey(d => d.FromId)
+                    .HasConstraintName("FK_Order_TerminalFrom");
+
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.OrderInsertedByNavigation)
                     .HasForeignKey(d => d.InsertedBy)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_UserInserted");
+
+                entity.HasOne(d => d.To)
+                    .WithMany(p => p.OrderTo)
+                    .HasForeignKey(d => d.ToId)
+                    .HasConstraintName("FK_Order_TerminalTo");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.OrderUpdatedByNavigation)

@@ -7,7 +7,8 @@ namespace TMS.API.Models
     {
         public MasterData()
         {
-            Accessory = new HashSet<Accessory>();
+            AccessoryBranch = new HashSet<Accessory>();
+            AccessoryCurrency = new HashSet<Accessory>();
             Container = new HashSet<Container>();
             CustomerCareLogCommodityType = new HashSet<CustomerCareLog>();
             CustomerCareLogContactType = new HashSet<CustomerCareLog>();
@@ -16,10 +17,11 @@ namespace TMS.API.Models
             CustomerCustomerGroup = new HashSet<Customer>();
             CustomerCustomerState = new HashSet<Customer>();
             InverseParent = new HashSet<MasterData>();
+            OrderAccountableDepartment = new HashSet<Order>();
+            OrderCurrency = new HashSet<Order>();
             OrderDetailCommodityType = new HashSet<OrderDetail>();
             OrderDetailContainerType = new HashSet<OrderDetail>();
             OrderDetailTruckType = new HashSet<OrderDetail>();
-            OrderNavigation = new HashSet<Order>();
             QuotationCommodityType = new HashSet<Quotation>();
             QuotationContainerType = new HashSet<Quotation>();
             QuotationCurrency = new HashSet<Quotation>();
@@ -51,7 +53,8 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual MasterData Parent { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Accessory> Accessory { get; set; }
+        public virtual ICollection<Accessory> AccessoryBranch { get; set; }
+        public virtual ICollection<Accessory> AccessoryCurrency { get; set; }
         public virtual ICollection<Container> Container { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogCommodityType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
@@ -60,10 +63,11 @@ namespace TMS.API.Models
         public virtual ICollection<Customer> CustomerCustomerGroup { get; set; }
         public virtual ICollection<Customer> CustomerCustomerState { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
+        public virtual ICollection<Order> OrderAccountableDepartment { get; set; }
+        public virtual ICollection<Order> OrderCurrency { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailCommodityType { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailContainerType { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailTruckType { get; set; }
-        public virtual ICollection<Order> OrderNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationCommodityType { get; set; }
         public virtual ICollection<Quotation> QuotationContainerType { get; set; }
         public virtual ICollection<Quotation> QuotationCurrency { get; set; }
