@@ -123,9 +123,7 @@ namespace Components
                 {
                     AddNewEmptyRow(frozen, nonFrozen);
                 }
-                _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
-                _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
-                if (RowData.Data.Nothing() && !Editable)
+                else if (RowData.Data.Nothing())
                 {
                     Html.Take(_frozenTable).Clear();
                     Html.Take(_nonFrozenTable).Clear();
@@ -133,8 +131,12 @@ namespace Components
                     _mainSection.Children?.ForEach(x => x.Dispose());
                     Html.Take(_mainSection.RootHtmlElement).P.ClassName("no-records").Text("No records found");
                 }
-
-                RenderSummary(frozen, nonFrozen);
+                if (RowData.Data.HasElement())
+                {
+                    _frozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                    _nonFrozenTable.TBodies[0].AddEventListener(EventType.ContextMenu, BodyContextMenu);
+                    RenderSummary(frozen, nonFrozen);
+                }
                 AfterRendered?.Invoke();
             });
         }
@@ -302,6 +304,7 @@ namespace Components
 
         private void RenderTableContent(List<Header<T>> headers, Section section)
         {
+            if (RowData.Data is null) return;
             Html.Instance.TBody.ForEach(RowData.Data, (row, index) =>
             {
                 RenderRowData(headers, row, section);

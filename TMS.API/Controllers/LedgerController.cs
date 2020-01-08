@@ -117,7 +117,7 @@ namespace TMS.API.Controllers
             var query = GetFilterQuery(filter);
             var ledgers = new List<Ledger>
             {
-                opening,
+                new Ledger { OpeningCredit = opening.OpeningCredit, OpeningDebit = opening.OpeningDebit },
                 new Ledger
                 {
                     OpeningDebit = await query.SumAsync(x => x.Debit ?? 0) + (opening.OpeningDebit ?? 0),

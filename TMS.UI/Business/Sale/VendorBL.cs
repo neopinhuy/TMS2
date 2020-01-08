@@ -1,11 +1,4 @@
-﻿using Common.Clients;
-using Common.Extensions;
-using Common.ViewModels;
-using Components;
-using Components.Forms;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Components.Forms;
 using TMS.API.Models;
 
 namespace TMS.UI.Business.Sale
@@ -17,13 +10,15 @@ namespace TMS.UI.Business.Sale
             Name = "Vendor List";
             Title = Name;
         }
+
         public void EditVendor(Vendor Vendor)
         {
             InitVendorForm(Vendor);
         }
-        public void CreateVendor(Vendor Vendor)
+
+        public void CreateVendor()
         {
-            InitVendorForm(Vendor);
+            InitVendorForm(new Vendor());
         }
 
         private void InitVendorForm(Vendor vendor)
