@@ -35,6 +35,7 @@ namespace TMS.API.Models
             Terminal = new HashSet<Terminal>();
             TruckBranch = new HashSet<Truck>();
             TruckCurrency = new HashSet<Truck>();
+            TruckDepartment = new HashSet<Truck>();
             TruckFuelType = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
             TruckTruckType = new HashSet<Truck>();
@@ -85,6 +86,7 @@ namespace TMS.API.Models
         public virtual ICollection<Terminal> Terminal { get; set; }
         public virtual ICollection<Truck> TruckBranch { get; set; }
         public virtual ICollection<Truck> TruckCurrency { get; set; }
+        public virtual ICollection<Truck> TruckDepartment { get; set; }
         public virtual ICollection<Truck> TruckFuelType { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual ICollection<Truck> TruckTruckType { get; set; }

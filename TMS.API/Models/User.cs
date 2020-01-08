@@ -111,6 +111,7 @@ namespace TMS.API.Models
             TransitionActionUpdatedByNavigation = new HashSet<TransitionAction>();
             TransitionInsertedByNavigation = new HashSet<Transition>();
             TransitionUpdatedByNavigation = new HashSet<Transition>();
+            Truck = new HashSet<Truck>();
             TruckMaintenanceAccountableUser = new HashSet<TruckMaintenance>();
             TruckMaintenanceDetailInsertedByNavigation = new HashSet<TruckMaintenanceDetail>();
             TruckMaintenanceDetailUpdatedByNavigation = new HashSet<TruckMaintenanceDetail>();
@@ -269,6 +270,7 @@ namespace TMS.API.Models
         public virtual ICollection<TransitionAction> TransitionActionUpdatedByNavigation { get; set; }
         public virtual ICollection<Transition> TransitionInsertedByNavigation { get; set; }
         public virtual ICollection<Transition> TransitionUpdatedByNavigation { get; set; }
+        public virtual ICollection<Truck> Truck { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenanceAccountableUser { get; set; }
         public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailInsertedByNavigation { get; set; }
         public virtual ICollection<TruckMaintenanceDetail> TruckMaintenanceDetailUpdatedByNavigation { get; set; }

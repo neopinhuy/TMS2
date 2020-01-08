@@ -53,6 +53,8 @@ namespace TMS.API.Models
 
         public virtual MasterData Branch { get; set; }
         public virtual MasterData Currency { get; set; }
+        public virtual MasterData Department { get; set; }
+        public virtual User Driver { get; set; }
         public virtual MasterData FuelType { get; set; }
         public virtual MasterData TruckType { get; set; }
         public virtual Vendor Vendor { get; set; }

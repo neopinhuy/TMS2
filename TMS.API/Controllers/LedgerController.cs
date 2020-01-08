@@ -54,6 +54,9 @@ namespace TMS.API.Controllers
                         FirstName = ledger.Approver.FirstName,
                         LastName = ledger.Approver.LastName
                     };
+                }
+                if (ledger.Currency != null)
+                {
                     ledger.Currency = new MasterData
                     {
                         Id = ledger.Currency.Id,
@@ -61,8 +64,37 @@ namespace TMS.API.Controllers
                         Description = ledger.Currency.Description
                     };
                 }
-                ledger.InsertedByNavigation = null;
-                ledger.UpdatedByNavigation = null;
+                if (ledger.ReceiverBank != null)
+                {
+                    ledger.ReceiverBank = new Bank
+                    {
+                        Id = ledger.ReceiverBank.Id,
+                        Name = ledger.ReceiverBank.Name,
+                        FullName = ledger.ReceiverBank.FullName
+                    };
+                }
+                if (ledger.ReceiverBankBranch != null)
+                {
+                    ledger.ReceiverBankBranch = new BankBranch
+                    {
+                        Id = ledger.ReceiverBankBranch.Id,
+                        Name = ledger.ReceiverBankBranch.Name
+                    };
+                }
+                if (ledger.InsertedByNavigation != null)
+                ledger.InsertedByNavigation = new User
+                {
+                    Id = ledger.InsertedByNavigation.Id,
+                    FirstName = ledger.InsertedByNavigation.FirstName,
+                    LastName = ledger.InsertedByNavigation.LastName
+                };
+                if (ledger.UpdatedByNavigation != null)
+                ledger.UpdatedByNavigation = new User
+                {
+                    Id = ledger.UpdatedByNavigation.Id,
+                    FirstName = ledger.UpdatedByNavigation.FirstName,
+                    LastName = ledger.UpdatedByNavigation.LastName
+                };
             }
             return Ok(new OdataResult<Ledger>
             {
@@ -130,6 +162,7 @@ namespace TMS.API.Controllers
         {
             return from le in db.Ledger.Include(x => x.AccountType).Include(x => x.Entity)
                                        .Include(x => x.Approver).Include(x => x.Currency)
+                                       .Include(x => x.ReceiverBank).Include(x => x.ReceiverBankBranch)
                    join entity in db.Entity on le.EntityId equals entity.Id
                    where
                        le.InsertedDate >= filter.FromDate && le.InsertedDate <= filter.ToDate

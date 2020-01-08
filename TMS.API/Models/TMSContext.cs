@@ -88,7 +88,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
             }
         }
 
@@ -2107,6 +2107,16 @@ namespace TMS.API.Models
                     .WithMany(p => p.TruckCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Truck_Currency");
+
+                entity.HasOne(d => d.Department)
+                    .WithMany(p => p.TruckDepartment)
+                    .HasForeignKey(d => d.DepartmentId)
+                    .HasConstraintName("FK_Truck_Department");
+
+                entity.HasOne(d => d.Driver)
+                    .WithMany(p => p.Truck)
+                    .HasForeignKey(d => d.DriverId)
+                    .HasConstraintName("FK_Truck_Driver");
 
                 entity.HasOne(d => d.FuelType)
                     .WithMany(p => p.TruckFuelType)
