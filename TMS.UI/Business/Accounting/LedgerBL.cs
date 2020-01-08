@@ -104,5 +104,16 @@ namespace TMS.UI.Business.Accounting
             var grid = FindComponent<GridView>().FirstOrDefault();
             grid?.ReloadData();
         }
+
+        public void Preview(Ledger ledger)
+        {
+            var preview = new PopupEditor<Ledger>
+            {
+                Entity = ledger,
+                Name = "Receipt Preview",
+                Title = "Receipt preview"
+            };
+            AddChild(preview);
+        }
     }
 }
