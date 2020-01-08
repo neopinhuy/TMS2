@@ -1258,7 +1258,7 @@ namespace TMS.API.Models
                 entity.Property(e => e.ReceiverFullName).HasMaxLength(100);
 
                 entity.HasOne(d => d.AccountType)
-                    .WithMany(p => p.Ledger)
+                    .WithMany(p => p.LedgerAccountType)
                     .HasForeignKey(d => d.AccountTypeId)
                     .HasConstraintName("FK_Ledger_AccountType");
 
