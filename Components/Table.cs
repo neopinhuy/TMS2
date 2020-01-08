@@ -155,6 +155,10 @@ namespace Components
         private void ColSpan(Header<T> sum, List<Header<T>> headers, HTMLTableElement table)
         {
             var tr = table.TBodies[0].LastElementChild as HTMLTableRowElement;
+            foreach (var c in tr.Cells)
+            {
+                c.TextContent = string.Empty;
+            }
             tr.AddClass("summary");
             if (!headers.Contains(sum)) return;
             var colSpan = sum.SummaryColSpan;
