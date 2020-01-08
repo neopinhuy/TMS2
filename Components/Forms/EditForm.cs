@@ -133,7 +133,7 @@ namespace Components.Forms
             Task.Run(async () =>
             {
                 var componentGroup = await Client<ComponentGroup>.Instance
-                    .GetList($"?$expand=Component($expand=Reference)&$filter=Feature/Name eq '{Name}'");
+                    .GetList($"?$expand=Component($expand=Reference($select=Id,Name))&$filter=Feature/Name eq '{Name}'");
                 var groupTree = BuildTree(componentGroup.value);
                 Html.Take(RootHtmlElement);
                 RenderGroup(groupTree, this);
