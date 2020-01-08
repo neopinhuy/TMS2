@@ -23,7 +23,7 @@ namespace TMS.UI.Business.Sale
         }
         public void CreateGroupRole(GroupRole GroupRole)
         {
-            InitGroupRoleForm(GroupRole);
+            InitGroupRoleForm( new GroupRole());
         }
 
         private void InitGroupRoleForm(GroupRole groupRole)
