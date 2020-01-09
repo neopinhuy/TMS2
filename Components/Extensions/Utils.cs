@@ -7,7 +7,7 @@ namespace Components.Extensions
 {
     public static partial class Utils
     {
-        public static string FormatWith(string format, object source)
+        public static string FormatWith(string format, object source, bool shouldDisplayNull = false)
         {
             if (!format.HasAnyChar()) return string.Empty;
             if (source is null) return format;
@@ -22,7 +22,7 @@ namespace Components.Extensions
             return text;
         }
 
-        public static string FormatWith(string format, IFormatProvider provider, object source)
+        public static string FormatWith(string format, IFormatProvider provider, object source, bool shouldDisplayNull = false)
         {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
@@ -36,7 +36,7 @@ namespace Components.Extensions
                 var formatGroup = m.Groups["format"];
                 var endGroup = m.Groups["end"];
                 var value = source.GetComplexPropValue(propertyGroup.Value);
-                values.Add(propertyGroup.Value == "0" ? source : value is null ? "null" : value);
+                values.Add(propertyGroup.Value == "0" ? source : value is null && shouldDisplayNull ? "null" : value);
                 return new string('{', startGroup.Captures.Count) + (values.Count - 1) + formatGroup.Value
                   + new string('}', endGroup.Captures.Count);
             });

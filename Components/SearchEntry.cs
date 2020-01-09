@@ -154,7 +154,7 @@ namespace Components
         private string FormatDataSource()
         {
             var dataSourceFilter = DataSourceFilter.HasAnyChar() ? DataSourceFilter : "?$filter=Active eq true";
-            var dataSource = Utils.FormatWith(dataSourceFilter, Entity);
+            var dataSource = Utils.FormatWith(dataSourceFilter, Entity, true);
             return dataSource;
         }
 

@@ -190,8 +190,7 @@ namespace Components
         private void SortHeaderByGroupName()
         {
             Headers.NewValue = Headers.Data
-                .OrderByDescending(x => x.Frozen).ThenBy(x => x.Order)
-                .ThenBy(x => x.GroupName).ToArray();
+                .OrderByDescending(x => x.Frozen).ThenBy(x => x.Order).ToArray();
         }
 
         private async Task LoadMasterData()

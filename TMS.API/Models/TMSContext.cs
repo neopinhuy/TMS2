@@ -588,12 +588,12 @@ namespace TMS.API.Models
                 entity.Property(e => e.Weight).HasColumnType("decimal(20, 5)");
 
                 entity.HasOne(d => d.CommodityType)
-                    .WithMany(p => p.Coordination)
+                    .WithMany(p => p.CoordinationCommodityType)
                     .HasForeignKey(d => d.CommodityTypeId)
                     .HasConstraintName("FK_Coordination_CommodityType");
 
                 entity.HasOne(d => d.ContainerType)
-                    .WithMany(p => p.Coordination)
+                    .WithMany(p => p.CoordinationContainerType)
                     .HasForeignKey(d => d.ContainerTypeId)
                     .HasConstraintName("FK_Coordination_Container");
 
@@ -608,7 +608,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Coordination_Terminal_EmptyContTo");
 
                 entity.HasOne(d => d.FreightState)
-                    .WithMany(p => p.Coordination)
+                    .WithMany(p => p.CoordinationFreightState)
                     .HasForeignKey(d => d.FreightStateId)
                     .HasConstraintName("FK_Coordination_FreightState");
 
@@ -639,7 +639,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Coordination_TerminalTo");
 
                 entity.HasOne(d => d.TruckType)
-                    .WithMany(p => p.Coordination)
+                    .WithMany(p => p.CoordinationTruckType)
                     .HasForeignKey(d => d.TruckTypeId)
                     .HasConstraintName("FK_Coordination_TruckType");
 
@@ -2240,17 +2240,6 @@ namespace TMS.API.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.TruckTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TruckType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.TruckTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_TruckType_UserUpdated");
             });
 
             modelBuilder.Entity<UoM>(entity =>

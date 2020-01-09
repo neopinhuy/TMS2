@@ -5,11 +5,6 @@ namespace TMS.API.Models
 {
     public partial class CommodityType
     {
-        public CommodityType()
-        {
-            Coordination = new HashSet<Coordination>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -21,6 +16,5 @@ namespace TMS.API.Models
 
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
-        public virtual ICollection<Coordination> Coordination { get; set; }
     }
 }

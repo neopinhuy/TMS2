@@ -204,7 +204,7 @@ namespace Components
 
         public virtual async Task ReloadData(string dataSource = null)
         {
-            var formatted = Utils.FormatWith(UI.DataSourceFilter, Entity);
+            var formatted = Utils.FormatWith(UI.DataSourceFilter, Entity, true);
             dataSource = dataSource ?? formatted;
             var pagingQuery = dataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
             var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,

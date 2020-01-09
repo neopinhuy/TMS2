@@ -12,6 +12,10 @@ namespace TMS.API.Models
             ContainerContainerType = new HashSet<Container>();
             ContainerCurrency = new HashSet<Container>();
             ContainerFreightState = new HashSet<Container>();
+            CoordinationCommodityType = new HashSet<Coordination>();
+            CoordinationContainerType = new HashSet<Coordination>();
+            CoordinationFreightState = new HashSet<Coordination>();
+            CoordinationTruckType = new HashSet<Coordination>();
             CustomerCareLogCommodityType = new HashSet<CustomerCareLog>();
             CustomerCareLogContactType = new HashSet<CustomerCareLog>();
             CustomerCareLogOrderPeriod = new HashSet<CustomerCareLog>();
@@ -63,6 +67,10 @@ namespace TMS.API.Models
         public virtual ICollection<Container> ContainerContainerType { get; set; }
         public virtual ICollection<Container> ContainerCurrency { get; set; }
         public virtual ICollection<Container> ContainerFreightState { get; set; }
+        public virtual ICollection<Coordination> CoordinationCommodityType { get; set; }
+        public virtual ICollection<Coordination> CoordinationContainerType { get; set; }
+        public virtual ICollection<Coordination> CoordinationFreightState { get; set; }
+        public virtual ICollection<Coordination> CoordinationTruckType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogCommodityType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogOrderPeriod { get; set; }

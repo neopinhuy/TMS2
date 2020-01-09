@@ -119,8 +119,6 @@ namespace TMS.API.Models
             TruckMaintenanceUpdatedByNavigation = new HashSet<TruckMaintenance>();
             TruckMonitorConfigInsertedByNavigation = new HashSet<TruckMonitorConfig>();
             TruckMonitorConfigUpdatedByNavigation = new HashSet<TruckMonitorConfig>();
-            TruckTypeInsertedByNavigation = new HashSet<TruckType>();
-            TruckTypeUpdatedByNavigation = new HashSet<TruckType>();
             UoMInsertedByNavigation = new HashSet<UoM>();
             UoMUpdatedByNavigation = new HashSet<UoM>();
             UomTypeInsertedByNavigation = new HashSet<UomType>();
@@ -278,8 +276,6 @@ namespace TMS.API.Models
         public virtual ICollection<TruckMaintenance> TruckMaintenanceUpdatedByNavigation { get; set; }
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigInsertedByNavigation { get; set; }
         public virtual ICollection<TruckMonitorConfig> TruckMonitorConfigUpdatedByNavigation { get; set; }
-        public virtual ICollection<TruckType> TruckTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<TruckType> TruckTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<UoM> UoMInsertedByNavigation { get; set; }
         public virtual ICollection<UoM> UoMUpdatedByNavigation { get; set; }
         public virtual ICollection<UomType> UomTypeInsertedByNavigation { get; set; }
