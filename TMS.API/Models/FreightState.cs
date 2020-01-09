@@ -28,10 +28,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual User InsertedByNavigation { get; set; }
-        public virtual StateType StateType { get; set; }
-        public virtual User UpdatedByNavigation { get; set; }
-        public virtual Workflow Workflow { get; set; }
+        public virtual MasterData StateType { get; set; }
         public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }

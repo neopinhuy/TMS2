@@ -7,7 +7,6 @@ namespace TMS.API.Models
     {
         public Workflow()
         {
-            FreightState = new HashSet<FreightState>();
             Transition = new HashSet<Transition>();
         }
 
@@ -24,7 +23,6 @@ namespace TMS.API.Models
 
         public virtual User IdNavigation { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual ICollection<FreightState> FreightState { get; set; }
         public virtual ICollection<Transition> Transition { get; set; }
     }
 }

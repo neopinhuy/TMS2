@@ -69,5 +69,16 @@ namespace Common.Extensions
         {
             obj.GetType().GetProperty(propName).SetValue(obj, value);
         }
+
+        public static void CopyProp(this object obj, object source)
+        {
+            if (obj == null) throw new ArgumentNullException($"{nameof(obj)} is null");
+            if (source == null) throw new ArgumentNullException($"{nameof(source)} is null");
+            var props = obj.GetType().GetProperties().Where(x => x.CanWrite && x.CanWrite);
+            foreach (var prop in props)
+            {
+                prop.SetValue(obj, prop.GetValue(source));
+            }
+        }
     }
 }

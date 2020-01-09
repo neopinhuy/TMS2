@@ -1,5 +1,7 @@
-﻿using Common.ViewModels;
+﻿using Common.Extensions;
+using Common.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System;
@@ -53,6 +55,12 @@ namespace TMS.API.Controllers
                 Console.WriteLine(ex.Message);
                 throw ex;
             }
+        }
+
+        public override Task<ActionResult<CustomerCare>> UpdateAsync([FromBody] CustomerCare entity)
+        {
+            UpdateChild(entity.Customer);
+            return base.UpdateAsync(entity);
         }
     }
 }

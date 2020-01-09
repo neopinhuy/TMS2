@@ -28,7 +28,6 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
-        public int? CompanyId { get; set; }
         public string TaxCode { get; set; }
         public string CompanyLocalShortName { get; set; }
         public string CompanyInterShortName { get; set; }

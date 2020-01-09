@@ -23,6 +23,7 @@ namespace TMS.API.Models
             CustomerCareLogStatus = new HashSet<CustomerCareLog>();
             CustomerCustomerGroup = new HashSet<Customer>();
             CustomerCustomerState = new HashSet<Customer>();
+            FreightState = new HashSet<FreightState>();
             InverseParent = new HashSet<MasterData>();
             LedgerAccountType = new HashSet<Ledger>();
             LedgerCurrency = new HashSet<Ledger>();
@@ -37,7 +38,8 @@ namespace TMS.API.Models
             QuotationCustomerGroup = new HashSet<Quotation>();
             QuotationPriceType = new HashSet<Quotation>();
             QuotationTruckType = new HashSet<Quotation>();
-            Surcharge = new HashSet<Surcharge>();
+            SurchargeCurrency = new HashSet<Surcharge>();
+            SurchargePriceType = new HashSet<Surcharge>();
             SurchargeType = new HashSet<SurchargeType>();
             Terminal = new HashSet<Terminal>();
             TruckBranch = new HashSet<Truck>();
@@ -46,7 +48,8 @@ namespace TMS.API.Models
             TruckFuelType = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
             TruckTruckType = new HashSet<Truck>();
-            User = new HashSet<User>();
+            UserDepartment = new HashSet<User>();
+            UserNationality = new HashSet<User>();
             Vendor = new HashSet<Vendor>();
         }
 
@@ -81,6 +84,7 @@ namespace TMS.API.Models
         public virtual ICollection<CustomerCareLog> CustomerCareLogStatus { get; set; }
         public virtual ICollection<Customer> CustomerCustomerGroup { get; set; }
         public virtual ICollection<Customer> CustomerCustomerState { get; set; }
+        public virtual ICollection<FreightState> FreightState { get; set; }
         public virtual ICollection<MasterData> InverseParent { get; set; }
         public virtual ICollection<Ledger> LedgerAccountType { get; set; }
         public virtual ICollection<Ledger> LedgerCurrency { get; set; }
@@ -95,7 +99,8 @@ namespace TMS.API.Models
         public virtual ICollection<Quotation> QuotationCustomerGroup { get; set; }
         public virtual ICollection<Quotation> QuotationPriceType { get; set; }
         public virtual ICollection<Quotation> QuotationTruckType { get; set; }
-        public virtual ICollection<Surcharge> Surcharge { get; set; }
+        public virtual ICollection<Surcharge> SurchargeCurrency { get; set; }
+        public virtual ICollection<Surcharge> SurchargePriceType { get; set; }
         public virtual ICollection<SurchargeType> SurchargeType { get; set; }
         public virtual ICollection<Terminal> Terminal { get; set; }
         public virtual ICollection<Truck> TruckBranch { get; set; }
@@ -104,7 +109,8 @@ namespace TMS.API.Models
         public virtual ICollection<Truck> TruckFuelType { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual ICollection<Truck> TruckTruckType { get; set; }
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<User> UserDepartment { get; set; }
+        public virtual ICollection<User> UserNationality { get; set; }
         public virtual ICollection<Vendor> Vendor { get; set; }
     }
 }

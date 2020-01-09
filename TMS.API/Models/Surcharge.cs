@@ -24,7 +24,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual CoordinationDetail CoordinationDetail { get; set; }
-        public virtual Currency Currency { get; set; }
+        public virtual MasterData Currency { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }
         public virtual OrderDetail OrderDetail { get; set; }

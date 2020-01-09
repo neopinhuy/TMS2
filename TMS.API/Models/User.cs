@@ -33,16 +33,11 @@ namespace TMS.API.Models
             CoordinationDetail = new HashSet<CoordinationDetail>();
             CoordinationInsertedByNavigation = new HashSet<Coordination>();
             CoordinationUpdatedByNavigation = new HashSet<Coordination>();
-            CurrencyInsertedByNavigation = new HashSet<Currency>();
-            CurrencyUpdatedByNavigation = new HashSet<Currency>();
             CustomerCareAssignedUser = new HashSet<CustomerCare>();
             CustomerCareInsertedByNavigation = new HashSet<CustomerCare>();
             CustomerCareLogInsertedByNavigation = new HashSet<CustomerCareLog>();
             CustomerCareLogUpdatedByNavigation = new HashSet<CustomerCareLog>();
             CustomerCareUpdatedByNavigation = new HashSet<CustomerCare>();
-            DepartmentInsertedByNavigation = new HashSet<Department>();
-            DepartmentLeader = new HashSet<Department>();
-            DepartmentUpdatedByNavigation = new HashSet<Department>();
             DistanceRangeInsertedByNavigation = new HashSet<DistanceRange>();
             DistanceRangeUpdatedByNavigation = new HashSet<DistanceRange>();
             EntityInsertedByNavigation = new HashSet<Entity>();
@@ -52,8 +47,6 @@ namespace TMS.API.Models
             Feature = new HashSet<Feature>();
             FeaturePolicyInsertedByNavigation = new HashSet<FeaturePolicy>();
             FeaturePolicyUpdatedByNavigation = new HashSet<FeaturePolicy>();
-            FreightStateInsertedByNavigation = new HashSet<FreightState>();
-            FreightStateUpdatedByNavigation = new HashSet<FreightState>();
             GridPolicyInsertedByNavigation = new HashSet<GridPolicy>();
             GridPolicyUpdatedByNavigation = new HashSet<GridPolicy>();
             GroupMemberInsertedByNavigation = new HashSet<GroupMember>();
@@ -111,8 +104,6 @@ namespace TMS.API.Models
             UoMUpdatedByNavigation = new HashSet<UoM>();
             UomTypeInsertedByNavigation = new HashSet<UomType>();
             UomTypeUpdatedByNavigation = new HashSet<UomType>();
-            VendorTypeInsertedByNavigation = new HashSet<VendorType>();
-            VendorTypeUpdatedByNavigation = new HashSet<VendorType>();
             VolumeRangeInsertedByNavigation = new HashSet<VolumeRange>();
             VolumeRangeUpdatedByNavigation = new HashSet<VolumeRange>();
             WeightRangeInsertedByNavigation = new HashSet<WeightRange>();
@@ -144,7 +135,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual Contract Contract { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual MasterData Department { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual MasterData Nationality { get; set; }
         public virtual Role Role { get; set; }
@@ -178,16 +169,11 @@ namespace TMS.API.Models
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<Coordination> CoordinationInsertedByNavigation { get; set; }
         public virtual ICollection<Coordination> CoordinationUpdatedByNavigation { get; set; }
-        public virtual ICollection<Currency> CurrencyInsertedByNavigation { get; set; }
-        public virtual ICollection<Currency> CurrencyUpdatedByNavigation { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareAssignedUser { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareInsertedByNavigation { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogInsertedByNavigation { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogUpdatedByNavigation { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareUpdatedByNavigation { get; set; }
-        public virtual ICollection<Department> DepartmentInsertedByNavigation { get; set; }
-        public virtual ICollection<Department> DepartmentLeader { get; set; }
-        public virtual ICollection<Department> DepartmentUpdatedByNavigation { get; set; }
         public virtual ICollection<DistanceRange> DistanceRangeInsertedByNavigation { get; set; }
         public virtual ICollection<DistanceRange> DistanceRangeUpdatedByNavigation { get; set; }
         public virtual ICollection<Entity> EntityInsertedByNavigation { get; set; }
@@ -197,8 +183,6 @@ namespace TMS.API.Models
         public virtual ICollection<Feature> Feature { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<FeaturePolicy> FeaturePolicyUpdatedByNavigation { get; set; }
-        public virtual ICollection<FreightState> FreightStateInsertedByNavigation { get; set; }
-        public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<GroupMember> GroupMemberInsertedByNavigation { get; set; }
@@ -256,8 +240,6 @@ namespace TMS.API.Models
         public virtual ICollection<UoM> UoMUpdatedByNavigation { get; set; }
         public virtual ICollection<UomType> UomTypeInsertedByNavigation { get; set; }
         public virtual ICollection<UomType> UomTypeUpdatedByNavigation { get; set; }
-        public virtual ICollection<VendorType> VendorTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<VendorType> VendorTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<VolumeRange> VolumeRangeInsertedByNavigation { get; set; }
         public virtual ICollection<VolumeRange> VolumeRangeUpdatedByNavigation { get; set; }
         public virtual ICollection<WeightRange> WeightRangeInsertedByNavigation { get; set; }

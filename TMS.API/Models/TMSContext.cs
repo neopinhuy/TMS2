@@ -28,12 +28,9 @@ namespace TMS.API.Models
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
         public virtual DbSet<CoordinationDetail> CoordinationDetail { get; set; }
-        public virtual DbSet<Currency> Currency { get; set; }
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerCare> CustomerCare { get; set; }
         public virtual DbSet<CustomerCareLog> CustomerCareLog { get; set; }
-        public virtual DbSet<CustomerGroup> CustomerGroup { get; set; }
-        public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<DistanceRange> DistanceRange { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
         public virtual DbSet<EntityPolicy> EntityPolicy { get; set; }
@@ -55,7 +52,6 @@ namespace TMS.API.Models
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<StackDirection> StackDirection { get; set; }
         public virtual DbSet<StatePolicy> StatePolicy { get; set; }
-        public virtual DbSet<StateType> StateType { get; set; }
         public virtual DbSet<Surcharge> Surcharge { get; set; }
         public virtual DbSet<SurchargeType> SurchargeType { get; set; }
         public virtual DbSet<TaskState> TaskState { get; set; }
@@ -72,7 +68,6 @@ namespace TMS.API.Models
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
-        public virtual DbSet<VendorType> VendorType { get; set; }
         public virtual DbSet<VolumeRange> VolumeRange { get; set; }
         public virtual DbSet<WeightRange> WeightRange { get; set; }
         public virtual DbSet<Workflow> Workflow { get; set; }
@@ -618,33 +613,6 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_CoordinationDetail_Truck");
             });
 
-            modelBuilder.Entity<Currency>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Description).HasMaxLength(100);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Symbol)
-                    .IsRequired()
-                    .HasMaxLength(4);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.CurrencyInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Currency_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.CurrencyUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_Currency_UserUpdated");
-            });
-
             modelBuilder.Entity<Customer>(entity =>
             {
                 entity.HasIndex(e => e.UserId)
@@ -782,41 +750,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.CustomerCareLogUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_CustomerCareLog_UserUpdated");
-            });
-
-            modelBuilder.Entity<CustomerGroup>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.GroupName)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<Department>(entity =>
-            {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.DepartmentInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Department_UserInserted");
-
-                entity.HasOne(d => d.Leader)
-                    .WithMany(p => p.DepartmentLeader)
-                    .HasForeignKey(d => d.LeaderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Department_Leader");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.DepartmentUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_Department_UserUpdated");
             });
 
             modelBuilder.Entity<DistanceRange>(entity =>
@@ -970,26 +903,10 @@ namespace TMS.API.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FreightStateInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FreightState_UserInserted");
-
                 entity.HasOne(d => d.StateType)
                     .WithMany(p => p.FreightState)
                     .HasForeignKey(d => d.StateTypeId)
                     .HasConstraintName("FK_FreightState_StateType");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FreightStateUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_FreightState_UserUpdated");
-
-                entity.HasOne(d => d.Workflow)
-                    .WithMany(p => p.FreightState)
-                    .HasForeignKey(d => d.WorkflowId)
-                    .HasConstraintName("FK_FreightState_Workflow");
             });
 
             modelBuilder.Entity<GridPolicy>(entity =>
@@ -1709,13 +1626,6 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_StatePolicy_UserUpdated");
             });
 
-            modelBuilder.Entity<StateType>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(150);
-
-                entity.Property(e => e.Name).HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Surcharge>(entity =>
             {
                 entity.Property(e => e.Note).HasMaxLength(200);
@@ -1734,7 +1644,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Surcharge_CoordinationDetail");
 
                 entity.HasOne(d => d.Currency)
-                    .WithMany(p => p.Surcharge)
+                    .WithMany(p => p.SurchargeCurrency)
                     .HasForeignKey(d => d.CurrencyId)
                     .HasConstraintName("FK_Surcharge_Currency");
 
@@ -1756,7 +1666,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Surcharge_Order");
 
                 entity.HasOne(d => d.PriceType)
-                    .WithMany(p => p.Surcharge)
+                    .WithMany(p => p.SurchargePriceType)
                     .HasForeignKey(d => d.PriceTypeId)
                     .HasConstraintName("FK_Surcharge_PriceType");
 
@@ -2215,7 +2125,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_User_Contract");
 
                 entity.HasOne(d => d.Department)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.UserDepartment)
                     .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK_User_Department");
 
@@ -2225,7 +2135,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_User_UserInserted");
 
                 entity.HasOne(d => d.Nationality)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.UserNationality)
                     .HasForeignKey(d => d.NationalityId)
                     .HasConstraintName("FK_User_Nationality");
 
@@ -2272,30 +2182,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.VendorTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Vendor_VendorType");
-            });
-
-            modelBuilder.Entity<VendorType>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.VendorTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_VendorType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.VendorTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_VendorType_UserUpdated");
             });
 
             modelBuilder.Entity<VolumeRange>(entity =>

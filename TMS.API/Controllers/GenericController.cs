@@ -99,6 +99,12 @@ namespace TMS.API.Controllers
             return entity;
         }
 
+        protected virtual void UpdateChild<Child>(Child entity) where Child: class
+        {
+            db.Set<Child>().Attach(entity);
+            db.Entry(entity).State = EntityState.Modified;
+        }
+
         [HttpPut("api/[Controller]/BulkUpdate")]
         public async Task<ActionResult<bool>> BulkUpdateAsync([FromBody]List<T> entities)
         {
