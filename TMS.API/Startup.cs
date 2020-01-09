@@ -109,7 +109,6 @@ namespace TMS.API
             builder.EntitySet<PaymentPolicy>(nameof(PaymentPolicy));
             builder.EntitySet<Policy>(nameof(Policy));
             builder.EntitySet<Quotation>(nameof(Quotation));
-            builder.EntitySet<PriceType>(nameof(PriceType));
             builder.EntitySet<Role>(nameof(Role));
             builder.EntitySet<StackDirection>(nameof(StackDirection));
             builder.EntitySet<StatePolicy>(nameof(StatePolicy));

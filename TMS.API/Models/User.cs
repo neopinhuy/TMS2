@@ -18,11 +18,7 @@ namespace TMS.API.Models
             BankInsertedByNavigation = new HashSet<Bank>();
             BankUpdatedByNavigation = new HashSet<Bank>();
             BranchInsertedByNavigation = new HashSet<Branch>();
-            BranchTypeInsertedByNavigation = new HashSet<BranchType>();
-            BranchTypeUpdatedByNavigation = new HashSet<BranchType>();
             BranchUpdatedByNavigation = new HashSet<Branch>();
-            CommodityTypeInsertedByNavigation = new HashSet<CommodityType>();
-            CommodityTypeUpdatedByNavigation = new HashSet<CommodityType>();
             ComponentGroupInsertedByNavigation = new HashSet<ComponentGroup>();
             ComponentGroupUpdatedByNavigation = new HashSet<ComponentGroup>();
             ComponentInsertedByNavigation = new HashSet<Component>();
@@ -88,8 +84,6 @@ namespace TMS.API.Models
             QuotationUpdatedByNavigation = new HashSet<Quotation>();
             StatePolicyInsertedByNavigation = new HashSet<StatePolicy>();
             StatePolicyUpdatedByNavigation = new HashSet<StatePolicy>();
-            StateTypeInsertedByNavigation = new HashSet<StateType>();
-            StateTypeUpdatedByNavigation = new HashSet<StateType>();
             SurchargeInsertedByNavigation = new HashSet<Surcharge>();
             SurchargeTypeInsertedByNavigation = new HashSet<SurchargeType>();
             SurchargeTypeUpdatedByNavigation = new HashSet<SurchargeType>();
@@ -169,11 +163,7 @@ namespace TMS.API.Models
         public virtual ICollection<Bank> BankInsertedByNavigation { get; set; }
         public virtual ICollection<Bank> BankUpdatedByNavigation { get; set; }
         public virtual ICollection<Branch> BranchInsertedByNavigation { get; set; }
-        public virtual ICollection<BranchType> BranchTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<BranchType> BranchTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Branch> BranchUpdatedByNavigation { get; set; }
-        public virtual ICollection<CommodityType> CommodityTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<CommodityType> CommodityTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupInsertedByNavigation { get; set; }
         public virtual ICollection<ComponentGroup> ComponentGroupUpdatedByNavigation { get; set; }
         public virtual ICollection<Component> ComponentInsertedByNavigation { get; set; }
@@ -239,8 +229,6 @@ namespace TMS.API.Models
         public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyInsertedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyUpdatedByNavigation { get; set; }
-        public virtual ICollection<StateType> StateTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<StateType> StateTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Surcharge> SurchargeInsertedByNavigation { get; set; }
         public virtual ICollection<SurchargeType> SurchargeTypeInsertedByNavigation { get; set; }
         public virtual ICollection<SurchargeType> SurchargeTypeUpdatedByNavigation { get; set; }

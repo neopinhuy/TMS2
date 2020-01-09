@@ -9,6 +9,7 @@ namespace TMS.API.Models
         {
             AccessoryBranch = new HashSet<Accessory>();
             AccessoryCurrency = new HashSet<Accessory>();
+            Branch = new HashSet<Branch>();
             ContainerContainerType = new HashSet<Container>();
             ContainerCurrency = new HashSet<Container>();
             ContainerFreightState = new HashSet<Container>();
@@ -66,6 +67,7 @@ namespace TMS.API.Models
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Accessory> AccessoryBranch { get; set; }
         public virtual ICollection<Accessory> AccessoryCurrency { get; set; }
+        public virtual ICollection<Branch> Branch { get; set; }
         public virtual ICollection<Container> ContainerContainerType { get; set; }
         public virtual ICollection<Container> ContainerCurrency { get; set; }
         public virtual ICollection<Container> ContainerFreightState { get; set; }

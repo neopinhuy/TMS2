@@ -21,8 +21,6 @@ namespace TMS.API.Models
         public virtual DbSet<Bank> Bank { get; set; }
         public virtual DbSet<BankBranch> BankBranch { get; set; }
         public virtual DbSet<Branch> Branch { get; set; }
-        public virtual DbSet<BranchType> BranchType { get; set; }
-        public virtual DbSet<CommodityType> CommodityType { get; set; }
         public virtual DbSet<Component> Component { get; set; }
         public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
@@ -256,48 +254,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.BranchUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_Branch_UserUpdated");
-            });
-
-            modelBuilder.Entity<BranchType>(entity =>
-            {
-                entity.Property(e => e.Desciption).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.BranchTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_BranchType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.BranchTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_BranchType_UserUpdated");
-            });
-
-            modelBuilder.Entity<CommodityType>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.CommodityTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CommodityType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.CommodityTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_CommodityType_UserUpdated");
             });
 
             modelBuilder.Entity<Component>(entity =>
@@ -1758,17 +1714,6 @@ namespace TMS.API.Models
                 entity.Property(e => e.Description).HasMaxLength(150);
 
                 entity.Property(e => e.Name).HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.StateTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StateType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.StateTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_StateType_UserUpdated");
             });
 
             modelBuilder.Entity<Surcharge>(entity =>

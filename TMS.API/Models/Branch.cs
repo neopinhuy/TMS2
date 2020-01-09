@@ -15,7 +15,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
 
-        public virtual BranchType BranchType { get; set; }
+        public virtual MasterData BranchType { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
     }
