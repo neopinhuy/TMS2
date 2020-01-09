@@ -75,8 +75,6 @@ namespace TMS.API
             builder.EntitySet<Bank>(nameof(Bank));
             builder.EntitySet<BankBranch>(nameof(BankBranch));
             builder.EntitySet<Branch>(nameof(Branch));
-            builder.EntitySet<BranchType>(nameof(BranchType));
-            builder.EntitySet<CommodityType>(nameof(CommodityType));
             builder.EntitySet<ComponentGroup>(nameof(ComponentGroup));
             builder.EntitySet<Container>(nameof(Container));
             builder.EntitySet<ContainerRange>(nameof(ContainerRange));
@@ -87,9 +85,7 @@ namespace TMS.API
             builder.EntitySet<Customer>(nameof(Customer));
             builder.EntitySet<CustomerCare>(nameof(CustomerCare));
             builder.EntitySet<CustomerCareLog>(nameof(CustomerCareLog));
-            builder.EntitySet<CustomerGroup>(nameof(CustomerGroup));
             builder.EntitySet<MasterData>(nameof(MasterData));
-            builder.EntitySet<Department>(nameof(Department));
             builder.EntitySet<DistanceRange>(nameof(DistanceRange));
             builder.EntitySet<Entity>(nameof(Entity));
             builder.EntitySet<EntityPolicy>(nameof(EntityPolicy));
@@ -124,13 +120,11 @@ namespace TMS.API
             builder.EntitySet<TruckMaintenance>(nameof(TruckMaintenance));
             builder.EntitySet<TruckMaintenanceDetail>(nameof(TruckMaintenanceDetail));
             builder.EntitySet<TruckMonitorConfig>(nameof(TruckMonitorConfig));
-            builder.EntitySet<TruckType>(nameof(TruckType));
             builder.EntitySet<UoM>(nameof(UoM));
             builder.EntitySet<UomType>(nameof(UomType));
             builder.EntitySet<User>(nameof(User));
             builder.EntitySet<Component>(nameof(Component));
             builder.EntitySet<Vendor>(nameof(Vendor));
-            builder.EntitySet<VendorType>(nameof(VendorType));
             builder.EntitySet<VolumeRange>(nameof(VolumeRange));
             builder.EntitySet<WeightRange>(nameof(WeightRange));
             builder.EntitySet<Workflow>(nameof(Workflow));

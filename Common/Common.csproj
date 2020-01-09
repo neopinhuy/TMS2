@@ -54,12 +54,6 @@
     <Compile Include="..\TMS.API\Models\Branch.cs">
       <Link>Models\Branch.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\BranchType.cs">
-      <Link>Models\BranchType.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\CommodityType.cs">
-      <Link>Models\CommodityType.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\Component.cs">
       <Link>Models\Component.cs</Link>
     </Compile>
@@ -98,12 +92,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\CustomerCareLog.cs">
       <Link>Models\CustomerCareLog.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\CustomerGroup.cs">
-      <Link>Models\CustomerGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\Department.cs">
-      <Link>Models\Department.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\DistanceRange.cs">
       <Link>Models\DistanceRange.cs</Link>
@@ -219,9 +207,6 @@
     <Compile Include="..\TMS.API\Models\TruckMonitorConfig.cs">
       <Link>Models\TruckMonitorConfig.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\TruckType.cs">
-      <Link>Models\TruckType.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\UoM.cs">
       <Link>Models\UoM.cs</Link>
     </Compile>
@@ -233,9 +218,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\Vendor.cs">
       <Link>Models\Vendor.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\VendorType.cs">
-      <Link>Models\VendorType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\VolumeRange.cs">
       <Link>Models\VolumeRange.cs</Link>
