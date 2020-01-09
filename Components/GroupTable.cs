@@ -38,6 +38,9 @@ namespace Components
         private void BuildGroupRowData(ObservableArrayArgs<object> arg)
         {
             if (_tableParam.GroupBy.IsNullOrEmpty()) return;
+            var arr = RowData.Data;
+            if (arr.Nothing()) return;
+            if (arr.First()[nameof(GroupRowData.Key)] != null) return;
             var keys = _tableParam.GroupBy.Split(",");
             RowData.NewValue = arg.Array.Select(x =>
             {
