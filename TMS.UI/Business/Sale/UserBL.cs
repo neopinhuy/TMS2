@@ -21,7 +21,7 @@ namespace TMS.UI.Business.Sale
         {
             InitUserForm(User);
         }
-        public void CreateUser(User User)
+        public void CreateUser()
         {
             InitUserForm(new User());
         }
