@@ -27,7 +27,6 @@ namespace TMS.API.Models
         public virtual DbSet<ComponentGroup> ComponentGroup { get; set; }
         public virtual DbSet<Container> Container { get; set; }
         public virtual DbSet<ContainerRange> ContainerRange { get; set; }
-        public virtual DbSet<ContainerType> ContainerType { get; set; }
         public virtual DbSet<Contract> Contract { get; set; }
         public virtual DbSet<Coordination> Coordination { get; set; }
         public virtual DbSet<CoordinationDetail> CoordinationDetail { get; set; }
@@ -43,7 +42,6 @@ namespace TMS.API.Models
         public virtual DbSet<Feature> Feature { get; set; }
         public virtual DbSet<FeaturePolicy> FeaturePolicy { get; set; }
         public virtual DbSet<FreightState> FreightState { get; set; }
-        public virtual DbSet<FuelType> FuelType { get; set; }
         public virtual DbSet<GridPolicy> GridPolicy { get; set; }
         public virtual DbSet<GroupMember> GroupMember { get; set; }
         public virtual DbSet<GroupRole> GroupRole { get; set; }
@@ -55,7 +53,6 @@ namespace TMS.API.Models
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<PaymentPolicy> PaymentPolicy { get; set; }
         public virtual DbSet<Policy> Policy { get; set; }
-        public virtual DbSet<PriceType> PriceType { get; set; }
         public virtual DbSet<Quotation> Quotation { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<StackDirection> StackDirection { get; set; }
@@ -73,7 +70,6 @@ namespace TMS.API.Models
         public virtual DbSet<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual DbSet<TruckMaintenanceDetail> TruckMaintenanceDetail { get; set; }
         public virtual DbSet<TruckMonitorConfig> TruckMonitorConfig { get; set; }
-        public virtual DbSet<TruckType> TruckType { get; set; }
         public virtual DbSet<UoM> UoM { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -530,28 +526,6 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_ContainerRange_UserUpdated");
             });
 
-            modelBuilder.Entity<ContainerType>(entity =>
-            {
-                entity.Property(e => e.Description)
-                    .IsRequired()
-                    .HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.ContainerTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ContainerType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.ContainerTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_ContainerType_UserUpdated");
-            });
-
             modelBuilder.Entity<Contract>(entity =>
             {
                 entity.Property(e => e.Currency)
@@ -721,6 +695,18 @@ namespace TMS.API.Models
                     .HasName("IX_Customer")
                     .IsUnique();
 
+                entity.Property(e => e.CompanyInterAddress).HasMaxLength(250);
+
+                entity.Property(e => e.CompanyInterFullName).HasMaxLength(250);
+
+                entity.Property(e => e.CompanyInterShortName).HasMaxLength(50);
+
+                entity.Property(e => e.CompanyLocalAddress).HasMaxLength(250);
+
+                entity.Property(e => e.CompanyLocalFullName).HasMaxLength(250);
+
+                entity.Property(e => e.CompanyLocalShortName).HasMaxLength(50);
+
                 entity.Property(e => e.Email).HasMaxLength(100);
 
                 entity.Property(e => e.Note).HasMaxLength(200);
@@ -728,6 +714,10 @@ namespace TMS.API.Models
                 entity.Property(e => e.OtherContact).HasMaxLength(100);
 
                 entity.Property(e => e.Skype).HasMaxLength(100);
+
+                entity.Property(e => e.TaxCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Viber).HasMaxLength(100);
 
@@ -1044,24 +1034,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.FreightState)
                     .HasForeignKey(d => d.WorkflowId)
                     .HasConstraintName("FK_FreightState_Workflow");
-            });
-
-            modelBuilder.Entity<FuelType>(entity =>
-            {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.FuelTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FuelType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.FuelTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_FuelType_UserUpdated");
             });
 
             modelBuilder.Entity<GridPolicy>(entity =>
@@ -1533,7 +1505,7 @@ namespace TMS.API.Models
                 entity.HasOne(d => d.ContainerType)
                     .WithMany(p => p.OrderDetailContainerType)
                     .HasForeignKey(d => d.ContainerTypeId)
-                    .HasConstraintName("FK_OrderDetail_ContainerType");
+                    .HasConstraintName("FK_OrderDeTail_ContainerType");
 
                 entity.HasOne(d => d.EmptyContFrom)
                     .WithMany(p => p.OrderDetailEmptyContFrom)
@@ -1630,28 +1602,6 @@ namespace TMS.API.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(150);
-            });
-
-            modelBuilder.Entity<PriceType>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.HasOne(d => d.InsertedByNavigation)
-                    .WithMany(p => p.PriceTypeInsertedByNavigation)
-                    .HasForeignKey(d => d.InsertedBy)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PriceType_UserInserted");
-
-                entity.HasOne(d => d.UpdatedByNavigation)
-                    .WithMany(p => p.PriceTypeUpdatedByNavigation)
-                    .HasForeignKey(d => d.UpdatedBy)
-                    .HasConstraintName("FK_PriceType_UserUpdated");
             });
 
             modelBuilder.Entity<Quotation>(entity =>
@@ -2231,15 +2181,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.TruckMonitorConfigUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_TruckMonitor_UserUpdated");
-            });
-
-            modelBuilder.Entity<TruckType>(entity =>
-            {
-                entity.Property(e => e.Description).HasMaxLength(200);
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<UoM>(entity =>

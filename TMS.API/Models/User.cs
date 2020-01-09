@@ -30,8 +30,6 @@ namespace TMS.API.Models
             ContainerInsertedByNavigation = new HashSet<Container>();
             ContainerRangeInsertedByNavigation = new HashSet<ContainerRange>();
             ContainerRangeUpdatedByNavigation = new HashSet<ContainerRange>();
-            ContainerTypeInsertedByNavigation = new HashSet<ContainerType>();
-            ContainerTypeUpdatedByNavigation = new HashSet<ContainerType>();
             ContainerUpdatedByNavigation = new HashSet<Container>();
             ContractInsertedByNavigation = new HashSet<Contract>();
             ContractUpdatedByNavigation = new HashSet<Contract>();
@@ -60,8 +58,6 @@ namespace TMS.API.Models
             FeaturePolicyUpdatedByNavigation = new HashSet<FeaturePolicy>();
             FreightStateInsertedByNavigation = new HashSet<FreightState>();
             FreightStateUpdatedByNavigation = new HashSet<FreightState>();
-            FuelTypeInsertedByNavigation = new HashSet<FuelType>();
-            FuelTypeUpdatedByNavigation = new HashSet<FuelType>();
             GridPolicyInsertedByNavigation = new HashSet<GridPolicy>();
             GridPolicyUpdatedByNavigation = new HashSet<GridPolicy>();
             GroupMemberInsertedByNavigation = new HashSet<GroupMember>();
@@ -88,8 +84,6 @@ namespace TMS.API.Models
             OrderUpdatedByNavigation = new HashSet<Order>();
             PaymentPolicyInsertedByNavigation = new HashSet<PaymentPolicy>();
             PaymentPolicyUpdatedByNavigation = new HashSet<PaymentPolicy>();
-            PriceTypeInsertedByNavigation = new HashSet<PriceType>();
-            PriceTypeUpdatedByNavigation = new HashSet<PriceType>();
             QuotationInsertedByNavigation = new HashSet<Quotation>();
             QuotationUpdatedByNavigation = new HashSet<Quotation>();
             StatePolicyInsertedByNavigation = new HashSet<StatePolicy>();
@@ -187,8 +181,6 @@ namespace TMS.API.Models
         public virtual ICollection<Container> ContainerInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerRange> ContainerRangeInsertedByNavigation { get; set; }
         public virtual ICollection<ContainerRange> ContainerRangeUpdatedByNavigation { get; set; }
-        public virtual ICollection<ContainerType> ContainerTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<ContainerType> ContainerTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Container> ContainerUpdatedByNavigation { get; set; }
         public virtual ICollection<Contract> ContractInsertedByNavigation { get; set; }
         public virtual ICollection<Contract> ContractUpdatedByNavigation { get; set; }
@@ -217,8 +209,6 @@ namespace TMS.API.Models
         public virtual ICollection<FeaturePolicy> FeaturePolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<FreightState> FreightStateInsertedByNavigation { get; set; }
         public virtual ICollection<FreightState> FreightStateUpdatedByNavigation { get; set; }
-        public virtual ICollection<FuelType> FuelTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<FuelType> FuelTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<GridPolicy> GridPolicyUpdatedByNavigation { get; set; }
         public virtual ICollection<GroupMember> GroupMemberInsertedByNavigation { get; set; }
@@ -245,8 +235,6 @@ namespace TMS.API.Models
         public virtual ICollection<Order> OrderUpdatedByNavigation { get; set; }
         public virtual ICollection<PaymentPolicy> PaymentPolicyInsertedByNavigation { get; set; }
         public virtual ICollection<PaymentPolicy> PaymentPolicyUpdatedByNavigation { get; set; }
-        public virtual ICollection<PriceType> PriceTypeInsertedByNavigation { get; set; }
-        public virtual ICollection<PriceType> PriceTypeUpdatedByNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationInsertedByNavigation { get; set; }
         public virtual ICollection<Quotation> QuotationUpdatedByNavigation { get; set; }
         public virtual ICollection<StatePolicy> StatePolicyInsertedByNavigation { get; set; }

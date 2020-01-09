@@ -28,7 +28,7 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual Order Order { get; set; }
         public virtual OrderDetail OrderDetail { get; set; }
-        public virtual PriceType PriceType { get; set; }
+        public virtual MasterData PriceType { get; set; }
         public virtual SurchargeType SurchargeType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
     }

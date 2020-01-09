@@ -28,6 +28,14 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+        public int? CompanyId { get; set; }
+        public string TaxCode { get; set; }
+        public string CompanyLocalShortName { get; set; }
+        public string CompanyInterShortName { get; set; }
+        public string CompanyLocalFullName { get; set; }
+        public string CompanyInterFullName { get; set; }
+        public string CompanyLocalAddress { get; set; }
+        public string CompanyInterAddress { get; set; }
 
         public virtual MasterData CustomerGroup { get; set; }
         public virtual MasterData CustomerState { get; set; }

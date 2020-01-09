@@ -23,7 +23,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
-        public virtual PriceType PriceType { get; set; }
+        public virtual MasterData PriceType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<Surcharge> Surcharge { get; set; }
     }

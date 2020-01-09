@@ -78,9 +78,6 @@
     <Compile Include="..\TMS.API\Models\ContainerRange.cs">
       <Link>Models\ContainerRange.cs</Link>
     </Compile>
-    <Compile Include="..\TMS.API\Models\ContainerType.cs">
-      <Link>Models\ContainerType.cs</Link>
-    </Compile>
     <Compile Include="..\TMS.API\Models\Contract.cs">
       <Link>Models\Contract.cs</Link>
     </Compile>
@@ -131,9 +128,6 @@
     </Compile>
     <Compile Include="..\TMS.API\Models\FreightState.cs">
       <Link>Models\FreightState.cs</Link>
-    </Compile>
-    <Compile Include="..\TMS.API\Models\FuelType.cs">
-      <Link>Models\FuelType.cs</Link>
     </Compile>
     <Compile Include="..\TMS.API\Models\GridPolicy.cs">
       <Link>Models\GridPolicy.cs</Link>

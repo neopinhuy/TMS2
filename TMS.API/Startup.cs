@@ -80,7 +80,6 @@ namespace TMS.API
             builder.EntitySet<ComponentGroup>(nameof(ComponentGroup));
             builder.EntitySet<Container>(nameof(Container));
             builder.EntitySet<ContainerRange>(nameof(ContainerRange));
-            builder.EntitySet<ContainerType>(nameof(ContainerType));
             builder.EntitySet<Contract>(nameof(Contract));
             builder.EntitySet<Coordination>(nameof(Coordination));
             builder.EntitySet<CoordinationDetail>(nameof(CoordinationDetail));
@@ -99,7 +98,6 @@ namespace TMS.API
             builder.EntitySet<FreightState>(nameof(FreightState));
             builder.EntitySet<FreightHistory>(nameof(FreightHistory));
             builder.EntitySet<FreightProof>(nameof(FreightProof));
-            builder.EntitySet<FuelType>(nameof(FuelType));
             builder.EntitySet<GridPolicy>(nameof(GridPolicy));
             builder.EntitySet<GroupMember>(nameof(GroupMember));
             builder.EntitySet<GroupRole>(nameof(GroupRole));
