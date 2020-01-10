@@ -1,7 +1,5 @@
-﻿using Common.Extensions;
-using Common.ViewModels;
+﻿using Common.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System;

@@ -36,14 +36,19 @@ namespace TMS.UI.Business.Sale
             vm.CustomerCareLog = new CustomerCareLog();
             var user = vm.Customer?.User;
             var name = user != null && user.FirstName.HasAnyChar() ? $"{user.FirstName} {user.LastName}" : vm.Customer?.CompanyInterShortName;
-            var customerForm = new CustomerCareDetailBL
+            var id = vm.Customer?.Id ?? 0;
+            if (!(Children.FirstOrDefault(x => x.Id == id) is CustomerCareDetailBL customerForm))
             {
-                Id = vm.Customer?.Id ?? 0,
-                Entity = vm,
-                Name = "CustomerCare Detail",
-                Title = vm.Customer?.Id > 0 ? $"{name}" : "New Customer"
-            };
-            AddChild(customerForm);
+                customerForm = new CustomerCareDetailBL
+                {
+                    Id = id,
+                    Entity = vm,
+                    Name = "CustomerCare Detail",
+                    Title = vm.Customer?.Id > 0 ? $"{name}" : "New Customer"
+                };
+                AddChild(customerForm);
+            }
+            customerForm.Focus();
         }
 
         public async Task Email()
