@@ -30,8 +30,8 @@ namespace Components
             Html.Instance.TextAlign(_header.TextAlign);
             if (cellData is bool cellBool)
             {
-                // Render checkbox instead of simple true false
-                Html.Instance.Padding(Direction.bottom, 0).SmallCheckbox(string.Empty, cellBool).Disabled(true).End.Render();
+                Html.Instance.Padding(Direction.bottom, 0)
+                    .SmallCheckbox(string.Empty, cellBool).Disabled(true).End.Render();
             }
             else
             {
@@ -58,6 +58,7 @@ namespace Components
 
         private string GetCellText(Header<object> header, object cellData, object row)
         {
+            if (header.FieldName == IdField && cellData != null && cellData is int cellInt && cellInt < 0) return string.Empty;
             if (header.FormatRow.HasAnyChar()) return Utils.FormatWith(header.FormatRow, row);
             else if (cellData == null) return string.Empty;
             else if (header.FieldName == IdField && (int)cellData <= 0) return string.Empty;

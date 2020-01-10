@@ -481,6 +481,7 @@ namespace Components
 
         private void RenderEditableCell(Header<T> header, Section cellSection)
         {
+
             if (!header.Editable) return;
             var cell = Html.Context as HTMLElement;
             var row = cell.ParentElement as HTMLElement;

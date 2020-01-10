@@ -23,7 +23,7 @@ namespace TMS.API.Controllers
                 from quo in db.Quotation
                     .Where(x => x.CustomerGroupId == cGroup.Id || x.CustomerId == customer.Id)
                     .DefaultIfEmpty()
-                where customer.Id == customerId
+                where customer.Id == customerId && quo != null
                 select quo;
 
             return await ApplyCustomQuery(options, query);
