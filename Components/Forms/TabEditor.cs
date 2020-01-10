@@ -19,22 +19,22 @@ namespace Components.Forms
 
         public bool IsExisted()
         {
-            var tab = Document.QuerySelector($"#tab-content #{ClassId}");
+            var tab = Document.GetElementById($"#{Id}-{ClassId}");
             if (tab != null) {
                 RootHtmlElement = tab;
                 return true;
             }
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
+                .Li.Anchor.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
-            Html.Take("#tab-content").Div.Id(ClassId).Render();
+            Html.Take("#tab-content").Div.Id($"{Id}-{ClassId}").Render();
             RootHtmlElement = Html.Context;
             return false;
         }
 
         public virtual void Focus()
         {
-            var html = Html.Take($"a[href='#{ClassId}'");
+            var html = Html.Take($"a[href='#{Id}-{ClassId}']");
             html.Trigger(EventType.Click);
         }
 
@@ -51,13 +51,13 @@ namespace Components.Forms
 
         protected override void RemoveDOM()
         {
-            Html.Take($"#tabs a[href='#{ClassId}']");
+            Html.Take($"#tabs a[href='#{Id}-{ClassId}']");
             var isActive = Html.Context.ParentElement.ClassName.Contains("active");
             var previousTab = Html.Context.ParentElement.PreviousElementSibling;
             var nextTab = Html.Context.ParentElement.NextElementSibling;
             Html.Context.ParentElement.Remove();
-            Html.Take("#" + ClassId);
-            Html.Context.Remove();
+            var dom = Document.GetElementById($"{Id}-{ClassId}");
+            dom?.Remove();
             if (isActive)
             {
                 if (previousTab != null)

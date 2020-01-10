@@ -10,9 +10,10 @@ namespace TMS.UI
             var menuComponent = new MenuComponent();
             menuComponent.Render();
 
-            var ledger = new SaleOrderBL();
-            ledger.Render();
-            ledger.Focus();
+            var order = new SaleOrderBL();
+            order.Id = 1016;
+            order.Render();
+            order.Focus();
         }
     }
 }

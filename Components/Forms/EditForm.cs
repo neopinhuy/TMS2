@@ -145,23 +145,25 @@ namespace Components.Forms
         {
             foreach (var group in componentGroup.OrderBy(x => x.Order))
             {
+                var groupId = $"group-{Id}-{group.Id}";
                 if (group.IsTab)
                 {
                     var tabGroup = group.ParentId is null ? group.FeatureId.ToString() : group.TabGroup;
-                    var tab = Document.GetElementById("tab_group_" + tabGroup);
+                    tabGroup = $"tab_group_{Id}-{tabGroup}";
+                    var tab = Document.GetElementById(tabGroup);
                     if (tab is null)
                     {
-                        Html.Instance.Tab().Id("tab_group_" + tabGroup)
-                            .TabItem(group.Name, "group_" + group.Id, true).EndOf(ElementType.ul)
+                        Html.Instance.Tab().Id(tabGroup)
+                            .TabItem(group.Name, groupId, true).EndOf(ElementType.ul)
                             .TabContent().Id("tab_content_" + tabGroup);
                     }
                     else
                     {
-                        Html.Take(tab).TabItem(group.Name, "group_" + group.Id).EndOf(ElementType.ul);
+                        Html.Take(tab).TabItem(group.Name, groupId).EndOf(ElementType.ul);
                         Html.Take("#tab_content_" + tabGroup);
                     }
                 }
-                Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id("group_" + group.Id)
+                Html.Instance.Panel(!group.IsTab ? group.Name : string.Empty).Id(groupId)
                     .ClassName("group").ClassName(group.ClassName)
                     .ClassName(group.IsTab ? "tab" : string.Empty).Display(!group.Hidden)
                     .Style(group.Style ?? string.Empty).Width(group.Width);
@@ -172,7 +174,7 @@ namespace Components.Forms
                     RenderGroup(group.InverseParent.ToList(), section);
                 }
                 RenderComponent(group, section);
-                Html.Instance.EndOf("#group_" + group.Id);
+                Html.Instance.EndOf("#" + groupId);
             }
         }
 
