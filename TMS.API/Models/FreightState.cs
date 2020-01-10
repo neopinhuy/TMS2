@@ -11,7 +11,6 @@ namespace TMS.API.Models
             ComponentGroup = new HashSet<ComponentGroup>();
             CoordinationDetail = new HashSet<CoordinationDetail>();
             GridPolicy = new HashSet<GridPolicy>();
-            Order = new HashSet<Order>();
             StatePolicy = new HashSet<StatePolicy>();
             TransitionCurrentState = new HashSet<Transition>();
             TransitionNextState = new HashSet<Transition>();
@@ -33,7 +32,6 @@ namespace TMS.API.Models
         public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<GridPolicy> GridPolicy { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<StatePolicy> StatePolicy { get; set; }
         public virtual ICollection<Transition> TransitionCurrentState { get; set; }
         public virtual ICollection<Transition> TransitionNextState { get; set; }

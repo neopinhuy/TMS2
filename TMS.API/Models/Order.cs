@@ -48,7 +48,7 @@ namespace TMS.API.Models
         public virtual User AccountableUser { get; set; }
         public virtual MasterData Currency { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual FreightState FreightState { get; set; }
+        public virtual MasterData FreightState { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual Terminal To { get; set; }

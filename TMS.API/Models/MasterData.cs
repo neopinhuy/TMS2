@@ -32,6 +32,7 @@ namespace TMS.API.Models
             OrderDetailCommodityType = new HashSet<OrderDetail>();
             OrderDetailContainerType = new HashSet<OrderDetail>();
             OrderDetailTruckType = new HashSet<OrderDetail>();
+            OrderFreightState = new HashSet<Order>();
             QuotationCommodityType = new HashSet<Quotation>();
             QuotationContainerType = new HashSet<Quotation>();
             QuotationCurrency = new HashSet<Quotation>();
@@ -94,6 +95,7 @@ namespace TMS.API.Models
         public virtual ICollection<OrderDetail> OrderDetailCommodityType { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailContainerType { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailTruckType { get; set; }
+        public virtual ICollection<Order> OrderFreightState { get; set; }
         public virtual ICollection<Quotation> QuotationCommodityType { get; set; }
         public virtual ICollection<Quotation> QuotationContainerType { get; set; }
         public virtual ICollection<Quotation> QuotationCurrency { get; set; }
