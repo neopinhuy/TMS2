@@ -23,7 +23,7 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual User InsertedByNavigation { get; set; }
-        public virtual UomType UomType { get; set; }
+        public virtual MasterData UomType { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
         public virtual ICollection<DistanceRange> DistanceRange { get; set; }
         public virtual ICollection<VolumeRange> VolumeRange { get; set; }

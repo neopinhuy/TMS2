@@ -3,9 +3,10 @@ using TMS.API.Models;
 
 namespace TMS.API.Controllers
 {
-    public class UomController : GenericController<UoM>
+    
+    public class UoMController : GenericController<UoM>
     {
-        public UomController(TMSContext context, IElasticClient client) : base(context, client)
+        public UoMController(TMSContext context, IElasticClient client) : base(context, client)
         {
         }
     }

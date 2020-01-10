@@ -48,6 +48,7 @@ namespace TMS.API.Models
             TruckFuelType = new HashSet<Truck>();
             TruckMaintenance = new HashSet<TruckMaintenance>();
             TruckTruckType = new HashSet<Truck>();
+            UoM = new HashSet<UoM>();
             UserDepartment = new HashSet<User>();
             UserNationality = new HashSet<User>();
             Vendor = new HashSet<Vendor>();
@@ -109,6 +110,7 @@ namespace TMS.API.Models
         public virtual ICollection<Truck> TruckFuelType { get; set; }
         public virtual ICollection<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual ICollection<Truck> TruckTruckType { get; set; }
+        public virtual ICollection<UoM> UoM { get; set; }
         public virtual ICollection<User> UserDepartment { get; set; }
         public virtual ICollection<User> UserNationality { get; set; }
         public virtual ICollection<Vendor> Vendor { get; set; }
