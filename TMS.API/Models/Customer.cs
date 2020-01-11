@@ -35,6 +35,7 @@ namespace TMS.API.Models
         public string CompanyInterFullName { get; set; }
         public string CompanyLocalAddress { get; set; }
         public string CompanyInterAddress { get; set; }
+        public DateTime? LastContactDate { get; set; }
 
         public virtual MasterData CustomerGroup { get; set; }
         public virtual MasterData CustomerState { get; set; }

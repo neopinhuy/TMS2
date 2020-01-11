@@ -77,7 +77,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
             }
         }
 
@@ -694,11 +694,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<CustomerCareLog>(entity =>
             {
-                entity.Property(e => e.ContactDate)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasComputedColumnSql("(CONVERT([varchar](10),[InsertedDate],(111)))");
-
                 entity.Property(e => e.ContactNumber).HasMaxLength(50);
 
                 entity.Property(e => e.Distance).HasColumnType("decimal(20, 5)");

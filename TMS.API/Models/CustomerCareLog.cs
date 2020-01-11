@@ -18,12 +18,12 @@ namespace TMS.API.Models
         public string Message { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
-        public string ContactDate { get; set; }
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public int? CommodityTypeId { get; set; }
         public int? OrderPeriodId { get; set; }
+        public DateTime? ContactDate { get; set; }
 
         public virtual MasterData CommodityType { get; set; }
         public virtual MasterData ContactType { get; set; }

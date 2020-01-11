@@ -20,18 +20,22 @@ namespace TMS.UI.Business.Sale
 
         public async Task AddLog(CustomerCareVM vm)
         {
+            var lastContact = vm.Customer;
             var log = vm.CustomerCareLog;
             CustomerCareLog saved;
             await CalcEstimatedCost(log);
             if (log.Id <= 0)
             {
+                lastContact.LastContactDate = log.ContactDate;
                 log.CustomerId = vm.CustomerId;
                 log.InsertedDate = DateTime.Now;
                 saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
+                await Client<Customer>.Instance.UpdateAsync(lastContact);
             }
             else
             {
                 saved = await Client<CustomerCareLog>.Instance.UpdateAsync(log);
+
             }
             if (saved != null) Toast.Success("Add/Update customer care log succeeded!");
             else Toast.Warning("Failed to add/update customer care log! Please try again!");
