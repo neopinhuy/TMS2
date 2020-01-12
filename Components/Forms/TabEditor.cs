@@ -1,10 +1,13 @@
 ﻿using Bridge.Html5;
 using MVVM;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Components.Forms
 {
     public class TabEditor<T> : EditForm<T> where T : class
     {
+        public static List<Component> Tabs = new List<Component>();
         public TabEditor()
         {
             Title = $"{typeof(T).Name} List";
@@ -14,18 +17,16 @@ namespace Components.Forms
         public override void Render()
         {
             if (IsExisted()) return;
+            Tabs.Add(this);
             base.Render();
         }
 
         public bool IsExisted()
         {
-            var tab = Document.GetElementById($"#{Id}-{ClassId}");
-            if (tab != null) {
-                RootHtmlElement = tab;
-                return true;
-            }
+            var existing = Tabs.FirstOrDefault(x => x.Id == Id);
+            if (existing != null) return true;
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, CloseTheTab).Text(Title).End
+                .Li.Anchor.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, Close).Text(Title).End
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id($"{Id}-{ClassId}").Render();
             RootHtmlElement = Html.Context;
@@ -38,7 +39,7 @@ namespace Components.Forms
             html.Trigger(EventType.Click);
         }
 
-        private void CloseTheTab(Event e)
+        public void Close(Event e)
         {
             var which = System.Convert.ToInt64(e["which"]);
             var button = System.Convert.ToInt64(e["button"]);
@@ -58,6 +59,7 @@ namespace Components.Forms
             Html.Context.ParentElement.Remove();
             var dom = Document.GetElementById($"{Id}-{ClassId}");
             dom?.Remove();
+            Tabs.Remove(this);
             if (isActive)
             {
                 if (previousTab != null)

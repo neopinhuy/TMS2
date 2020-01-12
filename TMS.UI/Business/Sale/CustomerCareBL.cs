@@ -36,7 +36,7 @@ namespace TMS.UI.Business.Sale
             vm.CustomerCareLog = new CustomerCareLog();
             var user = vm.Customer?.User;
             var name = user != null && user.FirstName.HasAnyChar() ? $"{user.FirstName} {user.LastName}" : vm.Customer?.CompanyInterShortName;
-            var id = vm.Customer?.Id ?? 0;
+            var id = vm.Customer != null ? vm.Customer.Id + GetHashCode() : GetHashCode();
             if (!(Children.FirstOrDefault(x => x.Id == id) is CustomerCareDetailBL customerForm))
             {
                 customerForm = new CustomerCareDetailBL

@@ -11,7 +11,7 @@ namespace TMS.UI
             menuComponent.Render();
 
             var order = new SaleOrderBL();
-            order.Id = 1016;
+            order.Id = order.GetHashCode();
             order.Render();
             order.Focus();
         }

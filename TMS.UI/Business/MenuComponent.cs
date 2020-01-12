@@ -110,7 +110,7 @@ namespace TMS.UI.Business
                 type = typeof(TabEditor<>).MakeGenericType(new Type[] { entityType });
             }
             var instance = Activator.CreateInstance(type) as Component;
-            instance.Id = menu.Id;
+            instance.Id = menu.GetHashCode();
             instance.Render();
             instance["Focus"].As<System.Action>().Invoke(instance);
         }

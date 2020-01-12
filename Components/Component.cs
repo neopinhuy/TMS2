@@ -4,7 +4,6 @@ using MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMS.API.Models;
 using Action = System.Action;
 
 namespace Components
@@ -82,7 +81,6 @@ namespace Components
             if (child.Entity is null) child.Entity = Entity;
             Children.Add(child);
             if (child.Parent is null) child.Parent = this;
-            if (Id <= 0) Id = (int?)Entity?[nameof(Id)] ?? 0;
             child.Render();
         }
 
