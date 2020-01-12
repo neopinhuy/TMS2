@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.OData.Query;
+﻿using Common.ViewModels;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nest;
@@ -36,6 +37,12 @@ namespace TMS.API.Controllers
                     count = options.Count?.Value == true ? query.Count() : 0
                 }
             });
+        }
+        public async Task<IActionResult> Login(LoginVM loginVM)
+        {
+            var existing = await db.User.AnyAsync(user => user.Password == loginVM.Password);
+            return Ok(existing);
+
         }
     }
 }

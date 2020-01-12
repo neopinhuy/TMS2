@@ -127,6 +127,7 @@ namespace TMS.API.Models
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
         public string Avatar { get; set; }
+        public string Password { get; set; }
         public int? SupervisorId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }

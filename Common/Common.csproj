@@ -247,6 +247,7 @@
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\CustomerCareVM.cs" />
     <Compile Include="ViewModels\LedgerVM.cs" />
+    <Compile Include="ViewModels\LoginVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

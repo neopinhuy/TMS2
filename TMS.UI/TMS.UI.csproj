@@ -39,6 +39,7 @@
     <Compile Include="Business\Asset\AccessoryBL.cs" />
     <Compile Include="Business\Asset\MaintenanceBL.cs" />
     <Compile Include="Business\Asset\TruckBL.cs" />
+    <Compile Include="Business\Authentication\LoginBL.cs" />
     <Compile Include="Business\Freight\CoordinationBL.cs" />
     <Compile Include="Business\Freight\DriverBL.cs" />
     <Compile Include="Business\Accounting\LedgerBL.cs" />
