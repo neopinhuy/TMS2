@@ -20,7 +20,10 @@ namespace TMS.UI.Business.UnitofMeaure
         {
             InitMasterDataForm(masterData);
         }
-
+        public void CreateMasterData()
+        {
+            InitMasterDataForm(new MasterData());
+        }
         private void InitMasterDataForm(MasterData masterData)
         {
             var MasterDataForm = new PopupEditor<MasterData>
