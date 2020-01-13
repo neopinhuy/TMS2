@@ -39,6 +39,7 @@ namespace TMS.API.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public DateTime? DueDate { get; set; }
+        public bool Paid { get; set; }
 
         public virtual MasterData AccountType { get; set; }
         public virtual User Approver { get; set; }

@@ -82,19 +82,19 @@ namespace TMS.API.Controllers
                     };
                 }
                 if (ledger.InsertedByNavigation != null)
-                ledger.InsertedByNavigation = new User
-                {
-                    Id = ledger.InsertedByNavigation.Id,
-                    FirstName = ledger.InsertedByNavigation.FirstName,
-                    LastName = ledger.InsertedByNavigation.LastName
-                };
+                    ledger.InsertedByNavigation = new User
+                    {
+                        Id = ledger.InsertedByNavigation.Id,
+                        FirstName = ledger.InsertedByNavigation.FirstName,
+                        LastName = ledger.InsertedByNavigation.LastName
+                    };
                 if (ledger.UpdatedByNavigation != null)
-                ledger.UpdatedByNavigation = new User
-                {
-                    Id = ledger.UpdatedByNavigation.Id,
-                    FirstName = ledger.UpdatedByNavigation.FirstName,
-                    LastName = ledger.UpdatedByNavigation.LastName
-                };
+                    ledger.UpdatedByNavigation = new User
+                    {
+                        Id = ledger.UpdatedByNavigation.Id,
+                        FirstName = ledger.UpdatedByNavigation.FirstName,
+                        LastName = ledger.UpdatedByNavigation.LastName
+                    };
             }
             return Ok(new OdataResult<Ledger>
             {
@@ -171,6 +171,49 @@ namespace TMS.API.Controllers
                        && (filter.TargetId == null || le.TargetId == filter.TargetId)
                    orderby le.InsertedDate, le.Id
                    select le;
+        }
+
+        [HttpGet("api/[Controller]/importliabilitieswarning")]
+        public async Task<IActionResult> ImportLiabilitesWarning()
+        {
+            var setting = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "DebtToPayWarning");
+            var initStatus = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "UnreadStatus"
+                                                                       && m.Parent.Name == "LiabilitiesWarningStatus");
+            var parsed = int.TryParse(setting.Description, out int res);
+            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00, 000);
+            DateTime commingtoday = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
+            var commingDate = today.AddDays(parsed ? res : 3);
+            var dataWarning =
+                from ledger in db.Ledger
+                from lw in db.LiabilitiesWarning.Where(x => x.LedgerId == ledger.Id).DefaultIfEmpty()
+                where ledger.DueDate <= commingDate && ledger.DueDate >= today && ledger.Paid == false
+                                                    && lw == null
+                select ledger;
+            var list = await dataWarning.ToListAsync();
+            var warning = list.Select(x => new LiabilitiesWarning
+            {
+
+                LedgerId = x.Id,
+                DueDate = x.DueDate,
+                Note = x.Note,
+                ProcessStatusId = initStatus.Id
+            });
+            db.LiabilitiesWarning.AddRange(warning);
+            await db.SaveChangesAsync();
+            return Ok(true);
+        }
+
+        [HttpGet("api/[Controller]/Countliabilitieswarning")]
+        public async Task<ActionResult<int>> CountLiabilitesWarning()
+        {
+
+            var initStatus = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "UnreadStatus"
+                                                                       && m.Parent.Name == "LiabilitiesWarningStatus");
+            var dataCount = from liabilities in db.LiabilitiesWarning
+                            where liabilities.ProcessStatusId == initStatus.Id
+                            select liabilities;
+            var count = await dataCount.CountAsync();
+            return Ok(count);
         }
     }
 }
