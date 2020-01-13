@@ -3,6 +3,7 @@ using Common.ViewModels;
 using Components;
 using Components.Extensions;
 using Components.Forms;
+using TMS.API.Models;
 
 namespace TMS.UI.Business.UnitofMeaure
 {
@@ -14,10 +15,12 @@ namespace TMS.UI.Business.UnitofMeaure
             Title = Name;
             Entity = new MasterDataVM();
         }
+
         public void EditMasterData(MasterData masterData)
         {
             InitMasterDataForm(masterData);
         }
+
         private void InitMasterDataForm(MasterData masterData)
         {
             var MasterDataForm = new PopupEditor<MasterData>
