@@ -59,6 +59,8 @@ namespace TMS.API.Models
             LedgerApprover = new HashSet<Ledger>();
             LedgerInsertedByNavigation = new HashSet<Ledger>();
             LedgerUpdatedByNavigation = new HashSet<Ledger>();
+            LiabilitiesWarningInsertedByNavigation = new HashSet<LiabilitiesWarning>();
+            LiabilitiesWarningUpdatedByNavigation = new HashSet<LiabilitiesWarning>();
             MaintenanceTicketAssignee = new HashSet<MaintenanceTicket>();
             MaintenanceTicketInsertedByNavigation = new HashSet<MaintenanceTicket>();
             MaintenanceTicketUpdatedByNavigation = new HashSet<MaintenanceTicket>();
@@ -127,13 +129,14 @@ namespace TMS.API.Models
         public int? DepartmentId { get; set; }
         public int? RoleId { get; set; }
         public string Avatar { get; set; }
-        public string Password { get; set; }
         public int? SupervisorId { get; set; }
         public bool Active { get; set; }
         public DateTime InsertedDate { get; set; }
         public int? InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+        public string Password { get; set; }
+        public string UserName { get; set; }
 
         public virtual Contract Contract { get; set; }
         public virtual MasterData Department { get; set; }
@@ -196,6 +199,8 @@ namespace TMS.API.Models
         public virtual ICollection<Ledger> LedgerApprover { get; set; }
         public virtual ICollection<Ledger> LedgerInsertedByNavigation { get; set; }
         public virtual ICollection<Ledger> LedgerUpdatedByNavigation { get; set; }
+        public virtual ICollection<LiabilitiesWarning> LiabilitiesWarningInsertedByNavigation { get; set; }
+        public virtual ICollection<LiabilitiesWarning> LiabilitiesWarningUpdatedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketAssignee { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketInsertedByNavigation { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicketUpdatedByNavigation { get; set; }

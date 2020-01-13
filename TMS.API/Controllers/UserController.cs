@@ -38,11 +38,11 @@ namespace TMS.API.Controllers
                 }
             });
         }
-        public async Task<IActionResult> Login(LoginVM loginVM)
-        {
-            var existing = await db.User.AnyAsync(user => user.Password == loginVM.Password);
-            return Ok(existing);
 
+        public override async Task<ActionResult<User>> UpdateAsync([FromBody] User entity)
+        {
+            var existing = await db.User.AnyAsync(user => user.Password == entity.Password);
+            return Ok(entity);
         }
     }
 }

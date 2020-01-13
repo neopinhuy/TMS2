@@ -27,6 +27,7 @@ namespace TMS.API.Models
             InverseParent = new HashSet<MasterData>();
             LedgerAccountType = new HashSet<Ledger>();
             LedgerCurrency = new HashSet<Ledger>();
+            LiabilitiesWarning = new HashSet<LiabilitiesWarning>();
             OrderAccountableDepartment = new HashSet<Order>();
             OrderCurrency = new HashSet<Order>();
             OrderDetailCommodityType = new HashSet<OrderDetail>();
@@ -90,6 +91,7 @@ namespace TMS.API.Models
         public virtual ICollection<MasterData> InverseParent { get; set; }
         public virtual ICollection<Ledger> LedgerAccountType { get; set; }
         public virtual ICollection<Ledger> LedgerCurrency { get; set; }
+        public virtual ICollection<LiabilitiesWarning> LiabilitiesWarning { get; set; }
         public virtual ICollection<Order> OrderAccountableDepartment { get; set; }
         public virtual ICollection<Order> OrderCurrency { get; set; }
         public virtual ICollection<OrderDetail> OrderDetailCommodityType { get; set; }

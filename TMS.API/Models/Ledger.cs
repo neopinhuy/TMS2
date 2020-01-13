@@ -38,6 +38,7 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public virtual MasterData AccountType { get; set; }
         public virtual User Approver { get; set; }
@@ -47,5 +48,6 @@ namespace TMS.API.Models
         public virtual Bank ReceiverBank { get; set; }
         public virtual BankBranch ReceiverBankBranch { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual LiabilitiesWarning LiabilitiesWarning { get; set; }
     }
 }

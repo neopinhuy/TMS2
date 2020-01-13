@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
 using Nest;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace TMS.API.Controllers
 {
@@ -14,9 +14,14 @@ namespace TMS.API.Controllers
         {
         }
 
-        [HttpGet("api/[Controller]/Customer/{customerId}")]
-        public virtual async Task<IActionResult> GetByCustomer(int customerId, ODataQueryOptions<Quotation> options)
+        [HttpGet("api/[Controller]/Customer/{customerId:int?}")]
+        public virtual async Task<IActionResult> GetByCustomer(int? customerId, ODataQueryOptions<Quotation> options)
         {
+            if (customerId is null) return Ok(new OdataResult<Quotation>
+            {
+                odata = new Odata() { count = 0 },
+                value = new List<Quotation>()
+            });
             var query =
                 from customer in db.Customer
                 join cGroup in db.MasterData on customer.CustomerGroupId equals cGroup.Id

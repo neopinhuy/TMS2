@@ -41,6 +41,7 @@ namespace TMS.API.Models
         public virtual DbSet<GroupMember> GroupMember { get; set; }
         public virtual DbSet<GroupRole> GroupRole { get; set; }
         public virtual DbSet<Ledger> Ledger { get; set; }
+        public virtual DbSet<LiabilitiesWarning> LiabilitiesWarning { get; set; }
         public virtual DbSet<MaintenanceTicket> MaintenanceTicket { get; set; }
         public virtual DbSet<MasterData> MasterData { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -77,7 +78,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
             }
         }
 
@@ -1139,6 +1140,36 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Ledger_UserUpdated");
             });
 
+            modelBuilder.Entity<LiabilitiesWarning>(entity =>
+            {
+                entity.HasIndex(e => e.LedgerId)
+                    .HasName("UQ__Liabilit__AE70E0CE8DA7DB6A")
+                    .IsUnique();
+
+                entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.LiabilitiesWarningInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_LiabilitiesWarning_InsertedBy");
+
+                entity.HasOne(d => d.Ledger)
+                    .WithOne(p => p.LiabilitiesWarning)
+                    .HasForeignKey<LiabilitiesWarning>(d => d.LedgerId)
+                    .HasConstraintName("FK_LiabilitiesWarning_Ledger");
+
+                entity.HasOne(d => d.ProcessStatus)
+                    .WithMany(p => p.LiabilitiesWarning)
+                    .HasForeignKey(d => d.ProcessStatusId)
+                    .HasConstraintName("FK_LiabilitiesWarning_ProcessStatus");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.LiabilitiesWarningUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_LiabilitiesWarning_UpdateBy");
+            });
+
             modelBuilder.Entity<MaintenanceTicket>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -2035,8 +2066,6 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<UoM>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Name)
@@ -2102,6 +2131,10 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.PhoneNumber)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -2111,6 +2144,10 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Ssn)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserName)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

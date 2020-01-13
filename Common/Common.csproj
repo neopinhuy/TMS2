@@ -129,6 +129,9 @@
     <Compile Include="..\TMS.API\Models\Ledger.cs">
       <Link>Models\Ledger.cs</Link>
     </Compile>
+    <Compile Include="..\TMS.API\Models\LiabilitiesWarning.cs">
+      <Link>Models\LiabilitiesWarning.cs</Link>
+    </Compile>
     <Compile Include="..\TMS.API\Models\MaintenanceTicket.cs">
       <Link>Models\MaintenanceTicket.cs</Link>
     </Compile>

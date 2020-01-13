@@ -1,13 +1,12 @@
 ﻿using Common.Clients;
+using Common.Extensions;
 using Common.ViewModels;
 using Components.Forms;
-using System;
 using System.Threading.Tasks;
-using TMS.API.Models;
 
 namespace TMS.UI.Business.Authentication
 {
-    public class LoginBL : TabEditor<LoginVM>
+    public class LoginBL : PopupEditor<LoginVM>
     {
         public LoginBL()
         {
@@ -19,9 +18,15 @@ namespace TMS.UI.Business.Authentication
         public async Task<bool> Login(LoginVM login)
         {
             var result = new Client("User");
-            await result.UpdateAsync(login);
-            Console.WriteLine(login.Username);
-            Console.WriteLine(login.Password);
+            var res = await result.UpdateAsync(login);
+            if (res is null)
+            {
+                Toast.Warning("Login failed! Please try again!");
+            }
+            else
+            {
+                Toast.Warning($"Welcome {login.Username}!");
+            }
             return true;
         }
     }
