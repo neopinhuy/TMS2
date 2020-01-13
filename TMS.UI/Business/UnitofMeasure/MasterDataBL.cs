@@ -36,9 +36,10 @@ namespace TMS.UI.Business.UnitofMeaure
         {
             var gridView = FindComponentByName<GridView>("MasterData");
             var originalQuery = gridView.FormattedDataSource;
-            var filter = Utils.FormatWith(" and (contains(Name,'{SearchText}') or contains(Description,'{SearchText}'))", Entity);
-            var finalFilter = OdataExtensions.AppendFilter(originalQuery, filter);
-            gridView.ReloadData(finalFilter);
+            var filter = Utils.FormatWith("Active eq true and (contains(Name,'{SearchText}') or contains(Description,'{SearchText}'))", Entity);
+            var finalFilter = OdataExtensions.ReplaceFilter(originalQuery, filter);
+            gridView.UI.DataSourceFilter = finalFilter;
+            gridView.ReloadData();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Common.Extensions
                 var filter = dataSourceFilter.Substring(filterIndex);
                 var endFilterIndex = filter.IndexOf("&$");
                 endFilterIndex = endFilterIndex == -1 ? filter.Length : endFilterIndex;
-                return filter.Substring(0, endFilterIndex);
+                return filter.Substring(8, endFilterIndex - 8);
             }
             return string.Empty; ;
         }
@@ -60,6 +60,18 @@ namespace Common.Extensions
                 index = originalQuery.IndexOf(originalFilter) + originalFilter.Length;
             }
             var finalFilter = originalQuery.Substring(0, index) + filter + originalQuery.Substring(index);
+            return finalFilter;
+        }
+
+        public static string ReplaceFilter(string originalQuery, string filter)
+        {
+            var originalFilter = GetFilterQuery(originalQuery);
+            if (originalFilter.IsNullOrEmpty())
+            {
+                originalQuery += originalQuery.IndexOf("?$") >= 0 ? "&?$filter=" : "?$filter=";
+            }
+            int index = originalQuery.IndexOf("$filter=") + 8;
+            var finalFilter = originalQuery.Substring(0, index) + filter + originalQuery.Substring(originalFilter.Length + index);
             return finalFilter;
         }
     }
