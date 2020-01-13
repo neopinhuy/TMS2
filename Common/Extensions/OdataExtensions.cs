@@ -32,5 +32,35 @@ namespace Common.Extensions
             }
             return noFilterQuery;
         }
+
+        public static string GetFilterQuery(string dataSourceFilter)
+        {
+            var result = dataSourceFilter;
+            var filterIndex = dataSourceFilter.IndexOf("$filter");
+            if (filterIndex >= 0)
+            {
+                var endFilterIndex = dataSourceFilter.Substring(filterIndex).IndexOf("&");
+                endFilterIndex = endFilterIndex == -1 ? dataSourceFilter.Length : endFilterIndex + filterIndex;
+                return result.Substring(filterIndex + 7, endFilterIndex);
+            }
+            return string.Empty; ;
+        }
+
+        public static string AppendFilter(string originalQuery, string filter)
+        {
+            var originalFilter = GetFilterQuery(originalQuery);
+            int index;
+            if (originalFilter.IsNullOrEmpty())
+            {
+                originalQuery += originalQuery.IndexOf("?$") >= 0 ? "&?$filter=" : "?$filter=";
+                index = originalQuery.Length;
+            }
+            else
+            {
+                index = originalQuery.IndexOf(originalFilter) + originalFilter.Length;
+            }
+            var finalFilter = originalQuery.Substring(0, index) + filter + originalQuery.Substring(index);
+            return finalFilter;
+        }
     }
 }

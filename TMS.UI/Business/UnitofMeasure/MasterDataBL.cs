@@ -1,21 +1,18 @@
-﻿using Common.Clients;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.ViewModels;
 using Components;
+using Components.Extensions;
 using Components.Forms;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using TMS.API.Models;
 
 namespace TMS.UI.Business.UnitofMeaure
 {
-    public class MasterDataBL : TabEditor<MasterData>
+    public class MasterDataBL : TabEditor<MasterDataVM>
     {
         public MasterDataBL()
         {
             Name = "Master Data";
             Title = Name;
+            Entity = new MasterDataVM();
         }
         public void EditMasterData(MasterData masterData)
         {
@@ -32,5 +29,13 @@ namespace TMS.UI.Business.UnitofMeaure
             AddChild(MasterDataForm);
         }
 
+        public void Search()
+        {
+            var gridView = FindComponentByName<GridView>("MasterData");
+            var originalQuery = gridView.FormattedDataSource;
+            var filter = Utils.FormatWith(" and (contains(Name,'{SearchText}') or contains(Description,'{SearchText}'))", Entity);
+            var finalFilter = OdataExtensions.AppendFilter(originalQuery, filter);
+            gridView.ReloadData(finalFilter);
+        }
     }
 }

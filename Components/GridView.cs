@@ -26,6 +26,7 @@ namespace Components
     public class GridView : Component
     {
         public readonly TMS.API.Models.Component UI;
+        public string FormattedDataSource => Utils.FormatWith(UI.DataSourceFilter, Entity, true);
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
@@ -51,6 +52,7 @@ namespace Components
 
         public override void Render()
         {
+            Html.Instance.DataAttr("name", UI.FieldName);
             Task.Run(async () =>
             {
                 var gridPolicyTask = LoadGridPolicy();
@@ -204,8 +206,7 @@ namespace Components
 
         public virtual async Task ReloadData(string dataSource = null)
         {
-            var formatted = Utils.FormatWith(UI.DataSourceFilter, Entity, true);
-            dataSource = dataSource ?? formatted;
+            dataSource = dataSource ?? FormattedDataSource;
             var pagingQuery = dataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
             var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,
                 UI.Row > 0 ? pagingQuery : dataSource);
