@@ -29,7 +29,7 @@ namespace TMS.UI.Business.Sale
                 lastContact.LastContactDate = log.ContactDate;
                 log.CustomerId = vm.CustomerId;
                 log.InsertedDate = DateTime.Now;
-                saved = await Client<CustomerCareLog>.Instance.CreateAsync(log);
+                saved = await Client<CustomerCareLog>.Instance.PostAsync(log);
                 await Client<Customer>.Instance.UpdateAsync(lastContact);
             }
             else
@@ -98,7 +98,7 @@ namespace TMS.UI.Business.Sale
             CustomerCare saved;
             if (customerCare.Id <= 0)
             {
-                saved = await client.CreateAsync(customerCare);
+                saved = await client.PostAsync(customerCare);
             }
             else
             {

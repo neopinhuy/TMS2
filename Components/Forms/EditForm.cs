@@ -51,7 +51,7 @@ namespace Components.Forms
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 SetDeafaultId();
-                var data = await client.CreateAsync((T)Entity);
+                var data = await client.PostAsync((T)Entity);
                 ReloadAndShowMessage(defaultMessage, data, false);
                 AfterSaved?.Invoke(data != null);
             }

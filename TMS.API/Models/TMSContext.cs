@@ -2141,6 +2141,10 @@ namespace TMS.API.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Salt)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Ssn)
                     .HasMaxLength(50)
                     .IsUnicode(false);

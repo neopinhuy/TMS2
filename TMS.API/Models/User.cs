@@ -137,6 +137,10 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
+        public string Salt { get; set; }
+        public int? LoginFailedCount { get; set; }
+        public DateTime? LastLogin { get; set; }
+        public DateTime? LastFailedLogin { get; set; }
 
         public virtual Contract Contract { get; set; }
         public virtual MasterData Department { get; set; }

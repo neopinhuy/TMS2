@@ -112,7 +112,7 @@ namespace TMS.UI.Business.Freight
                 }).ToList()
             };
             var client = new Client<Coordination>();
-            var res = await client.CreateAsync(coordination);
+            var res = await client.PostAsync(coordination);
             if (res is null)
             {
                 Toast.Warning("Create order composition failed!");

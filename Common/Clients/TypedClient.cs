@@ -172,12 +172,12 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<T> CreateAsync(T value)
+        public Task<T> PostAsync(T value, string subUrl = string.Empty)
         {
             var type = typeof(T);
             var tcs = new TaskCompletionSource<T>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"{BaseUrl}/api/{type.Name}", true);
+            xhr.Open("POST", $"{BaseUrl}/api/{type.Name}/{subUrl}", true);
             xhr.SetRequestHeader("Content-type", "application/json");
             xhr.OnReadyStateChange = () =>
             {

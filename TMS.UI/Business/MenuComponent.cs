@@ -112,7 +112,7 @@ namespace TMS.UI.Business
             var instance = Activator.CreateInstance(type) as Component;
             instance.Id = menu.GetHashCode();
             instance.Render();
-            instance["Focus"].As<System.Action>().Invoke(instance);
+            instance["Focus"].As<System.Action>()?.Invoke(instance);
         }
     }
 }
