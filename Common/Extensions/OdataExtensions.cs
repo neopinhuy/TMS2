@@ -35,13 +35,13 @@ namespace Common.Extensions
 
         public static string GetFilterQuery(string dataSourceFilter)
         {
-            var result = dataSourceFilter;
             var filterIndex = dataSourceFilter.IndexOf("$filter");
             if (filterIndex >= 0)
             {
-                var endFilterIndex = dataSourceFilter.Substring(filterIndex).IndexOf("&");
-                endFilterIndex = endFilterIndex == -1 ? dataSourceFilter.Length : endFilterIndex + filterIndex;
-                return result.Substring(filterIndex + 7, endFilterIndex);
+                var filter = dataSourceFilter.Substring(filterIndex);
+                var endFilterIndex = filter.IndexOf("&$");
+                endFilterIndex = endFilterIndex == -1 ? filter.Length : endFilterIndex;
+                return filter.Substring(0, endFilterIndex);
             }
             return string.Empty; ;
         }
