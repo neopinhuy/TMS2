@@ -1,4 +1,5 @@
-﻿using TMS.UI.Business;
+﻿using Components.Notifications;
+using TMS.UI.Business;
 using TMS.UI.Business.Sale;
 
 namespace TMS.UI
@@ -14,6 +15,9 @@ namespace TMS.UI
             order.Id = order.GetHashCode();
             order.Render();
             order.Focus();
+
+            var notification = new LiabilitiesNotification();
+            notification.Render();
         }
     }
 }

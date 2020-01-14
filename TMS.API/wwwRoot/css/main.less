@@ -5,8 +5,28 @@ html {
     font-size: 13px;
 }
 
+.badge {
+    right: auto;
+}
+.fix-grid {
+    max-height: calc(100vh - 52px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 body {
     background-color: @whiteGrey;
+    overflow: hidden;
+}
+
+.fix-sidebar {
+    width: calc(100% - 290px);
+}
+
+.fix-pos-relative {
+    position: absolute !important;
+    right: 0;
+    top: 39px;
+    width: 200px;
 }
 
 .sidebar {
@@ -30,10 +50,6 @@ body {
     }
 }
 
-#content {
-    max-width: calc(100% - 287px);
-}
-
 #tab-content {
     top: -2px;
     background-color: @white;
@@ -51,7 +67,6 @@ body {
 }
 
 .content-wrapper {
-    padding-bottom: 36px;
     min-height: calc(100vh - 52px);
 
     .app-bar {

@@ -102,11 +102,26 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<object> CreateAsync(object value)
+        public Task<object> PostAsync(object value, string subUrl)
+        {
+            return SubmitAsync(value, subUrl, "POST");
+        }
+
+        /// <summary>
+        /// Get data from server
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Task<object> GetAsync(object value, string subUrl)
+        {
+            return SubmitAsync(value, subUrl, "GET");
+        }
+
+        private Task<object> SubmitAsync(object value, string subUrl, string method)
         {
             var tcs = new TaskCompletionSource<object>();
             var xhr = new XMLHttpRequest();
-            xhr.Open("POST", $"/api/{_entityName}", true);
+            xhr.Open(method, $"/api/{_entityName}/{subUrl}", true);
             xhr.SetRequestHeader("Content-type", "application/json-patch+json");
             xhr.OnReadyStateChange = () =>
             {

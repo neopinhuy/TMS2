@@ -10,6 +10,7 @@
     <link href="css/metro-all.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <link href="css/LineIcons.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
 
     <script>
         String.prototype.startsWith = String.prototype.startsWith || function (str) {
@@ -45,15 +46,15 @@
         <div class="sidebar-wrapper">
         </div>
     </aside>
-    <div class="shifted-content-1 vh-100 p-ab">
+    <div class="shifted-content-1 vh-100 p-ab fix-sidebar">
         <div class="content-wrapper">
-            <div class="app-bar pos-absolute bg-red z-1" data-role="appbar">
+            <div class="app-bar pos-absolute bg-red z-1" data-role="appbar" id="app-bar">
                 <button class="app-bar-item c-pointer" id="sidebar-toggle-2">
                     <span class="mif-menu fg-white"></span>
                 </button>
             </div>
 
-            <div class="grid">
+            <div class="grid fix-grid">
                 <div class="row">
                     <div class="cell" id="content">
                         <div class="p-4">
@@ -65,7 +66,7 @@
                 </div>
             </div>
 
-            <footer id="bottomBar" class="bottom-bar z-1">
+            <!--<footer id="bottomBar" class="bottom-bar z-1">
                 <button class="button">
                     <span class="icon mif-plus"></span>
                     <span class="label">Add</span>
@@ -78,11 +79,9 @@
                     <span class="icon mif-search"></span>
                     <span class="label">Search</span>
                 </button>
-            </footer>
+            </footer>-->
         </div>
     </div>
-    <script>
-        $('button#sidebar-toggle-2').click();
-    </script>
+    <script src="js/Main.js"></script>
 </body>
 </html>
