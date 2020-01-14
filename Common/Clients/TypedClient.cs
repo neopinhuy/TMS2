@@ -128,6 +128,7 @@ namespace Common.Clients
         public Task<OdataResult<object>> GetListEntity(string entity, string filter = null)
         {
             var refType = Type.GetType("TMS.API.Models." + entity);
+            if (refType is null) throw new InvalidOperationException($"Type of {entity} not found!");
             var clientType = typeof(Client<>).MakeGenericType(new Type[] { refType });
             var httpGetList = clientType.GetMethod("GetList");
             var client = Activator.CreateInstance(clientType);

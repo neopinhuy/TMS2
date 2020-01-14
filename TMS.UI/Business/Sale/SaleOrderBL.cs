@@ -98,6 +98,7 @@ namespace TMS.UI.Business.Sale
 
         public void PrintOrder()
         {
+            var preview = FindComponentByName<Section>("SaleOrderPreview");
             var print = Window.Open("", "_blank");
             var shtml = "<html>";
             shtml += "<link rel='stylesheet' type='text/css' href='./css/main.css' />";
@@ -107,7 +108,7 @@ namespace TMS.UI.Business.Sale
             shtml += "<link href='./css/LineIcons.css' rel='stylesheet' />";
             shtml += "<body onload=\"window.print();window.close();\">";
             shtml += "<div style='padding:7pt'>";
-            shtml += Document.GetElementById("group_1166").InnerHTML;
+            shtml += preview.RootHtmlElement.InnerHTML;
             shtml += "</div>";
             shtml += "</body>";
             shtml += "</html>";
