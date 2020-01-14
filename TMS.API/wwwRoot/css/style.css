@@ -1,4 +1,5 @@
 ﻿/*! CSS Used from: https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css */
+
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -211,5 +212,18 @@
         .skin-blue .main-header .navbar .dropdown-menu li a:hover {
             background: #367fa9;
         }
+}
+.menu {
+    display: block;
+    list-style-type: none;
+    padding-left:0;
+    margin:0.5rem;
+    max-height:210px;
+    overflow-y:auto;
+}
+.ul-Warning {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0.5rem;
 }
 /*! CSS Used fontfaces */

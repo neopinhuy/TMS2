@@ -25,13 +25,23 @@ namespace Components.Notifications
                             .Span.ClassName("badge bg-orange fg-white mt-2 mr-1").Text(count.ToString())
                             .EndOf(ElementType.a);
             html.Div.ClassName("pos-relative fix-pos-relative")
-                .Div.ClassName("bg-red fg-white")
+                .Div.ClassName("fg-black")
                     .DataAttr("role", "dropdown")
                     .DataAttr("toggle-element", "#dropdown_toggle_LiabilitiesWarning");
-            html.Ul
+            html.Ul.ClassName("ul-Warning")
                 .Li.ClassName("header1").Text("You have " + count + " notifications").End
                 .Li
-                    .Ul.ClassName("menu").ForEach(LWarnings, RenderTask)
+                    .Ul.ClassName("menu")
+                        .Li.Anchor.Href("#")
+                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
+                        .Li.Anchor.Href("#")
+                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
+                        .Li.Anchor.Href("#")
+                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
+                        .Li.Anchor.Href("#")
+                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
+                            .Li.Anchor.Href("#")
+                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
             .EndOf(".ml-auto");
         }
 
