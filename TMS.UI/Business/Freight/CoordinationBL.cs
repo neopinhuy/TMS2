@@ -156,7 +156,7 @@ namespace TMS.UI.Business.Freight
             }
 
             var deleted = await new Client(nameof(Coordination))
-                .Delete(selected.Select(x => x.Id).ToList());
+                .DeleteAsync(selected.Select(x => x.Id).ToList());
             if (deleted)
             {
                 Toast.Success("Delete coordination succeeded!");

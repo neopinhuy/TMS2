@@ -210,7 +210,7 @@ namespace Common.Clients
             return tcs.Task;
         }
 
-        public Task<bool> Delete(List<int> ids)
+        public Task<bool> DeleteAsync(List<int> ids)
         {
             var tcs = new TaskCompletionSource<bool>();
             var xhr = new XMLHttpRequest();

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
 using Component = Components.Component;
+using ElementType = MVVM.ElementType;
 
 namespace TMS.UI.Business
 {
@@ -69,6 +70,7 @@ namespace TMS.UI.Business
                     Html.Instance.Li.DataAttr("feature", item.Id.ToString())
                     .Anchor.Attr("data-role", "ripple")
                     .Event(EventType.Click, MenuItemClick, item)
+                    .Event(EventType.ContextMenu, EditFeature, item) // IMPORTANT: check role to show this feature
                     .Span.ClassName("icon")
                         .If(iconClass,
                             () => Html.Instance.ClassName(item.Icon).Render(),
@@ -81,6 +83,45 @@ namespace TMS.UI.Business
                     }
                 }
             });
+        }
+
+        private ContextMenu _contextMenu;
+        private void EditFeature(Event e, Feature feature)
+        {
+            e.PreventDefault();
+            var top = (float)e["clientY"];
+            var left = (float)e["clientX"];
+            _contextMenu = new ContextMenu { Top = top, Left = left };
+            AddChild(_contextMenu);
+            Html.Instance
+                .Li.Event(EventType.Click, DeleteFeature, feature)
+                .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
+                .Li.Event(EventType.Click, FeatureEditor, feature)
+                .Icon("fa fa-plus").End.Span.Text("Edit this feature").EndOf(ElementType.li);
+        }
+
+        private void FeatureEditor(Feature feature)
+        {
+            var popup = new TabEditor<Feature>()
+            {
+                Id = feature?.Id ?? GetHashCode(),
+                Name = "Feature Editor",
+                Entity = feature,
+                Title = "Feature"
+            };
+            AddChild(popup);
+            popup.Focus();
+        }
+
+        private void DeleteFeature(Feature feature)
+        {
+            var confirmDialog = new ConfirmDialog();
+            confirmDialog.YesConfirmed = async () =>
+            {
+                var client = new Client("Feature");
+                await client.DeleteAsync(new List<int> { feature.Id });
+            };
+            AddChild(confirmDialog);
         }
 
         private void MenuItemClick(Feature menu, Event e)

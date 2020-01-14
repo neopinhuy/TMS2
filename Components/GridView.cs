@@ -267,7 +267,7 @@ namespace Components
                 .Where(x => (bool?)x["__selected__"] == true)
                 .Select(x => (int)x[IdField]).ToList();
             var client = new Client(entity);
-            var success = await client.Delete(ids);
+            var success = await client.DeleteAsync(ids);
             if (success)
             {
                 Toast.Success("Delete succeeded");
