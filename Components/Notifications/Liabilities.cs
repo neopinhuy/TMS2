@@ -19,6 +19,10 @@ namespace Components.Notifications
         {
             var client = new Client("Ledger");
             var count = await client.GetAsync(null, "Countliabilitieswarning");
+            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=ReceiverFullName)&$filter= Active eq true " +
+                                                                                                                                $"and ProcessStatus/Parent/Name eq 'LiabilitiesWarningStatus' " +
+                                                                                                                                $"and ProcessStatus/Name eq 'UnreadStatus' ");
+            LWarnings = warnings.value;
             var html = Html.Take("#app-bar").Div.ClassName("app-bar-container ml-auto")
                             .Anchor.ClassName("app-bar-item").Id("dropdown_toggle_LiabilitiesWarning")
                             .Span.ClassName("mif-bell").End
@@ -30,24 +34,15 @@ namespace Components.Notifications
                     .DataAttr("toggle-element", "#dropdown_toggle_LiabilitiesWarning");
             html.Ul.ClassName("ul-Warning")
                 .Li.ClassName("header1").Text("You have " + count + " notifications").End
-                .Li
+                .Li.ClassName("li-Root")
                     .Ul.ClassName("menu")
-                        .Li.Anchor.Href("#")
-                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
-                        .Li.Anchor.Href("#")
-                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
-                        .Li.Anchor.Href("#")
-                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
-                        .Li.Anchor.Href("#")
-                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
-                            .Li.Anchor.Href("#")
-                            .I.ClassName("fa fa-users text-aqua").Text(" 5 new members joined today").EndOf(ElementType.li)
+                            .ForEach(LWarnings, (li, index) =>
+                            {
+                                html.Li.ClassName("liItems").Anchor.Href("#")
+                                            .H4.ClassName("h4-items").Text(li.DueDate.ToString()).End
+                                            .P.ClassName("p-warning").Text(li.Ledger.ReceiverFullName).EndOf(ElementType.li);
+                            })
             .EndOf(".ml-auto");
-        }
-
-        private static void RenderTask(LiabilitiesWarning warning, int index)
-        {
-            Html.Instance.Li.Text($"{warning.Ledger.ReceiverFullName} - {warning.Ledger.Credit} - Due date {warning.DueDate}");
         }
     }
 }

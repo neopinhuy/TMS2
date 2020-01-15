@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Business\Accounting\LiabilitiesBL.cs" />
     <Compile Include="Business\Asset\AccessoryBL.cs" />
     <Compile Include="Business\Asset\MaintenanceBL.cs" />
     <Compile Include="Business\Asset\TruckBL.cs" />

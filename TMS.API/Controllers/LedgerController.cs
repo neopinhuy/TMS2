@@ -215,5 +215,17 @@ namespace TMS.API.Controllers
             var count = await dataCount.CountAsync();
             return Ok(count);
         }
+        [HttpGet("api/[Controller]/Listliabilitieswarning")]
+        public async Task<IActionResult> ListLiabilitesWarning()
+        {
+
+            var initStatus = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "UnreadStatus"
+                                                                       && m.Parent.Name == "LiabilitiesWarningStatus");
+            var data = from liabilities in db.LiabilitiesWarning
+                            where liabilities.ProcessStatusId == initStatus.Id
+                            select liabilities;
+            var ListData = await data.ToListAsync();
+            return Ok(ListData);
+        }
     }
 }
