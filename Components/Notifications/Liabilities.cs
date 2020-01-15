@@ -19,7 +19,7 @@ namespace Components.Notifications
         {
             var client = new Client("Ledger");
             var count = await client.GetAsync(null, "Countliabilitieswarning");
-            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=ReceiverFullName)&$filter= Active eq true " +
+            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=ReceiverFullName),Ledger($expand=AccountType($select=Description),ReceiverBank($select=Name))&$filter= Active eq true " +
                                                                                                                                 $"and ProcessStatus/Parent/Name eq 'LiabilitiesWarningStatus' " +
                                                                                                                                 $"and ProcessStatus/Name eq 'UnreadStatus' ");
             LWarnings = warnings.value;
@@ -40,7 +40,7 @@ namespace Components.Notifications
                             {
                                 html.Li.ClassName("liItems").Anchor.Href("#")
                                             .H4.ClassName("h4-items").Text(li.DueDate.ToString()).End
-                                            .P.ClassName("p-warning").Text(li.Ledger.ReceiverFullName).EndOf(ElementType.li);
+                                            .P.ClassName("p-warning").Text(li.Ledger.ReceiverFullName+"-"+ li.Ledger.AccountType.Description+ "-"+li.Ledger.ReceiverBank.Name).EndOf(ElementType.li);
                             })
             .EndOf(".ml-auto");
         }
