@@ -16,6 +16,9 @@ namespace Components.Extensions
                 case "Input":
                     childComponent = new Textbox(ui);
                     break;
+                case "Password":
+                    childComponent = new Textbox(ui) { Password = true };
+                    break;
                 case "Label":
                     childComponent = new Label(ui);
                     break;

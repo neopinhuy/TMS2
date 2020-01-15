@@ -10,6 +10,7 @@ namespace Components
     {
         private readonly TMS.API.Models.Component _ui;
         public bool MultipleLine { get; set; }
+        public bool Password { get; set; }
         public Observable<string> Value { get; private set; }
         public Textbox(TMS.API.Models.Component ui)
         {
@@ -43,6 +44,10 @@ namespace Components
                 Html.Instance.Input
                     .Attr("data-role", "input")
                     .ClassName("input-small").Value(Value);
+            }
+            if (Password)
+            {
+                Html.Instance.Attr("type", "password");
             }
             InteractiveElement = Html.Context;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);

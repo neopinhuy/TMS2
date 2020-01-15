@@ -36,7 +36,7 @@ namespace TMS.UI.Business.Authentication
             }
             else
             {
-                Toast.Warning($"Welcome {login.UserName}!");
+                Toast.Success($"Welcome {login.UserName}!");
             }
             return true;
         }

@@ -1,7 +1,6 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
 using Common.Extensions;
-using Common.ViewModels;
 using Components;
 using Components.Forms;
 using MVVM;
@@ -72,7 +71,7 @@ namespace TMS.UI.Business
                     Html.Instance.Li.DataAttr("feature", item.Id.ToString())
                     .Anchor.Attr("data-role", "ripple")
                     .Event(EventType.Click, MenuItemClick, item)
-                    .Event(EventType.ContextMenu, EditFeature, item) // IMPORTANT: check role to show this feature
+                    .Event(EventType.ContextMenu, FeatureContextMenu, item) // IMPORTANT: check role to show this feature
                     .Span.ClassName("icon")
                         .If(iconClass,
                             () => Html.Instance.ClassName(item.Icon).Render(),
@@ -88,7 +87,7 @@ namespace TMS.UI.Business
         }
 
         private ContextMenu _contextMenu;
-        private void EditFeature(Event e, Feature feature)
+        private void FeatureContextMenu(Event e, Feature feature)
         {
             e.PreventDefault();
             var top = (float)e["clientY"];
@@ -97,12 +96,26 @@ namespace TMS.UI.Business
             AddChild(_contextMenu);
             Html.Instance
                 .Li.Event(EventType.Click, DeleteFeature, feature)
-                .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, FeatureEditor)
-                .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li);
+                    .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
+                .Li.Event(EventType.Click, EditFeature, feature)
+                    .Icon("fa fa-edit").End.Span.Text("Edit this feature").EndOf(ElementType.li)
+                .Li.Event(EventType.Click, FeatureManagement)
+                    .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li);
         }
 
-        private void FeatureEditor()
+        private void EditFeature(Feature feature)
+        {
+            var editor = new PopupEditor<Feature>
+            {
+                Entity = feature,
+                Name = "Feature editor",
+                Title = $"{feature.Name} - {feature.Label}"
+            };
+            AddChild(editor);
+            _contextMenu.Dispose();
+        }
+
+        private void FeatureManagement()
         {
             var popup = new FeatureBL()
             {
