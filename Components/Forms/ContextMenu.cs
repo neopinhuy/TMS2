@@ -19,5 +19,16 @@ namespace Components.Forms
             Html.Instance.Event(EventType.FocusOut, Dispose);
             AfterRendered?.Invoke();
         }
+
+        protected override void RemoveDOM()
+        {
+            try
+            {
+                base.RemoveDOM();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
 using Common.Extensions;
+using Common.ViewModels;
 using Components;
 using Components.Forms;
 using MVVM;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
+using TMS.UI.Framework;
 using Component = Components.Component;
 using ElementType = MVVM.ElementType;
 
@@ -96,21 +98,19 @@ namespace TMS.UI.Business
             Html.Instance
                 .Li.Event(EventType.Click, DeleteFeature, feature)
                 .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, FeatureEditor, feature)
-                .Icon("fa fa-plus").End.Span.Text("Edit this feature").EndOf(ElementType.li);
+                .Li.Event(EventType.Click, FeatureEditor)
+                .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li);
         }
 
-        private void FeatureEditor(Feature feature)
+        private void FeatureEditor()
         {
-            var popup = new TabEditor<Feature>()
+            var popup = new FeatureBL()
             {
-                Id = feature?.Id ?? GetHashCode(),
-                Name = "Feature Editor",
-                Entity = feature,
-                Title = "Feature"
+                Id = GetHashCode(),
             };
-            AddChild(popup);
+            popup.Render();
             popup.Focus();
+            _contextMenu.Dispose();
         }
 
         private void DeleteFeature(Feature feature)
@@ -122,6 +122,7 @@ namespace TMS.UI.Business
                 await client.DeleteAsync(new List<int> { feature.Id });
             };
             AddChild(confirmDialog);
+            _contextMenu.Dispose();
         }
 
         private void MenuItemClick(Feature menu, Event e)

@@ -246,6 +246,7 @@
     <Compile Include="SaleLeaderBoardDataPoint.cs" />
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\CustomerCareVM.cs" />
+    <Compile Include="ViewModels\FeatureVM.cs" />
     <Compile Include="ViewModels\MasterDataVM.cs" />
     <Compile Include="ViewModels\LedgerVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />

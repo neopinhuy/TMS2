@@ -58,6 +58,7 @@
     <Compile Include="Business\UnitofMeasure\MasterDataBL.cs" />
     <Compile Include="Business\UnitofMeasure\UnitofMeasureBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\FeatureBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

@@ -7,6 +7,7 @@ namespace TMS.API.Controllers
     {
         public FeatureController(TMSContext context, IElasticClient client) : base(context, client)
         {
+
         }
     }
 }

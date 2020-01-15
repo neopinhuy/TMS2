@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,8 +11,10 @@ namespace Components.Forms
         public static List<Component> Tabs = new List<Component>();
         public TabEditor()
         {
-            Title = $"{typeof(T).Name} List";
+            var type = typeof(T);
+            Title = $"{type.Name} List";
             Name = Title; // Set default for form name
+            if (Entity == null) Entity = Activator.CreateInstance(type);
         }
 
         public override void Render()

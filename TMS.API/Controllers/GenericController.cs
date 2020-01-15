@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Nest;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -110,8 +109,16 @@ namespace TMS.API.Controllers
         {
             entities.ForEach(x =>
             {
-                db.Set<T>().Attach(x);
-                db.Entry(x).State = EntityState.Modified;
+                var id = x.GetPropValue(nameof(Component.Id));
+                if ((int)id <= 0)
+                {
+                    db.Set<T>().Add(x);
+                }
+                else
+                {
+                    db.Set<T>().Attach(x);
+                    db.Entry(x).State = EntityState.Modified;
+                }
             });
             await db.SaveChangesAsync();
             return Ok(true);
