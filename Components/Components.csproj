@@ -45,7 +45,6 @@
     <Compile Include="Extensions\Paginator.cs" />
     <Compile Include="Forms\ConfirmDialog.cs" />
     <Compile Include="GroupTable.cs" />
-    <Compile Include="Notifications\Liabilities.cs" />
     <Compile Include="NumberInput.cs" />
     <Compile Include="DatePicker.cs" />
     <Compile Include="Section.cs" />

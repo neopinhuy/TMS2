@@ -116,6 +116,7 @@ namespace TMS.API.Controllers
                 }
                 else
                 {
+                    x.SetPropValue(nameof(Component.Id), 0);
                     db.Set<T>().Attach(x);
                     db.Entry(x).State = EntityState.Modified;
                 }

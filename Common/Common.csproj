@@ -236,6 +236,7 @@
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\HtmlElementExtension.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\OdataExtensions.cs" />
     <Compile Include="Extensions\OrderDetailExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

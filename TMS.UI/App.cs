@@ -1,6 +1,6 @@
-﻿using Components.Notifications;
-using TMS.UI.Business;
+﻿using TMS.UI.Business;
 using TMS.UI.Business.Sale;
+using TMS.UI.Notifications;
 
 namespace TMS.UI
 {

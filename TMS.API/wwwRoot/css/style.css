@@ -76,3 +76,20 @@
 .mif-bell{
     color:#ffffff;
 }
+.span-warning {
+    padding-left: 1rem;
+}
+.li-Root:hover {
+    background: #f4f4f4;
+    text-decoration: none;
+}
+.pull-left {
+    float: left;
+    padding-left: 1rem;
+}
+.text-red {
+    color: red !important;
+}
+.text-yellow {
+    color: #f39c12 !important;
+}
