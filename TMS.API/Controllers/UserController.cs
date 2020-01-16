@@ -58,6 +58,7 @@ namespace TMS.API.Controllers
         {
             // TODO: Check the subscription and the role of user
             entity.Salt = GetSalt(saltLengthLimit).ToString();
+            entity.Password = GetHash(SHA256.Create(), entity.Password + entity.Salt);
             return await base.CreateAsync(entity);
         }
 

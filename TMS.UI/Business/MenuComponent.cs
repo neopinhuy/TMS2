@@ -97,10 +97,10 @@ namespace TMS.UI.Business
             Html.Instance
                 .Li.Event(EventType.Click, DeleteFeature, feature)
                     .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, EditFeature, feature)
-                    .Icon("fa fa-edit").End.Span.Text("Edit this feature").EndOf(ElementType.li)
                 .Li.Event(EventType.Click, FeatureManagement)
-                    .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li);
+                    .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li)
+                    .Li.Event(EventType.Click, EditFeature, feature)
+                    .Icon("fa fa-wrench").End.Span.Text("Properties").EndOf(ElementType.li);
         }
 
         private void EditFeature(Feature feature)
@@ -109,7 +109,7 @@ namespace TMS.UI.Business
             {
                 Entity = feature,
                 Name = "Feature editor",
-                Title = $"{feature.Name} - {feature.Label}"
+                Title = $"Feature {feature.Name ?? feature.Label ?? feature.Description}"
             };
             AddChild(editor);
             _contextMenu.Dispose();

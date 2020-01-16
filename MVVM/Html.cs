@@ -385,7 +385,8 @@ namespace MVVM
             {
                 var keyValue = x.Trim().Split(":");
                 return new { Key = keyValue.First().Trim(), Value = keyValue.Last().Trim() };
-            }).GroupBy(x => x.Key).Select(x => x.Last())
+            }).Where(x => !string.IsNullOrEmpty(x.Key))
+            .GroupBy(x => x.Key).Select(x => x.Last())
             .Select(x => $"{x.Key}: {x.Value}");
             Context["style"]["cssText"] = string.Join(";", distinctStyle);
             return this;

@@ -43,5 +43,16 @@ namespace TMS.UI.Framework
             filter = OdataExtensions.ReplaceFilter(originalQuery, filter);
             gridView.ReloadData(filter);
         }
+
+        public void EditFeature(Feature feature)
+        {
+            var editor = new PopupEditor<Feature>
+            {
+                Entity = feature,
+                Name = "Feature editor",
+                Title = $"Feature {feature.Name ?? feature.Label ?? feature.Description}"
+            };
+            AddChild(editor);
+        }
     }
 }
