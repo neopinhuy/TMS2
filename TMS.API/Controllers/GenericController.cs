@@ -112,11 +112,11 @@ namespace TMS.API.Controllers
                 var id = x.GetPropValue(nameof(Component.Id));
                 if ((int)id <= 0)
                 {
+                    x.SetPropValue(nameof(Component.Id), 0);
                     db.Set<T>().Add(x);
                 }
                 else
                 {
-                    x.SetPropValue(nameof(Component.Id), 0);
                     db.Set<T>().Attach(x);
                     db.Entry(x).State = EntityState.Modified;
                 }
