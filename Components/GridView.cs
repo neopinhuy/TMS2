@@ -61,7 +61,7 @@ namespace Components
                 await Task.WhenAll(gridPolicyTask, loadDataTask);
                 if (gridPolicyTask is null || gridPolicyTask.Result is null)
                 {
-                    throw new System.InvalidOperationException($"Can not load header for the GridView {UI.Reference.Name}");
+                    throw new InvalidOperationException($"Can not load header for the GridView {UI.Reference.Name}");
                 }
                 var headers = gridPolicyTask.Result.value
                     .Where(x => !x.Hidden).Select(MapToHeader).ToArray();
@@ -199,8 +199,17 @@ namespace Components
                 .TabIndex(-1).Trigger(EventType.Focus).Floating(top, left);
             var menu = Html.Context;
             Html.Instance.Event(EventType.FocusOut, () => menu.Remove())
+                .Li.Event(EventType.Click, DuplicateSelected)
+                .Icon("fa fa-copy").End.Span.Text("Duplicate selected rows").EndOf(ElementType.li)
                 .Li.Event(EventType.Click, DeleteSelected)
                 .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
+        }
+
+        private void DuplicateSelected()
+        {
+            var rows = GetSelectedRows();
+            rows.ForEach(x => x["__selected__"] = false);
+            RowData.AddRange(rows);
         }
 
         public void UpdateRow(object row) => _table.UpdateRow(row);
@@ -260,30 +269,28 @@ namespace Components
             };
         }
 
-        public IEnumerable<object> GetSelectedRow()
-        {
-            return RowData.Data
-                .Where(x => (bool?)x["__selected__"] == true);
-        }
-
         public virtual async Task Delete()
         {
             var entity = UI.Reference.Name;
-            var ids = RowData.Data
-                .Where(x => (bool?)x["__selected__"] == true)
+            var ids = GetSelectedRows()
                 .Select(x => (int)x[IdField]).ToList();
             var client = new Client(entity);
             var success = await client.DeleteAsync(ids);
             if (success)
             {
                 Toast.Success("Delete succeeded");
-                RowData.Data.Where(x => (bool?)x["__selected__"] == true).ForEach(RowData.Remove);
+                GetSelectedRows().ForEach(RowData.Remove);
                 ReloadData();
             }
             else
             {
                 Toast.Warning("Delete failed");
             }
+        }
+
+        public EnumerableInstance<object> GetSelectedRows()
+        {
+            return RowData.Data.Where(x => (bool?)x["__selected__"] == true);
         }
 
         public override void UpdateView()

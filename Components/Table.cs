@@ -91,10 +91,7 @@ namespace Components
             });
             RowData.Subscribe(args =>
             {
-                if (args.Action == ObservableAction.Render)
-                {
-                    Rerender();
-                }
+                Rerender();
             });
         }
 

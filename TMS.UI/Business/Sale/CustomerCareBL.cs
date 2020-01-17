@@ -54,7 +54,7 @@ namespace TMS.UI.Business.Sale
         public async Task Email()
         {
             var customers = FindActiveComponent<GridView>();
-            var selected = customers.SelectMany(x => x.GetSelectedRow()).Cast<CustomerCare>();
+            var selected = customers.SelectMany(x => x.GetSelectedRows()).Cast<CustomerCare>();
             var res = await Client<CustomerCare>.Instance.SendMail(new EmailVM
             {
                 ToAddresses = selected.Select(x => x.Customer.Email).ToList()

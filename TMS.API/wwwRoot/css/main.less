@@ -4,16 +4,14 @@
 html {
     font-size: 13px;
 }
-.fix-grid {
-    max-height: calc(100vh - 52px);
-    overflow-y: auto;
-    overflow-x: hidden;
-}
 body {
     background-color: @whiteGrey;
     overflow: hidden;
 }
-
+.app-bar {
+    background-color: #4482a0;
+    position: relative !important;
+}
 .fix-sidebar {
     width: calc(100% - 290px);
 }
@@ -54,24 +52,17 @@ body {
 #tab-content {
     top: -2px;
     background-color: @white;
-    min-height: calc(100vh - 167px);
+    height: calc(100vh - 112px);
+    max-height: calc(100vh - 112px);
     padding: 0.8rem;
+    overflow: hidden;
+    &:hover {
+        overflow: auto;
+        overflow: overlay;
+    }
 
     h1, h2 {
         .header(1.7rem, 600);
-    }
-}
-
-.vh-100 {
-    position: relative;
-    min-height: 100vh;
-}
-
-.content-wrapper {
-    min-height: calc(100vh - 52px);
-
-    .app-bar {
-        top: -52px;
     }
 }
 
