@@ -243,6 +243,7 @@
     <Compile Include="Extensions\ReflectionExtension.cs" />
     <Compile Include="Clients\TypedClient.cs" />
     <Compile Include="Extensions\Toast.cs" />
+    <Compile Include="Models\TruckMaintenanceWarning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaleLeaderBoardDataPoint.cs" />
     <Compile Include="ViewModels\EmailVM.cs" />

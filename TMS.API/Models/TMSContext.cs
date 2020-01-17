@@ -64,6 +64,7 @@ namespace TMS.API.Models
         public virtual DbSet<Truck> Truck { get; set; }
         public virtual DbSet<TruckMaintenance> TruckMaintenance { get; set; }
         public virtual DbSet<TruckMaintenanceDetail> TruckMaintenanceDetail { get; set; }
+        public virtual DbSet<TruckMaintenanceWarning> TruckMaintenanceWarning { get; set; }
         public virtual DbSet<TruckMonitorConfig> TruckMonitorConfig { get; set; }
         public virtual DbSet<UoM> UoM { get; set; }
         public virtual DbSet<UomType> UomType { get; set; }
@@ -2032,6 +2033,36 @@ namespace TMS.API.Models
                     .WithMany(p => p.TruckMaintenanceDetailUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_MaintenanceDetail_UserUpdated");
+            });
+
+            modelBuilder.Entity<TruckMaintenanceWarning>(entity =>
+            {
+                entity.HasIndex(e => e.TruckId)
+                    .HasName("UQ__TruckMai__6632E97AE6D10594")
+                    .IsUnique();
+
+                entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.TruckMaintenanceWarningInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TruckMaintenanceWarning_InsertedBy");
+
+                entity.HasOne(d => d.ProcessStatus)
+                    .WithMany(p => p.TruckMaintenanceWarning)
+                    .HasForeignKey(d => d.ProcessStatusId)
+                    .HasConstraintName("FK_TruckMaintenanceWarning_ProcessStatus");
+
+                entity.HasOne(d => d.Truck)
+                    .WithOne(p => p.TruckMaintenanceWarning)
+                    .HasForeignKey<TruckMaintenanceWarning>(d => d.TruckId)
+                    .HasConstraintName("FK_TruckMaintenanceWarning_Truck");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.TruckMaintenanceWarningUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_TruckMaintenanceWarning_UpdateBy");
             });
 
             modelBuilder.Entity<TruckMonitorConfig>(entity =>

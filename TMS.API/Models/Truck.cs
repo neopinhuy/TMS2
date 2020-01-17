@@ -58,6 +58,7 @@ namespace TMS.API.Models
         public virtual MasterData FuelType { get; set; }
         public virtual MasterData TruckType { get; set; }
         public virtual Vendor Vendor { get; set; }
+        public virtual TruckMaintenanceWarning TruckMaintenanceWarning { get; set; }
         public virtual ICollection<Accessory> Accessory { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<MaintenanceTicket> MaintenanceTicket { get; set; }
