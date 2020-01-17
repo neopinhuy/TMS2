@@ -31,6 +31,7 @@ namespace TMS.API.Models
         public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CustomerCare> CustomerCare { get; set; }
         public virtual DbSet<CustomerCareLog> CustomerCareLog { get; set; }
+        public virtual DbSet<CustomerCareWarning> CustomerCareWarning { get; set; }
         public virtual DbSet<DistanceRange> DistanceRange { get; set; }
         public virtual DbSet<Entity> Entity { get; set; }
         public virtual DbSet<EntityPolicy> EntityPolicy { get; set; }
@@ -375,7 +376,6 @@ namespace TMS.API.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Width)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -747,6 +747,36 @@ namespace TMS.API.Models
                     .WithMany(p => p.CustomerCareLogUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
                     .HasConstraintName("FK_CustomerCareLog_UserUpdated");
+            });
+
+            modelBuilder.Entity<CustomerCareWarning>(entity =>
+            {
+                entity.HasIndex(e => e.CustomerId)
+                    .HasName("UQ__Customer__A4AE64D96FD2BC24")
+                    .IsUnique();
+
+                entity.Property(e => e.Note).HasMaxLength(1500);
+
+                entity.HasOne(d => d.Customer)
+                    .WithOne(p => p.CustomerCareWarning)
+                    .HasForeignKey<CustomerCareWarning>(d => d.CustomerId)
+                    .HasConstraintName("FK_CustomerCareWarning_Customer");
+
+                entity.HasOne(d => d.InsertedByNavigation)
+                    .WithMany(p => p.CustomerCareWarningInsertedByNavigation)
+                    .HasForeignKey(d => d.InsertedBy)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CustomerCareWarning_InsertedBy");
+
+                entity.HasOne(d => d.ProcessStatus)
+                    .WithMany(p => p.CustomerCareWarning)
+                    .HasForeignKey(d => d.ProcessStatusId)
+                    .HasConstraintName("FK_CustomerCareWarning_ProcessStatus");
+
+                entity.HasOne(d => d.UpdatedByNavigation)
+                    .WithMany(p => p.CustomerCareWarningUpdatedByNavigation)
+                    .HasForeignKey(d => d.UpdatedBy)
+                    .HasConstraintName("FK_CustomerCareWarning_UpdateBy");
             });
 
             modelBuilder.Entity<DistanceRange>(entity =>

@@ -21,6 +21,7 @@ namespace TMS.API.Models
             CustomerCareLogContactType = new HashSet<CustomerCareLog>();
             CustomerCareLogOrderPeriod = new HashSet<CustomerCareLog>();
             CustomerCareLogStatus = new HashSet<CustomerCareLog>();
+            CustomerCareWarning = new HashSet<CustomerCareWarning>();
             CustomerCustomerGroup = new HashSet<Customer>();
             CustomerCustomerState = new HashSet<Customer>();
             FreightState = new HashSet<FreightState>();
@@ -86,6 +87,7 @@ namespace TMS.API.Models
         public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogOrderPeriod { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogStatus { get; set; }
+        public virtual ICollection<CustomerCareWarning> CustomerCareWarning { get; set; }
         public virtual ICollection<Customer> CustomerCustomerGroup { get; set; }
         public virtual ICollection<Customer> CustomerCustomerState { get; set; }
         public virtual ICollection<FreightState> FreightState { get; set; }

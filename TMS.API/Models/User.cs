@@ -38,6 +38,8 @@ namespace TMS.API.Models
             CustomerCareLogInsertedByNavigation = new HashSet<CustomerCareLog>();
             CustomerCareLogUpdatedByNavigation = new HashSet<CustomerCareLog>();
             CustomerCareUpdatedByNavigation = new HashSet<CustomerCare>();
+            CustomerCareWarningInsertedByNavigation = new HashSet<CustomerCareWarning>();
+            CustomerCareWarningUpdatedByNavigation = new HashSet<CustomerCareWarning>();
             DistanceRangeInsertedByNavigation = new HashSet<DistanceRange>();
             DistanceRangeUpdatedByNavigation = new HashSet<DistanceRange>();
             EntityInsertedByNavigation = new HashSet<Entity>();
@@ -184,6 +186,8 @@ namespace TMS.API.Models
         public virtual ICollection<CustomerCareLog> CustomerCareLogInsertedByNavigation { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogUpdatedByNavigation { get; set; }
         public virtual ICollection<CustomerCare> CustomerCareUpdatedByNavigation { get; set; }
+        public virtual ICollection<CustomerCareWarning> CustomerCareWarningInsertedByNavigation { get; set; }
+        public virtual ICollection<CustomerCareWarning> CustomerCareWarningUpdatedByNavigation { get; set; }
         public virtual ICollection<DistanceRange> DistanceRangeInsertedByNavigation { get; set; }
         public virtual ICollection<DistanceRange> DistanceRangeUpdatedByNavigation { get; set; }
         public virtual ICollection<Entity> EntityInsertedByNavigation { get; set; }

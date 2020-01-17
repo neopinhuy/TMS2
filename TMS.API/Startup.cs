@@ -129,6 +129,7 @@ namespace TMS.API
             builder.EntitySet<Workflow>(nameof(Workflow));
             builder.EntitySet<LiabilitiesWarning>(nameof(LiabilitiesWarning));
             builder.EntitySet<TruckMaintenanceWarning>(nameof(TruckMaintenanceWarning));
+            builder.EntitySet<CustomerCareWarning>(nameof(CustomerCareWarning));
             return builder.GetEdmModel();
         }
     }

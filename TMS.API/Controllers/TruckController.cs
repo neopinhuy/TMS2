@@ -17,6 +17,7 @@ namespace TMS.API.Controllers
         {
 
         }
+
         [HttpGet("api/[Controller]/ImportTruckWarning")]
         public async Task<IActionResult> ImportTruckWarning()
         {
