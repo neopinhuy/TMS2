@@ -79,7 +79,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
             }
         }
 
@@ -1491,6 +1491,8 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<Policy>(entity =>
             {
+                entity.Property(e => e.Description).HasMaxLength(200);
+
                 entity.Property(e => e.ExcludedGroupRole).IsUnicode(false);
 
                 entity.Property(e => e.ExcludedUserIds).IsUnicode(false);

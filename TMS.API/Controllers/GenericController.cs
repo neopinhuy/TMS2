@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Nest;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -77,6 +78,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            SetNullComplexObject(entity);
             entity.SetPropValue(nameof(Component.InsertedBy), 1); // hard code for now
             entity.SetPropValue(nameof(Component.InsertedDate), DateTime.Now); // hard code for now
             entity.SetPropValue(nameof(Component.Active), true); // hard code for now
@@ -92,10 +94,19 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+            SetNullComplexObject(entity);
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return entity;
+        }
+
+        private static void SetNullComplexObject(T entity)
+        {
+            entity.GetType().GetProperties()
+                .Where(x => x.CanWrite && x.CanRead && !x.PropertyType.IsSimple()
+                    && !typeof(IEnumerable).IsAssignableFrom(x.PropertyType))
+                .ForEach(x => x.SetValue(entity, null));
         }
 
         protected virtual void UpdateChild<Child>(Child entity) where Child: class

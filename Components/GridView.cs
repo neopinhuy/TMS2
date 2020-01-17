@@ -27,6 +27,7 @@ namespace Components
     {
         public readonly TMS.API.Models.Component UI;
         public string FormattedDataSource => Utils.FormatWith(UI.DataSourceFilter, Entity, true);
+        private string _lastDataSource;
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
@@ -206,10 +207,10 @@ namespace Components
 
         public virtual async Task ReloadData(string dataSource = null)
         {
-            dataSource = dataSource ?? FormattedDataSource;
-            var pagingQuery = dataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
+            _lastDataSource = dataSource ?? _lastDataSource ?? FormattedDataSource;
+            var pagingQuery = _lastDataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
             var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,
-                UI.Row > 0 ? pagingQuery : dataSource);
+                UI.Row > 0 ? pagingQuery : _lastDataSource);
             if (result == null)
             {
                 throw new InvalidOperationException($"Cannot load data for the GridView {UI.Reference.Name}");
@@ -218,6 +219,11 @@ namespace Components
             UpdatePagination();
             RowData.Data = result.value?.ToArray();
             if (Entity != null) Entity.SetComplexPropValue(UI.FieldName, RowData.Data);
+            if (result.odata?.count > 0 && result.value.Nothing())
+            {
+                _pageIndex = 0;
+                ReloadData(dataSource);
+            }
         }
 
         private void UpdatePagination()

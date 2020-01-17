@@ -14,8 +14,20 @@ namespace TMS.API.Controllers
 
         public override async Task<ActionResult<Feature>> UpdateAsync([FromBody] Feature entity)
         {
-            UpdateChildren(entity.ComponentGroup);
+            UpdateFeatureChildren(entity);
             return await base.UpdateAsync(entity);
+        }
+
+        private void UpdateFeatureChildren(Feature entity)
+        {
+            UpdateChildren(entity.ComponentGroup);
+            UpdateChildren(entity.GridPolicy);
+        }
+
+        public override async Task<ActionResult<Feature>> CreateAsync([FromBody] Feature entity)
+        {
+            UpdateFeatureChildren(entity);
+            return await base.CreateAsync(entity);
         }
     }
 }

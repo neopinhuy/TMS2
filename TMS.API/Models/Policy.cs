@@ -31,6 +31,7 @@ namespace TMS.API.Models
         public int InsertedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<ActionPolicy> ActionPolicy { get; set; }
         public virtual ICollection<Component> Component { get; set; }

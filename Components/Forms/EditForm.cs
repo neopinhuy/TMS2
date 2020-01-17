@@ -70,6 +70,7 @@ namespace Components.Forms
             var prefix = updating ? "Creating" : "Updating";
             if (data != null)
             {
+                Entity[IdField] = data[IdField];
                 if (defaultMessage)
                     Toast.Success($"{prefix} succeeded");
                 var grids = RootComponent.FindComponent<GridView>();
@@ -90,7 +91,7 @@ namespace Components.Forms
                 {
                     if (row[IdField] != null && (int)row[IdField] < 0)
                     {
-                        row.SetPropValue(IdField, 0);
+                        row[IdField] = 0;
                     }
                 });
             });

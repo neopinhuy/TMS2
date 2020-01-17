@@ -95,10 +95,12 @@ namespace TMS.UI.Business
             _contextMenu = new ContextMenu { Top = top, Left = left };
             AddChild(_contextMenu);
             Html.Instance
+                .Li.Event(EventType.Click, EditFeature, new Feature())
+                    .Icon("fa fa-plus").End.Span.Text("New feature").EndOf(ElementType.li)
                 .Li.Event(EventType.Click, DeleteFeature, feature)
                     .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
                 .Li.Event(EventType.Click, FeatureManagement)
-                    .Icon("fa fa-plus").End.Span.Text("Manage features").EndOf(ElementType.li)
+                    .Icon("fa fa-list").End.Span.Text("Manage features").EndOf(ElementType.li)
                     .Li.Event(EventType.Click, EditFeature, feature)
                     .Icon("fa fa-wrench").End.Span.Text("Properties").EndOf(ElementType.li);
         }
