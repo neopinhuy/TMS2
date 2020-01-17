@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Business\Accounting\LiabilitiesBL.cs" />
     <Compile Include="Business\Asset\AccessoryBL.cs" />
+    <Compile Include="Business\Asset\TruckMaintenanceWarningBL.cs" />
     <Compile Include="Business\Asset\MaintenanceBL.cs" />
     <Compile Include="Business\Asset\TruckBL.cs" />
     <Compile Include="Business\Authentication\LoginBL.cs" />

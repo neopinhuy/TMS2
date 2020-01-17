@@ -22,5 +22,17 @@ namespace TMS.UI.Business.Accounting
             var grid = FindComponent<GridView>().FirstOrDefault();
             grid?.ReloadData();
         }
+
+        public void EditLedger(LiabilitiesWarning entity)
+        {
+            var popup = new PopupEditor<Ledger>()
+            {
+                Id = entity.LedgerId??0,
+                Entity=entity.Ledger,
+                Name = "EditLedger",
+                Title = $"Warning - {entity.Ledger.ReceiverFullName}"
+            };
+            AddChild(popup);
+        }
     }
 }

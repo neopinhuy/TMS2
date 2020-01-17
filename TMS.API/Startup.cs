@@ -128,6 +128,7 @@ namespace TMS.API
             builder.EntitySet<WeightRange>(nameof(WeightRange));
             builder.EntitySet<Workflow>(nameof(Workflow));
             builder.EntitySet<LiabilitiesWarning>(nameof(LiabilitiesWarning));
+            builder.EntitySet<TruckMaintenanceWarning>(nameof(TruckMaintenanceWarning));
             return builder.GetEdmModel();
         }
     }

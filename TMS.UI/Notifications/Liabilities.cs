@@ -15,8 +15,9 @@ namespace TMS.UI.Notifications
     public class LiabilitiesNotification : Components.Component
     {
         private PopupEditor<Truck> _truckForm;
+        private PopupEditor<Ledger> _LiabilitiesForm;
         public List<LiabilitiesWarning> LWarnings { get; set; } = new List<LiabilitiesWarning>();
-        public List<Truck> LWarningsTruck { get; set; } = new List<Truck>();
+        public List<TruckMaintenanceWarning> LWarningsTruck { get; set; } = new List<TruckMaintenanceWarning>();
 
         public override void Render()
         {
@@ -32,8 +33,8 @@ namespace TMS.UI.Notifications
             var commingDate = today.AddDays(parsed ? res : 3);
             var client = new Client("Ledger");
             var count = await client.GetAsync(null, "Countliabilitieswarning");
-            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=ReceiverFullName),Ledger($expand=AccountType($select=Description),ReceiverBank($select=Name))&$filter= Active eq true " + $"and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
-            var warningsTruck = await Client<Truck>.Instance.GetList($"?$expand=Driver($select=LastName,FirstName)&$filter= Active eq true and NextMaintenanceDate lt " + commingDate.ToISOFormat() + $" and NextMaintenanceDate gt " + today.ToISOFormat()+$"&$orderby=InsertedDate&$top=5");
+            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=Id,ReceiverFullName),Ledger($expand=AccountType($select=Description),ReceiverBank($select=Name))&$filter= Active eq true " + $"and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
+            var warningsTruck = await Client<TruckMaintenanceWarning>.Instance.GetList($"?$expand=Truck($expand=Driver($select=LastName,FirstName))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
             var clientTruck = new Client("TruckMaintenance");
             var countTruck = await clientTruck.GetAsync(null, "CountMaintenanceWarning");
             LWarnings = warnings.value;
@@ -71,7 +72,7 @@ namespace TMS.UI.Notifications
                                                             .Event(Bridge.Html5.EventType.Click, OpenTruckWarning, li)
                                                             .Div.ClassName("pull-left").I.ClassName("fa fa-truck text-yellow").EndOf(".pull-left")
                                                             .H4.ClassName("h4-items").Text(li.NextMaintenanceDate?.ToString("dd/MM/yyyy")).End
-                                                            .P.ClassName("p-warning").Text(li.Driver?.FirstName + " " + li.Driver?.LastName + "-" + (li.TruckPlate ?? "") + "-" + (li.Color ?? "")).EndOf(ElementType.li);
+                                                            .P.ClassName("p-warning").Text(li.Truck.Driver?.FirstName + " " + li.Truck.Driver?.LastName + "-" + (li.Truck.TruckPlate ?? "") + "-" + (li.Truck.Color ?? "")).EndOf(ElementType.li);
                                             }).Li.ClassName("footer-viewall").Anchor.Href("javascript:;").Text("See All")
                                                                              .Event(Bridge.Html5.EventType.Click, OpenTruck)
                             .EndOf(".ml-auto");
@@ -97,22 +98,26 @@ namespace TMS.UI.Notifications
             tab.Render();
             tab.Focus();
 
-            var detail = new PopupEditor<LiabilitiesWarning>
+            _LiabilitiesForm = new PopupEditor<Ledger>
             {
-                Id = lw.Id,
-                Name = "LW Detail",
+                Id = lw.LedgerId ?? 0,
+                Entity = lw.Ledger,
+                Name = "EditLedger",
                 Title = $"Warning - {lw.Ledger.ReceiverFullName}"
             };
-            tab.AddChild(detail);
+            tab.AddChild(_LiabilitiesForm);
         }
-        private void OpenTruckWarning(Truck truck)
+        private void OpenTruckWarning(TruckMaintenanceWarning entity)
         {
             var tab = new TruckBL();
             tab.Render();
             tab.Focus();
             _truckForm = new PopupEditor<Truck>
             {
-                Entity = truck
+                Id = entity.TruckId ?? 0,
+                Entity = entity.Truck,
+                Name = "Truck Detail",
+                Title = $"Warning - {entity.Truck.TruckPlate}"
             };
             tab.AddChild(_truckForm);
         }
