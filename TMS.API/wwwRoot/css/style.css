@@ -121,9 +121,7 @@
         .footer-viewall a:hover {
             color: #66A812 ;
         }
-#app-bar{
-    padding-right:0.8rem;
-}
+
 .bg-green {
     color: #60A917;
 
@@ -143,8 +141,12 @@
 .hidden-xs {
     color: #ffffff;
 }
+.app-bar-container {
+    background-color: transparent !important;
+}
 .app-bar-item {
     cursor: pointer;
+    background-color: transparent !important;
 }
 .img-circle {
     border-radius: 50%;

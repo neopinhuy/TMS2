@@ -3,14 +3,16 @@
 
 html {
     font-size: 13px;
+    min-height: 100vh;
 }
 body {
     background-color: @whiteGrey;
     overflow: hidden;
 }
 .app-bar {
-    background-color: #4482a0;
+    background-color: rgba(33, 70, 101, 0.55);
     position: relative !important;
+    padding-right: 1rem;
 }
 .fix-sidebar {
     width: calc(100% - 290px);
@@ -33,6 +35,8 @@ body {
     bottom: 0;
     top: 0;
     overflow-y: hidden;
+    background-color: @warmBgColor;
+    .shadow(none);
 
     &:hover {
         overflow-y: auto;
@@ -49,20 +53,27 @@ body {
     }
 }
 
-#tab-content {
-    top: -2px;
-    background-color: @white;
-    height: calc(100vh - 112px);
-    max-height: calc(100vh - 112px);
-    padding: 0.8rem;
-    overflow: hidden;
-    &:hover {
-        overflow: auto;
-        overflow: overlay;
-    }
+#container {
+    height: calc(100vh - 52px);
 
-    h1, h2 {
-        .header(1.7rem, 600);
+    #tab-content {
+        position: absolute;
+        top: 47px;
+        bottom: 0;
+        left: 1rem;
+        right: 1rem;
+        background-color: @mainTabBgColor;
+        padding: 0.8rem;
+        overflow: hidden;
+
+        &:hover {
+            overflow: auto;
+            overflow: overlay;
+        }
+
+        h1, h2 {
+            .header(1.7rem, 600);
+        }
     }
 }
 
