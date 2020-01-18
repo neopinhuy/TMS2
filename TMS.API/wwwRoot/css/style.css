@@ -185,3 +185,6 @@ li.user-header {
 .pull-right{
     float:right;
 }
+.app-bar-item :hover {
+    background-color: rgba(29, 29, 29, 0.1);
+}

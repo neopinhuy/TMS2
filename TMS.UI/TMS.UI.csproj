@@ -45,6 +45,7 @@
     <Compile Include="Business\Freight\CoordinationBL.cs" />
     <Compile Include="Business\Freight\DriverBL.cs" />
     <Compile Include="Business\Accounting\LedgerBL.cs" />
+    <Compile Include="Business\Sale\CustomerCareWarningBL.cs" />
     <Compile Include="Business\Sale\CustomerCareDetailBL.cs" />
     <Compile Include="Business\Sale\GroupRoleBL.cs" />
     <Compile Include="Business\Sale\UserBL.cs" />

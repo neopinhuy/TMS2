@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TMS.API.Models;
 using TMS.UI.Business.Accounting;
 using TMS.UI.Business.Asset;
+using TMS.UI.Business.Sale;
 
 namespace TMS.UI.Notifications
 {
@@ -38,7 +39,7 @@ namespace TMS.UI.Notifications
             var count = await client.GetAsync(null, "Countliabilitieswarning");
             var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=Id,ReceiverFullName),Ledger($expand=AccountType($select=Description),ReceiverBank($select=Name))&$filter= Active eq true " + $"and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
             var warningsTruck = await Client<TruckMaintenanceWarning>.Instance.GetList($"?$expand=Truck($expand=Driver($select=LastName,FirstName))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
-            var warningsCustomer= await Client<CustomerCareWarning>.Instance.GetList($"?$expand=Customer($expand=CustomerGroup($select=Name),User($select=FirstName,LastName))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
+            var warningsCustomer= await Client<CustomerCareWarning>.Instance.GetList($"?$expand=CustomerCare($expand=Customer($expand=CustomerGroup($select=Name),User($select=FirstName,LastName)))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
             var clientTruck = new Client("TruckMaintenance");
             var countTruck = await clientTruck.GetAsync(null, "CountMaintenanceWarning");
             var clientCustomer = new Client("Customer");
@@ -102,11 +103,11 @@ namespace TMS.UI.Notifications
                 {
                     html.Li.ClassName("liItems").Anchor.ClassName("a-items").Href("javascript:;")
                                 .Event(Bridge.Html5.EventType.Click, OpenCWarning, li)
-                                .Div.ClassName("pull-left").Img.Src("./image/"+li.Customer.User.Avatar).ClassName("img-circle").EndOf(".pull-left")
+                                .Div.ClassName("pull-left").Img.Src("./image/"+li.CustomerCare.Customer.User.Avatar).ClassName("img-circle").EndOf(".pull-left")
                                 .H4.ClassName("h4-items").Text(li.LastContactDate?.ToString("dd/MM/yyyy")).End
-                                .P.ClassName("p-warning").Text(li.Customer.CustomerGroup.Name + "-" + li.Customer.User.FirstName+" "+ li.Customer.User.LastName).EndOf(ElementType.li);
+                                .P.ClassName("p-warning").Text(li.CustomerCare.Customer.CustomerGroup.Name + "-" + li.CustomerCare.Customer.User.FirstName+" "+ li.CustomerCare.Customer.User.LastName).EndOf(ElementType.li);
                 }).Li.ClassName("footer-viewall").Anchor.Href("javascript:;").Text("See All")
-                                                 .Event(Bridge.Html5.EventType.Click, OpenLiabilitiWarning)
+                                                 .Event(Bridge.Html5.EventType.Click, OpenCALLWarning)
                 .EndOf(".li-Root").EndOf(".pos-relative");
             #endregion
             #region profile user
@@ -126,9 +127,18 @@ namespace TMS.UI.Notifications
             html.EndOf(".ml-auto");
         }
 
+        private void OpenCALLWarning()
+        {
+            var tab = new CustomerCareWarningBL();
+            tab.Render();
+            tab.Focus();
+        }
+
         private void OpenCWarning(CustomerCareWarning cus)
         {
-            throw new NotImplementedException();
+            var tab = new CustomerCareWarningBL();
+            tab.Render();
+            tab.Focus();
         }
 
         private void OpenTruck()

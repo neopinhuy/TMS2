@@ -43,17 +43,17 @@ namespace TMS.API.Controllers
             DateTime commingtoday = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
             var commingDate = today.AddDays(parsed ? res : 3);
             var dataWarning =
-                from cus in db.Customer
-                from t in db.CustomerCareWarning.Where(x => x.CustomerId == cus.Id).DefaultIfEmpty()
-                where cus.LastContactDate <= commingDate && cus.LastContactDate >= today
-                                                    && t == null && cus.Active== true
+                from cus in db.CustomerCare.Include(x => x.Customer)
+                from t in db.CustomerCareWarning.Where(x => x.CustomerCare.CustomerId == cus.Id).DefaultIfEmpty()
+                where cus.Customer.LastContactDate <= commingDate && cus.Customer.LastContactDate >= today
+                                                    && t == null && cus.Active == true && cus.Customer.Active == true
                 select cus;
             var list = await dataWarning.ToListAsync();
             var warning = list.Select(x => new CustomerCareWarning
             {
 
-                CustomerId = x.Id,
-                LastContactDate = x.LastContactDate,
+                CustomerCareId = x.Id,
+                LastContactDate = x.Customer?.LastContactDate,
                 Note = x.Note,
                 ProcessStatusId = initStatus.Id
             });

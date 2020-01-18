@@ -43,7 +43,7 @@ namespace TMS.API.Controllers
             options.Validate(new ODataValidationSettings()
             {
                 AllowedQueryOptions = AllowedQueryOptions.All,
-                MaxExpansionDepth = 3
+                MaxExpansionDepth = 4
             });
 
             var results = options.ApplyTo(query);
@@ -55,7 +55,7 @@ namespace TMS.API.Controllers
             options.Validate(new ODataValidationSettings()
             {
                 AllowedQueryOptions = AllowedQueryOptions.All,
-                MaxExpansionDepth = 3
+                MaxExpansionDepth = 4
             });
 
             var appliedQuery = (EntityQueryable<T>)options.ApplyTo(query);

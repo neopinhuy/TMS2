@@ -19,5 +19,6 @@ namespace TMS.API.Models
         public virtual Customer Customer { get; set; }
         public virtual User InsertedByNavigation { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
+        public virtual CustomerCareWarning CustomerCareWarning { get; set; }
     }
 }

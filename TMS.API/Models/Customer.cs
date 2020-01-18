@@ -40,7 +40,6 @@ namespace TMS.API.Models
         public virtual MasterData CustomerGroup { get; set; }
         public virtual MasterData CustomerState { get; set; }
         public virtual User User { get; set; }
-        public virtual CustomerCareWarning CustomerCareWarning { get; set; }
         public virtual ICollection<CustomerCare> CustomerCare { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLog { get; set; }
         public virtual ICollection<Order> Order { get; set; }

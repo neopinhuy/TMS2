@@ -80,7 +80,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
             }
         }
 
@@ -751,16 +751,16 @@ namespace TMS.API.Models
 
             modelBuilder.Entity<CustomerCareWarning>(entity =>
             {
-                entity.HasIndex(e => e.CustomerId)
+                entity.HasIndex(e => e.CustomerCareId)
                     .HasName("UQ__Customer__A4AE64D96FD2BC24")
                     .IsUnique();
 
                 entity.Property(e => e.Note).HasMaxLength(1500);
 
-                entity.HasOne(d => d.Customer)
+                entity.HasOne(d => d.CustomerCare)
                     .WithOne(p => p.CustomerCareWarning)
-                    .HasForeignKey<CustomerCareWarning>(d => d.CustomerId)
-                    .HasConstraintName("FK_CustomerCareWarning_Customer");
+                    .HasForeignKey<CustomerCareWarning>(d => d.CustomerCareId)
+                    .HasConstraintName("FK_CustomerCareWarning_CustomerCare");
 
                 entity.HasOne(d => d.InsertedByNavigation)
                     .WithMany(p => p.CustomerCareWarningInsertedByNavigation)
