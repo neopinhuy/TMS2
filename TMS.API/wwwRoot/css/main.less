@@ -9,6 +9,19 @@ body {
     background-color: @whiteGrey;
     overflow: hidden;
 }
+aside {
+    overflow: hidden;
+
+    .sidebar-wrapper {
+        max-height: calc(100vh - 162px);
+        overflow: hidden;
+
+        &:hover {
+            overflow: auto;
+            overflow: overlay;
+        }
+    }
+}
 .app-bar {
     background-color: rgba(33, 70, 101, 0.55);
     position: relative !important;
@@ -56,12 +69,34 @@ body {
 #container {
     height: calc(100vh - 52px);
 
+    > .tabs-wrapper {
+        left: 4px;
+        top: -1px;
+
+        li {
+            top: -3px;
+            margin: 0;
+            border-bottom: 0 !important;
+            border-top: 1px solid #91c9e4;
+            margin-left: 1px;
+            border-top-left-radius: 18px;
+
+            a {
+                background-color: transparent;
+            }
+
+            &.active {
+                border-top: 2px solid #91c9e4;
+            }
+        }
+    }
+
     #tab-content {
         position: absolute;
         top: 47px;
         bottom: 0;
-        left: 1rem;
-        right: 1rem;
+        left: 1.5rem;
+        right: 1.5rem;
         background-color: @mainTabBgColor;
         padding: 0.8rem;
         overflow: hidden;
@@ -192,8 +227,10 @@ ul.tabs-list {
     }
 }
 
-ul#tabs {
-    border-bottom: 0;
+#tabs {
+    border-bottom: 0 !important;
+    left: 4px;
+    margin: 0;
 }
 
 .bottom {
