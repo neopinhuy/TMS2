@@ -18,6 +18,7 @@ namespace TMS.UI.Business
     public partial class MenuComponent : Component
     {
         public List<Feature> _feature;
+        private const string _active = "active";
 
         private void BuildFeatureTree()
         {
@@ -75,7 +76,7 @@ namespace TMS.UI.Business
                     .Span.ClassName("icon")
                         .If(iconClass,
                             () => Html.Instance.ClassName(item.Icon).Render(),
-                            () => Html.Instance.Style($"background-image: url({item.Icon});").Render())
+                            () => Html.Instance.Style($"background-image: url({item.Icon});").ClassName("iconBg").Render())
                     .End
                     .Text(item.Label).EndOf(MVVM.ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
@@ -146,15 +147,11 @@ namespace TMS.UI.Business
             var activeLi = Document.QuerySelectorAll(".sidebar-wrapper li.active");
             foreach (HTMLElement active in activeLi)
             {
-                if (active.Contains(li))
-                {
-                    continue;
-                }
-
-                active.ClassName = active.ClassName.Replace("active", "").Trim();
+                if (active.Contains(li)) continue;
+                active.RemoveClass("active");
             }
-            string className = li.ParentElement.ClassName + " active";
-            li.ParentElement.ClassName = className.Trim();
+            li.AddClass(_active);
+            li.ParentElement.AddClass(_active);
             if (menu.ViewClass is null && menu.Entity is null) return;
             Type type;
             if (menu.ViewClass != null)

@@ -47,6 +47,7 @@
     <Compile Include="Business\Accounting\LedgerBL.cs" />
     <Compile Include="Business\Sale\CustomerCareWarningBL.cs" />
     <Compile Include="Business\Sale\CustomerCareDetailBL.cs" />
+    <Compile Include="Business\Sale\GroupMemberBL.cs" />
     <Compile Include="Business\Sale\GroupRoleBL.cs" />
     <Compile Include="Business\Sale\UserBL.cs" />
     <Compile Include="Business\Sale\VendorBL.cs" />

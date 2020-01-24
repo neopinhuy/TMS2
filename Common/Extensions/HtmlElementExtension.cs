@@ -5,11 +5,12 @@ namespace Common.Extensions
 {
     public static class HtmlElementExtension
     {
-        public static bool HasClass(this Element element, string className)
+        public static bool HasClass(this Node node, string className)
         {
-            if (element is null) throw new InvalidOperationException($"{nameof(element)} is null");
+            if (node is null) throw new InvalidOperationException($"{nameof(node)} is null");
             if (!className.HasAnyChar()) return false;
-            return element.ClassName.Contains(className);
+            var ele = node as Element;
+            return ele.ClassName.Contains(className);
         }
 
         public static void ReplaceClass(this Node node, string oldClass, string newClass)
@@ -22,7 +23,7 @@ namespace Common.Extensions
 
         public static void AddClass(this Node node, string className)
         {
-            if (node is null || string.IsNullOrEmpty(className)) return;
+            if (node is null || string.IsNullOrEmpty(className) || HasClass(node, className)) return;
             var element = node as Element;
             element.ClassName = (element.ClassName + " " + className).Trim();
         }
