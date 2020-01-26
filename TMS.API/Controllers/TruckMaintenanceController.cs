@@ -31,13 +31,10 @@ namespace TMS.API.Controllers
         [HttpGet("api/[Controller]/CountMaintenanceWarning")]
         public async Task<ActionResult<int>> CountTruckcMaintenanceWarning()
         {
-            var setting = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "MaintenanceSettings");
-            var parsed = int.TryParse(setting.Description, out int res);
-            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00, 000);
-            DateTime commingtoday = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
-            var commingDate = today.AddDays(parsed ? res : 3);
-            var dataCount = from trucks in db.Truck
-                            where trucks.NextMaintenanceDate <= commingDate && trucks.NextMaintenanceDate >= today
+            var initStatus = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "UnreadStatus"
+                                                                       && m.Parent.Name == "LiabilitiesWarningStatus");
+            var dataCount = from trucks in db.TruckMaintenanceWarning
+                            where trucks.ProcessStatusId == initStatus.Id
                             select trucks;
             var count = await dataCount.CountAsync();
             return Ok(count);

@@ -136,6 +136,7 @@ namespace TMS.UI.Notifications
 
         private void OpenCWarning(CustomerCareWarning cus)
         {
+            UpdateStatusCustomerAsync(cus);
             var tab = new CustomerCareWarningBL();
             tab.Render();
             tab.Focus();
@@ -157,6 +158,7 @@ namespace TMS.UI.Notifications
 
         private void OpenLWarning(LiabilitiesWarning lw)
         {
+            UpdateStatusLiabilitiesAsync(lw);
             var tab = new LiabilitiesBL();
             tab.Render();
             tab.Focus();
@@ -170,8 +172,30 @@ namespace TMS.UI.Notifications
             };
             tab.AddChild(_LiabilitiesForm);
         }
+        private async Task UpdateStatusLiabilitiesAsync(LiabilitiesWarning liabilities)
+        {
+            var setting = await Client<MasterData>.Instance.GetList("?$filter=Active eq true and Name eq 'Read'");
+            var parsed = setting.value.FirstOrDefault()?.Id;
+            liabilities.ProcessStatusId = parsed;
+            await Client<LiabilitiesWarning>.Instance.UpdateAsync(liabilities);
+        }
+        private async Task UpdateStatusTruckAsync(TruckMaintenanceWarning truckMaintenanceWarning)
+        {
+            var setting = await Client<MasterData>.Instance.GetList("?$filter=Active eq true and Name eq 'Read'");
+            var parsed = setting.value.FirstOrDefault()?.Id;
+            truckMaintenanceWarning.ProcessStatusId = parsed;
+            await Client<TruckMaintenanceWarning>.Instance.UpdateAsync(truckMaintenanceWarning);
+        }
+        private async Task UpdateStatusCustomerAsync(CustomerCareWarning customerCareWarning)
+        {
+            var setting = await Client<MasterData>.Instance.GetList("?$filter=Active eq true and Name eq 'Read'");
+            var parsed = setting.value.FirstOrDefault()?.Id;
+            customerCareWarning.ProcessStatusId = parsed;
+            await Client<CustomerCareWarning>.Instance.UpdateAsync(customerCareWarning);
+        }
         private void OpenTruckWarning(TruckMaintenanceWarning entity)
         {
+            UpdateStatusTruckAsync(entity);
             var tab = new TruckBL();
             tab.Render();
             tab.Focus();
