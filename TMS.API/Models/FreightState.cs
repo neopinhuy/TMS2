@@ -7,8 +7,6 @@ namespace TMS.API.Models
     {
         public FreightState()
         {
-            Component = new HashSet<Component>();
-            ComponentGroup = new HashSet<ComponentGroup>();
             CoordinationDetail = new HashSet<CoordinationDetail>();
             GridPolicy = new HashSet<GridPolicy>();
             StatePolicy = new HashSet<StatePolicy>();
@@ -28,8 +26,6 @@ namespace TMS.API.Models
         public int? UpdatedBy { get; set; }
 
         public virtual MasterData StateType { get; set; }
-        public virtual ICollection<Component> Component { get; set; }
-        public virtual ICollection<ComponentGroup> ComponentGroup { get; set; }
         public virtual ICollection<CoordinationDetail> CoordinationDetail { get; set; }
         public virtual ICollection<GridPolicy> GridPolicy { get; set; }
         public virtual ICollection<StatePolicy> StatePolicy { get; set; }

@@ -53,6 +53,15 @@ aside {
     background-color: rgba(0, 146, 64, 0.78);
     position: relative !important;
     padding-right: 1rem;
+
+    > button {
+        width: 56px;
+    }
+
+    .app-bar-item:hover {
+        cursor: pointer;
+        background-color: rgba(29, 29, 29, 0.1) !important;
+    }
 }
 .fix-sidebar {
     width: calc(100% - 290px);
@@ -837,7 +846,7 @@ td {
 .context-menu {
     background-color: @white;
     color: @theadColor;
-    z-index: 999;
+    z-index: 1001;
     list-style: none;
     padding: 0;
     .shadow;

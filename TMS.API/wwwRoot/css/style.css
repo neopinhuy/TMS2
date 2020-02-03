@@ -141,12 +141,8 @@
 .hidden-xs {
     color: #ffffff;
 }
-.app-bar-container {
-    background-color: transparent !important;
-}
-.app-bar-item {
-    cursor: pointer;
-    background-color: transparent !important;
+.app-bar-container.ml-auto {
+    background: transparent;
 }
 .img-circle {
     border-radius: 50%;
@@ -178,13 +174,10 @@
 li.user-header {
     background-color: #CE352C;
 }
-    li.user-header p {
-        color: #ffffff;
-        font-size: 17px;
-    }
+li.user-header p {
+    color: #ffffff;
+    font-size: 17px;
+}
 .pull-right{
     float:right;
-}
-.app-bar-item :hover {
-    background-color: rgba(29, 29, 29, 0.1);
 }

@@ -9,7 +9,6 @@ namespace TMS.API.Models
         public string FieldName { get; set; }
         public int? Order { get; set; }
         public int? PolicyId { get; set; }
-        public int? StateId { get; set; }
         public string ComponentType { get; set; }
         public int? ComponentGroupId { get; set; }
         public string DataSourceFilter { get; set; }
@@ -50,7 +49,6 @@ namespace TMS.API.Models
         public virtual User InsertedByNavigation { get; set; }
         public virtual Policy Policy { get; set; }
         public virtual Entity Reference { get; set; }
-        public virtual FreightState State { get; set; }
         public virtual User UpdatedByNavigation { get; set; }
     }
 }

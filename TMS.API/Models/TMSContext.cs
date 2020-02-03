@@ -80,7 +80,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
             }
         }
 
@@ -348,11 +348,6 @@ namespace TMS.API.Models
                     .HasForeignKey(d => d.ReferenceId)
                     .HasConstraintName("FK_Component_Entity");
 
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.Component)
-                    .HasForeignKey(d => d.StateId)
-                    .HasConstraintName("FK_Component_FreightState");
-
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.ComponentUpdatedByNavigation)
                     .HasForeignKey(d => d.UpdatedBy)
@@ -400,11 +395,6 @@ namespace TMS.API.Models
                     .WithMany(p => p.ComponentGroup)
                     .HasForeignKey(d => d.PolicyId)
                     .HasConstraintName("FK_ComponentGroup_Policy");
-
-                entity.HasOne(d => d.State)
-                    .WithMany(p => p.ComponentGroup)
-                    .HasForeignKey(d => d.StateId)
-                    .HasConstraintName("FK_ComponentGroup_FreightState");
 
                 entity.HasOne(d => d.UpdatedByNavigation)
                     .WithMany(p => p.ComponentGroupUpdatedByNavigation)
