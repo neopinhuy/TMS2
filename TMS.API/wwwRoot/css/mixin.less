@@ -27,6 +27,7 @@
 @containerBgColor: #f2f2f2;
 @mainTabBgColor: #fffffe;
 @sideBarBgColor: #d7d7d7;
+@taskBarHeight: 52px;
 
 .hide {
     display: none;
@@ -116,13 +117,11 @@
 
 .acrylic::before {
     background: url(/image/bg.jfif) center/cover;
-    filter: blur(30px);
+    filter: blur(45px);
     content: "";
     position: absolute;
-    left: -300px;
-    top: -52px;
-    width: calc(100% + 300px);
-    height: calc(100% + 52px);
+    width: 100%;
+    height: 100%;
     z-index: -1;
 }
 
@@ -159,6 +158,13 @@
 }
 .width5px {
     width: 5px;
+}
+.fit(@top, @right, @bottom, @left) {
+    position: absolute;
+    top: @top;
+    left: @left;
+    bottom: @bottom;
+    right: @right;
 }
 .width10px { width: 10px; }
 .width15px { width: 15px; }

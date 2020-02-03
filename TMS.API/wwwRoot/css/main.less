@@ -18,7 +18,7 @@ aside {
     background-color: @warmBgColor;
 
     .sidebar-wrapper {
-        max-height: calc(100vh - 52px);
+        max-height: calc(100vh - @taskBarHeight);
         overflow: hidden;
 
         &:hover {
@@ -35,7 +35,7 @@ aside {
     }
 
     .sidebar-header {
-        height: 52px;
+        height: @taskBarHeight;
         background-color: @transparent;
         background-image: url(/image/logo.png);
         border: 0;
@@ -71,37 +71,46 @@ aside {
 }
 
 #container {
-    height: calc(100vh - 52px);
+    height: calc(100vh - @taskBarHeight);
     background-color: @containerBgColor;
 
     > .tabs-wrapper {
-        left: 4px;
-        top: -1px;
+        position: absolute;
+        left: 48px;
+        top: -@taskBarHeight;
+        z-index: 100;
 
         li {
-            top: -3px;
-            margin: 0;
-            border: 1px solid @infoDark;
-            border-bottom: 0 !important;
-            border-top-left-radius: 35px;
-            border-top-right-radius: 10px;
-
-            a {
-                background-color: transparent;
-            }
+            display: flex;
+            margin: 1px 0 0 1px;
+            border: 0 !important;
+            width: 59px;
+            height: calc(@taskBarHeight - 2px);
+            border-radius: 0;
+            background-color: #ffffff63;
 
             &.active {
-                border-top: 2px solid @infoDark;
+                background-color: #ffffffdb;
+            }
+
+            &.active::after {
+                content: '';
+                width: 100%;
+                border-top: 3px solid #ffffffd6 !important;
+            }
+        }
+
+        a {
+            .fit(0, 0, 0, 0);
+
+            .icon {
+                font-size: 1.6rem;
             }
         }
     }
 
     #tab-content {
-        position: absolute;
-        top: 45px;
-        bottom: 0;
-        left: 1.5rem;
-        right: 1.5rem;
+        .fit(0, 0, 0, 0);
         background-color: @mainTabBgColor;
         padding: 1.2rem;
         overflow: hidden;

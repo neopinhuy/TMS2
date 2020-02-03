@@ -22,8 +22,8 @@ namespace Components
                 .Button.ClassName("button small rounded").Span.ClassName("fa fa-sort-amount-up-alt").End.Text(" Ascending").End
                 .Button.ClassName("button small rounded").Span.ClassName("fa fa-sort-amount-down-alt").End.Text(" Descending").End.End
             .Div.ClassName("div-type")
-                .Anchor.Text("Filter by Condition").End
-                .Anchor.Text("Filter by Value").End.End
+                .A.Text("Filter by Condition").End
+                .A.Text("Filter by Value").End.End
             .SmallInput().ClassName("searchbox").Attr("placeholder", "Search").End
             .Div.ClassName("div-edt-val")
                 .SmallCheckbox("Select All").End

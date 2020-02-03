@@ -68,17 +68,12 @@ namespace TMS.UI.Business
                 }
                 else
                 {
-                    var iconClass = item.Icon.Contains("mif") || item.Icon.Contains("fa-");
                     Html.Instance.Li.DataAttr("feature", item.Id.ToString())
-                    .Anchor.Attr("data-role", "ripple")
+                    .A.Attr("data-role", "ripple")
                     .Event(EventType.Click, MenuItemClick, item)
                     .Event(EventType.ContextMenu, FeatureContextMenu, item) // IMPORTANT: check role to show this feature
-                    .Span.ClassName("icon")
-                        .If(iconClass,
-                            () => Html.Instance.ClassName(item.Icon).Render(),
-                            () => Html.Instance.Style($"background-image: url({item.Icon});").ClassName("iconBg").Render())
-                    .End
-                    .Text(item.Label).EndOf(MVVM.ElementType.a).Render();
+                    .Icon(item.Icon).End
+                    .Text(item.Label).EndOf(ElementType.a).Render();
                     if (item.InverseParent != null && item.InverseParent.Count > 0)
                     {
                         RenderMenuItems(item.InverseParent.ToList());
@@ -165,6 +160,7 @@ namespace TMS.UI.Business
             }
             var instance = Activator.CreateInstance(type) as Component;
             instance.Id = menu.GetHashCode();
+            instance["Icon"] = menu.Icon;
             instance.Render();
             instance["Focus"].As<System.Action>()?.Invoke(instance);
         }

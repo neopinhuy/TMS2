@@ -49,7 +49,7 @@ namespace TMS.UI.Notifications
             LWarningsCustomerCare = warningsCustomer.value;
             var html = Html.Take("#app-bar").Div.ClassName("app-bar-container ml-auto")
             #region libilities + truck maintenance warning
-                            .Anchor.ClassName("app-bar-item").Id("dropdown_toggle_LiabilitiesWarning")
+                            .A.ClassName("app-bar-item").Id("dropdown_toggle_LiabilitiesWarning")
                             .Span.ClassName("mif-bell").End
                             .Span.ClassName("badge bg-orange fg-white mt-2 mr-1").Text((int.Parse(count.ToString()) + int.Parse(countTruck.ToString())).ToString())
                             .EndOf(ElementType.a);
@@ -65,28 +65,28 @@ namespace TMS.UI.Notifications
                     .Ul.ClassName("menu")
                             .ForEach(LWarnings, (li, index) =>
                             {
-                                html.Li.ClassName("liItems").Anchor.ClassName("a-items").Href("javascript:;")
+                                html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;")
                                             .Event(Bridge.Html5.EventType.Click, OpenLWarning, li)
                                             .Div.ClassName("pull-left").I.ClassName("icon fa fa-hand-holding-usd text-red").EndOf(".pull-left")
                                             .H4.ClassName("h4-items").Text(li.DueDate?.ToString("dd/MM/yyyy")).End
                                             .P.ClassName("p-warning").Text(li.Ledger.ReceiverFullName + "-" + li.Ledger.AccountType.Description + "-" + li.Ledger.ReceiverBank.Name).EndOf(ElementType.li);
-                            }).Li.ClassName("footer-viewall").Anchor.Href("javascript:;").Text("See All")
+                            }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                              .Event(Bridge.Html5.EventType.Click, OpenLiabilitiWarning)
                             .EndOf(".li-Root")
                 .Li.ClassName("li-Root").Span.ClassName("span-warning").Text("Truck maintenance warning").End.Span.ClassName("badge bg-orange fg-white mt-2 mr-1 fix-float-left").Text(countTruck.ToString()).End
                     .Ul.ClassName("menu")
                             .ForEach(LWarningsTruck, (li, index) =>
                             {
-                                html.Li.ClassName("liItems").Anchor.Href("javascript:;")
+                                html.Li.ClassName("liItems").A.Href("javascript:;")
                                             .Event(Bridge.Html5.EventType.Click, OpenTruckWarning, li)
                                             .Div.ClassName("pull-left").I.ClassName("fa fa-truck text-yellow").EndOf(".pull-left")
                                             .H4.ClassName("h4-items").Text(li.NextMaintenanceDate?.ToString("dd/MM/yyyy")).End
                                             .P.ClassName("p-warning").Text(li.Truck.Driver?.FirstName + " " + li.Truck.Driver?.LastName + "-" + (li.Truck.TruckPlate ?? "") + "-" + (li.Truck.Color ?? "")).EndOf(ElementType.li);
-                            }).Li.ClassName("footer-viewall").Anchor.Href("javascript:;").Text("See All")
+                            }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                              .Event(Bridge.Html5.EventType.Click, OpenTruck).EndOf(".pos-relative");
             #endregion
             #region customers warning
-            html.Anchor.ClassName("app-bar-item").Id("dropdown_toggle_CustomersWarning")
+            html.A.ClassName("app-bar-item").Id("dropdown_toggle_CustomersWarning")
                             .Span.ClassName("fa fa-users white").End
                             .Span.ClassName("badge bg-green fg-white mt-2 mr-1").Text(countCustomer.ToString())
                             .EndOf(ElementType.a);
@@ -101,17 +101,17 @@ namespace TMS.UI.Notifications
                 .Ul.ClassName("menu")
                 .ForEach(LWarningsCustomerCare, (li, index) =>
                 {
-                    html.Li.ClassName("liItems").Anchor.ClassName("a-items").Href("javascript:;")
+                    html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;")
                                 .Event(Bridge.Html5.EventType.Click, OpenCWarning, li)
                                 .Div.ClassName("pull-left").Img.Src("./image/"+li.CustomerCare.Customer.User.Avatar).ClassName("img-circle").EndOf(".pull-left")
                                 .H4.ClassName("h4-items").Text(li.LastContactDate?.ToString("dd/MM/yyyy")).End
                                 .P.ClassName("p-warning").Text(li.CustomerCare.Customer.CustomerGroup.Name + "-" + li.CustomerCare.Customer.User.FirstName+" "+ li.CustomerCare.Customer.User.LastName).EndOf(ElementType.li);
-                }).Li.ClassName("footer-viewall").Anchor.Href("javascript:;").Text("See All")
+                }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                  .Event(Bridge.Html5.EventType.Click, OpenCALLWarning)
                 .EndOf(".li-Root").EndOf(".pos-relative");
             #endregion
             #region profile user
-            html.Anchor.ClassName("app-bar-item").Id("dropdown_toggle_Profile")
+            html.A.ClassName("app-bar-item").Id("dropdown_toggle_Profile")
                             .Img.Src("./image/chinese.jfif").ClassName("user-image").End.Span.ClassName("hidden-xs").Text("Nguyễn Văn A")
                             .EndOf(ElementType.a);
             html.Div.ClassName("pos-relative fix-pos-relative shadow")
@@ -122,7 +122,7 @@ namespace TMS.UI.Notifications
                 .Li.ClassName("user-header").Img.Src("./image/chinese.jfif").ClassName("img-circle").End
                 .P.Text("Nguyễn Văn A")
                 .EndOf(".user-header")
-                .Li.ClassName("user-footer").Div.ClassName("pull-right").Anchor.Href("javascript").ClassName("btn-signout").Text("Sign out").EndOf(".pos-relative");
+                .Li.ClassName("user-footer").Div.ClassName("pull-right").A.Href("javascript").ClassName("btn-signout").Text("Sign out").EndOf(".pos-relative");
             #endregion
             html.EndOf(".ml-auto");
         }

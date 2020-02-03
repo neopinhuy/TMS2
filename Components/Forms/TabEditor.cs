@@ -9,6 +9,7 @@ namespace Components.Forms
     public class TabEditor<T> : EditForm<T> where T : class
     {
         public static List<Component> Tabs = new List<Component>();
+        public string Icon { get; set; }
         public TabEditor()
         {
             var type = typeof(T);
@@ -29,7 +30,7 @@ namespace Components.Forms
             var existing = Tabs.FirstOrDefault(x => x.Id == Id);
             if (existing != null) return true;
             Html.Take("#tabs")
-                .Li.Anchor.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, Close).Text(Title).End
+                .Li.A.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, Close).Icon(Icon).EndOf(MVVM.ElementType.a)
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id($"{Id}-{ClassId}").Render();
             RootHtmlElement = Html.Context;

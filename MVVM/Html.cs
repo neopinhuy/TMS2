@@ -280,7 +280,7 @@ namespace MVVM
             }
         }
 
-        public Html Anchor
+        public Html A
         {
             get
             {

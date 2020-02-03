@@ -297,7 +297,7 @@ namespace Components
 
         public static Html TabItem(this Html html, string title, string reference, bool active = false)
         {
-            html.Li.Anchor.Href("#" + reference).Text(title).End.Render();
+            html.Li.A.Href("#" + reference).Text(title).End.Render();
             if (active) html.ClassName("active");
             return html.End;
         }
@@ -335,7 +335,11 @@ namespace Components
         /// <returns></returns>
         public static Html Icon(this Html html, string iconClass)
         {
-            return html.Span.ClassName("icon").ClassName(iconClass);
+            var isIconClass = iconClass.Contains("mif") || iconClass.Contains("fa-");
+            html.Span.ClassName("icon");
+            if (isIconClass) html.ClassName(iconClass).Render();
+            else html.Style($"background-image: url({iconClass});").ClassName("iconBg").Render();
+            return html;
         }
 
         public static Html Floating(this Html html, double top, double left)

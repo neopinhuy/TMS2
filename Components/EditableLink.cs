@@ -26,7 +26,7 @@ namespace Components
             var format = string.Empty;
             if (_ui.FormatData.HasAnyChar()) format = Utils.FormatWith(_ui.FormatData, Value.Data);
             else if (_ui.FormatEntity.HasAnyChar()) format = Utils.FormatWith(_ui.FormatEntity, Entity);
-            Html.Take(parent).Anchor.Href(format).Text(Value.Data);
+            Html.Take(parent).A.Href(format).Text(Value.Data);
         }
 
         public override void UpdateView()
@@ -37,7 +37,7 @@ namespace Components
             else if (_ui.FormatEntity.HasAnyChar()) format = Utils.FormatWith(_ui.FormatEntity, Entity);
             var root = InteractiveElement.ParentElement;
             root.RemoveChild(root.LastChild);
-            Html.Take(root).Anchor.Href(format).Text(Value.Data);
+            Html.Take(root).A.Href(format).Text(Value.Data);
         }
     }
 }
