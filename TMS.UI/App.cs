@@ -12,6 +12,7 @@ namespace TMS.UI
             menuComponent.Render();
 
             var order = new SaleOrderBL();
+            order.Icon = "icons/salechart.png";
             order.Id = order.GetHashCode();
             order.Render();
             order.Focus();
