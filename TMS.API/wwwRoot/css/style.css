@@ -96,7 +96,9 @@
     float: left;
     padding-left: 1rem;
 }
-
+#name-user{
+    color:#ffffff;
+}
 .text-red {
     color: red !important;
 }
