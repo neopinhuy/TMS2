@@ -46,8 +46,10 @@
     <Compile Include="..\Common\Extensions\StringExtensions.cs" Link="Extensions\StringExtensions.cs" />
     <Compile Include="..\Common\ViewModels\CustomerCareVM.cs" Link="ViewModels\CustomerCareVM.cs" />
     <Compile Include="..\Common\ViewModels\EmailVM.cs" Link="ViewModels\EmailVM.cs" />
+    <Compile Include="..\Common\ViewModels\FeatureVM.cs" Link="ViewModels\FeatureVM.cs" />
     <Compile Include="..\Common\ViewModels\LedgerVM.cs" Link="ViewModels\LedgerVM.cs" />
     <Compile Include="..\Common\ViewModels\LoginVM.cs" Link="ViewModels\LoginVM.cs" />
+    <Compile Include="..\Common\ViewModels\SearchFeatureVM.cs" Link="ViewModels\SearchFeatureVM.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,18 +8,19 @@ using TMS.API.Models;
 
 namespace TMS.UI.Framework
 {
-    public class FeatureBL : TabEditor<FeatureVM>
+    public class FeatureBL : TabEditor<SearchFeatureVM>
     {
         public FeatureBL()
         {
             Name = "Feature management";
-            Entity = new FeatureVM();
+            Entity = new SearchFeatureVM();
             Title = "Feature";
+            Icon = "icons/config.png";
         }
 
         public override async Task<bool> Save(bool defaultMessage = false)
         {
-            var vm = Entity as FeatureVM;
+            var vm = Entity as SearchFeatureVM;
             // Save changes to features
             var ok = await Client<Feature>.Instance.BulkUpdateAsync(vm.Feature);
             if (ok)
@@ -33,7 +34,7 @@ namespace TMS.UI.Framework
             return true;
         }
 
-        public void Search(FeatureVM vm)
+        public void Search(SearchFeatureVM vm)
         {
             var gridView = FindComponentByName<GridView>(nameof(vm.Feature));
             var originalQuery = gridView.FormattedDataSource;
@@ -44,15 +45,16 @@ namespace TMS.UI.Framework
             gridView.ReloadData(filter);
         }
 
-        public void EditFeature(Feature feature)
+        public void EditFeature(FeatureVM feature)
         {
-            var editor = new PopupEditor<Feature>
+            var editor = new FeatureDetailBL
             {
+                Id = feature.Id,
                 Entity = feature,
-                Name = "Feature editor",
                 Title = $"Feature {feature.Name ?? feature.Label ?? feature.Description}"
             };
             AddChild(editor);
+            editor.Focus();
         }
     }
 }

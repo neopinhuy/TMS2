@@ -1,0 +1,42 @@
+﻿using Common.Clients;
+using Common.Extensions;
+using Common.ViewModels;
+using Components.Forms;
+using System;
+using System.Threading.Tasks;
+using TMS.API.Models;
+
+namespace TMS.UI.Framework
+{
+    public class FeatureDetailBL : TabEditor<FeatureVM>
+    {
+        public FeatureDetailBL()
+        {
+            Name = "Feature editor";
+            Entity = new SearchFeatureVM();
+            Title = "Feature";
+            Icon = "icons/config.png";
+        }
+
+        public override async Task<bool> Save(bool defaultMessage = false)
+        {
+            var client = new Client(nameof(Feature));
+            if (Entity != null && Entity[IdField].As<int>() == 0)
+            {
+                if (Entity["Active"] != null) Entity["Active"] = true;
+                SetDeafaultId();
+                var data = await client.PostAsync(Entity.CastProp<FeatureVM>(), "create");
+                ReloadAndShowMessage(defaultMessage, data.CastProp<FeatureVM>(), false);
+                AfterSaved?.Invoke(data != null);
+            }
+            else
+            {
+                SetDeafaultId();
+                var data = await client.UpdateAsync(Entity.CastProp<FeatureVM>(), "update");
+                ReloadAndShowMessage(defaultMessage, data.CastProp<FeatureVM>(), true);
+                AfterSaved?.Invoke(data != null);
+            }
+            return true;
+        }
+    }
+}

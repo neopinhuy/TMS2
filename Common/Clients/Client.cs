@@ -182,32 +182,9 @@ namespace Common.Clients
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Task<object> UpdateAsync(object value)
+        public Task<object> UpdateAsync(object value, string subUrl = string.Empty)
         {
-            var tcs = new TaskCompletionSource<object>();
-            var xhr = new XMLHttpRequest();
-            xhr.Open("PUT", $"/api/{_entityName}", true);
-            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
-            xhr.OnReadyStateChange = () =>
-            {
-                if (xhr.ReadyState != AjaxReadyState.Done)
-                {
-                    return;
-                }
-
-                if (xhr.Status == 200 || xhr.Status == 204)
-                {
-                    var parsed = JsonConvert.DeserializeObject<object>(xhr.ResponseText);
-                    tcs.SetResult(parsed);
-                }
-                else
-                {
-                    tcs.SetResult(null);
-                    Toast.Warning(xhr.ResponseText);
-                }
-            };
-            xhr.Send(JsonConvert.SerializeObject(value, ClientConst.settings));
-            return tcs.Task;
+            return SubmitAsync(value, subUrl, "PUT");
         }
 
         public Task<bool> DeleteAsync(List<int> ids)

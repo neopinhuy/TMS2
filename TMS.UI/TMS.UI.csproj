@@ -60,6 +60,7 @@
     <Compile Include="Business\Sale\SaleOrderBL.cs" />
     <Compile Include="Business\UnitofMeasure\MasterDataBL.cs" />
     <Compile Include="Business\UnitofMeasure\UnitofMeasureBL.cs" />
+    <Compile Include="Framework\FeatureDetailBL.cs" />
     <Compile Include="Notifications\Liabilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Framework\FeatureBL.cs" />

@@ -59,15 +59,15 @@ namespace Components.Forms
             {
                 SetDeafaultId();
                 var data = await client.UpdateAsync((T)Entity);
-                ReloadAndShowMessage(defaultMessage, data, false);
+                ReloadAndShowMessage(defaultMessage, data, true);
                 AfterSaved?.Invoke(data != null);
             }
             return true;
         }
 
-        private void ReloadAndShowMessage(bool defaultMessage, T data, bool updating)
+        protected void ReloadAndShowMessage(bool defaultMessage, T data, bool updating)
         {
-            var prefix = updating ? "Creating" : "Updating";
+            var prefix = updating ? "Updating" : "Creating";
             if (data != null)
             {
                 Entity[IdField] = data[IdField];
@@ -82,7 +82,7 @@ namespace Components.Forms
             }
         }
 
-        private void SetDeafaultId()
+        protected void SetDeafaultId()
         {
             var grids = FindComponent<GridView>();
             grids.ForEach(x =>

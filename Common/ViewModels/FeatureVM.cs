@@ -3,9 +3,8 @@ using TMS.API.Models;
 
 namespace Common.ViewModels
 {
-    public class FeatureVM
+    public class FeatureVM : Feature
     {
-        public string SearchText { get; set; }
-        public List<Feature> Feature { get; set; }
+        public ICollection<Component> Component { get; set; }
     }
 }

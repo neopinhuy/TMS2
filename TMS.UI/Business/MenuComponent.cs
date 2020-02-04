@@ -103,13 +103,14 @@ namespace TMS.UI.Business
 
         private void EditFeature(Feature feature)
         {
-            var editor = new PopupEditor<Feature>
+            var editor = new FeatureDetailBL
             {
+                Id = feature.Id,
                 Entity = feature,
-                Name = "Feature editor",
                 Title = $"Feature {feature.Name ?? feature.Label ?? feature.Description}"
             };
             AddChild(editor);
+            editor.Focus();
             _contextMenu.Dispose();
         }
 
