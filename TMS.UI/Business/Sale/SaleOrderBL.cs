@@ -5,7 +5,8 @@ using Components;
 using Components.Forms;
 using System.Threading.Tasks;
 using TMS.API.Models;
-
+using Component = Components.Component;
+using ElementType = MVVM.ElementType;
 namespace TMS.UI.Business.Sale
 {
     public class SaleOrderBL : TabEditor<Order>

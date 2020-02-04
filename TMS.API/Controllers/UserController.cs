@@ -65,6 +65,7 @@ namespace TMS.API.Controllers
         [HttpPost("api/[Controller]/Login")]
         public async Task<ActionResult<LoginVM>> LoginAsync([FromBody] LoginVM login)
         {
+
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var settings = await db.MasterData.FirstOrDefaultAsync(x => x.Name == "MaxLoginFailed");
             var parsed = int.TryParse(settings?.Description, out int maxLoginFailed);
@@ -87,7 +88,7 @@ namespace TMS.API.Controllers
             if (!existing)
                 return BadRequest($"Wrong username or password. Please try again! " +
                     $"You still have {maxLoginFailed - matchedUser.LoginFailedCount} attempt");
-            return Ok(login);
+            return Ok(new User { FirstName = matchedUser.FirstName,LastName=matchedUser.LastName,UserName=matchedUser.UserName,Address=matchedUser.Address,Avatar=matchedUser.Avatar }) ;
         }
 
         [HttpPost("api/[Controller]/Unlock")]

@@ -172,12 +172,19 @@
     border-color: rgba(255,255,255,0.2);
 }
 li.user-header {
-    background-color: #CE352C;
+    background-color: #37A98A;
 }
 li.user-header p {
     color: #ffffff;
     font-size: 17px;
+    margin:0 !important;
 }
+    li.user-header span {
+        color: #ffffff;
+        display: block;
+        font-size: 12px;
+        margin-top: -2rem;
+    }
 .pull-right{
     float:right;
 }

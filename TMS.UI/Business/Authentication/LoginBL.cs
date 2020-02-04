@@ -1,7 +1,10 @@
-﻿using Common.Clients;
+﻿using Bridge.Html5;
+using Common.Clients;
 using Common.Extensions;
 using Common.ViewModels;
 using Components.Forms;
+using MVVM;
+using System;
 using System.Threading.Tasks;
 using TMS.API.Models;
 
@@ -37,6 +40,11 @@ namespace TMS.UI.Business.Authentication
             else
             {
                 Toast.Success($"Welcome {login.UserName}!");
+                Document.GetElementById("name-user").TextContent = login.UserName;
+                Document.GetElementById("Username-text").TextContent = res.FirstName+" "+res.LastName;
+                Document.GetElementById("text-address").TextContent = res.Address;
+                Html.Take("#user-image").Src("./image/" + res.Avatar);
+                Html.Take(".img-circle").Src("./image/" + res.Avatar);
             }
             return true;
         }
