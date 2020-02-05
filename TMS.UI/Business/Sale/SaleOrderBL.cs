@@ -102,7 +102,7 @@ namespace TMS.UI.Business.Sale
             var preview = FindComponentByName<Section>("SaleOrderPreview");
             var print = Window.Open("", "_blank");
             var shtml = "<html>";
-            shtml += "<link rel='stylesheet' type='text/css' href='./css/main.css' />";
+            shtml += "<link rel='stylesheet' type='text/css' href='./css/styleprint.css' />";
             shtml += "<link href='./css/font-awesome.css' rel='stylesheet' />";
             shtml += "<link href='./css/metro-all.css' rel='stylesheet' />";
             shtml += "<link href='./css/main.css' rel='stylesheet' />";

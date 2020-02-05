@@ -1,0 +1,11 @@
+﻿.frozen {
+    display: none !important;
+}
+
+.table-wrapper .non-frozen {
+    border-left: 1px solid #bfbfbf;
+}
+
+.header {
+    display: none;
+}
