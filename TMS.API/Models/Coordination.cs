@@ -41,7 +41,7 @@ namespace TMS.API.Models
         public virtual MasterData FreightState { get; set; }
         public virtual Terminal From { get; set; }
         public virtual User InsertedByNavigation { get; set; }
-        public virtual TaskState TaskState { get; set; }
+        public virtual MasterData TaskState { get; set; }
         public virtual Timebox Timebox { get; set; }
         public virtual Terminal To { get; set; }
         public virtual MasterData TruckType { get; set; }

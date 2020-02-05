@@ -80,7 +80,7 @@ namespace TMS.API.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer("Server=tcp:nhan.database.windows.net;Initial Catalog=TMS;user id=nhan;password=Testing)(&*;");
             }
         }
 
@@ -541,7 +541,7 @@ namespace TMS.API.Models
                     .HasConstraintName("FK_Coordination_UserInserted");
 
                 entity.HasOne(d => d.TaskState)
-                    .WithMany(p => p.Coordination)
+                    .WithMany(p => p.CoordinationTaskState)
                     .HasForeignKey(d => d.TaskStateId)
                     .HasConstraintName("FK_Coordination_TaskState");
 

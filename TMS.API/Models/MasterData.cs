@@ -16,6 +16,7 @@ namespace TMS.API.Models
             CoordinationCommodityType = new HashSet<Coordination>();
             CoordinationContainerType = new HashSet<Coordination>();
             CoordinationFreightState = new HashSet<Coordination>();
+            CoordinationTaskState = new HashSet<Coordination>();
             CoordinationTruckType = new HashSet<Coordination>();
             CustomerCareLogCommodityType = new HashSet<CustomerCareLog>();
             CustomerCareLogContactType = new HashSet<CustomerCareLog>();
@@ -82,6 +83,7 @@ namespace TMS.API.Models
         public virtual ICollection<Coordination> CoordinationCommodityType { get; set; }
         public virtual ICollection<Coordination> CoordinationContainerType { get; set; }
         public virtual ICollection<Coordination> CoordinationFreightState { get; set; }
+        public virtual ICollection<Coordination> CoordinationTaskState { get; set; }
         public virtual ICollection<Coordination> CoordinationTruckType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogCommodityType { get; set; }
         public virtual ICollection<CustomerCareLog> CustomerCareLogContactType { get; set; }
