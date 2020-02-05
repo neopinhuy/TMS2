@@ -70,7 +70,7 @@ namespace Common.Extensions
             obj.GetType().GetProperty(propName).SetValue(obj, value);
         }
 
-        public static void CopyProp(this object obj, object source)
+        public static void CopyPropFrom(this object obj, object source)
         {
             if (obj == null) throw new ArgumentNullException($"{nameof(obj)} is null");
             if (source == null) throw new ArgumentNullException($"{nameof(source)} is null");

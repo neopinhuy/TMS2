@@ -88,21 +88,24 @@ namespace TMS.UI.Business
             e.PreventDefault();
             var top = (float)e["clientY"];
             var left = (float)e["clientX"];
-            _contextMenu = new ContextMenu { Top = top, Left = left };
+            _contextMenu = new ContextMenu
+            {
+                Top = top,
+                Left = left,
+                ContextMenuItems = new List<ContextMenuItem>
+                {
+                    new ContextMenuItem { Icon = "fa fa-plus", Text = "New feature", Click = EditFeature, Parameter = new Feature() },
+                    new ContextMenuItem { Icon = "fa fa-trash", Text = "Delete this feature", Click = DeleteFeature, Parameter = feature },
+                    new ContextMenuItem { Icon = "fa fa-list", Text = "Manage features", Click = FeatureManagement },
+                    new ContextMenuItem { Icon = "fa fa-wrench", Text = "Properties", Click = EditFeature, Parameter = feature },
+                }
+            };
             AddChild(_contextMenu);
-            Html.Instance
-                .Li.Event(EventType.Click, EditFeature, new Feature())
-                    .Icon("fa fa-plus").End.Span.Text("New feature").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, DeleteFeature, feature)
-                    .Icon("fa fa-trash").End.Span.Text("Delete this feature").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, FeatureManagement)
-                    .Icon("fa fa-list").End.Span.Text("Manage features").EndOf(ElementType.li)
-                    .Li.Event(EventType.Click, EditFeature, feature)
-                    .Icon("fa fa-wrench").End.Span.Text("Properties").EndOf(ElementType.li);
         }
 
-        private void EditFeature(Feature feature)
+        private void EditFeature(object ev)
         {
+            var feature = ev as Feature;
             var editor = new FeatureDetailBL
             {
                 Id = feature.Id,
@@ -114,7 +117,7 @@ namespace TMS.UI.Business
             _contextMenu.Dispose();
         }
 
-        private void FeatureManagement()
+        private void FeatureManagement(object ev)
         {
             var popup = new FeatureBL()
             {
@@ -125,13 +128,16 @@ namespace TMS.UI.Business
             _contextMenu.Dispose();
         }
 
-        private void DeleteFeature(Feature feature)
+        private void DeleteFeature(object ev)
         {
-            var confirmDialog = new ConfirmDialog();
-            confirmDialog.YesConfirmed = async () =>
+            var feature = ev as Feature;
+            var confirmDialog = new ConfirmDialog
             {
-                var client = new Client("Feature");
-                await client.DeleteAsync(new List<int> { feature.Id });
+                YesConfirmed = async () =>
+                {
+                    var client = new Client(nameof(Feature));
+                    await client.DeleteAsync(new List<int> { feature.Id });
+                }
             };
             AddChild(confirmDialog);
             _contextMenu.Dispose();

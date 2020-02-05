@@ -38,5 +38,18 @@ namespace TMS.UI.Framework
             }
             return true;
         }
+
+        public void ComponentGroupDetail(ComponentGroup componentGroup)
+        {
+            var editor = new TabEditor<ComponentGroup>
+            {
+                Entity = componentGroup,
+                Name = "ComponentGroup",
+                Title = $"Component group - {componentGroup?.Name}",
+                Icon = "icons/config2.png"
+            };
+            AddChild(editor);
+            editor.Focus();
+        }
     }
 }

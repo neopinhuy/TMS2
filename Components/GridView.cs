@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMS.API.Models;
-using ElementType = MVVM.ElementType;
 
 namespace Components
 {
@@ -32,6 +31,7 @@ namespace Components
         private int _total = 0;
         private Table<object> _table;
         private HTMLElement _paginator;
+        private ContextMenu _contextMenu;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
         public Action<CellChangeEvent> CellChanged { get; set; }
@@ -97,7 +97,8 @@ namespace Components
             _table.CellChanged = (arg, header, data) =>
             {
                 var rows = _table.GetFlatternRowData();
-                if (IsGroupTable) {
+                if (IsGroupTable)
+                {
                     Entity.SetComplexPropValue(UI.FieldName, rows);
                 }
                 var e = new CellChangeEvent { Args = arg, Header = header, Row = data, FlatternRowData = rows, ObservableRowData = RowData };
@@ -195,20 +196,29 @@ namespace Components
             e.PreventDefault();
             var top = (float)e["clientY"];
             var left = (float)e["clientX"];
-            Html.Take(Document.Body).Ul.ClassName("context-menu")
-                .TabIndex(-1).Trigger(EventType.Focus).Floating(top, left);
-            var menu = Html.Context;
-            Html.Instance.Event(EventType.FocusOut, () => menu.Remove())
-                .Li.Event(EventType.Click, DuplicateSelected)
-                .Icon("fa fa-copy").End.Span.Text("Duplicate selected rows").EndOf(ElementType.li)
-                .Li.Event(EventType.Click, DeleteSelected)
-                .Icon("fa fa-trash").End.Span.Text("Delete selected rows").EndOf(ElementType.li);
+            _contextMenu = new ContextMenu
+            {
+                Top = top,
+                Left = left,
+                ContextMenuItems = new List<ContextMenuItem>
+                {
+                    new ContextMenuItem { Icon = "fa fa-copy", Text = "Duplicate selected rows", Click = DuplicateSelected },
+                    new ContextMenuItem { Icon = "fa fa-trash", Text = "Delete selected rows", Click = DeleteSelected },
+                }
+            };
+            AddChild(_contextMenu);
         }
 
-        private void DuplicateSelected()
+        private void DuplicateSelected(object ev)
         {
-            var rows = GetSelectedRows();
-            rows.ForEach(x => x["__selected__"] = false);
+            var rows = GetSelectedRows()?.ToArray();
+            if (rows.Nothing()) return;
+            rows = rows.Select(x => x.Copy()).ToArray();
+            rows.ForEach(x =>
+            {
+                x["__selected__"] = false;
+                x[IdField] = 0; 
+            });
             RowData.AddRange(rows);
         }
 
@@ -258,7 +268,7 @@ namespace Components
             });
         }
 
-        public void DeleteSelected()
+        public void DeleteSelected(object ev = null)
         {
             var confirm = new ConfirmDialog();
             confirm.Render();
@@ -288,7 +298,7 @@ namespace Components
             }
         }
 
-        public EnumerableInstance<object> GetSelectedRows()
+        public IEnumerable<object> GetSelectedRows()
         {
             return RowData.Data.Where(x => (bool?)x["__selected__"] == true);
         }

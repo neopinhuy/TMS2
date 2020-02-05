@@ -73,7 +73,17 @@ namespace Common.Extensions
             }
             catch (Exception)
             {
-                res.CopyProp(obj);
+                res.CopyPropFrom(obj);
+            }
+            return res;
+        }
+
+        public static object Copy(this object obj)
+        {
+            var res = new object();
+            foreach (var prop in GetOwnPropertyNames(obj))
+            {
+                res[prop] = obj[prop];
             }
             return res;
         }

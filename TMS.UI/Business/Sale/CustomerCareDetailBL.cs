@@ -85,7 +85,7 @@ namespace TMS.UI.Business.Sale
             var group = FindComponentByName<Section>("New log");
             var addButton = group.FindComponentByName<Button>("Add");
             addButton.Label = "Update";
-            group.Entity[nameof(CustomerCareVM.CustomerCareLog)].CopyProp(log);
+            group.Entity[nameof(CustomerCareVM.CustomerCareLog)].CopyPropFrom(log);
             group.UpdateView();
         }
 

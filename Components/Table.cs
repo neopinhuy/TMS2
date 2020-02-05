@@ -317,7 +317,7 @@ namespace Components
             var id = (int)rowData[IdField];
             var rowById = RowData.Data.FirstOrDefault(x => (int)x[IdField] == id);
             var index = Array.IndexOf(RowData.Data, rowById);
-            rowById.CopyProp(rowData);
+            rowById.CopyPropFrom(rowData);
             _frozenSection.Children[index]?.UpdateView();
             _mainSection.Children[index]?.UpdateView();
         }
