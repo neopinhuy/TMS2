@@ -254,6 +254,7 @@
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\CustomerCareVM.cs" />
     <Compile Include="ViewModels\FeatureVM.cs" />
+    <Compile Include="ViewModels\SaleorderVM.cs" />
     <Compile Include="ViewModels\SearchFeatureVM.cs" />
     <Compile Include="ViewModels\LiabilitiesVM.cs" />
     <Compile Include="ViewModels\MasterDataVM.cs" />

@@ -1,6 +1,7 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
 using Common.Extensions;
+using Common.ViewModels;
 using Components;
 using Components.Forms;
 using System.Threading.Tasks;
@@ -11,10 +12,13 @@ namespace TMS.UI.Business.Sale
 {
     public class SaleOrderBL : TabEditor<Order>
     {
+        private Client<Order> _client;
         public SaleOrderBL()
         {
             Name = "SaleOrder";
             Title = Name;
+            Entity = new SaleorderVM();
+            _client = new Client<Order>();
         }
 
         public void CreateSaleOrder()
@@ -84,6 +88,13 @@ namespace TMS.UI.Business.Sale
         {
             var SaleOrderGrid = FindComponentByName("SaleOrderGrid") as GridView;
             SaleOrderGrid.DeleteSelected();
+        }
+
+        public void SearchSO()
+        {
+            var soVM = Entity as SaleorderVM;
+            var soGrid = FindComponentByName("SaleOrderGrid") as GridView;
+            soGrid.ReloadData($"?$filter=Active eq true and contains(Customer/User/FirstName, '{soVM.SearchTerm}')");
         }
 
         public void Preview(Order order)

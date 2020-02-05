@@ -162,7 +162,8 @@ namespace Components
 
         public static Html SmallCheckbox(this Html html, string text, Observable<bool?> value = null)
         {
-            html.Checkbox(value).ClassName("input-small").Type("checkbox")
+            html.Checkbox(value)
+                .ClassName("input-small").Type("checkbox")
                 .Attr("data-role", "checkbox")
                 .Attr("data-style", "2")
                 .Attr("data-cls-check", "myCheckbox")
