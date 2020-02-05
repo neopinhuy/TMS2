@@ -115,5 +115,16 @@ namespace TMS.UI.Business.Accounting
             };
             AddChild(preview);
         }
+        public void PreviewAndPrint(Ledger ledger)
+        {
+            var preview = new PopupEditor<Ledger>
+            {
+                Entity = ledger,
+                Name = "Print Preview Liabilities",
+                Title = "Print Preview Liabilities"
+            };
+            AddChild(preview);
+        }
+
     }
 }

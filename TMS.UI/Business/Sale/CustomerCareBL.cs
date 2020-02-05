@@ -44,6 +44,7 @@ namespace TMS.UI.Business.Sale
                     Id = id,
                     Entity = vm,
                     Name = "CustomerCare Detail",
+                    Icon=vm.Customer?.User?.Avatar,
                     Title = vm.Customer?.Id > 0 ? $"{name}" : "New Customer"
                 };
                 AddChild(customerForm);
