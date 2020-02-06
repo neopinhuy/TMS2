@@ -22,6 +22,7 @@ namespace TMS.API.Controllers
 
         private void UpdateFeatureChildren(FeatureVM entity)
         {
+            if (entity is null) return;
             UpdateChildren(entity.ComponentGroup);
             UpdateChildren(entity.Component);
             UpdateChildren(entity.GridPolicy);

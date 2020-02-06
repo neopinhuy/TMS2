@@ -21,18 +21,23 @@ namespace TMS.UI.Framework
         public override async Task<bool> Save(bool defaultMessage = false)
         {
             var client = new Client(nameof(Feature));
+            var featureVM = Entity.CastProp<FeatureVM>();
+            featureVM.ComponentGroup.ForEach(x =>
+            {
+                x.Component = null;
+            });
             if (Entity != null && Entity[IdField].As<int>() == 0)
             {
                 if (Entity["Active"] != null) Entity["Active"] = true;
                 SetDeafaultId();
-                var data = await client.PostAsync(Entity.CastProp<FeatureVM>(), "create");
+                var data = await client.PostAsync(featureVM, "create");
                 ReloadAndShowMessage(defaultMessage, data.CastProp<FeatureVM>(), false);
                 AfterSaved?.Invoke(data != null);
             }
             else
             {
                 SetDeafaultId();
-                var data = await client.UpdateAsync(Entity.CastProp<FeatureVM>(), "update");
+                var data = await client.UpdateAsync(featureVM, "update");
                 ReloadAndShowMessage(defaultMessage, data.CastProp<FeatureVM>(), true);
                 AfterSaved?.Invoke(data != null);
             }

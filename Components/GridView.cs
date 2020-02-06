@@ -35,6 +35,7 @@ namespace Components
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
         public Action<CellChangeEvent> CellChanged { get; set; }
+        private static object[] _copiedRows;
 
         public GridView(TMS.API.Models.Component ui)
         {
@@ -202,11 +203,32 @@ namespace Components
                 Left = left,
                 ContextMenuItems = new List<ContextMenuItem>
                 {
-                    new ContextMenuItem { Icon = "fa fa-copy", Text = "Duplicate selected rows", Click = DuplicateSelected },
+                    new ContextMenuItem { Icon = "fa fa-copy", Text = "Copy", Click = CopySelected },
+                    new ContextMenuItem { Icon = "fa fa-paste", Text = "Paste", Click = PasteSelected },
+                    new ContextMenuItem { Icon = "fa fa-clone", Text = "Duplicate selected rows", Click = DuplicateSelected },
                     new ContextMenuItem { Icon = "fa fa-trash", Text = "Delete selected rows", Click = DeleteSelected },
                 }
             };
             AddChild(_contextMenu);
+        }
+
+        private void CopySelected(object ev)
+        {
+            var rows = GetSelectedRows()?.ToArray();
+            if (rows.Nothing()) return;
+            rows = rows.Select(x => x.Copy()).ToArray();
+            rows.ForEach(x =>
+            {
+                x["__selected__"] = false;
+                x[IdField] = 0;
+            });
+            _copiedRows = rows;
+        }
+
+        private void PasteSelected(object ev)
+        {
+            if (_copiedRows.Nothing()) return;
+            RowData.AddRange(_copiedRows);
         }
 
         private void DuplicateSelected(object ev)

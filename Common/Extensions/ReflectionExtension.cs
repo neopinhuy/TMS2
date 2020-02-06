@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 
 namespace Common.Extensions
@@ -79,6 +80,14 @@ namespace Common.Extensions
             {
                 prop.SetValue(obj, prop.GetValue(source));
             }
+        }
+
+        public static void SetNullComplexObject(this object entity)
+        {
+            entity.GetType().GetProperties()
+                .Where(x => x.CanWrite && x.CanRead && !x.PropertyType.IsSimple()
+                    && !typeof(IEnumerable).IsAssignableFrom(x.PropertyType))
+                .ForEach(x => x.SetValue(entity, null));
         }
     }
 }

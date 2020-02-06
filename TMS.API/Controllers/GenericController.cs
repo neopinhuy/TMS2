@@ -78,7 +78,7 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            SetNullComplexObject(entity);
+            entity.SetNullComplexObject();
             entity.SetPropValue(nameof(Component.InsertedBy), 1); // hard code for now
             entity.SetPropValue(nameof(Component.InsertedDate), DateTime.Now); // hard code for now
             entity.SetPropValue(nameof(Component.Active), true); // hard code for now
@@ -94,19 +94,11 @@ namespace TMS.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            SetNullComplexObject(entity);
+            entity.SetNullComplexObject();
             db.Set<T>().Attach(entity);
             db.Entry(entity).State = EntityState.Modified;
             await db.SaveChangesAsync();
             return entity;
-        }
-
-        private static void SetNullComplexObject(T entity)
-        {
-            entity.GetType().GetProperties()
-                .Where(x => x.CanWrite && x.CanRead && !x.PropertyType.IsSimple()
-                    && !typeof(IEnumerable).IsAssignableFrom(x.PropertyType))
-                .ForEach(x => x.SetValue(entity, null));
         }
 
         protected virtual void UpdateChild<Child>(Child entity) where Child: class
@@ -150,6 +142,7 @@ namespace TMS.API.Controllers
             if (entities.Nothing()) return;
             foreach (var detail in entities)
             {
+                detail.SetNullComplexObject();
                 var id = (int)detail.GetPropValue("Id");
                 if (id == 0)
                 {
