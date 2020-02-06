@@ -36,6 +36,7 @@ namespace Components
         public ObservableArray<object> RowData { get; set; }
         public Action<CellChangeEvent> CellChanged { get; set; }
         private static object[] _copiedRows;
+        private const string selectedFlag = "__selected__";
 
         public GridView(TMS.API.Models.Component ui)
         {
@@ -219,7 +220,7 @@ namespace Components
             rows = rows.Select(x => x.Copy()).ToArray();
             rows.ForEach(x =>
             {
-                x["__selected__"] = false;
+                x[selectedFlag] = false;
                 x[IdField] = 0;
             });
             _copiedRows = rows;
@@ -229,6 +230,12 @@ namespace Components
         {
             if (_copiedRows.Nothing()) return;
             RowData.AddRange(_copiedRows);
+            ClearSelected();
+        }
+
+        private void ClearSelected()
+        {
+            GetSelectedRows().ToList().ForEach(x => x[selectedFlag] = false);
         }
 
         private void DuplicateSelected(object ev)
@@ -238,10 +245,11 @@ namespace Components
             rows = rows.Select(x => x.Copy()).ToArray();
             rows.ForEach(x =>
             {
-                x["__selected__"] = false;
+                x[selectedFlag] = false;
                 x[IdField] = 0; 
             });
             RowData.AddRange(rows);
+            ClearSelected();
         }
 
         public void UpdateRow(object row) => _table.UpdateRow(row);
@@ -322,7 +330,7 @@ namespace Components
 
         public IEnumerable<object> GetSelectedRows()
         {
-            return RowData.Data.Where(x => (bool?)x["__selected__"] == true);
+            return RowData.Data.Where(x => (bool?)x[selectedFlag] == true);
         }
 
         public override void UpdateView()

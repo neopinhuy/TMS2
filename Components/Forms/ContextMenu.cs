@@ -29,6 +29,7 @@ namespace Components.Forms
             RootHtmlElement = Html.Context;
             jQuery.select(RootHtmlElement).HotKey("esc", Dispose);
             Html.Instance.Event(EventType.FocusOut, Dispose)
+                .Event(EventType.Click, Dispose)
                 .ForEach(ContextMenuItems, (item, index) =>
                 {
                     Html.Instance.Li.Event(EventType.Click, item.Click, item.Parameter)
