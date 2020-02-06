@@ -254,12 +254,16 @@
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\CustomerCareVM.cs" />
     <Compile Include="ViewModels\FeatureVM.cs" />
+    <Compile Include="ViewModels\CustomerCareWarningVM.cs" />
     <Compile Include="ViewModels\SaleorderVM.cs" />
     <Compile Include="ViewModels\SearchFeatureVM.cs" />
     <Compile Include="ViewModels\LiabilitiesVM.cs" />
     <Compile Include="ViewModels\MasterDataVM.cs" />
     <Compile Include="ViewModels\LedgerVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\LiabilitiWarningVM.cs" />
+    <Compile Include="ViewModels\TruckWarningVM.cs" />
+    <Compile Include="ViewModels\WarningAndNotificationsVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
@@ -292,7 +296,12 @@
       <HintPath>..\packages\Retyped.googlemaps.3.30.6733\lib\net40\Retyped.googlemaps.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\MVVM\MVVM.csproj">
+      <Project>{71801C9A-4FEB-4A2F-8EC0-44366FF4D5B1}</Project>
+      <Name>MVVM</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.17.9.0\build\Bridge.Min.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -34,6 +34,7 @@ namespace TMS.API.Controllers
             var initStatus = await db.MasterData.FirstOrDefaultAsync(m => m.Name == "UnreadStatus"
                                                                        && m.Parent.Name == "LiabilitiesWarningStatus");
             var dataCount = from trucks in db.TruckMaintenanceWarning
+
                             where trucks.ProcessStatusId == initStatus.Id
                             select trucks;
             var count = await dataCount.CountAsync();
