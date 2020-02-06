@@ -203,7 +203,7 @@ namespace Components.Forms
                 childComponent.Disabled = ui.Disabled;
                 childComponent.ShouldFocus = ui.Focus;
                 Html.Instance.EndOf(ElementType.td);
-                if (ui.Offset.HasValue)
+                if (ui.Offset.HasValue && ui.Offset > 0)
                 {
                     Html.Instance.TData.ColSpan(ui.Offset.Value).End.Render();
                     column += ui.Offset.Value;
