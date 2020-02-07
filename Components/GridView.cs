@@ -30,7 +30,7 @@ namespace Components
         private int _pageIndex = 0;
         private int _total = 0;
         private Table<object> _table;
-        private HTMLElement _paginator;
+        private Paginator _paginator;
         private ContextMenu _contextMenu;
         public ObservableArray<Header<object>> Header { get; set; }
         public ObservableArray<object> RowData { get; set; }
@@ -69,7 +69,7 @@ namespace Components
                     .Where(x => !x.Hidden).Select(MapToHeader).ToArray();
                 Header.AddRange(headers);
                 RenderTable();
-                Pagination();
+                RenderPaginator();
             });
         }
 
@@ -278,25 +278,27 @@ namespace Components
 
         private void UpdatePagination()
         {
-            if (UI.Row is null || UI.Row == 0) return;
+            if (UI.Row is null || UI.Row == 0) UI.Row = 12;
             if (_paginator is null) return;
-            Html.Take(_paginator).Pagination("updateItems", _total);
+            _paginator.UpdateTotal(_total);
         }
 
-        private void Pagination()
+        private void RenderPaginator()
         {
-            if (UI.Row is null || UI.Row == 0) return;
-            if (_paginator is null)
+            if (UI.Row is null || UI.Row == 0) UI.Row = 12;
+            _paginator = new Paginator(new PaginatorParam
             {
-                Html.Take(RootHtmlElement).Ul.ClassName("pagination");
-                _paginator = Html.Context as HTMLElement;
-            }
-            Html.Take(_paginator).Pagination(_total, UI.Row ?? 0, (page, e) =>
-            {
-                (e["preventDefault"] as System.Action)();
-                _pageIndex = page - 1;
-                ReloadData();
+                Total = _total,
+                PageSize = UI.Row ?? 12,
+                ClickHandler = (page, e) =>
+                {
+                    (e["preventDefault"] as System.Action)();
+                    _pageIndex = page - 1;
+                    ReloadData();
+                }
             });
+            Html.Take(RootHtmlElement);
+            AddChild(_paginator);
         }
 
         public void DeleteSelected(object ev = null)

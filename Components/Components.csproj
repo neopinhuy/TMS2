@@ -47,6 +47,7 @@
     <Compile Include="GroupTable.cs" />
     <Compile Include="NumberInput.cs" />
     <Compile Include="DatePicker.cs" />
+    <Compile Include="Paginator.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="TableRow.cs" />
     <Compile Include="Label.cs" />
