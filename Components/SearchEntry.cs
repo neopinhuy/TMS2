@@ -18,6 +18,7 @@ namespace Components
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
         private bool _isShowing;
+        private bool _isFocusing;
         private readonly TMS.API.Models.Component _ui;
         public string DataSourceFilter { get; set; }
         public readonly ObservableArray<object> Source;
@@ -160,6 +161,8 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
+            _isFocusing = true;
+            if (!_isFocusing) return;
             if (GridPolicy.Nothing())
             {
                 var policies = await Client<GridPolicy>.Instance.GetList(
@@ -181,6 +184,7 @@ namespace Components
             }).ToArray();
             if (Source.Data == null || Source.Data.Length == 0)
             {
+                if (!_isFocusing) return;
                 Source.Data = await GetDataSource();
             }
             var tableParam = new TableParam<object>
@@ -189,6 +193,7 @@ namespace Components
                 RowData = Source,
                 Headers = new ObservableArray<Header<object>>(headers)
             };
+            if (!_isFocusing) return;
             ToggleTable(position, tableParam);
         }
 
@@ -220,6 +225,7 @@ namespace Components
 
         private void HideTable()
         {
+            _isFocusing = false;
             if (_table == null) return;
             Html.Take(_table.RootHtmlElement).Display(false);
             _isShowing = false;
