@@ -7,9 +7,9 @@ namespace Common.ViewModels
 {
     public class WarningAndNotificationsVM
     {
-        public List<TruckWarningVM> LWarningsTruck { get; set; }
-        public List<LiabilitiWarningVM> LWarningsLiabilities { get; set; }
-        public List<CustomerCareWarningVM> LWarningsCustomerCare { get; set; }
+        public List<TruckMaintenanceWarning> LWarningsTruck { get; set; }
+        public List<LiabilitiesWarning> LWarningsLiabilities { get; set; }
+        public List<CustomerCareWarning> LWarningsCustomerCare { get; set; }
 
         public int CountLWarningsTruck { get; set; }
         public int CountLWarningsLiabilities { get; set; }

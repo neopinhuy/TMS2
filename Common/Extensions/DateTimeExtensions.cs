@@ -8,5 +8,11 @@ namespace Common.Extensions
         {
             return date.ToString("yyyy-MM-ddTHH:mm:ssZ");
         }
+        public static string CustomFormat(this DateTime? date, string format)
+        {
+            if (date is null) return string.Empty;
+            var dateTime = DateTime.Parse(date.As<string>());
+            return dateTime.ToString(format);
+        }
     }
 }

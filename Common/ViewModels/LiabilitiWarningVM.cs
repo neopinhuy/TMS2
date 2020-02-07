@@ -11,5 +11,6 @@ namespace Common.ViewModels
         public string ReceiverFullName { get; set; }
         public string ReceiverBank { get; set; }
         public string AccountType { get; set; }
+        
     }
 }

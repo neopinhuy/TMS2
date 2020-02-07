@@ -12,6 +12,7 @@ using TMS.UI.Business.Accounting;
 using TMS.UI.Business.Asset;
 using TMS.UI.Business.Sale;
 using Common.ViewModels;
+using Common.Extensions;
 
 namespace TMS.UI.Notifications
 {
@@ -20,10 +21,10 @@ namespace TMS.UI.Notifications
         private PopupEditor<Truck> _truckForm;
         private PopupEditor<Ledger> _LiabilitiesForm;
         public WarningAndNotificationsVM WarningAndNotificationsVM { get; set; }
-        public List<LiabilitiWarningVM> LWarnings { get; set; } = new List<LiabilitiWarningVM>();
-        public List<TruckWarningVM> LWarningsTruck { get; set; } = new List<TruckWarningVM>();
+        public List<LiabilitiesWarning> LWarnings { get; set; } = new List<LiabilitiesWarning>();
+        public List<TruckMaintenanceWarning> LWarningsTruck { get; set; } = new List<TruckMaintenanceWarning>();
 
-        public List<CustomerCareWarningVM> LWarningsCustomerCare { get; set; } = new List<CustomerCareWarningVM>();
+        public List<CustomerCareWarning> LWarningsCustomerCare { get; set; } = new List<CustomerCareWarning>();
 
         public override void Render()
         {
@@ -37,7 +38,7 @@ namespace TMS.UI.Notifications
             var objNotification = await clientLiabilities.GetAsync(null, "Notifications");
 
             WarningAndNotificationsVM = objNotification.As<WarningAndNotificationsVM>();
-            
+
             LWarnings = WarningAndNotificationsVM.LWarningsLiabilities.ToList();
             LWarningsTruck = WarningAndNotificationsVM.LWarningsTruck.ToList();
             LWarningsCustomerCare = WarningAndNotificationsVM.LWarningsCustomerCare.ToList();
@@ -87,12 +88,12 @@ namespace TMS.UI.Notifications
                 .ForEach(LWarningsCustomerCare, (li, index) =>
                 {
                     html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;")
-                                .Event(Bridge.Html5.EventType.Click, OpenCWarning, li)
-                                .Div.ClassName("pull-left").Img.Src("./image/" + li.Avatar).ClassName("img-circle").EndOf(".pull-left")
-                                .H4.ClassName("h4-items").Text(li.LastContactDate?.ToString("dd/MM/yyyy")).End
-                                .P.ClassName("p-warning").Text(li.GroupName + "-" + li.FirstName + " " + li.LastName).EndOf(ElementType.li);
+                                .Event(EventType.Click, OpenCWarning, li)
+                                .Div.ClassName("pull-left").Img.Src("./image/" + li.CustomerCare?.Customer?.User?.Avatar).ClassName("img-circle").EndOf(".pull-left")
+                                .H4.ClassName("h4-items").Text(li.LastContactDate.CustomFormat("dd/MM/yyyy")).End
+                                .P.ClassName("p-warning").Text(li.CustomerCare?.Customer?.CustomerGroup?.Name + "-" + li.CustomerCare?.Customer?.User?.FirstName + " " + li.CustomerCare?.Customer?.User?.LastName).EndOf(ElementType.li);
                 }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
-                                                 .Event(Bridge.Html5.EventType.Click, OpenCALLWarning)
+                                                 .Event(EventType.Click, OpenCALLWarning)
                 .EndOf(".li-Root").EndOf(".pos-relative");
             #endregion
         }
@@ -118,25 +119,25 @@ namespace TMS.UI.Notifications
                     .Ul.ClassName("menu")
                             .ForEach(LWarnings, (li, index) =>
                             {
-                                html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;")
-                                            .Event(Bridge.Html5.EventType.Click, OpenLWarning, li)
-                                            .Div.ClassName("pull-left").I.ClassName("icon fa fa-hand-holding-usd text-red").EndOf(".pull-left")
-                                            .H4.ClassName("h4-items").Text(li.DueDate?.ToString("dd/MM/yyyy")).End
-                                            .P.ClassName("p-warning").Text(li.ReceiverFullName + "-" + li.AccountType + "-" + li.ReceiverBank).EndOf(ElementType.li);
+                                html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;");
+                                html.Event(EventType.Click, OpenLWarning, li);
+                                            html.Div.ClassName("pull-left").I.ClassName("icon fa fa-hand-holding-usd text-red").EndOf(".pull-left");
+                                            html.H4.ClassName("h4-items").Text(li.DueDate.CustomFormat("dd/MM/yyyy")).End.Render();
+                                            html.P.ClassName("p-warning").Text(li.Ledger?.ReceiverFullName + "-" + li.Ledger?.AccountType?.Description + "-" + li.Ledger?.ReceiverBank?.Name).EndOf(ElementType.li);
                             }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
-                                                             .Event(Bridge.Html5.EventType.Click, OpenLiabilitiWarning)
+                                                             .Event(EventType.Click, OpenLiabilitiWarning)
                             .EndOf(".li-Root")
                 .Li.ClassName("li-Root").Span.ClassName("span-warning").Text("Truck maintenance warning").End.Span.ClassName("badge bg-orange fg-white mt-2 mr-1 fix-float-left").Id("count-TruckWarning").Text(countTruck.ToString()).End
                     .Ul.ClassName("menu")
                             .ForEach(LWarningsTruck, (li, index) =>
                             {
                                 html.Li.ClassName("liItems").A.Href("javascript:;")
-                                            .Event(Bridge.Html5.EventType.Click, OpenTruckWarning, li)
+                                            .Event(EventType.Click, OpenTruckWarning, li)
                                             .Div.ClassName("pull-left").I.ClassName("fa fa-truck text-yellow").EndOf(".pull-left")
-                                            .H4.ClassName("h4-items").Text(li.NextMaintenanceDate?.ToString("dd/MM/yyyy")).End
-                                            .P.ClassName("p-warning").Text(li.FirstName + " " + li.LastName + "-" + (li.TruckPlate ?? "") + "-" + (li.Color ?? "")).EndOf(ElementType.li);
+                                            .H4.ClassName("h4-items").Text(li.NextMaintenanceDate.CustomFormat("dd/MM/yyyy")).End
+                                            .P.ClassName("p-warning").Text(li.Truck?.Driver?.FirstName + " " + li.Truck?.Driver?.LastName + "-" + (li.Truck?.TruckPlate ?? "") + "-" + (li.Truck?.Color ?? "")).EndOf(ElementType.li);
                             }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
-                                                             .Event(Bridge.Html5.EventType.Click, OpenTruck).EndOf(".pos-relative");
+                                                             .Event(EventType.Click, OpenTruck).EndOf(".pos-relative");
             #endregion
             return html;
         }
@@ -148,7 +149,7 @@ namespace TMS.UI.Notifications
             tab.Focus();
         }
 
-        private void OpenCWarning(Event evt,CustomerCareWarning cus)
+        private void OpenCWarning(CustomerCareWarning cus)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace TMS.UI.Notifications
                 throw;
             }
 
-            
+
             var tab = new CustomerCareWarningBL();
             tab.Render();
             tab.Focus();
@@ -238,7 +239,7 @@ namespace TMS.UI.Notifications
                 UpdateStatusTruckAsync(entity);
                 Document.GetElementById("span-count").TextContent = (int.Parse(Document.GetElementById("span-count").TextContent) - 1).ToString();
                 Document.GetElementById("span-count-liabilitiesWarning").TextContent = Document.GetElementById("span-count").TextContent;
-                 Document.GetElementById("count-TruckWarning").TextContent= (int.Parse(Document.GetElementById("count-TruckWarning").TextContent) - 1).ToString();
+                Document.GetElementById("count-TruckWarning").TextContent = (int.Parse(Document.GetElementById("count-TruckWarning").TextContent) - 1).ToString();
             }
             catch (Exception)
             {
