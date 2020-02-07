@@ -1,6 +1,5 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
-using Component = Components.Component;
 using ElementType = MVVM.ElementType;
 using Components.Forms;
 using MVVM;
@@ -12,6 +11,7 @@ using TMS.API.Models;
 using TMS.UI.Business.Accounting;
 using TMS.UI.Business.Asset;
 using TMS.UI.Business.Sale;
+using Common.ViewModels;
 
 namespace TMS.UI.Notifications
 {
@@ -19,11 +19,11 @@ namespace TMS.UI.Notifications
     {
         private PopupEditor<Truck> _truckForm;
         private PopupEditor<Ledger> _LiabilitiesForm;
+        public WarningAndNotificationsVM WarningAndNotificationsVM { get; set; }
+        public List<LiabilitiWarningVM> LWarnings { get; set; } = new List<LiabilitiWarningVM>();
+        public List<TruckWarningVM> LWarningsTruck { get; set; } = new List<TruckWarningVM>();
 
-        public List<LiabilitiesWarning> LWarnings { get; set; } = new List<LiabilitiesWarning>();
-        public ObservableArray<TruckMaintenanceWarning> LWarningsTruck { get; set; } = new ObservableArray<TruckMaintenanceWarning>();
-
-        public List<CustomerCareWarning> LWarningsCustomerCare { get; set; } = new List<CustomerCareWarning>();
+        public List<CustomerCareWarningVM> LWarningsCustomerCare { get; set; } = new List<CustomerCareWarningVM>();
 
         public override void Render()
         {
@@ -33,24 +33,18 @@ namespace TMS.UI.Notifications
 
         public async Task RenderAsync()
         {
+            var clientLiabilities = new Client("LiabilitiesWarning");
+            var objNotification = await clientLiabilities.GetAsync(null, "Notifications");
 
-            var setting = await Client<MasterData>.Instance.GetList("?$filter=Active eq true and Name eq 'MaintenanceSettings'");
-            var parsed = int.TryParse(setting.value.FirstOrDefault()?.Description, out int res);
-            DateTime today = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 00, 00, 00, 000);
-            DateTime commingtoday = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
-            var commingDate = today.AddDays(parsed ? res : 3);
-            var client = new Client("Ledger");
-            var count = await client.GetAsync(null, "Countliabilitieswarning");
-            var warnings = await Client<LiabilitiesWarning>.Instance.GetList($"?$expand=ProcessStatus($select=Id,Name),Ledger($select=Id,ReceiverFullName),Ledger($expand=AccountType($select=Description),ReceiverBank($select=Name))&$filter= Active eq true " + $"and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
-            var warningsTruck = await Client<TruckMaintenanceWarning>.Instance.GetList($"?$expand=Truck($expand=Driver($select=LastName,FirstName))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
-            var warningsCustomer = await Client<CustomerCareWarning>.Instance.GetList($"?$expand=CustomerCare($expand=Customer($expand=CustomerGroup($select=Name),User($select=FirstName,LastName)))&$filter= Active eq true and ProcessStatus/Name eq 'UnreadStatus' " + $"&$orderby=InsertedDate&$top=5");
-            var clientTruck = new Client("TruckMaintenance");
-            var countTruck = await clientTruck.GetAsync(null, "CountMaintenanceWarning");
-            var clientCustomer = new Client("Customer");
-            var countCustomer = await clientCustomer.GetAsync(null, "CountCustomerWarning");
-            LWarnings = warnings.value;
-            LWarningsTruck.Data = warningsTruck.value.ToArray();
-            LWarningsCustomerCare = warningsCustomer.value;
+            WarningAndNotificationsVM = objNotification.As<WarningAndNotificationsVM>();
+            
+            LWarnings = WarningAndNotificationsVM.LWarningsLiabilities.ToList();
+            LWarningsTruck = WarningAndNotificationsVM.LWarningsTruck.ToList();
+            LWarningsCustomerCare = WarningAndNotificationsVM.LWarningsCustomerCare.ToList();
+
+            var count = WarningAndNotificationsVM.CountLWarningsLiabilities;
+            var countTruck = WarningAndNotificationsVM.CountLWarningsTruck;
+            var countCustomer = WarningAndNotificationsVM.CountLWarningsCustomerCare;
             Html html = RenderLibitiesWarning(count, countTruck);
             RenderCustomerWarning(countCustomer, html);
             RenderProfile(html); html.EndOf(".ml-auto");
@@ -94,9 +88,9 @@ namespace TMS.UI.Notifications
                 {
                     html.Li.ClassName("liItems").A.ClassName("a-items").Href("javascript:;")
                                 .Event(Bridge.Html5.EventType.Click, OpenCWarning, li)
-                                .Div.ClassName("pull-left").Img.Src("./image/" + li.CustomerCare.Customer.User.Avatar).ClassName("img-circle").EndOf(".pull-left")
+                                .Div.ClassName("pull-left").Img.Src("./image/" + li.Avatar).ClassName("img-circle").EndOf(".pull-left")
                                 .H4.ClassName("h4-items").Text(li.LastContactDate?.ToString("dd/MM/yyyy")).End
-                                .P.ClassName("p-warning").Text(li.CustomerCare.Customer.CustomerGroup.Name + "-" + li.CustomerCare.Customer.User.FirstName + " " + li.CustomerCare.Customer.User.LastName).EndOf(ElementType.li);
+                                .P.ClassName("p-warning").Text(li.GroupName + "-" + li.FirstName + " " + li.LastName).EndOf(ElementType.li);
                 }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                  .Event(Bridge.Html5.EventType.Click, OpenCALLWarning)
                 .EndOf(".li-Root").EndOf(".pos-relative");
@@ -128,7 +122,7 @@ namespace TMS.UI.Notifications
                                             .Event(Bridge.Html5.EventType.Click, OpenLWarning, li)
                                             .Div.ClassName("pull-left").I.ClassName("icon fa fa-hand-holding-usd text-red").EndOf(".pull-left")
                                             .H4.ClassName("h4-items").Text(li.DueDate?.ToString("dd/MM/yyyy")).End
-                                            .P.ClassName("p-warning").Text(li.Ledger.ReceiverFullName + "-" + li.Ledger.AccountType.Description + "-" + li.Ledger.ReceiverBank.Name).EndOf(ElementType.li);
+                                            .P.ClassName("p-warning").Text(li.ReceiverFullName + "-" + li.AccountType + "-" + li.ReceiverBank).EndOf(ElementType.li);
                             }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                              .Event(Bridge.Html5.EventType.Click, OpenLiabilitiWarning)
                             .EndOf(".li-Root")
@@ -140,7 +134,7 @@ namespace TMS.UI.Notifications
                                             .Event(Bridge.Html5.EventType.Click, OpenTruckWarning, li)
                                             .Div.ClassName("pull-left").I.ClassName("fa fa-truck text-yellow").EndOf(".pull-left")
                                             .H4.ClassName("h4-items").Text(li.NextMaintenanceDate?.ToString("dd/MM/yyyy")).End
-                                            .P.ClassName("p-warning").Text(li.Truck.Driver?.FirstName + " " + li.Truck.Driver?.LastName + "-" + (li.Truck.TruckPlate ?? "") + "-" + (li.Truck.Color ?? "")).EndOf(ElementType.li);
+                                            .P.ClassName("p-warning").Text(li.FirstName + " " + li.LastName + "-" + (li.TruckPlate ?? "") + "-" + (li.Color ?? "")).EndOf(ElementType.li);
                             }).Li.ClassName("footer-viewall").A.Href("javascript:;").Text("See All")
                                                              .Event(Bridge.Html5.EventType.Click, OpenTruck).EndOf(".pos-relative");
             #endregion
@@ -154,7 +148,7 @@ namespace TMS.UI.Notifications
             tab.Focus();
         }
 
-        private void OpenCWarning(CustomerCareWarning cus)
+        private void OpenCWarning(Event evt,CustomerCareWarning cus)
         {
             try
             {

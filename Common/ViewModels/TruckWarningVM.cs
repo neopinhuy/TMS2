@@ -4,7 +4,7 @@ using TMS.API.Models;
 
 namespace Common.ViewModels
 {
-    class TruckWarningVM
+    public class TruckWarningVM
     {
         public int Id { get; set; }
         public DateTime? NextMaintenanceDate { get; set; }

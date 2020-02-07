@@ -60,6 +60,7 @@ namespace TMS.API.Controllers
                                    GroupName = cu.Customer.CustomerGroup.Name,
                                    LastName = cu.Customer.User.LastName,
                                    FirstName = cu.Customer.User.FirstName,
+                                   Avatar=cu.Customer.User.Avatar
                                };
             var dtCountCus = dataCountCus.CountAsync();
             var listdtCountCus = dataCountCus.Take(5).ToListAsync();

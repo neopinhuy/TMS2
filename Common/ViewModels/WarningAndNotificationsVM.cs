@@ -5,7 +5,7 @@ using TMS.API.Models;
 
 namespace Common.ViewModels
 {
-    class WarningAndNotificationsVM
+    public class WarningAndNotificationsVM
     {
         public List<TruckWarningVM> LWarningsTruck { get; set; }
         public List<LiabilitiWarningVM> LWarningsLiabilities { get; set; }

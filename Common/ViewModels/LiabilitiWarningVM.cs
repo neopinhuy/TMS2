@@ -4,7 +4,7 @@ using TMS.API.Models;
 
 namespace Common.ViewModels
 {
-    class LiabilitiWarningVM
+    public class LiabilitiWarningVM
     {
         public int Id { get; set; }
         public DateTime? DueDate { get; set; }
