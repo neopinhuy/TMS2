@@ -37,7 +37,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public override async Task<ActionResult<bool>> Delete([FromBody] List<int> ids)
+        public override async Task<ActionResult<bool>> DeleteAsync([FromBody] List<int> ids)
         {
             var coordination = await db.Coordination
                 .Include(x => x.CoordinationDetail)
@@ -48,7 +48,7 @@ namespace TMS.API.Controllers
                 return BadRequest($"The coordination(s) {string.Join(", ", inprogress.Select(x => x.Id))} is(are) in progress");
             db.CoordinationDetail.RemoveRange(coordination.SelectMany(x => x.CoordinationDetail));
             db.OrderComposition.RemoveRange(coordination.SelectMany(x => x.OrderComposition));
-            return await base.Delete(ids);
+            return await base.DeleteAsync(ids);
         }
     }
 }

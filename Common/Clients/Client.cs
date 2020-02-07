@@ -213,5 +213,32 @@ namespace Common.Clients
             xhr.Send(JsonConvert.SerializeObject(ids));
             return tcs.Task;
         }
+
+        public Task<bool> HardDeleteAsync(List<int> ids)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            var xhr = new XMLHttpRequest();
+            xhr.Open("POST", $"/api/{_entityName}/HardDelete", true);
+            xhr.SetRequestHeader("Content-type", "application/json-patch+json");
+            xhr.OnReadyStateChange = () =>
+            {
+                if (xhr.ReadyState != AjaxReadyState.Done)
+                {
+                    return;
+                }
+                if (xhr.Status == 200 || xhr.Status == 204)
+                {
+                    var parsed = JsonConvert.DeserializeObject<bool>(xhr.ResponseText);
+                    tcs.SetResult(parsed);
+                }
+                else
+                {
+                    tcs.SetResult(false);
+                    Toast.Warning(xhr.ResponseText);
+                }
+            };
+            xhr.Send(JsonConvert.SerializeObject(ids));
+            return tcs.Task;
+        }
     }
 }

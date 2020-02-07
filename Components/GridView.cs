@@ -206,8 +206,9 @@ namespace Components
                 {
                     new ContextMenuItem { Icon = "fa fa-copy", Text = "Copy", Click = CopySelected },
                     new ContextMenuItem { Icon = "fa fa-paste", Text = "Paste", Click = PasteSelected },
-                    new ContextMenuItem { Icon = "fa fa-clone", Text = "Duplicate selected rows", Click = DuplicateSelected },
-                    new ContextMenuItem { Icon = "fa fa-trash", Text = "Delete selected rows", Click = DeleteSelected },
+                    new ContextMenuItem { Icon = "fa fa-clone", Text = "Duplicate", Click = DuplicateSelected },
+                    new ContextMenuItem { Icon = "fa fa-trash", Text = "Delete", Click = DeleteSelected },
+                    new ContextMenuItem { Icon = "fa fa-trash", Text = "Hard delete", Click = HardDeleteSelected },
                 }
             };
             AddChild(_contextMenu);
@@ -309,6 +310,17 @@ namespace Components
             };
         }
 
+        public void HardDeleteSelected(object ev = null)
+        {
+            var confirm = new ConfirmDialog();
+            confirm.Render();
+            confirm.YesConfirmed += async () =>
+            {
+                confirm.Dispose();
+                await HardDelete();
+            };
+        }
+
         public virtual async Task Delete()
         {
             var entity = UI.Reference.Name;
@@ -316,6 +328,25 @@ namespace Components
                 .Select(x => (int)x[IdField]).ToList();
             var client = new Client(entity);
             var success = await client.DeleteAsync(ids);
+            if (success)
+            {
+                Toast.Success("Delete succeeded");
+                GetSelectedRows().ForEach(RowData.Remove);
+                ReloadData();
+            }
+            else
+            {
+                Toast.Warning("Delete failed");
+            }
+        }
+
+        public virtual async Task HardDelete()
+        {
+            var entity = UI.Reference.Name;
+            var ids = GetSelectedRows()
+                .Select(x => (int)x[IdField]).ToList();
+            var client = new Client(entity);
+            var success = await client.HardDeleteAsync(ids);
             if (success)
             {
                 Toast.Success("Delete succeeded");

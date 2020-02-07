@@ -129,10 +129,19 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public virtual async Task<ActionResult<bool>> Delete([FromBody]List<int> ids)
+        public virtual async Task<ActionResult<bool>> DeleteAsync([FromBody]List<int> ids)
         {
             var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
             await entities.ForEachAsync(x => x.SetPropValue("Active", false));
+            await db.SaveChangesAsync();
+            return true;
+        }
+
+        [HttpPost("api/[Controller]/HardDelete")]
+        public virtual async Task<ActionResult<bool>> HardDeleteAsync([FromBody]List<int> ids)
+        {
+            var entities = db.Set<T>().Where(x => ids.Contains((int)x.GetPropValue("Id")));
+            db.Set<T>().RemoveRange(entities);
             await db.SaveChangesAsync();
             return true;
         }

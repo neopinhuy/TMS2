@@ -19,7 +19,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public override async Task<ActionResult<bool>> Delete([FromBody] List<int> ids)
+        public override async Task<ActionResult<bool>> DeleteAsync([FromBody] List<int> ids)
         {
             var inCoordination = (int)FreightStateEnum.InCoordination;
             var coordinations = db.FindCoordination(ids);
@@ -35,7 +35,7 @@ namespace TMS.API.Controllers
             db.OrderComposition.RemoveRange(composition);
             await db.SaveChangesAsync();
             db.RemoveEmptyCoordination();
-            return await base.Delete(ids);
+            return await base.DeleteAsync(ids);
         }
 
         [HttpGet("api/[Controller]/FindByCoorId/{coorId}")]

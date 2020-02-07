@@ -15,7 +15,7 @@ namespace TMS.API.Controllers
         }
 
         [HttpPost("api/[Controller]/Delete")]
-        public override async Task<ActionResult<bool>> Delete([FromBody] List<int> ids)
+        public override async Task<ActionResult<bool>> DeleteAsync([FromBody] List<int> ids)
         {
             var entities = db.OrderComposition.Where(x => ids.Contains(x.Id));
             db.OrderComposition.RemoveRange(entities);
