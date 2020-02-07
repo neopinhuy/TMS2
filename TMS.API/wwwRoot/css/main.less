@@ -5,10 +5,12 @@ html {
     font-size: 13px;
     min-height: 100vh;
 }
+
 body {
     background-color: @whiteGrey;
     overflow: hidden;
 }
+
 aside {
     overflow: hidden;
     position: fixed !important;
@@ -44,11 +46,13 @@ aside {
     .sidebar-menu {
         border-right: @whiteGrey;
         border-bottom: 0;
+
         a:hover {
             color: @white !important;
         }
     }
 }
+
 .app-bar {
     background-color: rgba(0, 146, 64, 0.78);
     position: relative !important;
@@ -63,6 +67,7 @@ aside {
         background-color: rgba(29, 29, 29, 0.1) !important;
     }
 }
+
 .fix-sidebar {
     width: calc(100% - 290px);
 }
@@ -75,8 +80,8 @@ aside {
     left: auto;
     background: #fff;
     margin-right: 1.1rem;
-    max-height:280px;
-    overflow-y:auto;
+    max-height: 280px;
+    overflow-y: auto;
 }
 
 #container {
@@ -118,7 +123,7 @@ aside {
                 width: 2.5rem;
                 height: 2.5rem;
                 margin-top: 3px;
-                border-radius:40%;
+                border-radius: 40%;
             }
         }
     }
@@ -522,8 +527,22 @@ td {
         position: fixed;
         background-color: @white;
         margin: 0;
-        border-left: 1px solid @grayDark;
+        border: 1px solid @grayDark;
         z-index: 9999;
+        max-height: 315px;
+
+        .non-frozen {
+            position: relative;
+            overflow: hidden;
+            &:hover {
+                overflow-y: auto;
+                overflow-y: overlay;
+            }
+            thead th {
+                border-top: 0;
+                background-color: @theadBg;
+            }
+        }
 
         table {
             width: auto;
