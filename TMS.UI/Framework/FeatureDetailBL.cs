@@ -48,6 +48,7 @@ namespace TMS.UI.Framework
         {
             var editor = new TabEditor<ComponentGroup>
             {
+                Id = componentGroup.Id,
                 Entity = componentGroup,
                 Name = "ComponentGroup",
                 Title = $"Component group - {componentGroup?.Name}",
