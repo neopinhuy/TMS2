@@ -254,12 +254,16 @@
     <Compile Include="ViewModels\EmailVM.cs" />
     <Compile Include="ViewModels\CustomerCareVM.cs" />
     <Compile Include="ViewModels\FeatureVM.cs" />
+    <Compile Include="ViewModels\CustomerCareWarningVM.cs" />
+    <Compile Include="ViewModels\PolicyManagementVM.cs" />
     <Compile Include="ViewModels\SaleorderVM.cs" />
     <Compile Include="ViewModels\SearchFeatureVM.cs" />
     <Compile Include="ViewModels\LiabilitiesVM.cs" />
     <Compile Include="ViewModels\MasterDataVM.cs" />
     <Compile Include="ViewModels\LedgerVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\LiabilitiWarningVM.cs" />
+    <Compile Include="ViewModels\TruckWarningVM.cs" />
     <Compile Include="ViewModels\WarningAndNotificationsVM.cs" />
   </ItemGroup>
   <ItemGroup>

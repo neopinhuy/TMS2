@@ -49,6 +49,7 @@
     <Compile Include="..\Common\ViewModels\FeatureVM.cs" Link="ViewModels\FeatureVM.cs" />
     <Compile Include="..\Common\ViewModels\LedgerVM.cs" Link="ViewModels\LedgerVM.cs" />
     <Compile Include="..\Common\ViewModels\LoginVM.cs" Link="ViewModels\LoginVM.cs" />
+    <Compile Include="..\Common\ViewModels\PolicyManagementVM.cs" Link="ViewModels\PolicyManagementVM.cs" />
     <Compile Include="..\Common\ViewModels\SearchFeatureVM.cs" Link="ViewModels\SearchFeatureVM.cs" />
     <Compile Include="..\Common\ViewModels\WarningAndNotificationsVM.cs" Link="ViewModels\WarningAndNotificationsVM.cs" />
   </ItemGroup>
