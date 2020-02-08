@@ -62,7 +62,7 @@ namespace TMS.UI.Notifications
                                         .DataAttr("toggle-element", "#dropdown_toggle_Profile")
                                     .Div.ClassName("fg-black");
             html.Ul.ClassName("ul-Warning")
-                .Li.ClassName("user-header").Img.Src("./image/chinese.jfif").ClassName("img-circle").End
+                .Li.ClassName("user-header").Img.Src("./image/chinese.jfif").ClassName("img-circle").Id("img-detail").End
                 .P.Id("Username-text").Text("Nguyễn Văn A").End.Span.Id("text-address").Text("227 Nguyễn Văn Cừ").End
                 .EndOf(".user-header")
                 .Li.ClassName("user-footer").Div.ClassName("pull-right").A.Href("javascript;").ClassName("btn-signout").Text("Sign out").EndOf(".pos-relative");

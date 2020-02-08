@@ -44,7 +44,7 @@ namespace TMS.UI.Business.Authentication
                 Document.GetElementById("Username-text").TextContent = res.FirstName+" "+res.LastName;
                 Document.GetElementById("text-address").TextContent = res.Address;
                 Html.Take("#user-image").Src("./image/" + res.Avatar);
-                Html.Take(".img-circle").Src("./image/" + res.Avatar);
+                Html.Take("#img-detail").Src("./image/" + res.Avatar);
             }
             return true;
         }

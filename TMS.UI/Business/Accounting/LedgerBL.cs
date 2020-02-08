@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using Common.Clients;
+using Common.Extensions;
 using Common.ViewModels;
 using Components;
 using Components.Forms;
@@ -117,41 +118,63 @@ namespace TMS.UI.Business.Accounting
         }
         public void PreviewAndPrintLedger(Ledger ledger)
         {
-            var preview = new PopupEditor<Ledger>
+            var filter = Entity as LedgerVM;
+            if (filter.TargetTypeId is null && filter.TargetId is null)
             {
-                Entity = ledger,
-                Name = "Print Preview Liabilities",
-                Title = "Print Preview Liabilities"
-            };
-            preview.AfterRendered += () =>
+                Toast.Warning("Wrong TargetType and Target! Please try again!");
+            }
+            else
             {
-                var grid = FindComponentByName<GridView>("LedgerGridPreview");
-                grid.RowData.Subscribe(x =>
+                var preview = new PopupEditor<Ledger>
                 {
-                    if (x.Array is null) return;
-                    var rows = x.Array as Ledger[];
-                    rows.ForEach(SetOriginMoney);
-                });
-                grid.AfterRendered += async () =>
-                {
-                    var filter = Entity as LedgerVM;
-                    var summary = await Client<Ledger>.Instance
-                        .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}" +
-                        $"&TargetTypeId={filter.TargetTypeId}&TargetId={filter.TargetId}");
-                    var opening = summary.value.FirstOrDefault();
-                    var closing = summary.value.LastOrDefault();
-                    if (opening is null || closing is null) return;
-
-                    var tr = grid.RootHtmlElement.QuerySelector(".summary") as HTMLTableRowElement;
-                    tr.Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
-                    tr.Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
-
-                    tr = tr.NextElementSibling as HTMLTableRowElement;
-                    tr.Cells[2].TextContent = string.Format("{0:n}", closing.OpeningDebit);
-                    tr.Cells[3].TextContent = string.Format("{0:n}", closing.OpeningCredit);
+                    Entity = ledger,
+                    Name = "Print Preview Liabilities",
+                    Title = "Print Preview Liabilities"
                 };
-            };
-            AddChild(preview);
+                AddChild(preview);
+                preview.AfterRendered += () =>
+                {
+                    var grid = FindComponentByName<GridView>("LedgerGridPreview");
+                    grid.AfterRendered += async () =>
+                    {
+
+                        var summary = await Client<Ledger>.Instance
+                            .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}" +
+                            $"&TargetTypeId={filter.TargetTypeId}&TargetId={filter.TargetId}");
+                        var opening = summary.value.FirstOrDefault();
+                        var closing = summary.value.LastOrDefault();
+                        if (opening is null || closing is null) return;
+
+                        var tr = grid.RootHtmlElement.QuerySelectorAll(".summary");
+                        tr[2].As<HTMLTableRowElement>().Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
+                        tr[2].As<HTMLTableRowElement>().Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
+
+                        tr[3].As<HTMLTableRowElement>().Cells[2].TextContent = string.Format("{0:n}", closing.OpeningDebit);
+                        tr[3].As<HTMLTableRowElement>().Cells[3].TextContent = string.Format("{0:n}", closing.OpeningCredit);
+                        //tr.Cells[1].TextContent = string.Format("{0:n}", opening.OpeningCredit);
+                    };
+                };
+            }
+            
+        }
+        public void PrintDebitCredit()
+        {
+            var preview = FindComponentByName<Section>("ViewA4");
+            var print = Window.Open("", "_blank");
+            var shtml = "<html>";
+            shtml += "<link rel='stylesheet' type='text/css' href='./css/styleprint.css' />";
+            shtml += "<link href='./css/font-awesome.css' rel='stylesheet' />";
+            shtml += "<link href='./css/metro-all.css' rel='stylesheet' />";
+            shtml += "<link href='./css/main.css' rel='stylesheet' />";
+            shtml += "<link href='./css/LineIcons.css' rel='stylesheet' />";
+            shtml += "<body onload=\"window.print();window.close();\">";
+            shtml += "<div style='padding:7pt'>";
+            shtml += preview.RootHtmlElement.InnerHTML;
+            shtml += "</div>";
+            shtml += "</body>";
+            shtml += "</html>";
+            print.Document.Write(shtml);
+            print.Document.Close();
         }
     }
 }
