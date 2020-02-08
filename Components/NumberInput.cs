@@ -1,8 +1,8 @@
-﻿using Common.Extensions;
+﻿using Bridge.Html5;
+using Common.Extensions;
 using Components.Extensions;
 using MVVM;
 using System;
-using TMS.API.Models;
 using static Retyped.jquery_maskmoney.jQueryMaskMoney;
 
 namespace Components
@@ -37,7 +37,7 @@ namespace Components
                 @decimal = ".",
                 precision = isDecimal ? _ui.Precision : 0
             });
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
 
         private bool ParseNumber(out decimal parsedVal)

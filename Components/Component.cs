@@ -20,7 +20,7 @@ namespace Components
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
         public virtual Element RootHtmlElement { get; set; }
-        public virtual Element InteractiveElement { get; set; }
+        public virtual HTMLElement InteractiveElement { get; set; }
         public Func<ObservableArgs, bool> ValueChanging { get; set; }
         public Action<ObservableArgs> ValueChanged { get; set; }
         public virtual Component RootComponent

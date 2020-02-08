@@ -2,7 +2,6 @@
 using Components.Extensions;
 using MVVM;
 using System;
-using TMS.API.Models;
 
 namespace Components
 {
@@ -38,7 +37,7 @@ namespace Components
                 {
                     this.DispatchEvent(_ui.Events, EventType.Click, Entity);
                 });
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
     }
 }

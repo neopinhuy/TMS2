@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Bridge.Html5;
+using Common.Extensions;
 using MVVM;
 using System;
 using TMS.API.Models;
@@ -25,7 +26,7 @@ namespace Components
                 ValueChanged?.Invoke(arg);
             });
             Html.Instance.SmallMonthYearPicker(Value);
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
 
         public override void UpdateView()

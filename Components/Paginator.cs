@@ -4,7 +4,7 @@ using System;
 
 namespace Components
 {
-    public class PaginatorParam
+    public class PaginationOptions
     {
         public int Total { get; set; }
         public int PageSize { get; set; }
@@ -13,24 +13,34 @@ namespace Components
 
     public class Paginator : Component
     {
-        private readonly PaginatorParam _paginator;
+        private readonly PaginationOptions Options;
+        private bool _hasInit;
         
-        public Paginator(PaginatorParam paginator)
+        public Paginator(PaginationOptions paginator)
         {
-            _paginator = paginator ?? throw new ArgumentNullException(nameof(paginator));
+            Options = paginator ?? throw new ArgumentNullException(nameof(paginator));
         }
 
         public override void Render()
         {
+            InitialRender();
+        }
+
+        private void InitialRender()
+        {
+            if (_hasInit || Options.Total <= Options.PageSize) return;
+            _hasInit = true;
             Html.Take(RootHtmlElement).Ul.ClassName("pagination");
             RootHtmlElement = Html.Context;
-            Html.Instance.Pagination(_paginator.Total, _paginator.PageSize, _paginator.ClickHandler);
+            Html.Take(RootHtmlElement).Pagination(Options.Total, Options.PageSize, Options.ClickHandler);
         }
 
         public void UpdateTotal(int total)
         {
-            _paginator.Total = total;
-            Html.Take(RootHtmlElement).Pagination("updateItems", _paginator.Total);
+            Options.Total = total;
+            if (_hasInit || Options.Total <= Options.PageSize) return;
+            InitialRender();
+            Html.Take(RootHtmlElement).Pagination("updateItems", Options.Total);
         }
     }
 }

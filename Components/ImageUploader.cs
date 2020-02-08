@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TMS.API.Models;
 
 namespace Components
 {
@@ -74,7 +73,7 @@ namespace Components
                         e.PreventDefault();
                     }
                 });
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
             _form = InteractiveElement.ParentElement as HTMLFormElement;
             RenderIcon();
         }

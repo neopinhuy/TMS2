@@ -12,12 +12,12 @@ namespace Components
         public override void Render()
         {
             base.Render();
-            Html.Take(RootHtmlElement).ClassName("floating").Floating(Top, Left);
+            Html.Take(InteractiveElement).ClassName("floating").Floating(Top, Left);
         }
 
         public void Toggle(bool shouldShow)
         {
-            Html.Take(RootHtmlElement).Display(shouldShow);
+            Html.Take(InteractiveElement).Display(shouldShow);
         }
     }
 }

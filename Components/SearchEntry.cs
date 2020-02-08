@@ -3,6 +3,7 @@ using Common.Clients;
 using Common.Extensions;
 using Components.Extensions;
 using MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,42 +18,53 @@ namespace Components
         private HTMLInputElement _input;
         private FloatingTable<object> _table;
         private IEnumerable<GridPolicy> GridPolicy;
-        private bool _isShowing;
-        private bool _isFocusing;
-        private readonly TMS.API.Models.Component _ui;
+        private bool _hasFocusOut;
+        private Paginator _paginator;
+        private string _lastDataSource;
+        private int _pageIndex;
+        private int _total;
+        private int _waitToClose;
+        private readonly TMS.API.Models.Component UI;
         public string DataSourceFilter { get; set; }
         public readonly ObservableArray<object> Source;
         public object Matched { get; set; }
 
         public SearchEntry(TMS.API.Models.Component ui)
         {
-            _ui = ui ?? throw new System.ArgumentNullException(nameof(ui));
+            UI = ui ?? throw new System.ArgumentNullException(nameof(ui));
             DataSourceFilter = ui.DataSourceFilter;
             Source = new ObservableArray<object>();
         }
 
         public override void Render()
         {
-            Value = new Observable<int?>((int?)Entity?.GetComplexPropValue(_ui.FieldName));
+            Value = new Observable<int?>((int?)Entity?.GetComplexPropValue(UI.FieldName));
             Value.Subscribe(arg =>
             {
                 var res = ValueChanging?.Invoke(arg);
                 if (res == false) return;
                 SetMatchText();
-                if (Entity != null) Entity.SetComplexPropValue(_ui.FieldName, arg.NewData);
+                if (Entity != null) Entity.SetComplexPropValue(UI.FieldName, arg.NewData);
                 ValueChanged?.Invoke(arg);
-                this.DispatchEvent(_ui.Events, EventType.Change, arg);
+                this.DispatchEvent(UI.Events, EventType.Change, arg);
                 var gridRow = Closest<TableRow>();
                 var root = gridRow ?? RootComponent;
                 CascadeField(root);
                 PopulateFields(root);
             });
-            Html.Take(RootHtmlElement).Input.PlaceHolder(_ui.Label ?? string.Empty)
+            Html.Take(RootHtmlElement).TabIndex(-1)
+                .Event(EventType.FocusIn, async () => await RenderSuggestion())
+                .Event(EventType.FocusOut, () =>
+                {
+                    _hasFocusOut = true;
+                    HideTable();
+                })
+                .Input.PlaceHolder(UI.Label ?? string.Empty)
                 .Attr("data-role", "input").ClassName("input-small")
                 .Event(EventType.KeyDown, (Event e) =>
                 {
                     var code = int.Parse(e["keyCode"].ToString());
-                    if (_isShowing)
+                    if (!_hasFocusOut)
                     {
                         if (code == 38) _table.MoveUp();
                         if (code == 40) _table.MoveDown();
@@ -68,18 +80,14 @@ namespace Components
                     }
                     // Searching here
                 });
-            InteractiveElement = Html.Context;
-            _input = InteractiveElement as HTMLInputElement;
-            Html.Take(InteractiveElement.ParentElement).TabIndex(-1)
-                    .Event(EventType.FocusIn, async () => await RenderSuggestion())
-                    .Event(EventType.FocusOut, HideTable);
+            InteractiveElement = _input = Html.Context as HTMLInputElement;
             SetMatchText();
         }
 
         private void PopulateFields(Component root)
         {
-            if (_ui.PopulateField.IsNullOrEmpty()) return;
-            _ui.PopulateField.Split(",").Where(x => x.HasAnyChar())
+            if (UI.PopulateField.IsNullOrEmpty()) return;
+            UI.PopulateField.Split(",").Where(x => x.HasAnyChar())
                 .Select(x => x.Trim()).ForEach(field =>
                 {
                     var value = Matched.GetComplexPropValue(field);
@@ -102,8 +110,8 @@ namespace Components
 
         private void CascadeField(Component root)
         {
-            if (_ui.CascadeField.IsNullOrEmpty()) return;
-            var com = root.FindComponentByName<SearchEntry>(_ui.CascadeField);
+            if (UI.CascadeField.IsNullOrEmpty()) return;
+            var com = root.FindComponentByName<SearchEntry>(UI.CascadeField);
             if (com is null) return;
             com.Value.Data = null;
             com.Source.NewValue = new object[] { };
@@ -134,7 +142,7 @@ namespace Components
                 var formattedDataSource = FormatDataSource();
                 var noFilterQuery = OdataExtensions.RemoveFilterQuery(formattedDataSource);
                 var query = OdataExtensions.FilterByIds(noFilterQuery, ids);
-                var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, query);
+                var source = await Client<object>.Instance.GetListEntity(UI.Reference.Name, query);
                 Matched = source?.value?.FirstOrDefault();
                 SetMatchedValue();
             });
@@ -142,14 +150,7 @@ namespace Components
 
         private void SetMatchedValue()
         {
-            _input.Value = Matched != null ? Utils.FormatWith(_ui.FormatData, Matched) : string.Empty;
-        }
-
-        private async Task<object[]> GetDataSource()
-        {
-            var dataSource = FormatDataSource();
-            var source = await Client<object>.Instance.GetListEntity(_ui.Reference.Name, dataSource);
-            return source?.value?.ToArray();
+            _input.Value = Matched != null ? Utils.FormatWith(UI.FormatData, Matched) : string.Empty;
         }
 
         private string FormatDataSource()
@@ -161,17 +162,35 @@ namespace Components
 
         public async Task RenderSuggestion()
         {
-            _isFocusing = true;
-            if (!_isFocusing) return;
+            _hasFocusOut = false;
+            if (_hasFocusOut) return;
             if (GridPolicy.Nothing())
             {
                 var policies = await Client<GridPolicy>.Instance.GetList(
                         $"?$expand=Reference($select=Name)&$filter=Active eq true and " +
-                        $"FeatureId eq null and Entity/Name eq '{_ui.Reference.Name}'");
+                        $"FeatureId eq null and Entity/Name eq '{UI.Reference.Name}'");
                 GridPolicy = policies.value.OrderBy(x => x.Order);
             }
+            var headers = GridPolicy.Select(MapTableHeader).ToArray();
+            if (Source.Data.Nothing())
+            {
+                if (_hasFocusOut) return;
+                ReloadData();
+            }
+            var tableParam = new TableParam<object>
+            {
+                RowClick = Select,
+                RowData = Source,
+                Headers = new ObservableArray<Header<object>>(headers)
+            };
+            if (_hasFocusOut) return;
             var position = InteractiveElement.GetBoundingClientRect();
-            var headers = GridPolicy.Select(column => new Header<object>()
+            ToggleTable(position, tableParam);
+        }
+
+        private static Header<object> MapTableHeader(GridPolicy column)
+        {
+            return new Header<object>()
             {
                 FieldName = column.FieldName,
                 FormatCell = column.FormatCell,
@@ -181,20 +200,7 @@ namespace Components
                 Description = column.Description,
                 Reference = column.Reference?.Name,
                 DataSource = column.DataSource,
-            }).ToArray();
-            if (Source.Data == null || Source.Data.Length == 0)
-            {
-                if (!_isFocusing) return;
-                Source.Data = await GetDataSource();
-            }
-            var tableParam = new TableParam<object>
-            {
-                RowClick = Select,
-                RowData = Source,
-                Headers = new ObservableArray<Header<object>>(headers)
             };
-            if (!_isFocusing) return;
-            ToggleTable(position, tableParam);
         }
 
         private void ToggleTable(ClientRect position, TableParam<object> tableParam)
@@ -204,16 +210,58 @@ namespace Components
                 _table = new FloatingTable<object>(tableParam)
                 {
                     Top = position.Bottom,
-                    Left = position.Left - 1
+                    Left = position.Left - 1,
+                    RootHtmlElement = RootHtmlElement
                 };
-                Html.Take(InteractiveElement.ParentElement);
                 AddChild(_table);
+                RenderPaginator();
             }
             else
             {
-                Html.Take(_table.RootHtmlElement).Display(true);
+                _table.Show(true);
             }
-            _isShowing = true;
+        }
+
+        public virtual async Task ReloadData(string dataSource = null)
+        {
+            _lastDataSource = dataSource ?? _lastDataSource ?? FormatDataSource();
+            if (UI.Row is null || UI.Row == 0) UI.Row = 20;
+            if (!_lastDataSource.Contains("?")) _lastDataSource += "?";
+            var pagingQuery = _lastDataSource + $"&$skip={_pageIndex * UI.Row}&$top={UI.Row}&$count=true";
+            var result = await Client<object>.Instance.GetListEntity(UI.Reference.Name,
+                UI.Row > 0 ? pagingQuery : _lastDataSource);
+            if (result == null)
+            {
+                throw new InvalidOperationException($"Cannot load data for the GridView {UI.Reference.Name}");
+            }
+            _total = result.odata?.count ?? 0;
+            UpdatePagination();
+            Source.Data = result.value?.ToArray();
+        }
+
+        private void UpdatePagination()
+        {
+            _paginator?.UpdateTotal(_total);
+        }
+
+        private void RenderPaginator()
+        {
+            _paginator = new Paginator(new PaginationOptions
+            {
+                Total = _total,
+                PageSize = UI.Row ?? 12,
+                ClickHandler = (page, e) =>
+                {
+                    e["preventDefault"].As<System.Action>().Invoke();
+                    _pageIndex = page - 1;
+                    _hasFocusOut = false;
+                    ReloadData();
+                },
+            })
+            {
+                RootHtmlElement = _table.InteractiveElement
+            };
+            _table.AddChild(_paginator);
         }
 
         private void Select(object rowData)
@@ -225,16 +273,18 @@ namespace Components
 
         private void HideTable()
         {
-            _isFocusing = false;
-            if (_table == null) return;
-            Html.Take(_table.RootHtmlElement).Display(false);
-            _isShowing = false;
+            Window.ClearTimeout(_waitToClose);
+            _waitToClose = Window.SetTimeout(() =>
+            {
+                if (!_hasFocusOut) return;
+                _table?.Show(false);
+            }, 10);
         }
 
         public override void UpdateView()
         {
-            Value.Data = (int?)Entity?.GetComplexPropValue(_ui.FieldName);
-            Matched = null;            
+            Value.Data = (int?)Entity?.GetComplexPropValue(UI.FieldName);
+            Matched = null;
             SetMatchText();
         }
     }

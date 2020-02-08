@@ -49,7 +49,7 @@ namespace Components
             {
                 Html.Instance.Attr("type", "password");
             }
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);
         }
 

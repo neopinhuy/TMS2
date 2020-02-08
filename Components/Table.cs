@@ -72,9 +72,9 @@ namespace Components
         public override void Render()
         {
             Editable = Headers.Data.Any(x => x.Editable);
-            Html.Instance.Div.ClassName("table-wrapper")
+            Html.Take(RootHtmlElement).Div.ClassName("table-wrapper")
                 .ClassName(Editable ? "editable" : string.Empty);
-            RootHtmlElement = Html.Context as HTMLElement;
+            InteractiveElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
             _frozenTable = Html.Context as HTMLTableElement;
             _frozenSection = new Section(_frozenTable);
@@ -495,7 +495,6 @@ namespace Components
                     var matched = source.FirstOrDefault(x => (int)x[IdField] == (int?)rowData?.GetComplexPropValue(ui.FieldName));
                     editor = new SearchEntry(ui)
                     {
-                        RootHtmlElement = Html.Context,
                         Matched = matched,
                     };
                     break;
@@ -506,6 +505,7 @@ namespace Components
             editor.Id = header.Id;
             editor.Name = header.FieldName;
             editor.Entity = rowData;
+            editor.RootHtmlElement = cellSection.RootHtmlElement;
             editor.ValueChanged += (arg) =>
             {
                 var res = CellChanging?.Invoke(arg, header, rowData);
@@ -577,6 +577,18 @@ namespace Components
                 SelectedRow++;
             }
             ToggleSelectRow(SelectedRow ?? -1, true);
+        }
+
+        public override void Show(bool show)
+        {
+            if (show)
+            {
+                InteractiveElement.Style.Display = "";
+            }
+            else
+            {
+                InteractiveElement.Style.Display = "none";
+            }
         }
 
         public override void Dispose()
