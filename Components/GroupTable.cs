@@ -25,7 +25,7 @@ namespace Components
         public override void Render()
         {
             base.Render();
-            Html.Take(RootHtmlElement).ClassName("group-table").End.Render();
+            Html.Take(ContainerElement).ClassName("group-table").End.Render();
             BuildGroupRowData(new ObservableArrayArgs<object>
             {
                 Array = RowData.Data,

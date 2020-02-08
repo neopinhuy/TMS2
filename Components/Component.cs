@@ -19,7 +19,7 @@ namespace Components
         public virtual string Name { get; set; }
         public virtual Component Parent { get; set; }
         public List<Component> Children { get; protected set; }
-        public virtual Element RootHtmlElement { get; set; }
+        public virtual Element ContainerElement { get; set; }
         public virtual HTMLElement InteractiveElement { get; set; }
         public Func<ObservableArgs, bool> ValueChanging { get; set; }
         public Action<ObservableArgs> ValueChanged { get; set; }
@@ -67,7 +67,7 @@ namespace Components
         public object Entity { get; set; }
         public virtual void Show(bool show)
         {
-            var ele = RootHtmlElement as HTMLElement;
+            var ele = ContainerElement as HTMLElement;
             if (!show)
                 ele.Style.Display = "none";
             else
@@ -77,7 +77,7 @@ namespace Components
         public void AddChild(Component child)
         {
             if (Children is null) Children = new List<Component>();
-            if (child.RootHtmlElement is null) child.RootHtmlElement = Html.Context;
+            if (child.ContainerElement is null) child.ContainerElement = Html.Context;
             if (child.Entity is null) child.Entity = Entity;
             Children.Add(child);
             if (child.Parent is null) child.Parent = this;
@@ -142,8 +142,8 @@ namespace Components
             foreach (var child in Children)
             {
                 if (child.GetType().IsAssignableFrom(type)
-                    && child.RootHtmlElement != null
-                    && !child.RootHtmlElement.Hidden()) result.Add(child as T);
+                    && child.ContainerElement != null
+                    && !child.ContainerElement.Hidden()) result.Add(child as T);
                 if (child.Children.Nothing()) continue;
                 var res = child.FindActiveComponent<T>();
                 res.ForEach(x => result.Add(x));
@@ -198,7 +198,7 @@ namespace Components
 
         protected virtual void RemoveDOM()
         {
-            RootHtmlElement.Remove();
+            ContainerElement.Remove();
         }
 
         public Component FindComponentEvent(string eventName)

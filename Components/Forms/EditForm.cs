@@ -136,7 +136,7 @@ namespace Components.Forms
                 var componentGroup = await Client<ComponentGroup>.Instance
                     .GetList($"?$expand=Component($expand=Reference($select=Id,Name))&$filter=Feature/Name eq '{Name}'");
                 var groupTree = BuildTree(componentGroup.value);
-                Html.Take(RootHtmlElement);
+                Html.Take(ContainerElement);
                 RenderGroup(groupTree, this);
                 AfterRendered?.Invoke();
             });

@@ -55,7 +55,7 @@ namespace Components
         {
             var isMultiple = _ui.Precision == 0;
             var hashCode = Math.Abs(GetHashCode());
-            Html.Take(RootHtmlElement)
+            Html.Take(ContainerElement)
                 .ClassName("uploader").ColSpan(2)
                 .Form.Attr("method", "POST").Attr("enctype", "multipart/form-data")
                 .Input.Id($"id_{hashCode}").Attr("name", "files").Type("file")

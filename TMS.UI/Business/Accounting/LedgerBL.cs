@@ -47,7 +47,7 @@ namespace TMS.UI.Business.Accounting
                     var closing = summary.value.LastOrDefault();
                     if (opening is null || closing is null) return;
 
-                    var tr = grid.RootHtmlElement.QuerySelector(".summary") as HTMLTableRowElement;
+                    var tr = grid.ContainerElement.QuerySelector(".summary") as HTMLTableRowElement;
                     tr.Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
                     tr.Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
 
@@ -145,7 +145,7 @@ namespace TMS.UI.Business.Accounting
                         var closing = summary.value.LastOrDefault();
                         if (opening is null || closing is null) return;
 
-                        var tr = grid.RootHtmlElement.QuerySelectorAll(".summary");
+                        var tr = grid.ContainerElement.QuerySelectorAll(".summary");
                         tr[2].As<HTMLTableRowElement>().Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
                         tr[2].As<HTMLTableRowElement>().Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
 
@@ -169,7 +169,7 @@ namespace TMS.UI.Business.Accounting
             shtml += "<link href='./css/LineIcons.css' rel='stylesheet' />";
             shtml += "<body onload=\"window.print();window.close();\">";
             shtml += "<div style='padding:7pt'>";
-            shtml += preview.RootHtmlElement.InnerHTML;
+            shtml += preview.ContainerElement.InnerHTML;
             shtml += "</div>";
             shtml += "</body>";
             shtml += "</html>";

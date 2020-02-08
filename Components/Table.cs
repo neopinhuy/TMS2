@@ -72,7 +72,7 @@ namespace Components
         public override void Render()
         {
             Editable = Headers.Data.Any(x => x.Editable);
-            Html.Take(RootHtmlElement).Div.ClassName("table-wrapper")
+            Html.Take(ContainerElement).Div.ClassName("table-wrapper")
                 .ClassName(Editable ? "editable" : string.Empty);
             InteractiveElement = Html.Context as HTMLElement;
             Html.Instance.Table.ClassName("table frozen");
@@ -126,7 +126,7 @@ namespace Components
                     Html.Take(_nonFrozenTable).Clear();
                     _frozenSection.Children?.ForEach(x => x.Dispose());
                     _mainSection.Children?.ForEach(x => x.Dispose());
-                    Html.Take(_mainSection.RootHtmlElement).P.ClassName("no-records").Text("No records found");
+                    Html.Take(_mainSection.ContainerElement).P.ClassName("no-records").Text("No records found");
                 }
                 if (RowData.Data.HasElement())
                 {
@@ -324,7 +324,7 @@ namespace Components
 
         protected virtual void RenderRowData(List<Header<T>> headers, T row, Section section)
         {
-            var rowSection = new TableRow(ElementType.tr) { Entity = row };
+            var rowSection = new TableRow(ElementType.tr) { Entity = row, ContainerElement = section.InteractiveElement };
             section.AddChild(rowSection);
             var tr = Html.Context as HTMLTableRowElement;
             tr[_rowData] = row;
@@ -505,7 +505,7 @@ namespace Components
             editor.Id = header.Id;
             editor.Name = header.FieldName;
             editor.Entity = rowData;
-            editor.RootHtmlElement = cellSection.RootHtmlElement;
+            editor.ContainerElement = cellSection.ContainerElement;
             editor.ValueChanged += (arg) =>
             {
                 var res = CellChanging?.Invoke(arg, header, rowData);

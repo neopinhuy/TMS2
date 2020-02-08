@@ -13,7 +13,7 @@ namespace Components.Forms
         public override void Render()
         {
             Html.Take(Document.Body).Div.ClassName("backdrop").Style("align-items: center;");
-            RootHtmlElement = Html.Context;
+            ContainerElement = Html.Context;
             jQuery.select(Html.Context).HotKey("esc", Dispose);
             Html.Instance.Div.ClassName("popup-content").Style("top: auto;")
                 .Div.ClassName("popup-title").Text(Title)
@@ -43,7 +43,7 @@ namespace Components.Forms
 
         protected override void RemoveDOM()
         {
-            RootHtmlElement.Remove();
+            ContainerElement.Remove();
         }
     }
 }

@@ -17,13 +17,13 @@ namespace Components.Forms
                     .Event(EventType.Click, Dispose)
                 .EndOf(".popup-title")
                 .Div.ClassName("popup-body");
-            RootHtmlElement = Html.Context as HTMLElement;
+            ContainerElement = Html.Context as HTMLElement;
             base.Render();
         }
 
         protected override void RemoveDOM()
         {
-            RootHtmlElement.ParentElement.ParentElement.Remove();
+            ContainerElement.ParentElement.ParentElement.Remove();
         }
 
         public void Cancel()

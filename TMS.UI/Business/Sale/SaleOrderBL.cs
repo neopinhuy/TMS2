@@ -120,7 +120,7 @@ namespace TMS.UI.Business.Sale
             shtml += "<link href='./css/LineIcons.css' rel='stylesheet' />";
             shtml += "<body onload=\"window.print();window.close();\">";
             shtml += "<div style='padding:7pt'>";
-            shtml += preview.RootHtmlElement.InnerHTML;
+            shtml += preview.ContainerElement.InnerHTML;
             shtml += "</div>";
             shtml += "</body>";
             shtml += "</html>";

@@ -33,7 +33,7 @@ namespace Components.Forms
                 .Li.A.Href($"#{Id}-{ClassId}").Event(EventType.MouseUp, Close).Icon(Icon).EndOf(MVVM.ElementType.a)
                 .Span.ClassName("icon fa fa-times").Event(EventType.Click, Dispose).End.Render();
             Html.Take("#tab-content").Div.Id($"{Id}-{ClassId}").Render();
-            RootHtmlElement = Html.Context;
+            ContainerElement = Html.Context;
             return false;
         }
 

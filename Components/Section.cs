@@ -8,23 +8,24 @@ namespace Components
         public Section(MVVM.ElementType elementType)
         {
             Html.Instance.Add(elementType);
-            RootHtmlElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
 
-        public Section(Element existingElement)
+        public Section(Element container)
         {
-            RootHtmlElement = existingElement;
+            ContainerElement = container;
+            InteractiveElement = container as HTMLElement;
         }
 
         public string TextContent
         {
             get 
             {
-                return RootHtmlElement.TextContent;
+                return ContainerElement.TextContent;
             }
             set
             {
-                RootHtmlElement.TextContent = value;
+                ContainerElement.TextContent = value;
             }
         }
 

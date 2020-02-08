@@ -26,8 +26,8 @@ namespace Components.Forms
         {
             Html.Take(Document.Body).Ul.ClassName("context-menu")
                 .TabIndex(-1).Trigger(EventType.Focus).Floating(Top, Left);
-            RootHtmlElement = Html.Context;
-            jQuery.select(RootHtmlElement).HotKey("esc", Dispose);
+            ContainerElement = Html.Context;
+            jQuery.select(ContainerElement).HotKey("esc", Dispose);
             Html.Instance.Event(EventType.FocusOut, Dispose)
                 .Event(EventType.Click, Dispose)
                 .ForEach(ContextMenuItems, (item, index) =>

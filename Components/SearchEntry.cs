@@ -52,7 +52,7 @@ namespace Components
                 CascadeField(root);
                 PopulateFields(root);
             });
-            Html.Take(RootHtmlElement).TabIndex(-1)
+            Html.Take(ContainerElement).TabIndex(-1)
                 .Event(EventType.FocusIn, async () => await RenderSuggestion())
                 .Event(EventType.FocusOut, () =>
                 {
@@ -211,7 +211,7 @@ namespace Components
                 {
                     Top = position.Bottom,
                     Left = position.Left - 1,
-                    RootHtmlElement = RootHtmlElement
+                    ContainerElement = ContainerElement
                 };
                 AddChild(_table);
                 RenderPaginator();
@@ -259,7 +259,7 @@ namespace Components
                 },
             })
             {
-                RootHtmlElement = _table.InteractiveElement
+                ContainerElement = _table.InteractiveElement
             };
             _table.AddChild(_paginator);
         }

@@ -22,7 +22,7 @@ namespace TMS.UI.Business.Authentication
         public override void Render()
         {
             base.Render();
-            RootHtmlElement.ParentElement.ParentElement.Style.BackgroundColor = "rgba(0,0,0,0.4)";
+            ContainerElement.ParentElement.ParentElement.Style.BackgroundColor = "rgba(0,0,0,0.4)";
         }
 
         public async Task<bool> Login(LoginVM login)

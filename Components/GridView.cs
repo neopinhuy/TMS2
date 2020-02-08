@@ -93,10 +93,10 @@ namespace Components
             };
             BindingEvents(tableParams);
             _table = IsGroupTable ? new GroupTable(tableParams) : new Table<object>(tableParams);
-            _table.RootHtmlElement = RootHtmlElement;
+            _table.ContainerElement = ContainerElement;
             _table.Entity = Entity;
             _table.BodyContextMenu += RenderContextMenu;
-            Html.Take(RootHtmlElement).Clear();
+            Html.Take(ContainerElement).Clear();
             _table.CellChanged = (arg, header, data) =>
             {
                 var rows = _table.GetFlatternRowData();
@@ -298,7 +298,7 @@ namespace Components
                     ReloadData();
                 }
             });
-            Html.Take(RootHtmlElement);
+            Html.Take(ContainerElement);
             AddChild(_paginator);
         }
 

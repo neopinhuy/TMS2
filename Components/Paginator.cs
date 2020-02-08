@@ -30,9 +30,9 @@ namespace Components
         {
             if (_hasInit || Options.Total <= Options.PageSize) return;
             _hasInit = true;
-            Html.Take(RootHtmlElement).Ul.ClassName("pagination");
-            RootHtmlElement = Html.Context;
-            Html.Take(RootHtmlElement).Pagination(Options.Total, Options.PageSize, Options.ClickHandler);
+            Html.Take(ContainerElement).Ul.ClassName("pagination");
+            ContainerElement = Html.Context;
+            Html.Take(ContainerElement).Pagination(Options.Total, Options.PageSize, Options.ClickHandler);
         }
 
         public void UpdateTotal(int total)
@@ -40,7 +40,7 @@ namespace Components
             Options.Total = total;
             if (_hasInit || Options.Total <= Options.PageSize) return;
             InitialRender();
-            Html.Take(RootHtmlElement).Pagination("updateItems", Options.Total);
+            Html.Take(ContainerElement).Pagination("updateItems", Options.Total);
         }
     }
 }
