@@ -115,7 +115,7 @@ namespace TMS.UI.Business.Accounting
             };
             AddChild(preview);
         }
-        public void PreviewAndPrint(Ledger ledger)
+        public void PreviewAndPrintLedger(Ledger ledger)
         {
             var preview = new PopupEditor<Ledger>
             {
@@ -123,8 +123,35 @@ namespace TMS.UI.Business.Accounting
                 Name = "Print Preview Liabilities",
                 Title = "Print Preview Liabilities"
             };
+            preview.AfterRendered += () =>
+            {
+                var grid = FindComponentByName<GridView>("LedgerGridPreview");
+                grid.RowData.Subscribe(x =>
+                {
+                    if (x.Array is null) return;
+                    var rows = x.Array as Ledger[];
+                    rows.ForEach(SetOriginMoney);
+                });
+                grid.AfterRendered += async () =>
+                {
+                    var filter = Entity as LedgerVM;
+                    var summary = await Client<Ledger>.Instance
+                        .GetList($"/summary?fromDate={filter.FromDate}&toDate={filter.ToDate}&AccountTypeId={filter.AccountTypeId}" +
+                        $"&TargetTypeId={filter.TargetTypeId}&TargetId={filter.TargetId}");
+                    var opening = summary.value.FirstOrDefault();
+                    var closing = summary.value.LastOrDefault();
+                    if (opening is null || closing is null) return;
+
+                    var tr = grid.RootHtmlElement.QuerySelector(".summary") as HTMLTableRowElement;
+                    tr.Cells[2].TextContent = string.Format("{0:n}", opening.OpeningDebit);
+                    tr.Cells[3].TextContent = string.Format("{0:n}", opening.OpeningCredit);
+
+                    tr = tr.NextElementSibling as HTMLTableRowElement;
+                    tr.Cells[2].TextContent = string.Format("{0:n}", closing.OpeningDebit);
+                    tr.Cells[3].TextContent = string.Format("{0:n}", closing.OpeningCredit);
+                };
+            };
             AddChild(preview);
         }
-
     }
 }
