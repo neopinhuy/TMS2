@@ -93,6 +93,7 @@ namespace Components
             };
             BindingEvents(tableParams);
             _table = IsGroupTable ? new GroupTable(tableParams) : new Table<object>(tableParams);
+            _table.RootHtmlElement = RootHtmlElement;
             _table.Entity = Entity;
             _table.BodyContextMenu += RenderContextMenu;
             Html.Take(RootHtmlElement).Clear();
@@ -286,7 +287,7 @@ namespace Components
         private void RenderPaginator()
         {
             if (UI.Row is null || UI.Row == 0) UI.Row = 12;
-            _paginator = new Paginator(new PaginatorParam
+            _paginator = new Paginator(new PaginationOptions
             {
                 Total = _total,
                 PageSize = UI.Row ?? 12,

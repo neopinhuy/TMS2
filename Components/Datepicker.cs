@@ -28,7 +28,7 @@ namespace Components
             });
             Html.Instance
                 .SmallDatePicker(Value);
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
 
         public override void UpdateView()

@@ -1,4 +1,5 @@
-﻿using Components.Extensions;
+﻿using Bridge.Html5;
+using Components.Extensions;
 using MVVM;
 using System;
 
@@ -17,7 +18,7 @@ namespace Components
             var text = Utils.GetFormatText(Entity, _ui);
             if (_ui.ShowLabel) Html.Instance.Label.Text(_ui.Label);
             Html.Instance.Label.Text(text);
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
             if (!_ui.ShowLabel) Html.Instance.PlaceHolder(_ui.Label ?? string.Empty);
         }
 

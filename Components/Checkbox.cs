@@ -1,8 +1,7 @@
-﻿using Common.Extensions;
+﻿using Bridge.Html5;
+using Common.Extensions;
 using MVVM;
 using System;
-using System.Collections.Generic;
-using TMS.API.Models;
 
 namespace Components
 {
@@ -26,7 +25,7 @@ namespace Components
                 ValueChanged?.Invoke(arg);
             });
             Html.Instance.SmallCheckbox(string.Empty, Value);
-            InteractiveElement = Html.Context;
+            InteractiveElement = Html.Context as HTMLElement;
         }
 
         public override void UpdateView()
